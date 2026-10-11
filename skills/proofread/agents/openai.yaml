@@ -1,0 +1,4 @@
+interface:
+  display_name: "English Proofreader Pro"
+  short_description: "Proofread and revise English prose"
+  default_prompt: "Use $proofread to proofread the following text."

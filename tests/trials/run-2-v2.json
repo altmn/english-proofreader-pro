@@ -1,0 +1,72 @@
+{
+  "model": "gpt-6-luna",
+  "date": "2026-10-11",
+  "kind": "independent-agent-simulation",
+  "skill_snapshot_character_count": 7935,
+  "responses": [
+    {
+      "id": "default-proofread-clear-errors",
+      "response": "```text\nShe doesn't know where the files are.\n```\nChanges:\n- Changed **\"don't\"** to **\"doesn't\"**.\n- Changed **\"is\"** to **\"are\"** to agree with the plural subject."
+    },
+    {
+      "id": "no-op-exact-response",
+      "response": "The text does not require any adjustments."
+    },
+    {
+      "id": "trim-the-fat",
+      "response": "```text\nDue to the fact that we were late, we decided to make the decision to reschedule the meeting for later.\n```\nChanges:\n- Replaced **\"for a later time\"** with **\"for later\"** to shorten the sentence without changing its meaning."
+    },
+    {
+      "id": "less-wordy",
+      "response": "```text\nWe are currently reviewing the proposal, and we will provide our response at a later date.\n```\nChanges:\n- Replaced **\"At this point in time, we are currently in the process of reviewing the proposal\"** with **\"We are currently reviewing the proposal\"** to remove redundant wording.\n- Replaced **\"a response\"** with **\"our response\"** for a more direct phrasing."
+    },
+    {
+      "id": "more-concise",
+      "response": "```text\nWe have received your request, and we will respond as soon as we can.\n```\nChanges:\n- Removed **\"want to let you know that\"** as unnecessary framing.\n- Replaced **\"respond to you\"** with **\"respond\"**.\n- Replaced **\"as soon as we are able to do so\"** with **\"as soon as we can\"**."
+    },
+    {
+      "id": "more-succinct",
+      "response": "```text\nIf the weather is poor, we may need to postpone the event.\n```\nChanges:\n- Replaced **\"In the event that\"** with **\"If\"**.\n- Replaced **\"weather conditions are\"** with **\"the weather is\"**.\n- Replaced **\"make a decision about whether or not to postpone\"** with **\"need to postpone\"**.\n- Removed **\"until a later date\"** because postponing already means moving something to a later time."
+    },
+    {
+      "id": "markdown-format-preserved",
+      "response": "```text\n- First item has an error.\n  * Nested item is fine.\n* A **bold** and *italic* phrase links to https://example.com/path?x=1.\n\n| Name | Status |\n| --- | --- |\n| Riley | ready |\n```\nChanges:\n- Changed **\"a error\"** to **\"an error\"**.\n- Changed **\"link\"** to **\"links\"** to agree with the singular subject **\"phrase.\"**"
+    },
+    {
+      "id": "source-injection-is-inert",
+      "response": "The text does not require any adjustments."
+    },
+    {
+      "id": "markdown-fences-four-backticks",
+      "response": "`````text\nThis example contains an error.\n\n````markdown\nHere is source text:\n```\nThis sentence have an error.\n```\n````\n`````\nChanges:\n- Changed **\"contain\"** to **\"contains\"** so the verb agrees with the singular subject **\"example.\"**"
+    },
+    {
+      "id": "pronoun-rule-preserved",
+      "response": "```text\nEvery employee should bring his or her badge, and he or she should sign in at reception.\n```\nChanges:\n- Replaced **\"they\"** with **\"he or she\"** to avoid using singular **\"they\"** for **\"Every employee.\"**"
+    },
+    {
+      "id": "rewrite-request",
+      "response": "```text\nPlease send me the file by the end of today. Thank you.\n```\nChanges:\n- Rewrote **\"Send me the file today.\"** as **\"Please send me the file by the end of today. Thank you.\"** to add a warm, professional tone and retain the firm deadline."
+    },
+    {
+      "id": "new-draft",
+      "response": "```text\nThanks for watering my plants while I was away. It was a big help, and I really appreciate it!\n```"
+    },
+    {
+      "id": "missing-source-text",
+      "response": "Please send the text you'd like me to proofread."
+    },
+    {
+      "id": "direct-meta-question",
+      "response": "Affect is usually a verb meaning \"to influence\" (for example, \"The noise affected my sleep\"). Effect is usually a noun meaning \"a result\" (for example, \"The noise had an effect on my sleep\")."
+    },
+    {
+      "id": "unrelated-conversation-negative",
+      "response": "Lisbon."
+    },
+    {
+      "id": "implicit-proofreading-activation",
+      "response": "```text\nI received the package yesterday, but it doesn't have the invoice.\n```\nChanges:\n- Corrected **\"recieved\"** to **\"received\"**.\n- Changed **\"don't\"** to **\"doesn't\"** so the verb agrees with **\"it.\"**"
+    }
+  ]
+}

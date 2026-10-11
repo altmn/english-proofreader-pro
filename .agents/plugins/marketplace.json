@@ -1,0 +1,12 @@
+{
+  "name": "english-proofreader-pro-dev",
+  "interface": { "displayName": "English Proofreader Pro Development" },
+  "plugins": [
+    {
+      "name": "english-proofreader-pro",
+      "source": { "source": "local", "path": "./dist/local-plugin" },
+      "policy": { "installation": "AVAILABLE", "authentication": "ON_INSTALL" },
+      "category": "Productivity"
+    }
+  ]
+}

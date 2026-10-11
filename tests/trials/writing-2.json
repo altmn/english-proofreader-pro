@@ -1,0 +1,26 @@
+{
+  "model": "gpt-6-luna",
+  "date": "2026-10-11",
+  "kind": "independent-agent-simulation",
+  "skill_snapshot_character_count": 7985,
+  "prompts": [
+    {
+      "id": "professional-status-email",
+      "prompt": "Draft a short professional email asking for a status update."
+    },
+    {
+      "id": "casual-thank-you-note",
+      "prompt": "Write a two-sentence casual thank-you note to a neighbor who watered my plants."
+    }
+  ],
+  "responses": [
+    {
+      "id": "professional-status-email",
+      "response": "```text\nSubject: Status Update\n\nHello,\n\nCould you please share a brief update when you have a chance?\n\nThank you.\n```"
+    },
+    {
+      "id": "casual-thank-you-note",
+      "response": "```text\nThanks so much for watering my plants! I really appreciate it.\n```"
+    }
+  ]
+}

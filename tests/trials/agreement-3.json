@@ -1,0 +1,8 @@
+{
+  "model": "gpt-6-luna",
+  "date": "2026-10-11",
+  "kind": "independent-agent-simulation",
+  "skill_snapshot_character_count": 7847,
+  "prompt": "Proofread:\n- First item has a error.\n  * Nested item is fine.\n* The **bold** and *italic* phrase link readers to https://example.com/path?x=1.\n\n| Name | Status |\n| --- | --- |\n| Riley | ready |",
+  "response": "```text\n- First item has an error.\n  * Nested item is fine.\n* The **bold** and *italic* phrase links readers to https://example.com/path?x=1.\n\n| Name | Status |\n| --- | --- |\n| Riley | ready |\n```\nChanges:\n- Changed **\"a error\"** to **\"an error\"** to correct the article.\n- Changed **\"phrase link readers\"** to **\"phrase links readers\"** so the verb agrees with the singular subject."
+}

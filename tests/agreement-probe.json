@@ -1,0 +1,10 @@
+{
+  "id": "markdown-agreement-unambiguous",
+  "reason": "The original phrase-link list label permits both a noun-fragment and finite-verb reading. A direct object in this probe makes the finite verb unambiguous.",
+  "input": "Proofread:\n- First item has a error.\n  * Nested item is fine.\n* The **bold** and *italic* phrase link readers to https://example.com/path?x=1.\n\n| Name | Status |\n| --- | --- |\n| Riley | ready |",
+  "expect": {
+    "corrects_article_and_finite_verb_agreement": true,
+    "preserves_markup_indentation_table_and_url": true,
+    "fenced_output_and_complete_changes_list": true
+  }
+}

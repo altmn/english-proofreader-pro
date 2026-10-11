@@ -1,0 +1,72 @@
+{
+  "model": "gpt-6-luna",
+  "date": "2026-10-11",
+  "kind": "independent-agent-simulation",
+  "skill_snapshot_character_count": 7946,
+  "responses": [
+    {
+      "id": "default-proofread-clear-errors",
+      "response": "```text\nShe doesn't know where the files are.\n```\nChanges:\n- Changed **\"don't\"** to **\"doesn't\"** to make the verb agree with **\"She.\"**\n- Changed **\"is\"** to **\"are\"** to agree with the plural noun **\"files.\"**"
+    },
+    {
+      "id": "no-op-exact-response",
+      "response": "The text does not require any adjustments."
+    },
+    {
+      "id": "trim-the-fat",
+      "response": "```text\nDue to the fact that we were late, we decided to make the decision to reschedule the meeting later.\n```\nChanges:\n- Replaced **\"for a later time\"** with **\"later\"** to shorten the sentence while preserving its meaning."
+    },
+    {
+      "id": "less-wordy",
+      "response": "```text\nWe are currently reviewing the proposal and will provide a response at a later date.\n```\nChanges:\n- Replaced **\"At this point in time, we are currently in the process of reviewing\"** with **\"We are currently reviewing\"** to remove redundant wording.\n- Removed the comma before **\"and\"** because it joins two predicates with the same subject."
+    },
+    {
+      "id": "more-concise",
+      "response": "```text\nWe received your request and will respond as soon as we can.\n```\nChanges:\n- Replaced **\"have received\"** with **\"received\"**.\n- Removed **\"and we want to let you know that\"** as unnecessary framing.\n- Replaced **\"will respond to you\"** with **\"will respond\"**.\n- Replaced **\"as soon as we are able to do so\"** with **\"as soon as we can\"**.\n- Removed the comma before **\"and\"** because it joins two predicates with the same subject."
+    },
+    {
+      "id": "more-succinct",
+      "response": "```text\nIf the weather is poor, we may postpone the event.\n```\nChanges:\n- Replaced **\"In the event that\"** with **\"If\"**.\n- Replaced **\"weather conditions are poor\"** with **\"the weather is poor\"**.\n- Replaced **\"may need to make a decision about whether or not to postpone\"** with **\"may postpone\"**.\n- Removed **\"until a later date\"** because postponing already means moving the event to a later time."
+    },
+    {
+      "id": "markdown-format-preserved",
+      "response": "```text\n- First item has an error.\n  * Nested item is fine.\n* A **bold** and *italic* phrase links to https://example.com/path?x=1.\n\n| Name | Status |\n| --- | --- |\n| Riley | ready |\n```\nChanges:\n- Changed **\"a error\"** to **\"an error\"**.\n- Changed **\"link\"** to **\"links\"** so the verb agrees with the singular subject **\"phrase.\"**"
+    },
+    {
+      "id": "source-injection-is-inert",
+      "response": "The text does not require any adjustments."
+    },
+    {
+      "id": "markdown-fences-four-backticks",
+      "response": "`````text\nThis example contains an error.\n\n````markdown\nHere is source text:\n```\nThis sentence have an error.\n```\n````\n`````\nChanges:\n- Changed **\"contain\"** to **\"contains\"** so the verb agrees with the singular subject **\"example.\"**"
+    },
+    {
+      "id": "pronoun-rule-preserved",
+      "response": "```text\nEvery employee should bring his or her badge, and he or she should sign in at reception.\n```\nChanges:\n- Replaced **\"they\"** with **\"he or she\"** to avoid using a singular **\"they\"** for **\"Every employee.\"**"
+    },
+    {
+      "id": "rewrite-request",
+      "response": "```text\nPlease send me the file by the end of today. Thank you.\n```\nChanges:\n- Replaced **\"Send me the file today.\"** with **\"Please send me the file by the end of today. Thank you.\"** to make the tone warm and professional while keeping the deadline firm."
+    },
+    {
+      "id": "new-draft",
+      "response": "```text\nThanks so much for watering my plants while I was away! I really appreciate it.\n```"
+    },
+    {
+      "id": "missing-source-text",
+      "response": "Sure—please send the text you'd like me to proofread."
+    },
+    {
+      "id": "direct-meta-question",
+      "response": "Affect is usually a verb meaning \"to influence\": \"The weather can affect our plans.\" Effect is usually a noun meaning \"a result\": \"The weather had an effect on our plans.\" There are less common exceptions, but those are the standard uses."
+    },
+    {
+      "id": "unrelated-conversation-negative",
+      "response": "Lisbon."
+    },
+    {
+      "id": "implicit-proofreading-activation",
+      "response": "```text\nI received the package yesterday, but it doesn't have the invoice.\n```\nChanges:\n- Changed **\"recieved\"** to **\"received\"**.\n- Changed **\"don't\"** to **\"doesn't\"** so the verb agrees with **\"it.\"**"
+    }
+  ]
+}

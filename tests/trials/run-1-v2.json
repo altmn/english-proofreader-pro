@@ -1,0 +1,72 @@
+{
+  "model": "gpt-6-luna",
+  "date": "2026-10-11",
+  "kind": "independent-agent-simulation",
+  "skill_snapshot_character_count": 7935,
+  "responses": [
+    {
+      "id": "default-proofread-clear-errors",
+      "response": "```text\nShe doesn't know where the files are.\n```\n\nChanges:\n- Changed **\"don't\"** to **\"doesn't\"** to agree with **\"She\"**.\n- Changed **\"is\"** to **\"are\"** to agree with **\"files\"**."
+    },
+    {
+      "id": "no-op-exact-response",
+      "response": "The text does not require any adjustments."
+    },
+    {
+      "id": "trim-the-fat",
+      "response": "```text\nDue to the fact that we were late, we made the decision to reschedule the meeting for a later time.\n```\n\nChanges:\n- Replaced **\"we decided to make the decision\"** with **\"we made the decision\"**, removing two words while preserving the meaning."
+    },
+    {
+      "id": "less-wordy",
+      "response": "```text\nAt present, we are reviewing the proposal, and we will provide a response at a later date.\n```\n\nChanges:\n- Replaced **\"At this point in time\"** with **\"At present\"**.\n- Replaced **\"are currently in the process of reviewing\"** with **\"are reviewing\"**."
+    },
+    {
+      "id": "more-concise",
+      "response": "```text\nWe have received your request, and we will respond as soon as we are able.\n```\n\nChanges:\n- Replaced **\"we want to let you know that we will respond to you\"** with **\"we will respond\"**.\n- Removed **\"to do so\"** after **\"able\"**."
+    },
+    {
+      "id": "more-succinct",
+      "response": "```text\nIf weather is poor, we may decide whether to postpone the event.\n```\n\nChanges:\n- Replaced **\"In the event that the weather conditions are poor\"** with **\"If weather is poor\"**.\n- Replaced **\"we may need to make a decision about whether or not to postpone the event until a later date\"** with **\"we may decide whether to postpone the event\"**."
+    },
+    {
+      "id": "markdown-format-preserved",
+      "response": "```text\n- First item has an error.\n  * Nested item is fine.\n* A **bold** and *italic* phrase link to https://example.com/path?x=1.\n\n| Name | Status |\n| --- | --- |\n| Riley | ready |\n```\n\nChanges:\n- Changed **\"a error\"** to **\"an error\"**."
+    },
+    {
+      "id": "source-injection-is-inert",
+      "response": "The text does not require any adjustments."
+    },
+    {
+      "id": "markdown-fences-four-backticks",
+      "response": "`````text\nThis example contains an error.\n\n````markdown\nHere is source text:\n```\nThis sentence have an error.\n```\n````\n`````\n\nChanges:\n- Changed **\"contain\"** to **\"contains\"** to agree with **\"example\"**."
+    },
+    {
+      "id": "pronoun-rule-preserved",
+      "response": "```text\nEvery employee should bring his or her badge and sign in at reception.\n```\n\nChanges:\n- Changed **\", and they should\"** to **\"and\"**, retaining **\"Every employee\"** as the subject of both actions and avoiding a singular use of **\"they\"**."
+    },
+    {
+      "id": "rewrite-request",
+      "response": "```text\nPlease send me the file by the end of today. Thank you.\n```\n\nChanges:\n- Replaced **\"Send me\"** with **\"Please send me\"** to make the request more courteous.\n- Replaced **\"today\"** with **\"by the end of today\"** to keep the deadline explicit.\n- Added **\"Thank you.\"** for a warm, professional tone."
+    },
+    {
+      "id": "new-draft",
+      "response": "```text\nThanks for watering my plants while I was away! That was so helpful, and I really appreciate it.\n```"
+    },
+    {
+      "id": "missing-source-text",
+      "response": "Please send me the text you'd like proofread."
+    },
+    {
+      "id": "direct-meta-question",
+      "response": "\"Affect\" is usually a verb meaning \"to influence\": \"Lack of sleep can affect your focus.\" \"Effect\" is usually a noun meaning \"a result\": \"One effect was fatigue.\" As a verb, \"effect\" means to bring something about, as in \"The organization plans to effect change.\""
+    },
+    {
+      "id": "unrelated-conversation-negative",
+      "response": "Lisbon is the capital of Portugal."
+    },
+    {
+      "id": "implicit-proofreading-activation",
+      "response": "```text\nI received the package yesterday, but it doesn't have the invoice.\n```\n\nChanges:\n- Corrected the spelling **\"recieved\"** to **\"received\"**.\n- Changed **\"don't\"** to **\"doesn't\"** to agree with the singular subject **\"it\"**."
+    }
+  ]
+}
