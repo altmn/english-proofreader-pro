@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "english-proofreader-pro",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Careful American English proofreading, editing, rewriting, and drafting with copyable results and complete correction lists.",
   "author": { "name": "Alex Allen", "url": "https://github.com/altmn" },
   "homepage": "https://github.com/altmn/english-proofreader-pro",
@@ -35,7 +35,7 @@
       },
       "publication": {
         "countries": [],
-        "release_notes": "Initial release with fenced text output and complete lists of corrections to supplied text. Open-source MIT package with public privacy, support, and usage information."
+        "release_notes": "Preserve fenced examples literally unless their payload is explicitly selected for editing. Harden package validation and failed-build recovery, and record source-bound behavioral evidence."
       }
     }
   }

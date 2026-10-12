@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import os
 import shutil
 import tempfile
 import unittest
@@ -243,6 +244,10 @@ class ReleaseBuilderTests(unittest.TestCase):
 
     def test_skill_frontmatter_and_absolute_path_failures(self) -> None:
         skill_path = self.root / release.EXPECTED_SKILL
+        skill_path.write_text(" ---\nname: proofread\ndescription: x\n---\nbody\n", encoding="utf-8")
+        with self.assertRaisesRegex(release.ReleaseError, "must start with YAML frontmatter"):
+            release.validate_skill()
+
         skill_path.write_text("---\nname: proofread\nname: proofread\ndescription: x\n---\nbody\n", encoding="utf-8")
         with self.assertRaisesRegex(release.ReleaseError, "duplicate name"):
             release.validate_skill()
@@ -250,6 +255,100 @@ class ReleaseBuilderTests(unittest.TestCase):
         skill_path.write_text("---\nname: proofread\ndescription: x\n---\nAvoid /private/data.\n", encoding="utf-8")
         with self.assertRaisesRegex(release.ReleaseError, "unsafe absolute or parent-relative path"):
             release.validate_skill()
+
+    def test_skill_frontmatter_rejects_malformed_or_typed_yaml_scalars(self) -> None:
+        skill_path = self.root / release.EXPECTED_SKILL
+        for line in (
+            "description: [unterminated",
+            "description: text: text",
+            "description: true",
+            "description: .nan",
+            "description: 0x10",
+            'description: "bad\\q"',
+        ):
+            with self.subTest(line=line):
+                skill_path.write_text(f"---\nname: proofread\n{line}\n---\nbody\n", encoding="utf-8")
+                with self.assertRaises(release.ReleaseError):
+                    release.validate_skill()
+        skill_path.write_text('---\nname: proofread\ndescription: "literal 0x10"\n---\nbody\n', encoding="utf-8")
+        release.validate_skill()
+
+    def test_skill_physical_unicode_character_count_preserves_crlf(self) -> None:
+        skill_path = self.root / release.EXPECTED_SKILL
+        header = "---\r\nname: proofread\r\ndescription: x\r\n---\r\n"
+        payload = header + ("é" * (release.MAX_SKILL_CHARS - len(header)))
+        skill_path.write_bytes(payload.encode("utf-8"))
+
+        with self.assertRaisesRegex(release.ReleaseError, "must be under 8000"):
+            release.validate_skill()
+
+    def test_agent_ui_metadata_validates_mapping_shape_and_scalars(self) -> None:
+        agent_path = self.root / "skills/proofread/agents/openai.yaml"
+        good = agent_path.read_text(encoding="utf-8")
+        release.validate_skill()
+        for content in (
+            "interface:\n  display_name: [unterminated\n  short_description: ok\n  default_prompt: ok\n",
+            "interface:\n  display_name: text: text\n  short_description: ok\n  default_prompt: ok\n",
+            "interface:\n  display_name: ok\n  display_name: duplicate\n  short_description: ok\n  default_prompt: ok\n",
+            "interface: [\n",
+        ):
+            with self.subTest(content=content):
+                agent_path.write_text(content, encoding="utf-8")
+                with self.assertRaises(release.ReleaseError):
+                    release.validate_skill()
+        agent_path.write_text(good, encoding="utf-8")
+        release.validate_skill()
+
+    def test_manifest_rejects_duplicate_json_keys_at_every_depth(self) -> None:
+        manifest_path = self.root / "plugin.json"
+        raw = manifest_path.read_text(encoding="utf-8")
+        for key, value in (("name", "english-proofreader-pro"), ("displayName", "English Proofreader Pro")):
+            with self.subTest(key=key):
+                needle = f'"{key}": "{value}"'
+                malformed = raw.replace(needle, f'{needle},\n    "{key}": "{value}"', 1)
+                manifest_path.write_text(malformed, encoding="utf-8")
+                with self.assertRaisesRegex(release.ReleaseError, "duplicate-key"):
+                    release.validate_manifest()
+
+    def test_semver_core_digits_must_be_ascii(self) -> None:
+        manifest = self.read_manifest()
+        for version in ("1٢.0.0", "1.1٢.0", "1.0.1٢"):
+            with self.subTest(version=version):
+                manifest["version"] = version
+                self.write_manifest(manifest)
+                with self.assertRaisesRegex(release.ReleaseError, "valid semantic versioning"):
+                    release.validate_manifest()
+
+    def test_yaml_string_subset_rejects_odd_quote_runs_and_invalid_characters(self) -> None:
+        for value in ("'a'''b'", '"\\ud800"', "bad\x01value"):
+            with self.subTest(value=repr(value)):
+                with self.assertRaises(release.ReleaseError):
+                    release.parse_yaml_string_scalar(value, "synthetic field")
+        self.assertEqual(release.parse_yaml_string_scalar("'a''''b'", "synthetic field"), "a''b")
+
+    def test_yaml_implicit_boolean_and_date_values_require_quotes(self) -> None:
+        for value in ("yes", "no", "on", "off", "2026-10-12", "2026-10-12T12:00:00Z"):
+            with self.subTest(value=value):
+                with self.assertRaises(release.ReleaseError):
+                    release.parse_yaml_string_scalar(value, "synthetic field")
+                self.assertEqual(release.parse_yaml_string_scalar(json.dumps(value), "synthetic field"), value)
+
+    def test_webp_container_requires_real_image_frame_and_valid_riff_bounds(self) -> None:
+        def chunk(kind: bytes, payload: bytes) -> bytes:
+            return kind + len(payload).to_bytes(4, "little") + payload + (b"\0" if len(payload) & 1 else b"")
+
+        canvas = b"\0\0\0\0" + (1023).to_bytes(3, "little") * 2
+        bits = 1023 | (1023 << 14)
+        frame = b"\x2f" + bits.to_bytes(4, "little") + b"\0"
+        body = b"WEBP" + chunk(b"VP8X", canvas) + chunk(b"VP8L", frame)
+        valid = b"RIFF" + len(body).to_bytes(4, "little") + body
+        self.assertEqual(release.parse_webp_dimensions(valid), (1024, 1024))
+
+        empty = b"WEBP" + chunk(b"VP8X", canvas)
+        empty = b"RIFF" + len(empty).to_bytes(4, "little") + empty
+        self.assertIsNone(release.parse_webp_dimensions(empty))
+        self.assertIsNone(release.parse_webp_dimensions(b"RIFF" + b"\0" * 4 + b"WEBP" + chunk(b"VP8X", canvas)))
+        self.assertIsNone(release.parse_webp_dimensions(valid[:-1]))
 
     def test_build_is_byte_for_byte_reproducible_and_has_fixed_metadata(self) -> None:
         first_path = release.build()
@@ -273,12 +372,84 @@ class ReleaseBuilderTests(unittest.TestCase):
             )
             self.assertTrue(all(info.date_time == (1980, 1, 1, 0, 0, 0) for info in archive.infolist()))
 
+    def test_archive_prepare_failure_preserves_previous_archive_and_stage(self) -> None:
+        archive_path = release.build()
+        old_archive = archive_path.read_bytes()
+        stage = archive_path.parent / "local-plugin"
+        old_stage = {path.relative_to(stage).as_posix(): path.read_bytes() for path in stage.rglob("*") if path.is_file()}
+
+        def partial_write_then_fail(path: Path, files: list[Path]) -> None:
+            path.write_bytes(b"partial zip")
+            raise OSError("synthetic archive write failure")
+
+        with patch.object(release, "_write_archive", side_effect=partial_write_then_fail):
+            with self.assertRaisesRegex(release.ReleaseError, "could not be prepared"):
+                release.build()
+
+        self.assertEqual(archive_path.read_bytes(), old_archive)
+        self.assertEqual({path.relative_to(stage).as_posix(): path.read_bytes() for path in stage.rglob("*") if path.is_file()}, old_stage)
+        self.assertFalse(list(archive_path.parent.glob(".*.tmp")))
+
+    def test_stage_copy_failure_preserves_previous_archive_and_stage(self) -> None:
+        archive_path = release.build()
+        old_archive = archive_path.read_bytes()
+        stage = archive_path.parent / "local-plugin"
+        old_stage = {path.relative_to(stage).as_posix(): path.read_bytes() for path in stage.rglob("*") if path.is_file()}
+        with patch.object(release.shutil, "copyfile", side_effect=OSError("synthetic staging copy failure")):
+            with self.assertRaisesRegex(release.ReleaseError, "could not be prepared"):
+                release.build()
+        self.assertEqual(archive_path.read_bytes(), old_archive)
+        self.assertEqual({path.relative_to(stage).as_posix(): path.read_bytes() for path in stage.rglob("*") if path.is_file()}, old_stage)
+
+    def test_archive_promotion_failure_rolls_back_both_outputs(self) -> None:
+        archive_path = release.build()
+        old_archive = archive_path.read_bytes()
+        stage = archive_path.parent / "local-plugin"
+        old_stage = {path.relative_to(stage).as_posix(): path.read_bytes() for path in stage.rglob("*") if path.is_file()}
+        real_replace = os.replace
+        injected = False
+
+        def fail_zip_promotion(source: os.PathLike[str] | str, destination: os.PathLike[str] | str) -> None:
+            nonlocal injected
+            if Path(destination) == archive_path:
+                self.assertTrue(archive_path.exists(), "old ZIP must remain at its final path until atomic replacement")
+            if not injected and Path(destination) == archive_path and Path(source) != archive_path:
+                injected = True
+                raise OSError("synthetic archive promotion failure")
+            real_replace(source, destination)
+
+        with patch.object(release.os, "replace", side_effect=fail_zip_promotion):
+            with self.assertRaisesRegex(release.ReleaseError, "could not atomically publish"):
+                release.build()
+        self.assertTrue(injected)
+        self.assertEqual(archive_path.read_bytes(), old_archive)
+        self.assertEqual({path.relative_to(stage).as_posix(): path.read_bytes() for path in stage.rglob("*") if path.is_file()}, old_stage)
+        self.assertFalse(list(archive_path.parent.glob(".release-backup-*")))
+
+    def test_successful_build_replaces_zip_only_while_old_path_exists(self) -> None:
+        archive_path = release.build()
+        real_replace = os.replace
+        archive_replacements = 0
+
+        def observe_zip_promotion(source: os.PathLike[str] | str, destination: os.PathLike[str] | str) -> None:
+            nonlocal archive_replacements
+            if Path(destination) == archive_path:
+                archive_replacements += 1
+                self.assertEqual(Path(source).parent, archive_path.parent)
+                self.assertTrue(archive_path.exists(), "old ZIP must remain at its final path until atomic replacement")
+            self.assertNotEqual(Path(source), archive_path, "build must never move the old ZIP into a backup")
+            real_replace(source, destination)
+
+        with patch.object(release.os, "replace", side_effect=observe_zip_promotion):
+            release.build()
+        self.assertEqual(archive_replacements, 1)
+
     def test_build_rejects_symlinked_archive_target_without_touching_target(self) -> None:
         dist = self.root / "dist"
         dist.mkdir()
         sentinel = self.root / "keep.bin"
         sentinel.write_bytes(b"do not overwrite")
-        archive_target = dist / f"{release.PLUGIN_NAME}-1.0.0.zip"
+        archive_target = dist / f"{release.PLUGIN_NAME}-{self.read_manifest()['version']}.zip"
         archive_target.symlink_to(sentinel)
 
         with self.assertRaisesRegex(release.ReleaseError, "release output is not a regular file"):
@@ -305,6 +476,20 @@ class ReleaseBuilderTests(unittest.TestCase):
             release.build()
 
         self.assertEqual(unexpected.read_text(encoding="utf-8"), "preserve me")
+
+    @unittest.skipUnless(hasattr(os, "mkfifo"), "FIFO creation is unavailable on this platform")
+    def test_staging_fifo_is_rejected_without_deleting_user_entry(self) -> None:
+        archive = release.build()
+        old_archive = archive.read_bytes()
+        stage = archive.parent / "local-plugin"
+        fifo = stage / "user-notes.pipe"
+        os.mkfifo(fifo)
+
+        with self.assertRaisesRegex(release.ReleaseError, "non-regular entry"):
+            release.build()
+
+        self.assertTrue(fifo.exists())
+        self.assertEqual(archive.read_bytes(), old_archive)
 
     def test_staging_symlink_cannot_escape_destination_tree(self) -> None:
         stage = release.build().parent / "local-plugin"

@@ -44,6 +44,22 @@ jobs:
       - name: Validate release package
         run: python scripts/release.py validate
 
+      - name: Check current behavioral-record integrity
+        # Failed semantic assertions remain evidence and block behavioral
+        # acceptance; this step checks source binding and complete grading.
+        run: |
+          for record in tests/trials/engineering-fixes-2026-10-12-run-{1,2,3}.json; do
+            python scripts/evaluate.py validate "$record" --require-current --require-complete
+          done
+
+      - name: Install asset verification decoder
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends --yes webp
+
+      - name: Decode runtime icon
+        run: dwebp assets/icon.webp -o "${RUNNER_TEMP}/english-proofreader-pro-icon.png"
+
       - name: Build allowlisted plugin archive
         run: python scripts/release.py build
 
