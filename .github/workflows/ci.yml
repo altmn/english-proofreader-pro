@@ -1,0 +1,56 @@
+name: CI
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: Validate and test
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Set up minimum supported Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.11"
+
+      - name: Test on Python 3.11
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: Set up latest stable Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.x"
+          check-latest: true
+
+      - name: Test on latest stable Python
+        run: python -m unittest discover -s tests -p 'test_*.py' -v
+
+      - name: Validate release package
+        run: python scripts/release.py validate
+
+      - name: Build allowlisted plugin archive
+        run: python scripts/release.py build
+
+      - name: Upload archive for review
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: english-proofreader-pro-plugin
+          path: dist/english-proofreader-pro-*.zip
+          if-no-files-found: error
+          retention-days: 14

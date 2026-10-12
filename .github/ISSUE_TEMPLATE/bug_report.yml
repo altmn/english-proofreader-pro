@@ -1,0 +1,44 @@
+name: Bug report
+description: Report a reproducible problem using a synthetic example.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: >-
+        Do not include real private writing, personal information, credentials, or confidential material.
+        For a security vulnerability, do not use this public form; follow SECURITY.md.
+  - type: input
+    id: version
+    attributes:
+      label: Plugin version
+      description: The version shown by the package or host, if known.
+      placeholder: e.g. 1.0.0
+    validations:
+      required: false
+  - type: textarea
+    id: environment
+    attributes:
+      label: Host and model context
+      description: Include host/model details only if known and relevant.
+    validations:
+      required: false
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Synthetic reproduction
+      description: Provide minimal invented input and the steps to reproduce.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected and observed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: checks
+    attributes:
+      label: Checks already tried
+    validations:
+      required: false

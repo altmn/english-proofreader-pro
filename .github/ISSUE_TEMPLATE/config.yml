@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Report a security vulnerability privately
+    url: https://github.com/altmn/english-proofreader-pro/security/advisories/new
+    about: Use the private reporting form, not a public issue, for security details.
+  - name: Support and privacy guidance
+    url: https://github.com/altmn/english-proofreader-pro/blob/master/SUPPORT.md
+    about: Read the reporting guidance and use synthetic examples in public discussions.

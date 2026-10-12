@@ -11,13 +11,17 @@ import sys
 import zipfile
 from pathlib import Path, PurePosixPath
 from typing import Any
+from urllib.parse import urlsplit
 
 
 ROOT = Path(__file__).resolve().parent.parent
 PLUGIN_NAME = "english-proofreader-pro"
 EXPECTED_SKILL = "skills/proofread/SKILL.md"
+EXPECTED_SKILL_FILES = (EXPECTED_SKILL, "skills/proofread/agents/openai.yaml")
 EXPECTED_ICON = "assets/icon.webp"
 MAX_SKILL_CHARS = 8000
+MAX_METADATA_URL_CHARS = 2048
+MAX_INTERFACE_URL_CHARS = 1024
 SEMVER = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$")
 PLACEHOLDER = re.compile(
     r"\b(?:TODO|FIXME|TBD|XXX|CHANGEME|PLACEHOLDER)\b|"
@@ -25,7 +29,10 @@ PLACEHOLDER = re.compile(
     r"<(?:your[-_ ]|insert[-_ ])[^>]+>",
     re.IGNORECASE,
 )
-FORBIDDEN_CONFIG_NAMES = {"mcp.json", "mcp.yaml", "mcp.yml", "hooks.json", "hooks.yaml", "hooks.yml", "app.json", "apps.json"}
+IGNORED_PACKAGE_METADATA = {".ds_store"}
+ROOT_URL_FIELDS = {"homepage", "repository"}
+AUTHOR_URL_FIELDS = {"url"}
+INTERFACE_URL_FIELDS = {"websiteURL", "supportURL", "privacyPolicyURL"}
 
 
 class ReleaseError(Exception):
@@ -49,6 +56,24 @@ def check_placeholders(text: str, label: str) -> None:
         fail(f"unfinished placeholder in {label}: {match.group(0)!r}")
 
 
+def validate_https_url(value: Any, label: str, max_chars: int = MAX_METADATA_URL_CHARS) -> None:
+    if not isinstance(value, str) or not value or len(value) > max_chars:
+        fail(f"{label} must be a non-empty HTTPS URL of at most {max_chars} characters")
+    if any(character.isspace() or ord(character) < 0x20 for character in value) or "\\" in value:
+        fail(f"{label} must not contain whitespace, control characters, or backslashes")
+    try:
+        parsed = urlsplit(value)
+        hostname = parsed.hostname
+        # Accessing .port also detects malformed ports and bracketed hosts.
+        parsed.port
+    except ValueError:
+        fail(f"{label} must be a valid absolute HTTPS URL")
+    if parsed.scheme.lower() != "https" or not parsed.netloc or not hostname:
+        fail(f"{label} must be a valid absolute HTTPS URL")
+    if parsed.username is not None or parsed.password is not None:
+        fail(f"{label} must not contain URL credentials")
+
+
 def safe_relative_path(raw: str, label: str) -> str:
     if not raw or "\\" in raw or raw.startswith("/"):
         fail(f"unsafe {label} path: {raw!r}")
@@ -67,7 +92,9 @@ def require_regular_file(relative: str) -> Path:
             parent = parent / part
             if parent.is_symlink():
                 fail(f"runtime path contains a symlinked directory: {relative}")
-        if path.is_symlink() or not path.is_file():
+        if path.is_symlink():
+            fail(f"required runtime file may not be a symlink: {relative}")
+        if not path.is_file():
             fail(f"required runtime file is missing or not a regular file: {relative}")
     except OSError as exc:
         fail(f"cannot inspect {relative}: {exc}")
@@ -111,7 +138,7 @@ def validate_manifest() -> dict[str, Any]:
     missing = sorted(required - manifest.keys())
     if missing:
         fail(f"plugin.json is missing required field(s): {', '.join(missing)}")
-    allowed = required
+    allowed = required | ROOT_URL_FIELDS
     extra = sorted(manifest.keys() - allowed)
     if extra:
         fail(f"unsupported plugin.json field(s): {', '.join(extra)}")
@@ -126,11 +153,20 @@ def validate_manifest() -> dict[str, Any]:
         if value != expected:
             fail(f"plugin.json {key} must be {expected!r}")
     author = manifest.get("author")
-    if not isinstance(author, dict) or set(author) != {"name"} or author.get("name") != "Alex Allen":
+    if not isinstance(author, dict) or not {"name"}.issubset(author) or set(author) - ({"name"} | AUTHOR_URL_FIELDS) or author.get("name") != "Alex Allen":
         fail("plugin.json author.name must be 'Alex Allen'")
+    for key in sorted(ROOT_URL_FIELDS):
+        if key in manifest:
+            validate_https_url(manifest[key], f"plugin.json {key}")
+    for key in sorted(AUTHOR_URL_FIELDS):
+        if key in author:
+            validate_https_url(author[key], f"plugin.json author.{key}")
     version = manifest.get("version")
     if not isinstance(version, str) or not SEMVER.fullmatch(version):
         fail("plugin.json version must be valid semantic versioning")
+    prerelease = version.split("+", 1)[0].partition("-")[2]
+    if any(identifier.isdigit() and len(identifier) > 1 and identifier.startswith("0") for identifier in prerelease.split(".")):
+        fail("plugin.json version must follow semantic versioning (numeric prerelease identifiers may not have leading zeroes)")
     description = manifest.get("description")
     if not isinstance(description, str) or not description.strip() or len(description) > 300:
         fail("plugin.json description must be non-empty and at most 300 characters")
@@ -145,14 +181,18 @@ def validate_manifest() -> dict[str, Any]:
     if not isinstance(openai, dict) or set(openai) != {"interface", "publication"}:
         fail("plugin.json com.openai extension must contain interface and publication")
     interface = openai.get("interface")
-    interface_fields = {"displayName", "shortDescription", "longDescription", "developerName", "category", "capabilities", "defaultPrompt", "composerIcon", "logo"}
-    if not isinstance(interface, dict) or set(interface) != interface_fields:
+    required_interface_fields = {"displayName", "shortDescription", "longDescription", "developerName", "category", "capabilities", "defaultPrompt", "composerIcon", "logo"}
+    allowed_interface_fields = required_interface_fields | INTERFACE_URL_FIELDS
+    if not isinstance(interface, dict) or not required_interface_fields.issubset(interface) or set(interface) - allowed_interface_fields:
         fail("plugin.json com.openai.interface does not match the supported portable interface schema")
     string_limits = {"displayName": 30, "shortDescription": 30, "longDescription": 4000, "developerName": 80, "category": 64}
     for key, maximum in string_limits.items():
         value = interface.get(key)
         if not isinstance(value, str) or not value.strip() or len(value) > maximum:
             fail(f"plugin.json interface.{key} must be non-empty and at most {maximum} characters")
+    for key in sorted(INTERFACE_URL_FIELDS):
+        if key in interface:
+            validate_https_url(interface[key], f"plugin.json interface.{key}", MAX_INTERFACE_URL_CHARS)
     if interface["developerName"] != "Alex Allen":
         fail("plugin.json interface.developerName must be 'Alex Allen'")
     if interface["category"] != "Productivity":
@@ -232,22 +272,25 @@ def validate_skill() -> list[Path]:
     skills_root = ROOT / "skills"
     if skills_root.is_symlink() or not skills_root.is_dir():
         fail("skills must be a regular directory")
+    allowed_files = set(EXPECTED_SKILL_FILES)
     files: list[Path] = []
     for path in sorted(skills_root.rglob("*")):
         if path.is_symlink():
             fail(f"skill package may not contain symlinks: {path.relative_to(ROOT)}")
         if path.is_file():
             relative = path.relative_to(ROOT).as_posix()
-            if path.name.lower() in FORBIDDEN_CONFIG_NAMES or any(part.lower() in {"mcp", "hooks", "apps"} for part in path.relative_to(skills_root).parts[:-1]):
-                fail(f"skill-only package may not contain integration configuration: {relative}")
-            if path.suffix.lower() in {".png", ".jpg", ".jpeg"} or "screenshot" in path.name.lower():
-                fail(f"skill-only package may not contain screenshots: {relative}")
+            if path.name.lower() in IGNORED_PACKAGE_METADATA:
+                continue
+            if relative not in allowed_files:
+                fail(f"unexpected skill package file is not in the release allowlist: {relative}")
             content = read_text(path, relative)
             check_placeholders(content, relative)
             files.append(path)
-    if skill_path not in files:
-        fail(f"{EXPECTED_SKILL} was not found in the skill package")
-    return files
+    expected_paths = [require_regular_file(relative) for relative in EXPECTED_SKILL_FILES]
+    if set(files) != set(expected_paths):
+        missing_files = sorted(allowed_files - {path.relative_to(ROOT).as_posix() for path in files})
+        fail(f"required skill package file(s) missing: {', '.join(missing_files)}")
+    return expected_paths
 
 
 def validate() -> list[Path]:
@@ -270,7 +313,11 @@ def build() -> Path:
     manifest = validate_manifest()
     output = Path("dist") / f"{PLUGIN_NAME}-{manifest['version']}.zip"
     output_path = ROOT / output
+    if output_path.parent.is_symlink() or (output_path.parent.exists() and not output_path.parent.is_dir()):
+        fail("dist must be a regular directory before building the release archive")
     output_path.parent.mkdir(parents=True, exist_ok=True)
+    if output_path.is_symlink() or (output_path.exists() and not output_path.is_file()):
+        fail(f"release output is not a regular file: {output.as_posix()}")
     with zipfile.ZipFile(output_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
         for path in files:
             name = path.relative_to(ROOT).as_posix()
@@ -339,6 +386,9 @@ def stage_local_plugin(files: list[Path], manifest: dict[str, Any]) -> Path:
         "interface": openai_extension["interface"],
         "extensions": {"com.openai": {"publication": openai_extension["publication"]}},
     }
+    for key in sorted(ROOT_URL_FIELDS):
+        if key in manifest:
+            legacy_manifest[key] = manifest[key]
 
     stage_root.mkdir(parents=True, exist_ok=True)
     for source in files:

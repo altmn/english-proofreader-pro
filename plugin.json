@@ -3,7 +3,9 @@
   "name": "english-proofreader-pro",
   "version": "1.0.0",
   "description": "Careful American English proofreading, editing, rewriting, and drafting with copyable results and complete correction lists.",
-  "author": { "name": "Alex Allen" },
+  "author": { "name": "Alex Allen", "url": "https://github.com/altmn" },
+  "homepage": "https://github.com/altmn/english-proofreader-pro",
+  "repository": "https://github.com/altmn/english-proofreader-pro",
   "license": "MIT",
   "keywords": ["proofreading", "editing", "american-english", "writing"],
   "extensions": {
@@ -15,6 +17,9 @@
         "developerName": "Alex Allen",
         "category": "Productivity",
         "capabilities": ["Proofreading", "Editing", "Rewriting", "Drafting"],
+        "websiteURL": "https://github.com/altmn/english-proofreader-pro",
+        "supportURL": "https://github.com/altmn/english-proofreader-pro/issues",
+        "privacyPolicyURL": "https://github.com/altmn/english-proofreader-pro/blob/master/PRIVACY.md",
         "defaultPrompt": [
           "Proofread the following text, preserving its formatting.",
           "Proofread the following text and trim the fat.",

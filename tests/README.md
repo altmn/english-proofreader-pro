@@ -9,11 +9,14 @@
 From the repository root, run:
 
 ```sh
+python3 -m unittest discover -s tests -p 'test_*.py' -v
 python3 scripts/release.py validate
 python3 scripts/release.py build
 ```
 
-Confirm the generated ZIP contains the intended skill-only package and that no source text, credentials, or unrelated files were bundled. Install from the local marketplace catalog and refresh/reinstall after changing package files; a cached install does not track the working tree.
+The offline unit tests exercise package validation, URL safety, character limits, allowlisting, symlink rejection, staging preservation, and repeatable ZIP output. CI runs them on Python 3.11 and the latest stable Python. These tests do not call a model or require credentials.
+
+Confirm the generated ZIP contains the intended skill-only package and that no user writing, credentials, or unrelated files were bundled. Install from the local marketplace catalog and refresh/reinstall after changing package files; a cached install does not track the working tree.
 
 ## Behavioral and host acceptance
 
