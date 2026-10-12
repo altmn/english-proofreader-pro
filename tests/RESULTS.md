@@ -3,7 +3,7 @@
 Final skill: **7,985 characters**, including YAML, spaces, and newlines.
 
 - Skill SHA-256: `edc3a5c9305e11a2e0822a38e8f8a55a2a39646d3dbf346a3b90ac38d1c2c70c`
-- Release ZIP SHA-256: `b1ca855566130eef33919d1078e90344f68c611c8289a22a00fc99bdbc752611`
+- Original private-testing ZIP SHA-256: `b1ca855566130eef33919d1078e90344f68c611c8289a22a00fc99bdbc752611` (before public repository/privacy metadata was added).
 
 ## Package checks
 
@@ -34,16 +34,10 @@ The package was imported, installed, and updated in the author's Personal ChatGP
 | Rewrite | Returned the retained bullet and he/she form in a code block, followed by a full before/after Changes entry. |
 | Fresh drafting | An earlier Chat follow-up used an editable writing block. After explicitly prohibiting that default, a fresh plugin-selected Work invocation returned only a copyable plain-text code block with no Changes list. |
 
-Evidence: `evidence/chatgpt-formatting.jpg` and `evidence/chatgpt-draft.jpg`. The first captures the initial successful proofreading output; the second captures the final drafting invocation.
+The maintainer retained private screenshots and account-scoped conversations for these checks. They are not public acceptance artifacts; account links and screenshots are omitted from the current public tree. The synthetic fixture inputs and agent trial responses remain available for inspection.
 
-Live test conversations:
-
-- https://chatgpt.com/c/6acc015b-326c-83e8-be89-b8bdea5694ef
-- https://chatgpt.com/c/6acc03d1-aae0-83e8-b3bc-19f05cb3ca68
-- https://chatgpt.com/c/6acc06ea-1498-83e8-ba3b-74a70c83cba2
-
-These account-scoped links do not publish the conversations. The final generic Chat follow-up drafting path was not separately rerun after the last clarification; explicit plugin invocation is the verified drafting route. Model selection, automatic skill activation, and host rendering can affect future behavior, so these observations are finite checks rather than a guarantee for every context.
+The final generic Chat follow-up drafting path was not separately rerun after the last clarification; explicit plugin invocation is the verified drafting route. Model selection, automatic skill activation, and host rendering can affect future behavior, so these observations are finite checks rather than a guarantee for every context.
 
 ## Publication status
 
-Creation and private testing are complete. Public hosting of the privacy notice, verified publishing identity, required scans, review, and publication remain separate steps. No approval or public listing is claimed.
+Creation and private testing were completed on October 11. The repository and privacy notice are public. Verified publishing identity, required scans, review, and OpenAI directory publication remain separate steps. No approval or public listing is claimed.
