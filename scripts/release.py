@@ -32,7 +32,7 @@ PLACEHOLDER = re.compile(
 IGNORED_PACKAGE_METADATA = {".ds_store"}
 ROOT_URL_FIELDS = {"homepage", "repository"}
 AUTHOR_URL_FIELDS = {"url"}
-INTERFACE_URL_FIELDS = {"websiteURL", "supportURL", "privacyPolicyURL"}
+INTERFACE_URL_FIELDS = {"websiteURL", "supportURL", "privacyPolicyURL", "termsOfServiceURL"}
 
 
 class ReleaseError(Exception):
@@ -178,8 +178,19 @@ def validate_manifest() -> dict[str, Any]:
     if not isinstance(extensions, dict) or set(extensions) != {"com.openai"}:
         fail("plugin.json extensions must contain only com.openai")
     openai = extensions.get("com.openai")
-    if not isinstance(openai, dict) or set(openai) != {"interface", "publication"}:
-        fail("plugin.json com.openai extension must contain interface and publication")
+    required_openai_fields = {"interface", "publication"}
+    allowed_openai_fields = required_openai_fields | {"review"}
+    if not isinstance(openai, dict) or not required_openai_fields.issubset(openai) or set(openai) - allowed_openai_fields:
+        fail("plugin.json com.openai extension must contain interface and publication and may contain review")
+    if "review" in openai:
+        review = openai["review"]
+        if not isinstance(review, dict) or set(review) != {"commerce", "commerce_description"}:
+            fail("plugin.json com.openai.review must contain only commerce and commerce_description")
+        if review["commerce"] is not False:
+            fail("plugin.json com.openai.review.commerce must be false")
+        description = review["commerce_description"]
+        if not isinstance(description, str) or len(description) > 4000:
+            fail("plugin.json com.openai.review.commerce_description must be a string of at most 4000 characters")
     interface = openai.get("interface")
     required_interface_fields = {"displayName", "shortDescription", "longDescription", "developerName", "category", "capabilities", "defaultPrompt", "composerIcon", "logo"}
     allowed_interface_fields = required_interface_fields | INTERFACE_URL_FIELDS
@@ -210,8 +221,17 @@ def validate_manifest() -> dict[str, Any]:
     if len(set(prompts)) != len(prompts):
         fail("plugin.json interface.defaultPrompt entries must be unique")
     publication = openai.get("publication")
-    if not isinstance(publication, dict) or set(publication) != {"release_notes"} or not isinstance(publication.get("release_notes"), str) or not publication["release_notes"].strip() or len(publication["release_notes"]) > 500:
+    publication_fields = {"release_notes", "countries"}
+    if not isinstance(publication, dict) or "release_notes" not in publication or set(publication) - publication_fields or not isinstance(publication.get("release_notes"), str) or not publication["release_notes"].strip() or len(publication["release_notes"]) > 500:
         fail("plugin.json publication.release_notes must be a non-empty string of at most 500 characters")
+    if "countries" in publication:
+        countries = publication["countries"]
+        # This validates shape and uniqueness only; the submission portal is
+        # authoritative for which country codes are currently selectable.
+        if not isinstance(countries, list) or any(not isinstance(country, str) or not re.fullmatch(r"[A-Z]{2}", country) for country in countries):
+            fail("plugin.json publication.countries must be a list of uppercase two-letter country codes")
+        if len(set(countries)) != len(countries):
+            fail("plugin.json publication.countries must not contain duplicate country codes")
     icon_path = require_regular_file(EXPECTED_ICON)
     dimensions = parse_webp_dimensions(icon_path.read_bytes())
     if dimensions != (1024, 1024):
@@ -386,6 +406,8 @@ def stage_local_plugin(files: list[Path], manifest: dict[str, Any]) -> Path:
         "interface": openai_extension["interface"],
         "extensions": {"com.openai": {"publication": openai_extension["publication"]}},
     }
+    if "review" in openai_extension:
+        legacy_manifest["extensions"]["com.openai"]["review"] = openai_extension["review"]
     for key in sorted(ROOT_URL_FIELDS):
         if key in manifest:
             legacy_manifest[key] = manifest[key]

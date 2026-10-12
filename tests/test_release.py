@@ -121,6 +121,96 @@ class ReleaseBuilderTests(unittest.TestCase):
         with self.assertRaisesRegex(release.ReleaseError, "at most 1024 characters"):
             release.validate_https_url(value_at_limit + "x", "interface.websiteURL", release.MAX_INTERFACE_URL_CHARS)
 
+    def test_terms_of_service_url_uses_interface_url_limit(self) -> None:
+        manifest = self.read_manifest()
+        interface = manifest["extensions"]["com.openai"]["interface"]
+        interface["termsOfServiceURL"] = "https://a/" + ("x" * (release.MAX_INTERFACE_URL_CHARS - len("https://a/")))
+        self.write_manifest(manifest)
+        release.validate_manifest()
+
+        interface["termsOfServiceURL"] += "x"
+        self.write_manifest(manifest)
+        with self.assertRaisesRegex(release.ReleaseError, "interface.termsOfServiceURL.*1024"):
+            release.validate_manifest()
+
+    def test_review_commerce_is_false_and_description_is_bounded_text(self) -> None:
+        manifest = self.read_manifest()
+        openai = manifest["extensions"]["com.openai"]
+        openai["review"] = {"commerce": False, "commerce_description": "No paid features or transactions."}
+        self.write_manifest(manifest)
+        release.validate_manifest()
+
+        openai["review"]["commerce_description"] = "x" * 4000
+        self.write_manifest(manifest)
+        release.validate_manifest()
+
+        for commerce in (True, "false", 0):
+            with self.subTest(commerce=commerce):
+                manifest = self.read_manifest()
+                manifest["extensions"]["com.openai"]["review"]["commerce"] = commerce
+                self.write_manifest(manifest)
+                with self.assertRaisesRegex(release.ReleaseError, "commerce must be false"):
+                    release.validate_manifest()
+
+        manifest = self.read_manifest()
+        manifest["extensions"]["com.openai"]["review"]["commerce"] = False
+        manifest["extensions"]["com.openai"]["review"]["commerce_description"] = 12
+        self.write_manifest(manifest)
+        with self.assertRaisesRegex(release.ReleaseError, "commerce_description must be a string"):
+            release.validate_manifest()
+
+        manifest["extensions"]["com.openai"]["review"]["commerce"] = False
+        manifest["extensions"]["com.openai"]["review"]["commerce_description"] = "x" * 4001
+        self.write_manifest(manifest)
+        with self.assertRaisesRegex(release.ReleaseError, "at most 4000 characters"):
+            release.validate_manifest()
+
+    def test_review_rejects_unrecognized_or_secret_fields(self) -> None:
+        manifest = self.read_manifest()
+        manifest["extensions"]["com.openai"]["review"] = {
+            "commerce": False,
+            "commerce_description": "No paid features.",
+            "api_key": "not-a-real-key",
+        }
+
+        self.write_manifest(manifest)
+        with self.assertRaisesRegex(release.ReleaseError, "review must contain only"):
+            release.validate_manifest()
+
+    def test_publication_countries_allow_empty_and_valid_codes_but_reject_bad_lists(self) -> None:
+        manifest = self.read_manifest()
+        publication = manifest["extensions"]["com.openai"]["publication"]
+        publication["countries"] = []
+        self.write_manifest(manifest)
+        release.validate_manifest()
+
+        publication["countries"] = ["US", "CA"]
+        self.write_manifest(manifest)
+        release.validate_manifest()
+
+        for countries in (["US", "US"], ["us"], ["USA"], [1], "US"):
+            with self.subTest(countries=countries):
+                manifest = self.read_manifest()
+                manifest["extensions"]["com.openai"]["publication"]["countries"] = countries
+                self.write_manifest(manifest)
+                with self.assertRaises(release.ReleaseError):
+                    release.validate_manifest()
+
+    def test_overlay_preserves_review_and_explicit_empty_countries(self) -> None:
+        manifest = self.read_manifest()
+        openai = manifest["extensions"]["com.openai"]
+        openai["review"] = {"commerce": False, "commerce_description": "No paid features."}
+        openai["publication"]["countries"] = []
+        self.write_manifest(manifest)
+
+        release.build()
+        overlay = json.loads((self.root / "dist/local-plugin/.codex-plugin/plugin.json").read_text(encoding="utf-8"))
+        overlay_openai = overlay["extensions"]["com.openai"]
+
+        self.assertEqual(overlay_openai["publication"], openai["publication"])
+        self.assertEqual(overlay_openai["publication"]["countries"], [])
+        self.assertEqual(overlay_openai["review"], openai["review"])
+
     def test_semver_rejects_leading_zero_numeric_prerelease_and_accepts_alphanumeric_and_build_metadata(self) -> None:
         manifest = self.read_manifest()
         manifest["version"] = "1.0.0-01"

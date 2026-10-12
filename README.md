@@ -42,11 +42,12 @@ The default branch is `master`. Changes go through feature branches and pull req
 - [Code of conduct](CODE_OF_CONDUCT.md): expectations for participation.
 - [Testing](tests/README.md): automated package checks and manual host acceptance.
 - [How to publish a release](docs/releasing.md): versioning, verification, and distribution.
+- [ChatGPT submission preparation](docs/chatgpt-submission.md): listing, policy links, metadata, and remaining portal steps.
 - [Open-source preparation and references](docs/open-source-readiness.md): research and repository safeguards.
 
 ## OpenAI directory publication
 
-Open-sourcing this repository and publishing a plugin listing are separate processes. The [public privacy notice](https://github.com/altmn/english-proofreader-pro/blob/master/PRIVACY.md) is linked in the manifest. A verified publishing identity, skill scans, review, approval, and publication must still be completed before claiming a public listing. Follow [OpenAI's submission instructions](https://developers.openai.com/plugins/deploy/submission). Skills-only packages do not need a publisher-hosted MCP service or API credentials.
+Open-sourcing this repository and publishing a plugin listing are separate processes. The manifest links the [privacy notice](PRIVACY.md), [usage terms](TERMS.md), and public support path. Publication metadata uses Alex Allen's individual identity, declares no publisher commerce, and removes geographic restrictions (subject to OpenAI's availability). A verified publishing identity, skill scans, review, approval, and publication must still be completed before claiming a public listing. Follow the [preparation checklist](docs/chatgpt-submission.md) and [OpenAI's submission instructions](https://developers.openai.com/plugins/deploy/submission). Skills-only packages do not need a publisher-hosted MCP service or API credentials.
 
 No public directory approval or listing is claimed by this repository.
 

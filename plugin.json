@@ -20,6 +20,7 @@
         "websiteURL": "https://github.com/altmn/english-proofreader-pro",
         "supportURL": "https://github.com/altmn/english-proofreader-pro/issues",
         "privacyPolicyURL": "https://github.com/altmn/english-proofreader-pro/blob/master/PRIVACY.md",
+        "termsOfServiceURL": "https://github.com/altmn/english-proofreader-pro/blob/master/TERMS.md",
         "defaultPrompt": [
           "Proofread the following text, preserving its formatting.",
           "Proofread the following text and trim the fat.",
@@ -28,7 +29,14 @@
         "composerIcon": "./assets/icon.webp",
         "logo": "./assets/icon.webp"
       },
-      "publication": { "release_notes": "Initial release with fenced text output and complete lists of corrections to supplied text." }
+      "review": {
+        "commerce": false,
+        "commerce_description": "This skills-only plugin does not sell products, process payments, or require a publisher-provided paid service. Host subscriptions are separate."
+      },
+      "publication": {
+        "countries": [],
+        "release_notes": "Initial release with fenced text output and complete lists of corrections to supplied text. Open-source MIT package with public privacy, support, and usage information."
+      }
     }
   }
 }
