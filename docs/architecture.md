@@ -18,6 +18,8 @@ The skill defaults to minimal edits and preservation of meaning, voice, pronouns
 
 The skill describes desired behavior; it cannot guarantee identical output across models, hosts, or contexts. The test suite checks local deterministic properties and packaging, not universal model quality.
 
+The editing workflow now orders five checks: separate directions from the complete source, calculate shortening budgets or inventory drafting facts, compose text, verify counts and every edit, then construct a safe outer fence. The final check includes quoted spans in Changes explanations. These checks are instructions executed by the host model, not deterministic runtime enforcement. Current simulations and model-specific gaps are recorded in [validation evidence](../tests/RESULTS.md).
+
 Fenced/code-example payloads remain literal unless the user explicitly asks for edits inside them. Preserve their fence delimiters and other formatting in either case. Ordinary prose editing, source-command isolation, pronouns, and Changes-list requirements still apply.
 
 ## Distribution

@@ -35,7 +35,7 @@
       },
       "publication": {
         "countries": [],
-        "release_notes": "Preserve fenced examples literally unless their payload is explicitly selected for editing. Harden package validation and failed-build recovery, and record source-bound behavioral evidence."
+        "release_notes": "Calculate and recheck shortening budgets, preserve complete source fences, audit every quoted Changes span, and draft only from supported facts. Harden package validation and failed-build recovery, with source-bound behavioral evidence."
       }
     }
   }

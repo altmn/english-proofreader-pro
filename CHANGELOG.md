@@ -4,6 +4,8 @@ This file records notable changes to the repository's distributable package. An 
 
 ## Unreleased
 
+- Reorganize the editing workflow around calculated shortening budgets, complete source wrappers, a before/after edit ledger with bold quoted spans, supported drafting facts, and a final safe-fence check. Preserve all original behavioral assertions and failed captures; record baseline controls, both candidate revisions, and model/effort-specific reruns. Current stronger-model simulations pass; Luna gaps and pending intended-host acceptance remain documented.
+
 - Prepare package 1.0.1: preserve fenced example payloads unless explicitly selected for editing, harden manifest/YAML/icon/character-limit validation, preserve verified outputs on failed builds, and bind new behavioral records to exact inputs and per-assertion verdicts. Historical host observations remain historical; the revised skill requires fresh intended-host acceptance before publication.
 
 - Prepare ChatGPT directory metadata with public policy/support links, worldwide targeting, and a no-commerce declaration; keep portal verification and submission separate.
