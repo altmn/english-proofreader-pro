@@ -44,6 +44,29 @@ jobs:
       - name: Validate release package
         run: python scripts/release.py validate
 
+      - name: Check current behavioral-record integrity
+        # Retain failures in every profile; completeness is not semantic pass.
+        run: |
+          for record in tests/trials/behavior-final-{luna,sol}-{1,2,3}-2026-10-12.json tests/trials/behavior-max-luna-2026-10-12.json tests/trials/behavior-max-luna-{2,3}-2026-10-12.json; do
+            python scripts/evaluate.py validate "$record" --require-current --require-complete
+          done
+
+      - name: Require passing stronger-model simulation records
+        # This accepts only the recorded gpt-6.1-sol/high simulation profile,
+        # not Luna or installed-host rendering/activation.
+        run: |
+          for record in tests/trials/behavior-final-sol-{1,2,3}-2026-10-12.json; do
+            python scripts/evaluate.py validate "$record" --require-current --require-complete --require-pass
+          done
+
+      - name: Install asset verification decoder
+        run: |
+          sudo apt-get update
+          sudo apt-get install --no-install-recommends --yes webp
+
+      - name: Decode runtime icon
+        run: dwebp assets/icon.webp -o "${RUNNER_TEMP}/english-proofreader-pro-icon.png"
+
       - name: Build allowlisted plugin archive
         run: python scripts/release.py build
 

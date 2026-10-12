@@ -5,9 +5,11 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import re
 import shutil
 import sys
+import tempfile
 import zipfile
 from pathlib import Path, PurePosixPath
 from typing import Any
@@ -22,7 +24,7 @@ EXPECTED_ICON = "assets/icon.webp"
 MAX_SKILL_CHARS = 8000
 MAX_METADATA_URL_CHARS = 2048
 MAX_INTERFACE_URL_CHARS = 1024
-SEMVER = re.compile(r"^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$")
+SEMVER = re.compile(r"^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$")
 PLACEHOLDER = re.compile(
     r"\b(?:TODO|FIXME|TBD|XXX|CHANGEME|PLACEHOLDER)\b|"
     r"\[(?:INSERT|ADD|REPLACE|TODO|TBD)[^\]]*\]|"
@@ -54,6 +56,64 @@ def check_placeholders(text: str, label: str) -> None:
     match = PLACEHOLDER.search(text)
     if match:
         fail(f"unfinished placeholder in {label}: {match.group(0)!r}")
+
+
+def parse_yaml_string_scalar(raw_value: str, label: str) -> str:
+    """Parse the deliberately small YAML string-scalar subset used in metadata."""
+    value = raw_value.strip()
+    if not value:
+        fail(f"{label} must be a non-empty YAML string scalar")
+    if value[0] in {"'", '"'}:
+        quote = value[0]
+        if len(value) < 2 or value[-1] != quote:
+            fail(f"{label} has an unsupported or unterminated quoted scalar")
+        if quote == '"':
+            try:
+                result = json.loads(value)
+            except json.JSONDecodeError:
+                fail(f"{label} has an invalid double-quoted YAML scalar")
+            if not isinstance(result, str):
+                fail(f"{label} must be a YAML string scalar")
+        else:
+            inner = value[1:-1]
+            if "'" in inner.replace("''", ""):
+                fail(f"{label} has an invalid single-quoted YAML scalar")
+            result = inner.replace("''", "'")
+        if not result or any(ord(char) < 0x20 or 0xD800 <= ord(char) <= 0xDFFF for char in result):
+            fail(f"{label} must be a non-empty YAML string scalar")
+        return result
+    if any(ord(char) < 0x20 for char in value):
+        fail(f"{label} contains an unsupported control character")
+    if value[0] in "-?:,[]{}#&*!|>'\"%@`" or re.search(r":\s|\s#", value) or value.endswith(":"):
+        fail(f"{label} is not a supported YAML string scalar")
+    yaml_typed = (
+        value.lower() in {"null", "~", "true", "false", "yes", "no", "on", "off", ".nan", ".inf", "+.inf", "-.inf"}
+        or re.fullmatch(r"[0-9]{4}-[0-9]{1,2}-[0-9]{1,2}(?:[Tt \t].*)?", value)
+        or re.fullmatch(r"[-+]?0[xX][0-9a-fA-F_]+|[-+]?0[oO][0-7_]+|[-+]?0[bB][01_]+", value)
+        or re.fullmatch(r"[-+]?(?:[0-9][0-9_]*(?:\.[0-9_]*)?|\.[0-9_]+)(?:[eE][-+]?[0-9]+)?", value)
+    )
+    if yaml_typed:
+        fail(f"{label} must be a YAML string, not a typed scalar")
+    return value
+
+
+def parse_flat_yaml_mapping(lines: list[str], label: str, *, indent: int = 0) -> dict[str, str]:
+    """Parse unique key/string-scalar entries with one fixed indentation level."""
+    fields: dict[str, str] = {}
+    prefix = " " * indent
+    for line in lines:
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        if len(line) - len(line.lstrip(" ")) != indent or "\t" in line[: len(line) - len(line.lstrip())]:
+            fail(f"unsupported YAML indentation in {label}: {line!r}")
+        match = re.fullmatch(prefix + r"([A-Za-z_][A-Za-z0-9_-]*):(?:[ \t]+(.*)|[ \t]*)", line)
+        if not match:
+            fail(f"unsupported YAML mapping line in {label}: {line!r}")
+        key, raw_value = match.groups()
+        if key in fields:
+            fail(f"duplicate {key} key in {label}")
+        fields[key] = parse_yaml_string_scalar(raw_value or "", f"{label}.{key}")
+    return fields
 
 
 def validate_https_url(value: Any, label: str, max_chars: int = MAX_METADATA_URL_CHARS) -> None:
@@ -102,33 +162,67 @@ def require_regular_file(relative: str) -> Path:
 
 
 def parse_webp_dimensions(data: bytes) -> tuple[int, int] | None:
-    """Read dimensions from common WebP bitstreams without external libraries."""
-    if len(data) < 30 or data[:4] != b"RIFF" or data[8:12] != b"WEBP":
+    """Check WebP container/frame headers and read dimensions (not full decoding)."""
+    if len(data) < 20 or len(data) > 5 * 1024 * 1024 or data[:4] != b"RIFF" or data[8:12] != b"WEBP":
+        return None
+    if int.from_bytes(data[4:8], "little") + 8 != len(data):
         return None
     offset = 12
-    while offset + 8 <= len(data):
+    dimensions: tuple[int, int] | None = None
+    extended = False
+    image_frame = False
+    while offset < len(data):
+        if offset + 8 > len(data):
+            return None
         kind = data[offset : offset + 4]
         size = int.from_bytes(data[offset + 4 : offset + 8], "little")
-        chunk = data[offset + 8 : offset + 8 + size]
-        if len(chunk) != size:
+        chunk_start = offset + 8
+        chunk_end = chunk_start + size
+        padded_end = chunk_end + (size & 1)
+        if chunk_end > len(data) or padded_end > len(data):
             return None
-        if kind == b"VP8X" and size >= 10:
-            return (1 + int.from_bytes(chunk[4:7], "little"), 1 + int.from_bytes(chunk[7:10], "little"))
-        if kind == b"VP8 " and size >= 10 and chunk[3:6] == b"\x9d\x01\x2a":
-            return (int.from_bytes(chunk[6:8], "little") & 0x3FFF, int.from_bytes(chunk[8:10], "little") & 0x3FFF)
-        if kind == b"VP8L" and size >= 5 and chunk[0] == 0x2F:
+        if size & 1 and data[chunk_end] != 0:
+            return None
+        chunk = data[chunk_start:chunk_end]
+        if kind == b"VP8X":
+            if extended or size != 10:
+                return None
+            extended = True
+            dimensions = (1 + int.from_bytes(chunk[4:7], "little"), 1 + int.from_bytes(chunk[7:10], "little"))
+        elif kind == b"VP8 " and size >= 11 and chunk[0] & 1 == 0 and chunk[3:6] == b"\x9d\x01\x2a":
+            current = (int.from_bytes(chunk[6:8], "little") & 0x3FFF, int.from_bytes(chunk[8:10], "little") & 0x3FFF)
+            if 0 in current or (dimensions is not None and dimensions != current):
+                return None
+            dimensions = current
+            image_frame = True
+        elif kind == b"VP8L" and size >= 6 and chunk[0] == 0x2F:
             bits = int.from_bytes(chunk[1:5], "little")
-            return ((bits & 0x3FFF) + 1, ((bits >> 14) & 0x3FFF) + 1)
-        offset += 8 + size + (size & 1)
-    return None
+            current = ((bits & 0x3FFF) + 1, ((bits >> 14) & 0x3FFF) + 1)
+            if dimensions is not None and dimensions != current:
+                return None
+            dimensions = current
+            image_frame = True
+        offset = padded_end
+    if offset != len(data) or dimensions is None or not image_frame:
+        return None
+    return dimensions
 
 
 def validate_manifest() -> dict[str, Any]:
     manifest_path = require_regular_file("plugin.json")
+    def unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+        result: dict[str, Any] = {}
+        for key, value in pairs:
+            if key in result:
+                raise ValueError(f"duplicate JSON key: {key}")
+            result[key] = value
+        return result
     try:
-        manifest = json.loads(read_text(manifest_path, "plugin.json"))
+        manifest = json.loads(read_text(manifest_path, "plugin.json"), object_pairs_hook=unique_object)
     except json.JSONDecodeError as exc:
         fail(f"plugin.json is not valid JSON: {exc}")
+    except ValueError as exc:
+        fail(f"plugin.json contains invalid duplicate-key JSON: {exc}")
     if not isinstance(manifest, dict):
         fail("plugin.json must contain a JSON object")
 
@@ -235,7 +329,7 @@ def validate_manifest() -> dict[str, Any]:
     icon_path = require_regular_file(EXPECTED_ICON)
     dimensions = parse_webp_dimensions(icon_path.read_bytes())
     if dimensions != (1024, 1024):
-        fail(f"{EXPECTED_ICON} must be a valid 1024x1024 WebP (detected {dimensions})")
+        fail(f"{EXPECTED_ICON} must be a structurally valid 1024x1024 WebP (detected {dimensions})")
 
     manifest_text = read_text(manifest_path, "plugin.json")
     check_placeholders(manifest_text, "plugin.json")
@@ -244,38 +338,21 @@ def validate_manifest() -> dict[str, Any]:
 
 def validate_skill() -> list[Path]:
     skill_path = require_regular_file(EXPECTED_SKILL)
-    text = read_text(skill_path, EXPECTED_SKILL)
+    try:
+        text = skill_path.read_bytes().decode("utf-8")
+    except (OSError, UnicodeError) as exc:
+        fail(f"cannot read {EXPECTED_SKILL} as UTF-8: {exc}")
     if len(text) >= MAX_SKILL_CHARS:
         fail(f"{EXPECTED_SKILL} must be under {MAX_SKILL_CHARS} Unicode characters (currently {len(text)})")
     lines = text.splitlines()
-    if len(lines) < 5 or lines[0].strip() != "---":
+    if len(lines) < 5 or lines[0] != "---":
         fail(f"{EXPECTED_SKILL} must start with YAML frontmatter")
     try:
         end = lines.index("---", 1)
     except ValueError:
         fail(f"{EXPECTED_SKILL} frontmatter is not closed")
     frontmatter = lines[1:end]
-    fields: dict[str, str] = {}
-    for line in frontmatter:
-        if not line.strip() or line.lstrip().startswith("#"):
-            continue
-        match = re.match(r"^([A-Za-z_][A-Za-z0-9_-]*):\s*(.*?)\s*$", line)
-        if not match:
-            fail(f"unsupported YAML frontmatter line in {EXPECTED_SKILL}: {line!r}")
-        key, raw_value = match.groups()
-        if key in fields:
-            fail(f"duplicate {key} key in {EXPECTED_SKILL} frontmatter")
-        raw_value = raw_value.strip()
-        if raw_value[:1] in {"'", '"'}:
-            quote = raw_value[0]
-            if len(raw_value) < 2 or raw_value[-1] != quote or quote in raw_value[1:-1]:
-                fail(f"unsupported quoted scalar in {EXPECTED_SKILL} frontmatter: {raw_value!r}")
-            value = raw_value[1:-1]
-        else:
-            if raw_value[-1:] in {"'", '"'}:
-                fail(f"unmatched quote in {EXPECTED_SKILL} frontmatter: {raw_value!r}")
-            value = raw_value
-        fields[key] = value
+    fields = parse_flat_yaml_mapping(frontmatter, f"{EXPECTED_SKILL} frontmatter")
     if set(fields) != {"name", "description"}:
         fail(f"{EXPECTED_SKILL} frontmatter must contain exactly name and description")
     for field in ("name", "description"):
@@ -285,6 +362,18 @@ def validate_skill() -> list[Path]:
         fail(f"{EXPECTED_SKILL} frontmatter name must be 'proofread'")
     if len(fields["name"]) > 64 or len(fields["description"]) > 1024:
         fail(f"{EXPECTED_SKILL} frontmatter name/description exceeds supported metadata limits")
+    agent_path = require_regular_file("skills/proofread/agents/openai.yaml")
+    agent_text = read_text(agent_path, "skills/proofread/agents/openai.yaml")
+    agent_lines = agent_text.splitlines()
+    if len(agent_lines) < 2 or agent_lines[0] != "interface:":
+        fail("skills/proofread/agents/openai.yaml must contain an interface mapping")
+    agent_fields = parse_flat_yaml_mapping(agent_lines[1:], "skills/proofread/agents/openai.yaml interface", indent=2)
+    if set(agent_fields) != {"display_name", "short_description", "default_prompt"}:
+        fail("skills/proofread/agents/openai.yaml interface must contain display_name, short_description, and default_prompt")
+    limits = {"display_name": 64, "short_description": 256, "default_prompt": 1024}
+    for field, maximum in limits.items():
+        if len(agent_fields[field]) > maximum:
+            fail(f"skills/proofread/agents/openai.yaml interface.{field} exceeds {maximum} characters")
     check_placeholders(text, EXPECTED_SKILL)
     if re.search(r"(?:^|\s)(?:\.\./|/|[A-Za-z]:\\)", text):
         fail(f"{EXPECTED_SKILL} contains a potentially unsafe absolute or parent-relative path")
@@ -338,38 +427,58 @@ def build() -> Path:
     output_path.parent.mkdir(parents=True, exist_ok=True)
     if output_path.is_symlink() or (output_path.exists() and not output_path.is_file()):
         fail(f"release output is not a regular file: {output.as_posix()}")
-    with zipfile.ZipFile(output_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
-        for path in files:
-            name = path.relative_to(ROOT).as_posix()
-            info = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
-            info.compress_type = zipfile.ZIP_DEFLATED
-            info.create_system = 3
-            info.external_attr = (0o100644 & 0xFFFF) << 16
-            archive.writestr(info, path.read_bytes(), compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
+    _preflight_stage(ROOT / "dist" / "local-plugin", files)
+    zip_fd, zip_temp_name = tempfile.mkstemp(prefix=f".{output_path.name}.", suffix=".tmp", dir=output_path.parent)
+    os.close(zip_fd)
+    zip_temp = Path(zip_temp_name)
+    stage_temp: Path | None = None
+    backup: Path | None = None
+    preserve_backup = False
     try:
-        with zipfile.ZipFile(output_path) as archive:
-            bad_member = archive.testzip()
-            if bad_member is not None:
-                fail(f"built ZIP failed CRC validation at {bad_member}")
-            actual = archive.namelist()
-            expected = [path.relative_to(ROOT).as_posix() for path in files]
-            if actual != expected:
-                fail("built ZIP contents differ from the release allowlist")
+        stage_temp = Path(tempfile.mkdtemp(prefix=".local-plugin.", suffix=".tmp", dir=output_path.parent))
+        backup = Path(tempfile.mkdtemp(prefix=".release-backup.", dir=output_path.parent))
+        _write_archive(zip_temp, files)
+        _verify_archive(zip_temp, files)
+        _populate_stage(stage_temp, files, manifest)
+        _verify_stage(stage_temp, files)
+        old_stage = ROOT / "dist" / "local-plugin"
+        backed_stage = backup / "local-plugin"
+        stage_backed_up = stage_promoted = False
+        try:
+            if old_stage.exists():
+                os.replace(old_stage, backed_stage)
+                stage_backed_up = True
+            os.replace(stage_temp, old_stage)
+            stage_promoted = True
+            # Keep the old archive at its final path until this atomic replace.
+            os.replace(zip_temp, output_path)
+        except OSError as exc:
+            rollback_errors: list[str] = []
+            try:
+                if stage_promoted and old_stage.exists():
+                    shutil.rmtree(old_stage)
+                if stage_backed_up:
+                    os.replace(backed_stage, old_stage)
+                    stage_backed_up = False
+            except OSError as rollback_exc:
+                rollback_errors.append(str(rollback_exc))
+            if stage_backed_up:
+                preserve_backup = True
+                fail(f"could not publish release outputs ({exc}); previous staging tree is preserved in {backup}: {'; '.join(rollback_errors)}")
+            fail(f"could not atomically publish release outputs: {exc}")
     except (OSError, zipfile.BadZipFile) as exc:
-        fail(f"built ZIP could not be verified: {exc}")
-    stage_local_plugin(files, manifest)
+        fail(f"release outputs could not be prepared or verified: {exc}")
+    finally:
+        if zip_temp.exists():
+            zip_temp.unlink()
+        if stage_temp is not None and stage_temp.exists():
+            shutil.rmtree(stage_temp)
+        if backup is not None and backup.exists() and not preserve_backup:
+            shutil.rmtree(backup)
     return output_path
 
 
-def stage_local_plugin(files: list[Path], manifest: dict[str, Any]) -> Path:
-    """Stage the runtime package plus a legacy Codex manifest for local testing."""
-    stage_root = ROOT / "dist" / "local-plugin"
-    dist_root = stage_root.parent
-    if dist_root.is_symlink() or not dist_root.is_dir():
-        fail("dist must be a regular directory before staging the local plugin")
-    if stage_root.is_symlink() or (stage_root.exists() and not stage_root.is_dir()):
-        fail("dist/local-plugin must be a regular directory")
-
+def _stage_paths(stage_root: Path, files: list[Path]) -> tuple[set[str], set[str]]:
     canonical_paths = {path.relative_to(ROOT).as_posix() for path in files}
     compatibility_path = ".codex-plugin/plugin.json"
     expected_files = canonical_paths | {compatibility_path}
@@ -379,9 +488,18 @@ def stage_local_plugin(files: list[Path], manifest: dict[str, Any]) -> Path:
         for parent in PurePosixPath(name).parents
         if parent.as_posix() != "."
     }
+    return expected_files, expected_dirs
 
-    # Never clear the staging directory: fail closed if it contains anything
-    # outside this script's explicit output set, preserving user data.
+
+def _preflight_stage(stage_root: Path, files: list[Path]) -> None:
+    """Reject unsafe or unexpected staging content before replacing anything."""
+    dist_root = stage_root.parent
+    if dist_root.is_symlink() or not dist_root.is_dir():
+        fail("dist must be a regular directory before staging the local plugin")
+    if stage_root.is_symlink() or (stage_root.exists() and not stage_root.is_dir()):
+        fail("dist/local-plugin must be a regular directory")
+    expected_files, expected_dirs = _stage_paths(stage_root, files)
+
     if stage_root.exists():
         for path in stage_root.rglob("*"):
             relative = path.relative_to(stage_root).as_posix()
@@ -391,6 +509,14 @@ def stage_local_plugin(files: list[Path], manifest: dict[str, Any]) -> Path:
                 fail(f"staging output contains an unexpected directory: dist/local-plugin/{relative}")
             if path.is_file() and relative not in expected_files:
                 fail(f"staging output contains an unexpected file: dist/local-plugin/{relative}")
+            if not path.is_file() and not path.is_dir():
+                fail(f"staging output contains a non-regular entry: dist/local-plugin/{relative}")
+
+
+def _populate_stage(stage_root: Path, files: list[Path], manifest: dict[str, Any]) -> None:
+    """Populate a fresh staging tree; callers publish it only after verification."""
+    compatibility_path = ".codex-plugin/plugin.json"
+    stage_root.mkdir(parents=True, exist_ok=True)
 
     # The compatibility manifest mirrors the canonical root identity and
     # translates the portable OpenAI extension to the legacy overlay shape.
@@ -412,7 +538,6 @@ def stage_local_plugin(files: list[Path], manifest: dict[str, Any]) -> Path:
         if key in manifest:
             legacy_manifest[key] = manifest[key]
 
-    stage_root.mkdir(parents=True, exist_ok=True)
     for source in files:
         relative = source.relative_to(ROOT)
         destination = stage_root / relative
@@ -429,7 +554,46 @@ def stage_local_plugin(files: list[Path], manifest: dict[str, Any]) -> Path:
         json.dumps(legacy_manifest, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
-    return stage_root
+
+
+def _verify_stage(stage_root: Path, files: list[Path]) -> None:
+    expected_files, expected_dirs = _stage_paths(stage_root, files)
+    actual_files: set[str] = set()
+    for path in stage_root.rglob("*"):
+        relative = path.relative_to(stage_root).as_posix()
+        if path.is_symlink():
+            fail(f"prepared staging output contains a symlink: {relative}")
+        if path.is_file():
+            actual_files.add(relative)
+        elif path.is_dir() and relative not in expected_dirs:
+            fail(f"prepared staging output contains an unexpected directory: {relative}")
+    if actual_files != expected_files:
+        fail("prepared staging output differs from the release allowlist")
+
+
+def _write_archive(output_path: Path, files: list[Path]) -> None:
+    with zipfile.ZipFile(output_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
+        for path in files:
+            name = path.relative_to(ROOT).as_posix()
+            info = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
+            info.compress_type = zipfile.ZIP_DEFLATED
+            info.create_system = 3
+            info.external_attr = (0o100644 & 0xFFFF) << 16
+            archive.writestr(info, path.read_bytes(), compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
+
+
+def _verify_archive(archive_path: Path, files: list[Path]) -> None:
+    try:
+        with zipfile.ZipFile(archive_path) as archive:
+            bad_member = archive.testzip()
+            if bad_member is not None:
+                fail(f"built ZIP failed CRC validation at {bad_member}")
+            actual = archive.namelist()
+            expected = [path.relative_to(ROOT).as_posix() for path in files]
+            if actual != expected:
+                fail("built ZIP contents differ from the release allowlist")
+    except (OSError, zipfile.BadZipFile) as exc:
+        fail(f"built ZIP could not be verified: {exc}")
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -439,7 +603,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         if args.command == "validate":
             files = validate()
-            print(f"Validation passed: {len(files)} runtime files are ready for release.")
+            print(f"Validation passed: {len(files)} runtime files meet local package checks.")
         else:
             path = build()
             print(f"Built and verified {path.relative_to(ROOT)} and staged dist/local-plugin")

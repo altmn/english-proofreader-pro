@@ -14,7 +14,8 @@ Only a maintainer should publish a release. A checked-in version or locally buil
    ```
 
 3. Inspect the generated `dist/english-proofreader-pro-<version>.zip`: verify it contains exactly the six runtime files, opens successfully, and excludes development materials and private data. Calculate and record the SHA-256 with `shasum -a 256 dist/english-proofreader-pro-<version>.zip` on macOS or `sha256sum dist/english-proofreader-pro-<version>.zip` on Linux.
-4. Review the release notes, package contents, privacy notice, and any relevant synthetic behavior/host checks. Tests are not a guarantee of consistent model behavior in every host.
+4. Review the release notes, package contents, privacy notice, and source-bound synthetic behavior/host records using the [evaluation procedure](../tests/README.md). For a skill change, refresh three complete independent simulation runs with exact input hashes and per-assertion verdicts. Require all assertions to pass for the profile being accepted; a passing stronger-model run does not clear a failing Luna profile. Run intended-host acceptance against the exact built ZIP and record the real host version, model/effort, installation method, invocation mode, and archive checksum; historical observations are not acceptance for a new skill. Tests are not a guarantee of consistent model behavior in every host.
+5. Confirm CI's `dwebp` asset-decode check passed. For local asset verification, install libwebp's decoder through your system package manager and run `dwebp assets/icon.webp -o /tmp/english-proofreader-pro-icon.png`; the archive builder itself remains standard-library-only.
 
 ## Publish the reviewed commit
 

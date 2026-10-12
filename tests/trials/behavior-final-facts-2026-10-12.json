@@ -1,0 +1,166 @@
+{
+  "schema_version": 1,
+  "kind": "supplemental-facts-evaluation",
+  "purpose": "Supplementary cross-check of the existing public-skill draft-facts rule against the known new-draft case. This is not an unseen holdout and does not replace or alter any of the original 83 fixture assertions.",
+  "rubric_file": "tests/supplemental-facts.json",
+  "rubric_sha256": "47011d5f11542905dc16a2c4a11817d657d5e1ee69ce1afac42d3c4cbe061379",
+  "assertion": "does_not_invent_user_circumstances",
+  "expected": true,
+  "reviewer": "Independent Codex reviewer (gpt-6-astra)",
+  "observations": [
+    {
+      "source_record": "tests/trials/behavior-final-luna-1-2026-10-12.json",
+      "source_record_sha256": "b4583ed7d80a233b262c0c0e5ff4080a764556a9ea138b2b4310ad9cdfa8940f",
+      "snapshot_file": "tests/trials/behavior-final-luna-2026-10-12-snapshot.json",
+      "snapshot_sha256": "529993dcd282966a611f8c6d4517bab362b8a8b76b0c79035e6506c1f50b80e4",
+      "case_id": "new-draft",
+      "response_sha256": "0f7557effc6c5c7ffaea8dad5b3a8b6d19a12cc62451f922f6c1eb91d7be827c",
+      "model": "gpt-6-luna",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "pass",
+      "evidence": {
+        "response": "```text\nThanks so much for watering my plants! I really appreciate your help.\n```",
+        "unsupported_claims": [],
+        "note": "The draft states gratitude for watering the plants and generic appreciation, with no unsupported absence, reason, event, promise, or personal history."
+      }
+    },
+    {
+      "source_record": "tests/trials/behavior-final-luna-2-2026-10-12.json",
+      "source_record_sha256": "5dde931bf5a7f73a55cdd388c660696ddbb7b5388286abf45126e4f71f6cbf4c",
+      "snapshot_file": "tests/trials/behavior-final-luna-2026-10-12-snapshot.json",
+      "snapshot_sha256": "529993dcd282966a611f8c6d4517bab362b8a8b76b0c79035e6506c1f50b80e4",
+      "case_id": "new-draft",
+      "response_sha256": "7030a73224e0e7571ee4dddb9698b4a3fdb738cf53accbd613a2a7a9d28ca50e",
+      "model": "gpt-6-luna",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "pass",
+      "evidence": {
+        "response": "```text\nThanks so much for watering my plants! I really appreciate it.\n```",
+        "unsupported_claims": [],
+        "note": "The draft states gratitude for watering the plants and generic appreciation, with no unsupported absence, reason, event, promise, or personal history."
+      }
+    },
+    {
+      "source_record": "tests/trials/behavior-final-luna-3-2026-10-12.json",
+      "source_record_sha256": "924bdba0b916da44ee4fc758d383f7e1bb0c359e16c73c74184feada41ac79f5",
+      "snapshot_file": "tests/trials/behavior-final-luna-2026-10-12-snapshot.json",
+      "snapshot_sha256": "529993dcd282966a611f8c6d4517bab362b8a8b76b0c79035e6506c1f50b80e4",
+      "case_id": "new-draft",
+      "response_sha256": "7030a73224e0e7571ee4dddb9698b4a3fdb738cf53accbd613a2a7a9d28ca50e",
+      "model": "gpt-6-luna",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "pass",
+      "evidence": {
+        "response": "```text\nThanks so much for watering my plants! I really appreciate it.\n```",
+        "unsupported_claims": [],
+        "note": "The draft states gratitude for watering the plants and generic appreciation, with no unsupported absence, reason, event, promise, or personal history."
+      }
+    },
+    {
+      "source_record": "tests/trials/behavior-final-sol-1-2026-10-12.json",
+      "source_record_sha256": "ab089a56e39886063a9dd894b761be4d28af942eb464a7562ccbc41fb8b290b5",
+      "snapshot_file": "tests/trials/behavior-final-sol-2026-10-12-snapshot.json",
+      "snapshot_sha256": "ca24213353568cb27909242f4f5be0081b1be577b44ffd68210dbacf48055cf4",
+      "case_id": "new-draft",
+      "response_sha256": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+      "model": "gpt-6.1-sol",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "pass",
+      "evidence": {
+        "response": "```text\nThanks for watering my plants! I really appreciate your help.\n```",
+        "unsupported_claims": [],
+        "note": "The draft states gratitude for watering the plants and generic appreciation, with no unsupported absence, reason, event, promise, or personal history."
+      }
+    },
+    {
+      "source_record": "tests/trials/behavior-final-sol-2-2026-10-12.json",
+      "source_record_sha256": "24b00ad7784b96cc4c02dca2ebd2671b447b890c1fd9618ac4f401e81299d330",
+      "snapshot_file": "tests/trials/behavior-final-sol-2026-10-12-snapshot.json",
+      "snapshot_sha256": "ca24213353568cb27909242f4f5be0081b1be577b44ffd68210dbacf48055cf4",
+      "case_id": "new-draft",
+      "response_sha256": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+      "model": "gpt-6.1-sol",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "pass",
+      "evidence": {
+        "response": "```text\nThanks for watering my plants! I really appreciate your help.\n```",
+        "unsupported_claims": [],
+        "note": "The draft states gratitude for watering the plants and generic appreciation, with no unsupported absence, reason, event, promise, or personal history."
+      }
+    },
+    {
+      "source_record": "tests/trials/behavior-final-sol-3-2026-10-12.json",
+      "source_record_sha256": "f6bd7c2367883827c2be77296bf8517350993c916bbc6646f76edaecf7571c8a",
+      "snapshot_file": "tests/trials/behavior-final-sol-2026-10-12-snapshot.json",
+      "snapshot_sha256": "ca24213353568cb27909242f4f5be0081b1be577b44ffd68210dbacf48055cf4",
+      "case_id": "new-draft",
+      "response_sha256": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+      "model": "gpt-6.1-sol",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "pass",
+      "evidence": {
+        "response": "```text\nThanks for watering my plants! I really appreciate your help.\n```",
+        "unsupported_claims": [],
+        "note": "The draft states gratitude for watering the plants and generic appreciation, with no unsupported absence, reason, event, promise, or personal history."
+      }
+    },
+    {
+      "source_record": "tests/trials/behavior-max-luna-2026-10-12.json",
+      "source_record_sha256": "61834fcb8db37ef8d9b713b0fe0f61bf3b912a8149576b5aa644d6ff62f2c8d2",
+      "snapshot_file": "tests/trials/behavior-final-sol-2026-10-12-snapshot.json",
+      "snapshot_sha256": "ca24213353568cb27909242f4f5be0081b1be577b44ffd68210dbacf48055cf4",
+      "case_id": "new-draft",
+      "response_sha256": "7030a73224e0e7571ee4dddb9698b4a3fdb738cf53accbd613a2a7a9d28ca50e",
+      "model": "gpt-6-luna",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "pass",
+      "evidence": {
+        "response": "```text\nThanks so much for watering my plants! I really appreciate it.\n```",
+        "unsupported_claims": [],
+        "note": "The draft states gratitude for watering the plants and generic appreciation, with no unsupported absence, reason, event, promise, or personal history."
+      }
+    },
+    {
+      "source_record": "tests/trials/behavior-max-luna-3-2026-10-12.json",
+      "source_record_sha256": "0a8fd11aa3515974116a14daa915b279bbf949ea7f4c3af3f96ba007a07943bb",
+      "snapshot_file": "tests/trials/behavior-final-sol-2026-10-12-snapshot.json",
+      "snapshot_sha256": "ca24213353568cb27909242f4f5be0081b1be577b44ffd68210dbacf48055cf4",
+      "case_id": "new-draft",
+      "response_sha256": "7030a73224e0e7571ee4dddb9698b4a3fdb738cf53accbd613a2a7a9d28ca50e",
+      "model": "gpt-6-luna",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "pass",
+      "evidence": {
+        "response": "```text\nThanks so much for watering my plants! I really appreciate it.\n```",
+        "unsupported_claims": [],
+        "note": "The draft states gratitude for watering the plants and generic appreciation, with no unsupported absence, reason, event, promise, or personal history."
+      }
+    },
+    {
+      "source_record": "tests/trials/behavior-max-luna-2-2026-10-12.json",
+      "source_record_sha256": "5f7fa185f7c2b71ad6d3612f721ecf87c9a6b73d8941d47dcb909480ccbc55bc",
+      "snapshot_file": "tests/trials/behavior-final-sol-2026-10-12-snapshot.json",
+      "snapshot_sha256": "ca24213353568cb27909242f4f5be0081b1be577b44ffd68210dbacf48055cf4",
+      "case_id": "new-draft",
+      "response_sha256": "7030a73224e0e7571ee4dddb9698b4a3fdb738cf53accbd613a2a7a9d28ca50e",
+      "model": "gpt-6-luna",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "pass",
+      "evidence": {
+        "response": "```text\nThanks so much for watering my plants! I really appreciate it.\n```",
+        "unsupported_claims": [],
+        "note": "The draft states gratitude for watering the plants and generic appreciation, with no unsupported absence, reason, event, promise, or personal history."
+      }
+    }
+  ],
+  "aggregate": "pass"
+}

@@ -1,0 +1,53 @@
+{
+  "schema_version": 1,
+  "kind": "native-single-request-diagnostic",
+  "metadata": {
+    "model": "gpt-6-luna",
+    "reasoning_effort": "high",
+    "host": "Codex collaboration subagent",
+    "host_version": "unknown",
+    "invocation_mode": "native-independent-agent-simulation",
+    "date": "2026-10-12",
+    "reviewer": "Codex parent reviewer",
+    "source": "Two fresh fork-none agents returned native final text for one exact user request each; expectations and prior replies withheld. Responses preserved verbatim from their final messages."
+  },
+  "observations": [
+    {
+      "profile": "baseline",
+      "snapshot_file": "tests/trials/behavior-baseline-2026-10-12-snapshot.json",
+      "snapshot_sha256": "97115c149b9f5bab9368e47ecbdd1e1edaef8d6e708dff0892a046347b0144a3",
+      "skill_sha256": "9c2134334e6c4ce33c4780c03d39ecc6f26793ef1d4e2bf733f246572c4a34ee",
+      "protocol": "One actual editing request per fresh agent turn. The public skill is authorized workflow guidance; the user_request is the writing task. Return the complete native answer in final, without writing a response JSON file or seeing expectations. This is a diagnostic isolation probe, not a complete suite or live installed-plugin test.",
+      "case_id": "trim-the-fat",
+      "prompt": "Proofread and trim the fat: Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.",
+      "context": "",
+      "response": "```text\nBecause we were late, we decided to reschedule the meeting for later.\n```\n\nChanges:\n\n- **\"Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.\"** → **\"Because we were late, we decided to reschedule the meeting for later.\"** Replaced “Due to the fact that” with “Because,” removed the redundant “make the decision to,” and shortened “for a later time” to “for later.”",
+      "response_sha256": "314a124ec7b3ded07c5b094aad33bc10a4780dd99220fabc6b151aa89207d676",
+      "source_words": 22,
+      "result_words": 12,
+      "reduction_percent": 45.45454545454545,
+      "requested_reduction_target": "about 5-10%",
+      "status": "fail",
+      "note": "Overcompresses the source even with one native response per fresh turn. Changes also contain unbolded explanation quotations. This diagnostic probe is not a complete fixture run or intended-host acceptance."
+    },
+    {
+      "profile": "final",
+      "snapshot_file": "tests/trials/behavior-final-luna-2026-10-12-snapshot.json",
+      "snapshot_sha256": "529993dcd282966a611f8c6d4517bab362b8a8b76b0c79035e6506c1f50b80e4",
+      "skill_sha256": "cc7c5e6baed1d0329b6b279b1d38a39a7d7dffc143f02051dc084408ad4996f2",
+      "protocol": "One actual editing request per fresh agent turn. The public skill is authorized workflow guidance; the user_request is the writing task. Return the complete native answer in final, without writing a response JSON file or seeing expectations. This is a diagnostic isolation probe, not a complete suite or live installed-plugin test.",
+      "case_id": "trim-the-fat",
+      "prompt": "Proofread and trim the fat: Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.",
+      "context": "",
+      "response": "```text\nBecause we were late, we decided to reschedule the meeting for a later time.\n```\n\nChanges:\n\n- **“Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.”** → **“Because we were late, we decided to reschedule the meeting for a later time.”** Replaced the wordy opening with “Because” and removed the repetition in “decided to make the decision.”",
+      "response_sha256": "886196fef4655290f85f49edb0b8054fb3060296add69e5cde1b9c947b4a2de2",
+      "source_words": 22,
+      "result_words": 14,
+      "reduction_percent": 36.36363636363637,
+      "requested_reduction_target": "about 5-10%",
+      "status": "fail",
+      "note": "Overcompresses the source even with one native response per fresh turn. Changes also contain unbolded explanation quotations. This diagnostic probe is not a complete fixture run or intended-host acceptance."
+    }
+  ],
+  "aggregate": "fail"
+}

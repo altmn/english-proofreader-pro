@@ -1,0 +1,191 @@
+{
+  "schema_version": 1,
+  "kind": "supplemental-facts-evaluation",
+  "purpose": "Supplementary cross-check of the existing public-skill draft-facts rule against the known new-draft case. This is not an unseen holdout and does not replace or alter any of the original 83 fixture assertions.",
+  "rubric_file": "tests/supplemental-facts.json",
+  "rubric_sha256": "47011d5f11542905dc16a2c4a11817d657d5e1ee69ce1afac42d3c4cbe061379",
+  "assertion": "does_not_invent_user_circumstances",
+  "expected": true,
+  "reviewer": "Independent Codex reviewer (gpt-6.1-sol)",
+  "observations": [
+    {
+      "source_record": "tests/trials/engineering-fixes-2026-10-12-run-1.json",
+      "source_record_sha256": "c0a8ede85b3e3546eaaa3cc0b3a6078f0fe34a569f2507fe0f8b52db677b2d7d",
+      "snapshot_file": "tests/trials/engineering-fixes-2026-10-12-snapshot.json",
+      "snapshot_sha256": "9577d2fa1e7bd7de4b57443d4364173890dd00819fcdf0120d4691a8df94805c",
+      "case_id": "new-draft",
+      "response_sha256": "0fae188144e60130f3cff51184ad0f99e99b75f95d10e957347b3c75152bacda",
+      "model": "gpt-6-luna",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "fail",
+      "evidence": {
+        "response": "```text\nThanks so much for watering my plants while I was away! I really appreciate your help, and I owe you one.\n```",
+        "unsupported_claims": [
+          "while I was away"
+        ],
+        "note": "The draft adds an absence not supplied by the request: \"while I was away\"."
+      }
+    },
+    {
+      "source_record": "tests/trials/engineering-fixes-2026-10-12-run-2.json",
+      "source_record_sha256": "16480529a63897c10d70acb794255fcde748d30aeb796758ddf1bb8ed6f7af41",
+      "snapshot_file": "tests/trials/engineering-fixes-2026-10-12-snapshot.json",
+      "snapshot_sha256": "9577d2fa1e7bd7de4b57443d4364173890dd00819fcdf0120d4691a8df94805c",
+      "case_id": "new-draft",
+      "response_sha256": "0fae188144e60130f3cff51184ad0f99e99b75f95d10e957347b3c75152bacda",
+      "model": "gpt-6-luna",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "fail",
+      "evidence": {
+        "response": "```text\nThanks so much for watering my plants while I was away! I really appreciate your help, and I owe you one.\n```",
+        "unsupported_claims": [
+          "while I was away"
+        ],
+        "note": "The draft adds an absence not supplied by the request: \"while I was away\"."
+      }
+    },
+    {
+      "source_record": "tests/trials/engineering-fixes-2026-10-12-run-3.json",
+      "source_record_sha256": "4b3f9a146acc1f29123ab0c96dc3acd377af15bdcf0c10c79ac8e33bfb38c8fe",
+      "snapshot_file": "tests/trials/engineering-fixes-2026-10-12-snapshot.json",
+      "snapshot_sha256": "9577d2fa1e7bd7de4b57443d4364173890dd00819fcdf0120d4691a8df94805c",
+      "case_id": "new-draft",
+      "response_sha256": "807127ce4eacc0395389c07d4614720196a1eb3d4e5cb080ff5cc7c94067fc5e",
+      "model": "gpt-6-luna",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "pass",
+      "evidence": {
+        "response": "```text\nThanks so much for watering my plants! I really appreciate you looking after them.\n```",
+        "unsupported_claims": [],
+        "note": "The draft states only gratitude for watering the plants and generic appreciation, with no unsupported concrete user circumstance."
+      }
+    },
+    {
+      "source_record": "tests/trials/behavior-baseline-sol-2026-10-12.json",
+      "source_record_sha256": "c96cfa20f41242a273354dc2396f2da8e89ffb6305826ef72a1c52b17a04272c",
+      "snapshot_file": "tests/trials/behavior-baseline-2026-10-12-snapshot.json",
+      "snapshot_sha256": "97115c149b9f5bab9368e47ecbdd1e1edaef8d6e708dff0892a046347b0144a3",
+      "case_id": "new-draft",
+      "response_sha256": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+      "model": "gpt-6.1-sol",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "pass",
+      "evidence": {
+        "response": "```text\nThanks for watering my plants! I really appreciate your help.\n```",
+        "unsupported_claims": [],
+        "note": "The draft states only gratitude for watering the plants and generic appreciation, with no unsupported concrete user circumstance."
+      }
+    },
+    {
+      "source_record": "tests/trials/behavior-first-luna-1-2026-10-12.json",
+      "source_record_sha256": "dd7f468b3f38248e68a2cd6feafd50be2e6faa8ea37ee55e334be7a6345edcbf",
+      "snapshot_file": "tests/trials/behavior-fixed-luna-2026-10-12-snapshot.json",
+      "snapshot_sha256": "e6dab30a3f0b4a4c16624a2b314bc1a203afcbbbc306120d5a227c8bc7fb0445",
+      "case_id": "new-draft",
+      "response_sha256": "9ccf48e6dbdb9eb371df83ff528494412771cf1413c4132498d9f46ef0604721",
+      "model": "gpt-6-luna",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "fail",
+      "evidence": {
+        "response": "```text\nThanks so much for watering my plants while I was away. I really appreciate your help!\n```",
+        "unsupported_claims": [
+          "while I was away"
+        ],
+        "note": "The draft adds an absence not supplied by the request: \"while I was away\"."
+      }
+    },
+    {
+      "source_record": "tests/trials/behavior-first-luna-2-2026-10-12.json",
+      "source_record_sha256": "1e30db18aaadeffbeb7635d56a65277d575bfe7a698f18d41a236a9ff60e4590",
+      "snapshot_file": "tests/trials/behavior-fixed-luna-2026-10-12-snapshot.json",
+      "snapshot_sha256": "e6dab30a3f0b4a4c16624a2b314bc1a203afcbbbc306120d5a227c8bc7fb0445",
+      "case_id": "new-draft",
+      "response_sha256": "0f7557effc6c5c7ffaea8dad5b3a8b6d19a12cc62451f922f6c1eb91d7be827c",
+      "model": "gpt-6-luna",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "pass",
+      "evidence": {
+        "response": "```text\nThanks so much for watering my plants! I really appreciate your help.\n```",
+        "unsupported_claims": [],
+        "note": "The draft states only gratitude for watering the plants and generic appreciation, with no unsupported concrete user circumstance."
+      }
+    },
+    {
+      "source_record": "tests/trials/behavior-first-luna-3-2026-10-12.json",
+      "source_record_sha256": "e0d2acbf613c8fc88a1dae47c3fd1d6aee5cd08ba9959b0cecaa64b6a4f67c2f",
+      "snapshot_file": "tests/trials/behavior-fixed-luna-2026-10-12-snapshot.json",
+      "snapshot_sha256": "e6dab30a3f0b4a4c16624a2b314bc1a203afcbbbc306120d5a227c8bc7fb0445",
+      "case_id": "new-draft",
+      "response_sha256": "a4776b6d502e63b971c0725107f56aaa2d7af7e5d7ff2a2932c0ea0a95bfd21e",
+      "model": "gpt-6-luna",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "fail",
+      "evidence": {
+        "response": "``text\nThanks so much for watering my plants while I was away! I really appreciate your help.\n``",
+        "unsupported_claims": [
+          "while I was away"
+        ],
+        "note": "The draft adds an absence not supplied by the request: \"while I was away\"."
+      }
+    },
+    {
+      "source_record": "tests/trials/behavior-first-sol-1-2026-10-12.json",
+      "source_record_sha256": "476cba77dac0dafbd04a51f410237388c2675511faf0cacdda38e1a7abcd0d04",
+      "snapshot_file": "tests/trials/behavior-fixed-sol-2026-10-12-snapshot.json",
+      "snapshot_sha256": "48674fd4436474208516514caaed626d757080ee5a5c336ecffa80488eca35fb",
+      "case_id": "new-draft",
+      "response_sha256": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+      "model": "gpt-6.1-sol",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "pass",
+      "evidence": {
+        "response": "```text\nThanks for watering my plants! I really appreciate your help.\n```",
+        "unsupported_claims": [],
+        "note": "The draft states only gratitude for watering the plants and generic appreciation, with no unsupported concrete user circumstance."
+      }
+    },
+    {
+      "source_record": "tests/trials/behavior-first-sol-2-2026-10-12.json",
+      "source_record_sha256": "299cc1982ed027e062c929aa8c13dd69acf25eb20c8f96d04d3dd20ad0216d30",
+      "snapshot_file": "tests/trials/behavior-fixed-sol-2026-10-12-snapshot.json",
+      "snapshot_sha256": "48674fd4436474208516514caaed626d757080ee5a5c336ecffa80488eca35fb",
+      "case_id": "new-draft",
+      "response_sha256": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+      "model": "gpt-6.1-sol",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "pass",
+      "evidence": {
+        "response": "```text\nThanks for watering my plants! I really appreciate your help.\n```",
+        "unsupported_claims": [],
+        "note": "The draft states only gratitude for watering the plants and generic appreciation, with no unsupported concrete user circumstance."
+      }
+    },
+    {
+      "source_record": "tests/trials/behavior-first-sol-3-2026-10-12.json",
+      "source_record_sha256": "85ec78b67a654169a1bf2500201aa8c3cb18916d9b19df957b4047569b38f2d7",
+      "snapshot_file": "tests/trials/behavior-fixed-sol-2026-10-12-snapshot.json",
+      "snapshot_sha256": "48674fd4436474208516514caaed626d757080ee5a5c336ecffa80488eca35fb",
+      "case_id": "new-draft",
+      "response_sha256": "0f7557effc6c5c7ffaea8dad5b3a8b6d19a12cc62451f922f6c1eb91d7be827c",
+      "model": "gpt-6.1-sol",
+      "assertion": "does_not_invent_user_circumstances",
+      "expected": true,
+      "status": "pass",
+      "evidence": {
+        "response": "```text\nThanks so much for watering my plants! I really appreciate your help.\n```",
+        "unsupported_claims": [],
+        "note": "The draft states only gratitude for watering the plants and generic appreciation, with no unsupported concrete user circumstance."
+      }
+    }
+  ],
+  "aggregate": "fail"
+}

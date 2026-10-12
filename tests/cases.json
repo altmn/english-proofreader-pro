@@ -3,6 +3,7 @@
   "purpose": "Synthetic behavioral evaluation fixtures. Inputs are examples; expected values describe observable properties and intentionally do not prescribe full answer strings.",
   "shared_output_contract": {
     "when_returning_revised_or_transformed_text": "The response begins with the text, without an introduction, inside a plain-text fenced code block labeled text. Use at least three backticks and choose an outer fence longer than every consecutive backtick run in the result. Preserve original Markdown and list formatting literally unless a requested change or clear correction requires a change.",
+    "for_fenced_code_or_examples": "Preserve the payload literally unless the user explicitly asks you to edit it.",
     "when_supplied_text_changes": "After the code block, include a complete Changes: list. Describe every actual edit and no invented correction; show before-and-after text in quotation marks and bold each quoted span. Keep the list outside the code block.",
     "when_no_edit_is_needed": "Respond exactly: The text does not require any adjustments.",
     "when_writing_new_text": "Return the new text first in the fenced code block; do not add a Changes: list."
@@ -104,6 +105,18 @@
       }
     },
     {
+      "id": "explicitly-edit-fenced-payload",
+      "input": "Proofread this text, including the sentence inside the fenced example; keep all formatting.\n\n```text\nThis example contain an error.\n```",
+      "expect": {
+        "task": "proofread_supplied_text_with_explicit_fenced_payload_edit",
+        "honors_explicit_request_to_edit_fenced_payload": true,
+        "preserves_fence_and_other_formatting": true,
+        "does_not_change_other_source_content": true,
+        "revised_text_first_in_fenced_code_block": true,
+        "changes_list_after_fence_and_accounts_for_each_edit": true
+      }
+    },
+    {
       "id": "pronoun-rule-preserved",
       "input": "Proofread: Every employee should bring his or her badge, and they should sign in at reception.",
       "expect": {
@@ -143,6 +156,18 @@
         "task": "proofread_request_without_text",
         "asks_user_to_submit_text": true,
         "does_not_invent_source_text": true
+      }
+    },
+    {
+      "id": "starter-help",
+      "input": "How can you help me proofread my writing?",
+      "expect": {
+        "task": "explain_starter_help",
+        "describes_american_english_editing_and_preserving_meaning_voice_formatting": true,
+        "offers_proofread_as_least_invasive_option": true,
+        "mentions_four_shortening_commands_and_approximate_reductions": true,
+        "invites_user_to_submit_text_and_directions": true,
+        "answers_directly_without_proofread_fence_or_changes_list": true
       }
     },
     {
