@@ -256,6 +256,18 @@ class ReleaseBuilderTests(unittest.TestCase):
         with self.assertRaisesRegex(release.ReleaseError, "unsafe absolute or parent-relative path"):
             release.validate_skill()
 
+    def test_empty_skill_body_is_rejected_by_validation_and_build(self) -> None:
+        skill_path = self.root / release.EXPECTED_SKILL
+        header = "---\nname: proofread\ndescription: Proofread prose\n---"
+        for body in ("", "\n", "\n\n", "\n \t\r\n"):
+            with self.subTest(body=repr(body)):
+                skill_path.write_bytes((header + body).encode("utf-8"))
+                for command in (release.validate, release.build):
+                    with self.subTest(command=command.__name__):
+                        with self.assertRaisesRegex(release.ReleaseError, "non-empty body"):
+                            command()
+                self.assertFalse((self.root / "dist").exists())
+
     def test_skill_frontmatter_rejects_malformed_or_typed_yaml_scalars(self) -> None:
         skill_path = self.root / release.EXPECTED_SKILL
         for line in (
@@ -325,6 +337,48 @@ class ReleaseBuilderTests(unittest.TestCase):
                 with self.assertRaises(release.ReleaseError):
                     release.parse_yaml_string_scalar(value, "synthetic field")
         self.assertEqual(release.parse_yaml_string_scalar("'a''''b'", "synthetic field"), "a''b")
+
+    def test_yaml_scalars_reject_forbidden_raw_character_ranges(self) -> None:
+        forbidden = (0x00, 0x08, 0x0B, 0x0C, 0x0E, 0x1F, 0x7F, 0x80, 0x84, 0x86, 0x9F,
+                     0xD800, 0xDFFF, 0xFFFE, 0xFFFF)
+        for codepoint in forbidden:
+            for quote in ("", "'", '"'):
+                with self.subTest(codepoint=f"U+{codepoint:04X}", quote=quote):
+                    value = quote + "before" + chr(codepoint) + "after" + quote
+                    with self.assertRaisesRegex(release.ReleaseError, "forbidden raw YAML character"):
+                        release.parse_yaml_string_scalar(value, "synthetic field")
+
+    def test_yaml_source_accepts_printable_boundaries_and_supported_escapes(self) -> None:
+        allowed = (0x09, 0x0A, 0x0D, 0x20, 0x7E, 0x85, 0xA0, 0xD7FF, 0xE000,
+                   0xFFFD, 0x10000, 0x10FFFF)
+        release.validate_yaml_characters("".join(chr(codepoint) for codepoint in allowed), "synthetic document")
+        for codepoint in (0x20, 0x7E, 0x85, 0xA0, 0xD7FF, 0xE000, 0xFFFD, 0x10000, 0x10FFFF):
+            value = "before" + chr(codepoint) + "after"
+            for quote in ("", "'", '"'):
+                with self.subTest(codepoint=f"U+{codepoint:04X}", quote=quote):
+                    self.assertEqual(release.parse_yaml_string_scalar(quote + value + quote, "synthetic field"), value)
+        for value in ('"before\\u007fafter"', '"before\\u0080after"', '"before\\ufffeafter"'):
+            with self.subTest(escaped=value):
+                self.assertEqual(release.parse_yaml_string_scalar(value, "synthetic field"), json.loads(value))
+
+    def test_yaml_documents_reject_forbidden_characters_before_ignoring_lines(self) -> None:
+        skill_path = self.root / release.EXPECTED_SKILL
+        agent_path = self.root / "skills/proofread/agents/openai.yaml"
+        original_skill = skill_path.read_text(encoding="utf-8")
+        original_agent = agent_path.read_text(encoding="utf-8")
+        # U+001C would disappear in splitlines(); forbidden characters in comments
+        # would otherwise be skipped without reaching scalar validation.
+        for character in ("\x1c", "\x7f", "\x80", "\ufffe"):
+            for path, content in (
+                (skill_path, "---\n# comment " + character + "\nname: proofread\ndescription: prose\n---\nbody\n"),
+                (agent_path, original_agent + "# comment " + character + "\n"),
+            ):
+                with self.subTest(path=path.name, character=repr(character)):
+                    path.write_text(content, encoding="utf-8")
+                    with self.assertRaisesRegex(release.ReleaseError, "forbidden raw YAML character"):
+                        release.validate()
+                    skill_path.write_text(original_skill, encoding="utf-8")
+                    agent_path.write_text(original_agent, encoding="utf-8")
 
     def test_yaml_implicit_boolean_and_date_values_require_quotes(self) -> None:
         for value in ("yes", "no", "on", "off", "2026-10-12", "2026-10-12T12:00:00Z"):

@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "purpose": "Synthetic supplemental behavioral regressions for literal Markdown in bold Changes quotations. These cases require model generation and review of rendered output; fixture validity alone does not demonstrate model compliance. The original cases.json and historical records remain unchanged.",
+  "shared_output_contract": {
+    "when_returning_revised_or_transformed_text": "Return complete revised text first in a text-labeled backtick fence longer than every backtick run in the result. Preserve the source's literal Markdown and code; do not add display escapes to this copyable text.",
+    "when_supplied_text_changes": "After the code block, include a complete Changes: list. For each rewrite or shortening, quote full original and revised sentences or paragraphs, covering every actual edit without invented changes. Every quoted span, including quotation marks, must render entirely bold. Within the bold wrapper, escape original backslashes first and every other ASCII punctuation character once, including URL punctuation, so the visible quote matches the literal source or result. These display-only escapes are not text edits and must not be described as edits.",
+    "verification": "Compare the copyable fenced result with the source and inspect rendered Changes. Nested emphasis must not interrupt bold, backticks must remain visible instead of creating code spans, Markdown links must remain literal syntax, and entities or tags must not replace or hide source characters. Host autolinking of a bare URL or email is acceptable only if the visible characters and bold are unchanged. Do not grade raw delimiter presence as proof of correct rendering."
+  },
+  "cases": [
+    {
+      "id": "rewrite-markdown-changes-quotes",
+      "input": "Rewrite this for a warm but professional tone. Keep the deadline firm and preserve all literal Markdown, links, and inline code. Source:\nSend the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.",
+      "expect": {
+        "task": "rewrite_supplied_text",
+        "honors_tone_and_keeps_today_deadline": true,
+        "preserves_literal_emphasis_link_url_and_inline_code_in_result": true,
+        "returns_complete_text_first_in_safe_fence": true,
+        "changes_quote_complete_original_and_revised_sentences": true,
+        "all_quoted_spans_render_entirely_bold": true,
+        "rendered_quotes_show_literal_markdown_including_backticks_brackets_and_ampersand": true,
+        "display_escapes_do_not_leak_into_result_or_count_as_edits": true,
+        "changes_account_for_every_actual_edit_without_inventing_edits": true
+      }
+    },
+    {
+      "id": "shorten-markdown-changes-quotes",
+      "input": "Proofread and make it less wordy; preserve all literal Markdown, links, and inline code. Source:\nAt this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+      "expect": {
+        "task": "proofread_and_shorten_supplied_text",
+        "requested_reduction_target": "about 30%",
+        "preserves_review_and_future_decision_whether_to_send": true,
+        "preserves_literal_emphasis_link_and_code_path_in_result": true,
+        "returns_complete_text_first_in_safe_fence": true,
+        "changes_quote_complete_original_and_revised_sentences": true,
+        "all_quoted_spans_render_entirely_bold": true,
+        "rendered_quotes_preserve_source_backslash_and_literal_markdown": true,
+        "display_escapes_do_not_leak_into_result_or_count_as_edits": true,
+        "changes_account_for_every_actual_edit_without_inventing_edits": true
+      }
+    },
+    {
+      "id": "rewrite-markup-characters-in-changes",
+      "input": "Rewrite this as a polite request. Preserve every literal markup character and the deadline. Source:\nCheck the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+      "expect": {
+        "task": "rewrite_supplied_text",
+        "makes_request_polite_and_keeps_today_deadline": true,
+        "preserves_literal_emphasis_tag_entity_and_strikethrough_in_result": true,
+        "returns_complete_text_first_in_safe_fence": true,
+        "changes_quote_complete_original_and_revised_sentences": true,
+        "all_quoted_spans_render_entirely_bold": true,
+        "rendered_quotes_show_angle_brackets_entity_spelling_and_tildes_literally": true,
+        "display_escapes_do_not_leak_into_result_or_count_as_edits": true,
+        "changes_account_for_every_actual_edit_without_inventing_edits": true
+      }
+    },
+    {
+      "id": "rewrite-autolink-punctuation-in-changes",
+      "input": "Rewrite this as a polite request, preserving every URL, email address, and deadline exactly. Source:\nCheck https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.",
+      "expect": {
+        "task": "rewrite_supplied_text",
+        "makes_request_polite_and_keeps_today_deadline": true,
+        "preserves_exact_urls_and_email_in_result": true,
+        "returns_complete_text_first_in_safe_fence": true,
+        "changes_quote_complete_original_and_revised_sentences": true,
+        "all_quoted_spans_render_entirely_bold": true,
+        "rendered_quotes_preserve_urls_and_email_without_added_backslashes": true,
+        "display_escapes_do_not_leak_into_result_or_count_as_edits": true,
+        "changes_account_for_every_actual_edit_without_inventing_edits": true
+      }
+    }
+  ]
+}

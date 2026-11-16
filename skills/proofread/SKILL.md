@@ -57,6 +57,8 @@ For edited supplied text, compare complete original/result. Account for EVERY in
 
 Quote accurate before/after spans. For rewrites/shortening, each item quotes FULL original/revised sentences or paragraphs, then explains edits, covering all deletions without misleading fragments. Bold EVERY quoted span throughout Changes, including explanations: **"old"** and **"new"**. Prefer unquoted explanations.
 
+Inside Changes quotes, backslash-escape original backslashes first, then every other ASCII punctuation character once, including Markdown delimiters and URL punctuation such as colons, periods, and @. Add unescaped quotation marks and outer bold markers afterward. The rendered quote must show the exact literal source/result entirely in bold. These display escapes belong only in Changes: never add them to the returned fenced text or count them as edits.
+
 ## 5. Construct and inspect output
 
 Use chat text; Canvas, editable writing blocks, or documents only if explicitly requested. Return complete edited/transformed/new text FIRST in a plain-text fenced code block, with no preceding comments or edit highlighting.

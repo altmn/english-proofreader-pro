@@ -1,6 +1,22 @@
 # Validation evidence
 
-## Current source — October 12, 2026
+## Engineering review fixes — November 16, 2026
+
+Proposed package: **1.0.1**. Skill: **7,448 Unicode characters**, including frontmatter, spaces, and physical newlines; SHA-256 `257bcb051e347875580ad0516cd2bcc39c48fefedd2f3980476f64afdd31840a`.
+
+The quotation rule now escapes literal backslashes and all other ASCII punctuation inside Changes quotes before adding the bold wrapper. This prevents nested emphasis, code, tags, entities, and automatic URL links from changing the visible source text. The copyable fenced result remains literal. [Supplemental cases](changes-markdown-cases.json) add four rewrite/shortening cases with 37 assertions; the original fixture and historical response records remain unchanged.
+
+The official GitHub Markdown renderer verified six synthetic escaped quotations: all visible characters matched the input and remained bold, including links, URL ampersands, inline code, tags, entities, and backslashes. GitHub can still link a rendered email address while preserving its visible characters and bold styling. This checks the specified escaping method, not whether a model reliably applies it or how an intended plugin host renders it.
+
+All **71 standard-library unit tests** pass, including concurrent-writer, empty-body, raw-YAML, profile, fixture-binding, copied-run, and documentation regressions. Release validation/build and whitespace checks pass. Two builds produced identical six-file ZIPs, CRC checks passed, and every member matched source and local staging. ZIP SHA-256: `8eb34a0f6abc2ca6271c9e0f1e1eacbbcbff4403371a30ac7325f46f0bfafc73`. All 19 prior schema-1 records still validate as historical evidence. The unchanged icon decoded with `dwebp` at 1024×1024.
+
+**Fresh model simulations are pending.** Three isolated Codex CLI 0.136.0 attempts with `gpt-6.1-sol` / high failed before generating any responses: the account backend returned `model_not_found` and reported that this model is unsupported for the CLI's ChatGPT-account connection. These infrastructure failures are not behavioral verdicts. No prior response has been relabeled as evidence for the revised skill. The [original-suite snapshot](trials/review-fixes-agents-2026-11-16-snapshot.json) and [supplemental snapshot](trials/review-markdown-agents-2026-11-16-snapshot.json) freeze the final revised inputs for fresh agent runs. The new CI suite gates require current schema-2 records with the named profile and full original/supplemental fixture bindings; historical records cannot clear them.
+
+**Intended-host acceptance remains pending.** No live plugin was installed or updated. Before publication, test the exact built ZIP in the intended host and record model/effort, actual host version, installation method, invocation mode, build checksum, rendered/copied output, and per-case gaps.
+
+## Previous source — October 12, 2026
+
+This section retains the results for the October snapshot. References to current source or records within this dated section describe that snapshot, not the November revision above.
 
 Proposed package: **1.0.1**. Skill: **6,990 Unicode characters**, including frontmatter, spaces, and physical newlines; SHA-256 `cc7c5e6baed1d0329b6b279b1d38a39a7d7dffc143f02051dc084408ad4996f2`.
 

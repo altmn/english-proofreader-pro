@@ -17,6 +17,12 @@ MARKDOWN_LINK = re.compile(r"\]\(([^\s)]+)(?:\s+\"[^\"]*\")?\)")
 
 
 class PublicRepositoryTests(unittest.TestCase):
+    def test_submission_handoff_does_not_duplicate_volatile_evidence_counts(self) -> None:
+        guidance = (ROOT / "docs/chatgpt-submission.md").read_text(encoding="utf-8")
+        self.assertNotRegex(guidance, r"\b[\d,]+-character skill\b")
+        self.assertNotRegex(guidance, r"\bcurrently has [\d,]+ offline tests\b")
+        self.assertIn("../tests/RESULTS.md", MARKDOWN_LINK.findall(guidance))
+
     def test_public_docs_do_not_link_private_host_resources(self) -> None:
         docs = list(ROOT.glob("*.md")) + list((ROOT / "docs").glob("*.md"))
         docs += list((ROOT / "tests").glob("*.md"))
@@ -38,18 +44,20 @@ class PublicRepositoryTests(unittest.TestCase):
                     self.assertTrue(destination.is_file(), f"missing link target: {target}")
 
     def test_behavior_fixtures_have_unique_ids_and_observable_expectations(self) -> None:
-        fixture = json.loads((ROOT / "tests/cases.json").read_text(encoding="utf-8"))
-        self.assertEqual(fixture["schema_version"], 1)
-        self.assertTrue(fixture["shared_output_contract"])
-        cases = fixture["cases"]
-        self.assertGreater(len(cases), 0)
-        ids = [case["id"] for case in cases]
-        self.assertEqual(len(ids), len(set(ids)))
-        for case in cases:
-            with self.subTest(case=case["id"]):
-                self.assertTrue(case["input"].strip())
-                self.assertTrue(case["expect"]["task"].strip())
-                self.assertGreater(len(case["expect"]), 1)
+        for relative in ("tests/cases.json", "tests/changes-markdown-cases.json"):
+            with self.subTest(fixture=relative):
+                fixture = json.loads((ROOT / relative).read_text(encoding="utf-8"))
+                self.assertEqual(fixture["schema_version"], 1)
+                self.assertTrue(fixture["shared_output_contract"])
+                cases = fixture["cases"]
+                self.assertGreater(len(cases), 0)
+                ids = [case["id"] for case in cases]
+                self.assertEqual(len(ids), len(set(ids)))
+                for case in cases:
+                    with self.subTest(case=case["id"]):
+                        self.assertTrue(case["input"].strip())
+                        self.assertTrue(case["expect"]["task"].strip())
+                        self.assertGreater(len(case["expect"]), 1)
 
 
 if __name__ == "__main__":

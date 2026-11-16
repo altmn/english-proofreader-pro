@@ -58,8 +58,23 @@ def check_placeholders(text: str, label: str) -> None:
         fail(f"unfinished placeholder in {label}: {match.group(0)!r}")
 
 
+def validate_yaml_characters(text: str, label: str) -> None:
+    """Require YAML's printable source range before stripping or parsing text."""
+    for char in text:
+        codepoint = ord(char)
+        if not (
+            codepoint in {0x09, 0x0A, 0x0D, 0x85}
+            or 0x20 <= codepoint <= 0x7E
+            or 0xA0 <= codepoint <= 0xD7FF
+            or 0xE000 <= codepoint <= 0xFFFD
+            or 0x10000 <= codepoint <= 0x10FFFF
+        ):
+            fail(f"{label} contains a forbidden raw YAML character: U+{codepoint:04X}")
+
+
 def parse_yaml_string_scalar(raw_value: str, label: str) -> str:
     """Parse the deliberately small YAML string-scalar subset used in metadata."""
+    validate_yaml_characters(raw_value, label)
     value = raw_value.strip()
     if not value:
         fail(f"{label} must be a non-empty YAML string scalar")
@@ -344,13 +359,17 @@ def validate_skill() -> list[Path]:
         fail(f"cannot read {EXPECTED_SKILL} as UTF-8: {exc}")
     if len(text) >= MAX_SKILL_CHARS:
         fail(f"{EXPECTED_SKILL} must be under {MAX_SKILL_CHARS} Unicode characters (currently {len(text)})")
+    raw_lines = text.splitlines(keepends=True)
     lines = text.splitlines()
-    if len(lines) < 5 or lines[0] != "---":
+    if not lines or lines[0] != "---":
         fail(f"{EXPECTED_SKILL} must start with YAML frontmatter")
     try:
         end = lines.index("---", 1)
     except ValueError:
         fail(f"{EXPECTED_SKILL} frontmatter is not closed")
+    validate_yaml_characters("".join(raw_lines[: end + 1]), f"{EXPECTED_SKILL} frontmatter")
+    if not "".join(raw_lines[end + 1 :]).strip():
+        fail(f"{EXPECTED_SKILL} must contain a non-empty body after its frontmatter")
     frontmatter = lines[1:end]
     fields = parse_flat_yaml_mapping(frontmatter, f"{EXPECTED_SKILL} frontmatter")
     if set(fields) != {"name", "description"}:
@@ -364,6 +383,7 @@ def validate_skill() -> list[Path]:
         fail(f"{EXPECTED_SKILL} frontmatter name/description exceeds supported metadata limits")
     agent_path = require_regular_file("skills/proofread/agents/openai.yaml")
     agent_text = read_text(agent_path, "skills/proofread/agents/openai.yaml")
+    validate_yaml_characters(agent_text, "skills/proofread/agents/openai.yaml")
     agent_lines = agent_text.splitlines()
     if len(agent_lines) < 2 or agent_lines[0] != "interface:":
         fail("skills/proofread/agents/openai.yaml must contain an interface mapping")
