@@ -1,0 +1,338 @@
+{
+  "schema_version": 2,
+  "kind": "evaluation-record",
+  "snapshot_file": "tests/trials/review-markdown-sol-2026-11-16-snapshot.json",
+  "snapshot_sha256": "fd808215c86aaa18af472b33974332ba99a5399ca986474b4f7cccaf3695a45e",
+  "source_binding": {
+    "skill_sha256": "257bcb051e347875580ad0516cd2bcc39c48fefedd2f3980476f64afdd31840a",
+    "manifest_version": "1.0.1",
+    "manifest_sha256": "5b219e8e9afa7d7fcbb7b5f2696ac0a38884904bcb8fd6179a8573e999baf75e",
+    "runner_context_sha256": "dae6e8e36c277a6d5af8fb09d4e5d72bb9d8efeb0bac531a53deabb76f8593e7"
+  },
+  "metadata": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "high",
+    "run_id": "sol-review-run-3-2026-11-16",
+    "host": "Codex collaboration agent",
+    "host_version": "unknown",
+    "invocation_mode": "independent-agent-simulation",
+    "date": "2026-11-16",
+    "source": "Fresh collaboration task sol_review_run_3; fork_turns=none; explicit model=gpt-6.1-sol, reasoning_effort=high. 22 original and supplemental cases batched in one turn. Only frozen input SHA-256 e8a3c18adf211287f3ef59f15d0ff643548fa72d228c4c3891582914a1765c7d was supplied; expectations, previous answers, and grading notes withheld. Tool use limited to loading that input and serializing the complete ungraded output.",
+    "reviewer": "Independent Codex assertion reviewer",
+    "reviewer_context": "Separate agent receives the frozen expectations after all generators finish; grades each assertion against literal responses and shared contract. Lead reviewer independently checks rendered Markdown and literal copyable text. No response revisions after generation."
+  },
+  "host_evidence": {
+    "install_method": null,
+    "build_sha256": null
+  },
+  "cases": [
+    {
+      "id": "rewrite-markdown-changes-quotes",
+      "prompt": "Independent-agent behavioral simulation protocol for engineering regressions.\n\nEach fresh collaboration agent receives this complete runner context, the frozen public skill, and case IDs with their exact prompts. Fixture expectations, historical responses, and grading notes are withheld. No conversation is inherited. The actual model, reasoning effort, and unique agent invocation identity are recorded in metadata.\n\nApply the supplied skill to each case as a separate user request. All cases are batched in one invocation; do not carry answers or source material between cases. Produce one complete literal response per case without grading or revising it against expectations. Save only a JSON object containing responses, each with id and response string, to the assigned output artifact. Tools may load the assigned frozen input and serialize the generated output; do not use them to solve cases, read other files, or modify the repository. Do not revise answers after saving them.\n\nThe generation envelope contains this runner context, the complete frozen skill, and a JSON list of cases (id and exact prompt only). Each exact prompt consists of this runner context, optional case context, and the user input. Both the original suite and supplemental Markdown cases are batched in the same agent turn and recorded separately. A separate reviewer grades the frozen expectations after generation. All attempted generations and failed verdicts are retained.\n\nRuntime host: Codex collaboration agent; its exact build version is not exposed and is recorded as unknown. Invocation mode: independent-agent-simulation. These simulations do not test an installed plugin, host activation, Markdown rendering, clipboard behavior, or portal scans. Intended-host acceptance is separate.\n\nRewrite this for a warm but professional tone. Keep the deadline firm and preserve all literal Markdown, links, and inline code. Source:\nSend the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.",
+      "context": "",
+      "expectation": {
+        "task": "rewrite_supplied_text",
+        "honors_tone_and_keeps_today_deadline": true,
+        "preserves_literal_emphasis_link_url_and_inline_code_in_result": true,
+        "returns_complete_text_first_in_safe_fence": true,
+        "changes_quote_complete_original_and_revised_sentences": true,
+        "all_quoted_spans_render_entirely_bold": true,
+        "rendered_quotes_show_literal_markdown_including_backticks_brackets_and_ampersand": true,
+        "display_escapes_do_not_leak_into_result_or_count_as_edits": true,
+        "changes_account_for_every_actual_edit_without_inventing_edits": true
+      },
+      "expectation_sha256": "597847d585c7906bb442909a4d208d763408af12f8720bc3e6f3b86602460c20",
+      "response": "```text\nPlease send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.\n```\nChanges:\n- Changed **\"Send the \\*\\*draft\\*\\* and \\*notes\\* from \\[the folder\\]\\(https\\:\\/\\/example\\.com\\/files\\?a\\=1\\&b\\=2\\) to \\`review\\_queue\\` today\\.\"** to **\"Please send the \\*\\*draft\\*\\* and \\*notes\\* from \\[the folder\\]\\(https\\:\\/\\/example\\.com\\/files\\?a\\=1\\&b\\=2\\) to \\`review\\_queue\\` today\\.\"** to make the request warmer and more professional while preserving the deadline and literal formatting.",
+      "response_sha256": "cb89976efea82a1c5ddbdd0386956a2055d8b5475ac9abe8b3f772a3dba03a9d",
+      "assertions": [
+        {
+          "name": "task",
+          "expected": "rewrite_supplied_text",
+          "status": "pass",
+          "note": "Rewrites the supplied request and follows it with a Changes list."
+        },
+        {
+          "name": "honors_tone_and_keeps_today_deadline",
+          "expected": true,
+          "status": "pass",
+          "note": "Please softens the request while today remains the explicit deadline. The wording remains professional."
+        },
+        {
+          "name": "preserves_literal_emphasis_link_url_and_inline_code_in_result",
+          "expected": true,
+          "status": "pass",
+          "note": "The fenced result retains the exact emphasis markers, complete folder link with a=1&b=2, and review_queue inline-code syntax."
+        },
+        {
+          "name": "returns_complete_text_first_in_safe_fence",
+          "expected": true,
+          "status": "pass",
+          "note": "Complete result appears first in matching text-labeled three-backtick fences; the longest result backtick run is one or zero. Changes follows the closing fence."
+        },
+        {
+          "name": "changes_quote_complete_original_and_revised_sentences",
+          "expected": true,
+          "status": "pass",
+          "note": "Independently inspected GitHub GFM HTML in tests/trials/review-markdown-render-2026-11-16.json; both complete quoted source and result match the bound snapshot and fenced text exactly, including punctuation and all literal syntax."
+        },
+        {
+          "name": "all_quoted_spans_render_entirely_bold",
+          "expected": true,
+          "status": "pass",
+          "note": "Independently inspected GitHub GFM HTML in tests/trials/review-markdown-render-2026-11-16.json; both full quotations, including quote marks, occupy uninterrupted strong elements; no quoted span in the explanation lies outside bold."
+        },
+        {
+          "name": "rendered_quotes_show_literal_markdown_including_backticks_brackets_and_ampersand",
+          "expected": true,
+          "status": "pass",
+          "note": "Independently inspected GitHub GFM HTML in tests/trials/review-markdown-render-2026-11-16.json; decoded strong text exactly retains the asterisks, backticks, brackets, parentheses, URL punctuation, and ampersand; no nested emphasis, link, or code conversion occurs."
+        },
+        {
+          "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "The fenced result preserves literal source syntax without presentation escapes; the Changes explanation describes only the actual wording edits."
+        },
+        {
+          "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "The complete sentence mapping accounts for Please, Send-to-send capitalization; the explanation describes the tone change without inventing corrections."
+        }
+      ]
+    },
+    {
+      "id": "shorten-markdown-changes-quotes",
+      "prompt": "Independent-agent behavioral simulation protocol for engineering regressions.\n\nEach fresh collaboration agent receives this complete runner context, the frozen public skill, and case IDs with their exact prompts. Fixture expectations, historical responses, and grading notes are withheld. No conversation is inherited. The actual model, reasoning effort, and unique agent invocation identity are recorded in metadata.\n\nApply the supplied skill to each case as a separate user request. All cases are batched in one invocation; do not carry answers or source material between cases. Produce one complete literal response per case without grading or revising it against expectations. Save only a JSON object containing responses, each with id and response string, to the assigned output artifact. Tools may load the assigned frozen input and serialize the generated output; do not use them to solve cases, read other files, or modify the repository. Do not revise answers after saving them.\n\nThe generation envelope contains this runner context, the complete frozen skill, and a JSON list of cases (id and exact prompt only). Each exact prompt consists of this runner context, optional case context, and the user input. Both the original suite and supplemental Markdown cases are batched in the same agent turn and recorded separately. A separate reviewer grades the frozen expectations after generation. All attempted generations and failed verdicts are retained.\n\nRuntime host: Codex collaboration agent; its exact build version is not exposed and is recorded as unknown. Invocation mode: independent-agent-simulation. These simulations do not test an installed plugin, host activation, Markdown rendering, clipboard behavior, or portal scans. Intended-host acceptance is separate.\n\nProofread and make it less wordy; preserve all literal Markdown, links, and inline code. Source:\nAt this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+      "context": "",
+      "expectation": {
+        "task": "proofread_and_shorten_supplied_text",
+        "requested_reduction_target": "about 30%",
+        "preserves_review_and_future_decision_whether_to_send": true,
+        "preserves_literal_emphasis_link_and_code_path_in_result": true,
+        "returns_complete_text_first_in_safe_fence": true,
+        "changes_quote_complete_original_and_revised_sentences": true,
+        "all_quoted_spans_render_entirely_bold": true,
+        "rendered_quotes_preserve_source_backslash_and_literal_markdown": true,
+        "display_escapes_do_not_leak_into_result_or_count_as_edits": true,
+        "changes_account_for_every_actual_edit_without_inventing_edits": true
+      },
+      "expectation_sha256": "d9dcac64ac7bb6bf810ac4b02f6c37f24052dfbaef7973487f6bdd8b2406b6fd",
+      "response": "```text\nAt this time, we are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\n```\nChanges:\n- Changed **\"At this point in time\\, we are currently in the process of reviewing the \\*\\*draft\\*\\* in \\`C\\:\\\\reports\\` and the \\[notes\\]\\(https\\:\\/\\/example\\.com\\/notes\\)\\, and we will make a decision about whether to send them later\\.\"** to **\"At this time\\, we are reviewing the \\*\\*draft\\*\\* in \\`C\\:\\\\reports\\` and the \\[notes\\]\\(https\\:\\/\\/example\\.com\\/notes\\)\\, and we will decide whether to send them later\\.\"** to shorten the time reference, simplify the ongoing review and decision wording, and remove redundancy while retaining the decision about whether to send the materials.",
+      "response_sha256": "abe76dea577fc1bbee894bfe560308eea4083a26b5b465b90f4d6f573f719bc3",
+      "assertions": [
+        {
+          "name": "task",
+          "expected": "proofread_and_shorten_supplied_text",
+          "status": "pass",
+          "note": "Shortens the supplied sentence and follows it with a Changes list."
+        },
+        {
+          "name": "requested_reduction_target",
+          "expected": "about 30%",
+          "status": "pass",
+          "note": "Counted complete source/result using whitespace-separated prose tokens: 32 to 22 words, a 31.25% reduction, consistent with about 30%."
+        },
+        {
+          "name": "preserves_review_and_future_decision_whether_to_send",
+          "expected": true,
+          "status": "pass",
+          "note": "Ongoing review and a future decision whether to send are retained, including later; no decision to send or completed sending is asserted."
+        },
+        {
+          "name": "preserves_literal_emphasis_link_and_code_path_in_result",
+          "expected": true,
+          "status": "pass",
+          "note": "The exact draft emphasis, notes Markdown link, and inline code path are retained. Parsed source and result each contain one literal path backslash."
+        },
+        {
+          "name": "returns_complete_text_first_in_safe_fence",
+          "expected": true,
+          "status": "pass",
+          "note": "Complete result appears first in matching text-labeled three-backtick fences; the longest result backtick run is one or zero. Changes follows the closing fence."
+        },
+        {
+          "name": "changes_quote_complete_original_and_revised_sentences",
+          "expected": true,
+          "status": "pass",
+          "note": "Independently inspected GitHub GFM HTML in tests/trials/review-markdown-render-2026-11-16.json; both complete quoted source and result match the bound snapshot and fenced text exactly, including punctuation and all literal syntax."
+        },
+        {
+          "name": "all_quoted_spans_render_entirely_bold",
+          "expected": true,
+          "status": "pass",
+          "note": "Independently inspected GitHub GFM HTML in tests/trials/review-markdown-render-2026-11-16.json; both full quotations, including quote marks, occupy uninterrupted strong elements; no quoted span in the explanation lies outside bold."
+        },
+        {
+          "name": "rendered_quotes_preserve_source_backslash_and_literal_markdown",
+          "expected": true,
+          "status": "pass",
+          "note": "Independently inspected GitHub GFM HTML in tests/trials/review-markdown-render-2026-11-16.json; decoded strong text equals both full sentences exactly, with one literal path backslash in each, visible Markdown/backticks, and no added or lost characters."
+        },
+        {
+          "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "The fenced result preserves literal source syntax without presentation escapes; the Changes explanation describes only the actual wording edits."
+        },
+        {
+          "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "The full before/after mapping covers the shorter time phrase, removal of current/process redundancy, and make-a-decision-about to decide wording; all real edits are covered without fictional corrections."
+        }
+      ]
+    },
+    {
+      "id": "rewrite-markup-characters-in-changes",
+      "prompt": "Independent-agent behavioral simulation protocol for engineering regressions.\n\nEach fresh collaboration agent receives this complete runner context, the frozen public skill, and case IDs with their exact prompts. Fixture expectations, historical responses, and grading notes are withheld. No conversation is inherited. The actual model, reasoning effort, and unique agent invocation identity are recorded in metadata.\n\nApply the supplied skill to each case as a separate user request. All cases are batched in one invocation; do not carry answers or source material between cases. Produce one complete literal response per case without grading or revising it against expectations. Save only a JSON object containing responses, each with id and response string, to the assigned output artifact. Tools may load the assigned frozen input and serialize the generated output; do not use them to solve cases, read other files, or modify the repository. Do not revise answers after saving them.\n\nThe generation envelope contains this runner context, the complete frozen skill, and a JSON list of cases (id and exact prompt only). Each exact prompt consists of this runner context, optional case context, and the user input. Both the original suite and supplemental Markdown cases are batched in the same agent turn and recorded separately. A separate reviewer grades the frozen expectations after generation. All attempted generations and failed verdicts are retained.\n\nRuntime host: Codex collaboration agent; its exact build version is not exposed and is recorded as unknown. Invocation mode: independent-agent-simulation. These simulations do not test an installed plugin, host activation, Markdown rendering, clipboard behavior, or portal scans. Intended-host acceptance is separate.\n\nRewrite this as a polite request. Preserve every literal markup character and the deadline. Source:\nCheck the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+      "context": "",
+      "expectation": {
+        "task": "rewrite_supplied_text",
+        "makes_request_polite_and_keeps_today_deadline": true,
+        "preserves_literal_emphasis_tag_entity_and_strikethrough_in_result": true,
+        "returns_complete_text_first_in_safe_fence": true,
+        "changes_quote_complete_original_and_revised_sentences": true,
+        "all_quoted_spans_render_entirely_bold": true,
+        "rendered_quotes_show_angle_brackets_entity_spelling_and_tildes_literally": true,
+        "display_escapes_do_not_leak_into_result_or_count_as_edits": true,
+        "changes_account_for_every_actual_edit_without_inventing_edits": true
+      },
+      "expectation_sha256": "4e1b786f9caecdb40df7d585798ceebdde6af94d4b42fe4f0ab5835d4fe4765b",
+      "response": "```text\nPlease check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\n```\nChanges:\n- Changed **\"Check the \\*\\*draft\\*\\* marked \\<ready\\>\\, \\&copy\\;\\, and \\~\\~pending\\~\\~ today\\.\"** to **\"Please check the \\*\\*draft\\*\\* marked \\<ready\\>\\, \\&copy\\;\\, and \\~\\~pending\\~\\~ today\\.\"** to make the request polite while preserving every literal markup character and the deadline.",
+      "response_sha256": "c42baf6442b5aba61e688c9c02832a6610b3b72793163fd623ee1bcb260d620a",
+      "assertions": [
+        {
+          "name": "task",
+          "expected": "rewrite_supplied_text",
+          "status": "pass",
+          "note": "Rewrites the supplied request and follows it with a Changes list."
+        },
+        {
+          "name": "makes_request_polite_and_keeps_today_deadline",
+          "expected": true,
+          "status": "pass",
+          "note": "Please makes the request polite; today remains the unchanged deadline."
+        },
+        {
+          "name": "preserves_literal_emphasis_tag_entity_and_strikethrough_in_result",
+          "expected": true,
+          "status": "pass",
+          "note": "The fenced text preserves the exact draft emphasis, <ready> tag spelling, &copy; entity spelling, and pending strikethrough delimiters."
+        },
+        {
+          "name": "returns_complete_text_first_in_safe_fence",
+          "expected": true,
+          "status": "pass",
+          "note": "Complete result appears first in matching text-labeled three-backtick fences; the longest result backtick run is one or zero. Changes follows the closing fence."
+        },
+        {
+          "name": "changes_quote_complete_original_and_revised_sentences",
+          "expected": true,
+          "status": "pass",
+          "note": "Independently inspected GitHub GFM HTML in tests/trials/review-markdown-render-2026-11-16.json; both complete quoted source and result match the bound snapshot and fenced text exactly, including punctuation and all literal syntax."
+        },
+        {
+          "name": "all_quoted_spans_render_entirely_bold",
+          "expected": true,
+          "status": "pass",
+          "note": "Independently inspected GitHub GFM HTML in tests/trials/review-markdown-render-2026-11-16.json; both full quotations, including quote marks, occupy uninterrupted strong elements; no quoted span in the explanation lies outside bold."
+        },
+        {
+          "name": "rendered_quotes_show_angle_brackets_entity_spelling_and_tildes_literally",
+          "expected": true,
+          "status": "pass",
+          "note": "Independently inspected GitHub GFM HTML in tests/trials/review-markdown-render-2026-11-16.json; decoded strong text shows <ready>, &copy;, and both tilde pairs literally, without a hidden tag, copyright substitution, or strike interpretation."
+        },
+        {
+          "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "The fenced result preserves literal source syntax without presentation escapes; the Changes explanation describes only the actual wording edits."
+        },
+        {
+          "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "The complete before/after mapping accounts for Please and Check-to-check capitalization; the explanation accurately states the polite-request purpose without inventing markup edits."
+        }
+      ]
+    },
+    {
+      "id": "rewrite-autolink-punctuation-in-changes",
+      "prompt": "Independent-agent behavioral simulation protocol for engineering regressions.\n\nEach fresh collaboration agent receives this complete runner context, the frozen public skill, and case IDs with their exact prompts. Fixture expectations, historical responses, and grading notes are withheld. No conversation is inherited. The actual model, reasoning effort, and unique agent invocation identity are recorded in metadata.\n\nApply the supplied skill to each case as a separate user request. All cases are batched in one invocation; do not carry answers or source material between cases. Produce one complete literal response per case without grading or revising it against expectations. Save only a JSON object containing responses, each with id and response string, to the assigned output artifact. Tools may load the assigned frozen input and serialize the generated output; do not use them to solve cases, read other files, or modify the repository. Do not revise answers after saving them.\n\nThe generation envelope contains this runner context, the complete frozen skill, and a JSON list of cases (id and exact prompt only). Each exact prompt consists of this runner context, optional case context, and the user input. Both the original suite and supplemental Markdown cases are batched in the same agent turn and recorded separately. A separate reviewer grades the frozen expectations after generation. All attempted generations and failed verdicts are retained.\n\nRuntime host: Codex collaboration agent; its exact build version is not exposed and is recorded as unknown. Invocation mode: independent-agent-simulation. These simulations do not test an installed plugin, host activation, Markdown rendering, clipboard behavior, or portal scans. Intended-host acceptance is separate.\n\nRewrite this as a polite request, preserving every URL, email address, and deadline exactly. Source:\nCheck https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.",
+      "context": "",
+      "expectation": {
+        "task": "rewrite_supplied_text",
+        "makes_request_polite_and_keeps_today_deadline": true,
+        "preserves_exact_urls_and_email_in_result": true,
+        "returns_complete_text_first_in_safe_fence": true,
+        "changes_quote_complete_original_and_revised_sentences": true,
+        "all_quoted_spans_render_entirely_bold": true,
+        "rendered_quotes_preserve_urls_and_email_without_added_backslashes": true,
+        "display_escapes_do_not_leak_into_result_or_count_as_edits": true,
+        "changes_account_for_every_actual_edit_without_inventing_edits": true
+      },
+      "expectation_sha256": "24273406cdf6c5e7d218392df560c805400d25a01ec950ba4e09446bd8dc8ec9",
+      "response": "```text\nPlease check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\n```\nChanges:\n- Changed **\"Check https\\:\\/\\/example\\.com\\/a\\?x\\=1\\&y\\=2 and www\\.example\\.com\\/a\\_b\\, then email user\\@example\\.com today\\.\"** to **\"Please check https\\:\\/\\/example\\.com\\/a\\?x\\=1\\&y\\=2 and www\\.example\\.com\\/a\\_b\\, then email user\\@example\\.com today\\.\"** to make the request polite while preserving both URLs, the email address, and the deadline exactly.",
+      "response_sha256": "148a8167e2c5c8e17e8b142f864896f538085d48d14b36efe268b600b15ed0af",
+      "assertions": [
+        {
+          "name": "task",
+          "expected": "rewrite_supplied_text",
+          "status": "pass",
+          "note": "Rewrites the supplied request and follows it with a Changes list."
+        },
+        {
+          "name": "makes_request_polite_and_keeps_today_deadline",
+          "expected": true,
+          "status": "pass",
+          "note": "Please makes the request polite; today remains the unchanged deadline."
+        },
+        {
+          "name": "preserves_exact_urls_and_email_in_result",
+          "expected": true,
+          "status": "pass",
+          "note": "Both exact URLs, including query punctuation and a_b, and user@example.com remain unchanged in the fenced text."
+        },
+        {
+          "name": "returns_complete_text_first_in_safe_fence",
+          "expected": true,
+          "status": "pass",
+          "note": "Complete result appears first in matching text-labeled three-backtick fences; the longest result backtick run is one or zero. Changes follows the closing fence."
+        },
+        {
+          "name": "changes_quote_complete_original_and_revised_sentences",
+          "expected": true,
+          "status": "pass",
+          "note": "Independently inspected GitHub GFM HTML in tests/trials/review-markdown-render-2026-11-16.json; both complete quoted source and result match the bound snapshot and fenced text exactly, including punctuation and all literal syntax."
+        },
+        {
+          "name": "all_quoted_spans_render_entirely_bold",
+          "expected": true,
+          "status": "pass",
+          "note": "Independently inspected GitHub GFM HTML in tests/trials/review-markdown-render-2026-11-16.json; both full quotations, including quote marks, occupy uninterrupted strong elements; no quoted span in the explanation lies outside bold."
+        },
+        {
+          "name": "rendered_quotes_preserve_urls_and_email_without_added_backslashes",
+          "expected": true,
+          "status": "pass",
+          "note": "Independently inspected GitHub GFM HTML in tests/trials/review-markdown-render-2026-11-16.json; decoded strong text exactly preserves both URLs and email, without display backslashes; email autolinks remain descendants of strong with unchanged visible text."
+        },
+        {
+          "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "The fenced result preserves literal source syntax without presentation escapes; the Changes explanation describes only the actual wording edits."
+        },
+        {
+          "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "The complete before/after mapping accounts for Please and Check-to-check capitalization; no fictional URL or email corrections are claimed."
+        }
+      ]
+    }
+  ],
+  "aggregate": "pass"
+}
