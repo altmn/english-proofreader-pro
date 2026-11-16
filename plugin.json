@@ -11,9 +11,9 @@
   "extensions": {
     "com.openai": {
       "interface": {
-        "displayName": "English Proofreader Pro",
+        "displayName": "EnglishProofreaderPro",
         "shortDescription": "Careful English proofreading",
-        "longDescription": "Proofread, edit, rewrite, or draft American English prose while preserving meaning and voice. Finished text appears in a copyable plain-text code block. Edits to supplied text are followed by a complete Changes list. Preserve literal Markdown, paragraph breaks, and list markers. Supports requested shortening levels and editing AI prompts without executing their embedded instructions. By default, make only necessary corrections and retain gendered singular pronouns instead of replacing them with singular they; use they, them, and their for plural references only. Already-correct text receives a no-adjustments confirmation. Follow the user's separate editing directions.",
+        "longDescription": "Proofread, edit, rewrite, or draft American English text while preserving meaning and voice. Finished text appears in a plain-text code block with Copy code and soft wrapping where the host supports them. Edits to supplied text are followed by a complete Changes list. Preserve literal Markdown, paragraph breaks, and list markers. Supports requested shortening levels and editing AI prompts without executing their embedded instructions. By default, make only necessary corrections and retain gendered singular pronouns instead of replacing them with singular they; use they, them, and their for plural references only. Already-correct text receives a no-adjustments confirmation. Follow the user's separate editing directions. For routine proofreading, start with the latest ChatGPT Instant model at its normal setting; model selection remains a host setting.",
         "developerName": "Alex Allen",
         "category": "Productivity",
         "capabilities": ["Proofreading", "Editing", "Rewriting", "Drafting"],
@@ -35,7 +35,7 @@
       },
       "publication": {
         "countries": [],
-        "release_notes": "Calculate and recheck shortening budgets, preserve complete source fences, audit every quoted Changes span, and draft only from supported facts. Harden package validation and failed-build recovery, with source-bound behavioral evidence."
+        "release_notes": "Require programmatic text counts, strengthen isolation of source URLs and commands, request copyable plain-text blocks with soft wrapping where supported, use distinctive invocation labels, and recommend ChatGPT Instant at its normal setting."
       }
     }
   }

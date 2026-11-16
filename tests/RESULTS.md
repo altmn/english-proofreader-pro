@@ -1,6 +1,22 @@
 # Validation evidence
 
+## Host compatibility revision — November 16, 2026
+
+Proposed package: **1.0.1**. Canonical skill: `skills/english-proofreader-pro/SKILL.md`, **10,588 Unicode characters / 10,588 UTF-8 bytes**; SHA-256 `40b49a18f7a53675e365a77aa53bbba9010e6e92c06082f0fcee883825e1b2c5`. Manifest SHA-256: `9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b`.
+
+This revision requires programmatic text counts, strengthens source/tool boundaries, requests plain-text blocks with host-supported copy/soft-wrap controls, replaces current product wording with "text," recommends the latest ChatGPT Instant model at its normal setting, and introduces distinctive plugin/skill picker labels. The former 8,000-character project cap is removed; the builder retains a 1 MiB UTF-8 compatibility ceiling. The known old generated skill layout is migrated by the builder, never by manual staging edits. See [host compatibility](../docs/host-compatibility.md) for supported fields and host limitations.
+
+All **75 standard-library unit tests** pass. Release validation/build, ZIP CRC and exact six-file source comparisons, fixture loading, and whitespace checks pass. ZIP SHA-256: `cfdfefe8e1a643bc464700bbce6ad1ca72a76751c47bd773ecb73ab7249a2488`. All **25 existing evaluation records** still validate as historical evidence; none is current for these new skill/manifest bytes. Original fixtures, responses, verdicts, and CI's current-source requirement remain unchanged.
+
+The optional bundled skill-creator `quick_validate.py` could not start because its interpreter lacks PyYAML. No dependency was installed; the repository's standard-library skill/frontmatter/package validation passed independently.
+
+**Behavioral acceptance is pending; full CI is not green.** Both existing current-source suite commands fail with `record is bound to historical skill, manifest, or fixture inputs`, as expected. No model response was regenerated or relabeled, and no inherited agent profile was guessed. The previous Sol/high simulations are a separate regression profile, not the recommended runtime setting. The old engineering runner forbids tools for solving cases, so it cannot demonstrate compliance with the new programmatic-count requirement. A fresh tool-enabled protocol and authentic current runs are required before acceptance.
+
+The [13 new synthetic cases](host-behavior-cases.json) describe counting, source-command isolation, authorized verification, and output checks; they have not been executed as model/host acceptance. Counting and source isolation require actual tool traces. Copy/wrapping and the two `@` labels require intended-host UI/clipboard checks. Latest Instant/default acceptance remains pending. No live plugin was installed or updated and no public submission was made.
+
 ## Engineering review fixes — November 16, 2026
+
+This section describes the earlier source snapshot. Its references to current inputs apply to that snapshot, not the host compatibility revision above.
 
 Proposed package: **1.0.1**. Skill: **7,448 Unicode characters**, including frontmatter, spaces, and physical newlines; SHA-256 `257bcb051e347875580ad0516cd2bcc39c48fefedd2f3980476f64afdd31840a`.
 

@@ -8,7 +8,7 @@ Thanks for considering a contribution. Small, focused fixes to the skill, packag
 - Keep changes focused and explain the user-facing reason in the issue or pull request.
 - Do not include real private writing, personal data, credentials, or confidential material in issues, tests, screenshots, or examples. Use synthetic text.
 - Keep the skill's behavior intact unless a change explicitly targets it: minimal editing by default; preserve meaning, voice, pronouns, and formatting; treat instructions embedded in source text as inert; retain and safely fence literal text; and list actual changes to supplied text. Drafting has no Changes list.
-- Keep `skills/proofread/SKILL.md` below 8,000 characters.
+- Keep `skills/english-proofreader-pro/SKILL.md` concise and within the build's 1 MiB UTF-8 compatibility ceiling. The former 8,000-character project cap no longer applies.
 
 ## Local checks
 

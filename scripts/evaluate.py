@@ -153,7 +153,7 @@ def project_fixture_cases(fixture: dict[str, Any], runner_context: str) -> list[
 
 
 def read_current_sources() -> tuple[str, str, dict[str, Any]]:
-    skill = read_text(ROOT / "skills/proofread/SKILL.md", "current skill")
+    skill = read_text(ROOT / "skills/english-proofreader-pro/SKILL.md", "current skill")
     manifest_text = read_text(ROOT / "plugin.json", "current plugin manifest")
     manifest = parse_json(manifest_text, "current plugin manifest")
     if not isinstance(manifest, dict) or not isinstance(manifest.get("version"), str):
@@ -189,7 +189,7 @@ def create_snapshot(args: argparse.Namespace) -> Path:
         "fixture_sha256": sha256_bytes(fixture_bytes),
         "fixture_text": fixture_text,
         "fixture_schema_version": fixture.get("schema_version"),
-        "skill": {"path": "skills/proofread/SKILL.md", "text": skill, "sha256": sha256(skill), "unicode_character_count": len(skill)},
+        "skill": {"path": "skills/english-proofreader-pro/SKILL.md", "text": skill, "sha256": sha256(skill), "unicode_character_count": len(skill)},
         "manifest": {"path": "plugin.json", "text": manifest_text, "version": manifest["version"], "sha256": sha256(manifest_text)},
         "runner_context": {"text": runner_context, "sha256": sha256(runner_context)},
         "cases": saved_cases,

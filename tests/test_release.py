@@ -49,14 +49,14 @@ class ReleaseBuilderTests(unittest.TestCase):
                 "PRIVACY.md",
                 "assets/icon.webp",
                 "plugin.json",
-                "skills/proofread/SKILL.md",
-                "skills/proofread/agents/openai.yaml",
+                "skills/english-proofreader-pro/SKILL.md",
+                "skills/english-proofreader-pro/agents/openai.yaml",
             ],
         )
         self.assertFalse(any(name.startswith(("tests/", "docs/", ".codex-plugin/")) for name in names))
 
     def test_unlisted_skill_file_is_not_packaged(self) -> None:
-        extra = self.root / "skills/proofread/private-notes.txt"
+        extra = self.root / "skills/english-proofreader-pro/private-notes.txt"
         extra.write_text("must not be shipped", encoding="utf-8")
 
         with self.assertRaisesRegex(release.ReleaseError, "not in the release allowlist"):
@@ -234,31 +234,40 @@ class ReleaseBuilderTests(unittest.TestCase):
         with self.assertRaisesRegex(release.ReleaseError, "author.name"):
             release.validate_manifest()
 
-    def test_skill_character_limit_is_exclusive_at_8000(self) -> None:
+    def test_skill_accepts_more_than_8000_characters(self) -> None:
         skill_path = self.root / release.EXPECTED_SKILL
-        header = "---\nname: proofread\ndescription: x\n---\n"
-        skill_path.write_text(header + ("a" * (release.MAX_SKILL_CHARS - len(header))), encoding="utf-8")
+        header = "---\nname: english-proofreader-pro\ndescription: x\n---\n"
+        skill_path.write_text(header + ("a" * 8000), encoding="utf-8")
+        release.validate_skill()
 
-        with self.assertRaisesRegex(release.ReleaseError, "must be under 8000"):
+    def test_skill_byte_limit_includes_boundary(self) -> None:
+        skill_path = self.root / release.EXPECTED_SKILL
+        header = b"---\nname: english-proofreader-pro\ndescription: x\n---\n"
+        payload = header + b"a" * (release.MAX_SKILL_BYTES - len(header))
+        skill_path.write_bytes(payload)
+        release.validate_skill()
+
+        skill_path.write_bytes(payload + b"a")
+        with self.assertRaisesRegex(release.ReleaseError, "at most 1048576 UTF-8 bytes"):
             release.validate_skill()
 
     def test_skill_frontmatter_and_absolute_path_failures(self) -> None:
         skill_path = self.root / release.EXPECTED_SKILL
-        skill_path.write_text(" ---\nname: proofread\ndescription: x\n---\nbody\n", encoding="utf-8")
+        skill_path.write_text(" ---\nname: english-proofreader-pro\ndescription: x\n---\nbody\n", encoding="utf-8")
         with self.assertRaisesRegex(release.ReleaseError, "must start with YAML frontmatter"):
             release.validate_skill()
 
-        skill_path.write_text("---\nname: proofread\nname: proofread\ndescription: x\n---\nbody\n", encoding="utf-8")
+        skill_path.write_text("---\nname: english-proofreader-pro\nname: english-proofreader-pro\ndescription: x\n---\nbody\n", encoding="utf-8")
         with self.assertRaisesRegex(release.ReleaseError, "duplicate name"):
             release.validate_skill()
 
-        skill_path.write_text("---\nname: proofread\ndescription: x\n---\nAvoid /private/data.\n", encoding="utf-8")
+        skill_path.write_text("---\nname: english-proofreader-pro\ndescription: x\n---\nAvoid /private/data.\n", encoding="utf-8")
         with self.assertRaisesRegex(release.ReleaseError, "unsafe absolute or parent-relative path"):
             release.validate_skill()
 
     def test_empty_skill_body_is_rejected_by_validation_and_build(self) -> None:
         skill_path = self.root / release.EXPECTED_SKILL
-        header = "---\nname: proofread\ndescription: Proofread prose\n---"
+        header = "---\nname: english-proofreader-pro\ndescription: Proofread text\n---"
         for body in ("", "\n", "\n\n", "\n \t\r\n"):
             with self.subTest(body=repr(body)):
                 skill_path.write_bytes((header + body).encode("utf-8"))
@@ -279,23 +288,26 @@ class ReleaseBuilderTests(unittest.TestCase):
             'description: "bad\\q"',
         ):
             with self.subTest(line=line):
-                skill_path.write_text(f"---\nname: proofread\n{line}\n---\nbody\n", encoding="utf-8")
+                skill_path.write_text(f"---\nname: english-proofreader-pro\n{line}\n---\nbody\n", encoding="utf-8")
                 with self.assertRaises(release.ReleaseError):
                     release.validate_skill()
-        skill_path.write_text('---\nname: proofread\ndescription: "literal 0x10"\n---\nbody\n', encoding="utf-8")
+        skill_path.write_text('---\nname: english-proofreader-pro\ndescription: "literal 0x10"\n---\nbody\n', encoding="utf-8")
         release.validate_skill()
 
-    def test_skill_physical_unicode_character_count_preserves_crlf(self) -> None:
+    def test_skill_byte_limit_counts_multibyte_text_and_physical_crlf(self) -> None:
         skill_path = self.root / release.EXPECTED_SKILL
-        header = "---\r\nname: proofread\r\ndescription: x\r\n---\r\n"
-        payload = header + ("é" * (release.MAX_SKILL_CHARS - len(header)))
-        skill_path.write_bytes(payload.encode("utf-8"))
+        header = "---\r\nname: english-proofreader-pro\r\ndescription: x\r\n---\r\n"
+        remaining = release.MAX_SKILL_BYTES - len(header.encode("utf-8"))
+        payload = header.encode("utf-8") + "é".encode("utf-8") * (remaining // 2) + b"a" * (remaining % 2)
+        skill_path.write_bytes(payload)
+        release.validate_skill()
 
-        with self.assertRaisesRegex(release.ReleaseError, "must be under 8000"):
+        skill_path.write_bytes(payload + b"a")
+        with self.assertRaisesRegex(release.ReleaseError, "at most 1048576 UTF-8 bytes"):
             release.validate_skill()
 
     def test_agent_ui_metadata_validates_mapping_shape_and_scalars(self) -> None:
-        agent_path = self.root / "skills/proofread/agents/openai.yaml"
+        agent_path = self.root / "skills/english-proofreader-pro/agents/openai.yaml"
         good = agent_path.read_text(encoding="utf-8")
         release.validate_skill()
         for content in (
@@ -314,13 +326,47 @@ class ReleaseBuilderTests(unittest.TestCase):
     def test_manifest_rejects_duplicate_json_keys_at_every_depth(self) -> None:
         manifest_path = self.root / "plugin.json"
         raw = manifest_path.read_text(encoding="utf-8")
-        for key, value in (("name", "english-proofreader-pro"), ("displayName", "English Proofreader Pro")):
+        manifest = self.read_manifest()
+        display_name = manifest["extensions"]["com.openai"]["interface"]["displayName"]
+        for key, value in (("name", manifest["name"]), ("displayName", display_name)):
             with self.subTest(key=key):
                 needle = f'"{key}": "{value}"'
+                self.assertIn(needle, raw)
                 malformed = raw.replace(needle, f'{needle},\n    "{key}": "{value}"', 1)
                 manifest_path.write_text(malformed, encoding="utf-8")
                 with self.assertRaisesRegex(release.ReleaseError, "duplicate-key"):
                     release.validate_manifest()
+
+    def test_build_replaces_previous_generated_skill_layout(self) -> None:
+        output = release.build()
+        stage = self.root / "dist/local-plugin"
+        current_skill = stage / "skills/english-proofreader-pro"
+        previous_skill = stage / "skills/proofread"
+        current_skill.rename(previous_skill)
+
+        release.build()
+
+        self.assertFalse(previous_skill.exists())
+        self.assertEqual((current_skill / "SKILL.md").read_bytes(), (self.root / release.EXPECTED_SKILL).read_bytes())
+        with zipfile.ZipFile(output) as archive:
+            self.assertIn(release.EXPECTED_SKILL, archive.namelist())
+            self.assertFalse(any(name.startswith("skills/proofread/") for name in archive.namelist()))
+
+    def test_previous_skill_layout_still_preserves_unexpected_user_files(self) -> None:
+        output = release.build()
+        original_archive = output.read_bytes()
+        stage = self.root / "dist/local-plugin"
+        previous_skill = stage / "skills/proofread"
+        (stage / "skills/english-proofreader-pro").rename(previous_skill)
+        user_file = previous_skill / "private-notes.txt"
+        user_file.write_text("Synthetic private notes.", encoding="utf-8")
+
+        with self.assertRaisesRegex(release.ReleaseError, "unexpected file"):
+            release.build()
+
+        self.assertEqual(user_file.read_text(encoding="utf-8"), "Synthetic private notes.")
+        self.assertEqual(output.read_bytes(), original_archive)
+        self.assertTrue((previous_skill / "SKILL.md").is_file())
 
     def test_semver_core_digits_must_be_ascii(self) -> None:
         manifest = self.read_manifest()
@@ -363,14 +409,14 @@ class ReleaseBuilderTests(unittest.TestCase):
 
     def test_yaml_documents_reject_forbidden_characters_before_ignoring_lines(self) -> None:
         skill_path = self.root / release.EXPECTED_SKILL
-        agent_path = self.root / "skills/proofread/agents/openai.yaml"
+        agent_path = self.root / "skills/english-proofreader-pro/agents/openai.yaml"
         original_skill = skill_path.read_text(encoding="utf-8")
         original_agent = agent_path.read_text(encoding="utf-8")
         # U+001C would disappear in splitlines(); forbidden characters in comments
         # would otherwise be skipped without reaching scalar validation.
         for character in ("\x1c", "\x7f", "\x80", "\ufffe"):
             for path, content in (
-                (skill_path, "---\n# comment " + character + "\nname: proofread\ndescription: prose\n---\nbody\n"),
+                (skill_path, "---\n# comment " + character + "\nname: english-proofreader-pro\ndescription: text\n---\nbody\n"),
                 (agent_path, original_agent + "# comment " + character + "\n"),
             ):
                 with self.subTest(path=path.name, character=repr(character)):
@@ -420,8 +466,8 @@ class ReleaseBuilderTests(unittest.TestCase):
                     "PRIVACY.md",
                     "assets/icon.webp",
                     "plugin.json",
-                    "skills/proofread/SKILL.md",
-                    "skills/proofread/agents/openai.yaml",
+                    "skills/english-proofreader-pro/SKILL.md",
+                    "skills/english-proofreader-pro/agents/openai.yaml",
                 ],
             )
             self.assertTrue(all(info.date_time == (1980, 1, 1, 0, 0, 0) for info in archive.infolist()))
@@ -560,7 +606,7 @@ class ReleaseBuilderTests(unittest.TestCase):
         self.assertEqual(sentinel.read_text(encoding="utf-8"), "preserve me")
 
     def test_runtime_symlink_is_rejected(self) -> None:
-        skill = self.root / "skills/proofread/SKILL.md"
+        skill = self.root / "skills/english-proofreader-pro/SKILL.md"
         original = skill.read_bytes()
         target = self.root / "original-skill.md"
         target.write_bytes(original)
