@@ -17,6 +17,7 @@ from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
 SCHEMA_VERSION = 1
+RECORD_SCHEMA_VERSION = 2
 SNAPSHOT_SUFFIX = "-snapshot.json"
 VERDICTS = {"pass", "fail", "not_run"}
 
@@ -73,6 +74,18 @@ def read_text(path: Path, label: str) -> str:
         raise EvaluationError(f"cannot read {label} as UTF-8: {exc}") from exc
 
 
+def write_json_exclusive(path: Path, value: dict[str, Any], label: str) -> None:
+    """Create an artifact without replacing another writer's evidence."""
+    text = json.dumps(value, ensure_ascii=False, indent=2) + "\n"
+    try:
+        with path.open("x", encoding="utf-8", newline="\n") as output:
+            output.write(text)
+    except FileExistsError as exc:
+        raise EvaluationError(f"refusing to overwrite existing {label}: {path}") from exc
+    except OSError as exc:
+        raise EvaluationError(f"cannot write {label}: {exc}") from exc
+
+
 def unique_ids(items: Any, label: str) -> dict[str, dict[str, Any]]:
     if not isinstance(items, list):
         raise EvaluationError(f"{label} must be a list")
@@ -98,6 +111,19 @@ def compose_prompt(runner_context: str, case_context: str, user_input: str) -> s
         parts.append(case_context.strip())
     parts.append(user_input)
     return "\n\n".join(parts)
+
+
+def fixture_source_path(source: Any) -> Path:
+    if not isinstance(source, str) or not source:
+        raise EvaluationError("fixture_source must be a repository-relative file path")
+    path = Path(source)
+    try:
+        resolved = (ROOT / path).resolve()
+    except (OSError, ValueError) as exc:
+        raise EvaluationError(f"invalid fixture_source: {exc}") from exc
+    if path.is_absolute() or ".." in path.parts or not resolved.is_relative_to(ROOT.resolve()):
+        raise EvaluationError("fixture_source must stay inside the repository")
+    return resolved
 
 
 def project_fixture_cases(fixture: dict[str, Any], runner_context: str) -> list[dict[str, Any]]:
@@ -141,12 +167,11 @@ def create_snapshot(args: argparse.Namespace) -> Path:
     if not re.fullmatch(r"[a-z0-9][a-z0-9-]{0,63}", args.id):
         raise EvaluationError("snapshot ID must be a lowercase slug of up to 64 characters")
     output = trial_dir / f"{args.id}{SNAPSHOT_SUFFIX}"
-    if output.exists():
-        raise EvaluationError(f"refusing to overwrite existing snapshot: {output.relative_to(ROOT)}")
 
     skill, manifest_text, manifest = read_current_sources()
     runner_context = read_text(Path(args.runner_context), "runner context")
-    fixture_bytes = read_bytes(ROOT / "tests/cases.json", "evaluation fixtures")
+    fixture_source = getattr(args, "fixtures", "tests/cases.json")
+    fixture_bytes = read_bytes(fixture_source_path(fixture_source), "evaluation fixtures")
     try:
         fixture_text = fixture_bytes.decode("utf-8")
     except UnicodeError as exc:
@@ -160,7 +185,7 @@ def create_snapshot(args: argparse.Namespace) -> Path:
         "kind": "evaluation-snapshot",
         "id": args.id,
         "created_at": now,
-        "fixture_source": "tests/cases.json",
+        "fixture_source": fixture_source,
         "fixture_sha256": sha256_bytes(fixture_bytes),
         "fixture_text": fixture_text,
         "fixture_schema_version": fixture.get("schema_version"),
@@ -169,7 +194,7 @@ def create_snapshot(args: argparse.Namespace) -> Path:
         "runner_context": {"text": runner_context, "sha256": sha256(runner_context)},
         "cases": saved_cases,
     }
-    output.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    write_json_exclusive(output, snapshot, "snapshot")
     print(output.relative_to(ROOT))
     return output
 
@@ -177,6 +202,7 @@ def create_snapshot(args: argparse.Namespace) -> Path:
 def validate_snapshot(snapshot: dict[str, Any]) -> dict[str, dict[str, Any]]:
     if snapshot.get("schema_version") != SCHEMA_VERSION or snapshot.get("kind") != "evaluation-snapshot":
         raise EvaluationError("unsupported snapshot schema or kind")
+    fixture_path = fixture_source_path(snapshot.get("fixture_source"))
     skill = snapshot.get("skill")
     manifest = snapshot.get("manifest")
     context = snapshot.get("runner_context")
@@ -193,7 +219,7 @@ def validate_snapshot(snapshot: dict[str, Any]) -> dict[str, dict[str, Any]]:
     if "fixture_text" not in snapshot:
         # A pre-projection schema-1 snapshot can be verified only against the
         # exact current fixture bytes. It cannot prove its own historical cases.
-        fixture_bytes = read_bytes(ROOT / "tests/cases.json", "current evaluation fixtures")
+        fixture_bytes = read_bytes(fixture_path, "current evaluation fixtures")
         if snapshot["fixture_sha256"] != sha256_bytes(fixture_bytes):
             raise EvaluationError("snapshot has no embedded fixture text and its fixture hash is not current; case projection cannot be verified")
         try:
@@ -237,6 +263,8 @@ def create_record(args: argparse.Namespace) -> Path:
         raise EvaluationError(f"response IDs do not match snapshot (missing: {missing}; extra: {extra})")
     metadata = {
         "model": args.model,
+        "reasoning_effort": getattr(args, "reasoning_effort", None),
+        "run_id": getattr(args, "run_id", None),
         "host": args.host,
         "host_version": args.host_version,
         "invocation_mode": args.invocation_mode,
@@ -245,10 +273,8 @@ def create_record(args: argparse.Namespace) -> Path:
         "reviewer": args.reviewer,
         "reviewer_context": args.reviewer_context,
     }
-    validate_metadata(metadata, args.install_method, args.build_sha256, snapshot)
+    validate_metadata(metadata, args.install_method, args.build_sha256, snapshot, require_profile=True)
     output = Path(args.out)
-    if output.exists():
-        raise EvaluationError(f"refusing to overwrite existing record: {output}")
 
     record_cases = []
     for case_id, source_case in snapshot_cases.items():
@@ -277,7 +303,7 @@ def create_record(args: argparse.Namespace) -> Path:
         "runner_context_sha256": snapshot["runner_context"]["sha256"],
     }
     record = {
-        "schema_version": SCHEMA_VERSION,
+        "schema_version": RECORD_SCHEMA_VERSION,
         "kind": "evaluation-record",
         "snapshot_file": str(snapshot_path.relative_to(ROOT)) if snapshot_path.is_relative_to(ROOT) else str(snapshot_path),
         "snapshot_sha256": sha256_bytes(read_bytes(snapshot_path, "snapshot")),
@@ -288,18 +314,24 @@ def create_record(args: argparse.Namespace) -> Path:
         "aggregate": aggregate(record_cases),
     }
     output.parent.mkdir(parents=True, exist_ok=True)
-    output.write_text(json.dumps(record, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    write_json_exclusive(output, record, "record")
     print(output)
     return output
 
 
-def validate_metadata(metadata: Any, install_method: Any, build_sha256: Any, snapshot: dict[str, Any]) -> None:
+def validate_metadata(metadata: Any, install_method: Any, build_sha256: Any, snapshot: dict[str, Any],
+                      *, require_profile: bool = False) -> None:
     fields = ("model", "host", "host_version", "invocation_mode", "date", "source", "reviewer", "reviewer_context")
     if not isinstance(metadata, dict):
         raise EvaluationError("metadata must be an object")
     missing = [key for key in fields if not isinstance(metadata.get(key), str) or not metadata[key].strip()]
     if missing:
         raise EvaluationError(f"metadata must include non-empty fields: {', '.join(missing)}")
+    if require_profile or "reasoning_effort" in metadata or "run_id" in metadata:
+        for field in ("reasoning_effort", "run_id"):
+            value = metadata.get(field)
+            if not isinstance(value, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._:-]{0,127}", value):
+                raise EvaluationError(f"metadata {field} must be a non-empty identifier of up to 128 characters")
     try:
         run_date = date.fromisoformat(metadata["date"])
         snapshot_date = date.fromisoformat(snapshot["created_at"][:10])
@@ -339,7 +371,7 @@ def validate_record(record_path: Path) -> str:
     required = {"schema_version", "kind", "snapshot_file", "snapshot_sha256", "source_binding", "metadata", "host_evidence", "cases", "aggregate"}
     if set(record) != required:
         raise EvaluationError(f"record fields must be exactly: {', '.join(sorted(required))}")
-    if record.get("schema_version") != SCHEMA_VERSION or record.get("kind") != "evaluation-record":
+    if record.get("schema_version") not in (1, RECORD_SCHEMA_VERSION) or record.get("kind") != "evaluation-record":
         raise EvaluationError("unsupported evaluation record schema or kind")
     if not isinstance(record["snapshot_file"], str) or not record["snapshot_file"]:
         raise EvaluationError("snapshot_file must be a path string")
@@ -376,7 +408,8 @@ def validate_record(record_path: Path) -> str:
     host_evidence = record.get("host_evidence")
     if not isinstance(host_evidence, dict) or set(host_evidence) != {"install_method", "build_sha256"}:
         raise EvaluationError("host_evidence must contain install_method and build_sha256 fields")
-    validate_metadata(metadata, host_evidence["install_method"], host_evidence["build_sha256"], snapshot)
+    validate_metadata(metadata, host_evidence["install_method"], host_evidence["build_sha256"], snapshot,
+                      require_profile=record["schema_version"] == RECORD_SCHEMA_VERSION)
     record_cases = unique_ids(record.get("cases"), "record case")
     missing = sorted(snapshot_cases.keys() - record_cases.keys())
     extra = sorted(record_cases.keys() - snapshot_cases.keys())
@@ -419,14 +452,90 @@ def validate_record(record_path: Path) -> str:
     if record.get("aggregate") != derived_aggregate:
         raise EvaluationError("record aggregate does not match assertion statuses")
     current_skill, current_manifest_text, current_manifest = read_current_sources()
-    current_cases_bytes = read_bytes(ROOT / "tests/cases.json", "current evaluation fixtures")
+    fixture_path = fixture_source_path(snapshot["fixture_source"])
+    try:
+        current_fixture_hash = sha256_bytes(fixture_path.read_bytes())
+    except FileNotFoundError:
+        current_fixture_hash = None
+    except OSError as exc:
+        raise EvaluationError(f"cannot read current evaluation fixtures: {exc}") from exc
     current = (
         snapshot["skill"]["sha256"] == sha256(current_skill)
         and snapshot["manifest"]["sha256"] == sha256(current_manifest_text)
         and snapshot["manifest"]["version"] == current_manifest["version"]
-        and snapshot["fixture_sha256"] == sha256_bytes(current_cases_bytes)
+        and snapshot["fixture_sha256"] == current_fixture_hash
     )
     return "current" if current else "historical"
+
+
+def check_requirements(record: dict[str, Any], binding: str, *, require_current: bool = False,
+                       require_complete: bool = False, require_pass: bool = False) -> None:
+    if require_current and binding != "current":
+        raise EvaluationError("record is bound to historical skill, manifest, or fixture inputs")
+    if require_complete and any(
+        assertion["status"] == "not_run"
+        for case in record["cases"]
+        for assertion in case["assertions"]
+    ):
+        raise EvaluationError("record has assertions that have not been graded")
+    if require_pass and record["aggregate"] != "pass":
+        raise EvaluationError(f"record aggregate is {record['aggregate']}, not pass")
+
+
+def validate_suite(record_paths: list[Path], *, model: str, reasoning_effort: str,
+                   invocation_mode: str, min_runs: int, require_current: bool = False,
+                   require_complete: bool = False, require_pass: bool = False,
+                   fixtures: str = "tests/cases.json", identical_responses_note: str | None = None) -> int:
+    """Check a declared profile and reject obvious reuse, not attest execution."""
+    if not isinstance(min_runs, int) or isinstance(min_runs, bool) or min_runs < 1:
+        raise EvaluationError("minimum run count must be a positive integer")
+    if len(record_paths) < min_runs:
+        raise EvaluationError(f"suite requires at least {min_runs} runs; received {len(record_paths)}")
+    profile = {"model": model, "reasoning_effort": reasoning_effort, "invocation_mode": invocation_mode}
+    if any(not isinstance(value, str) or not value.strip() for value in profile.values()):
+        raise EvaluationError("suite profile values must be non-empty strings")
+    if identical_responses_note is not None and (
+        not isinstance(identical_responses_note, str) or not identical_responses_note.strip()
+    ):
+        raise EvaluationError("identical responses review note must be non-empty")
+    expected_fixture_path = fixture_source_path(fixtures)
+    run_ids: set[str] = set()
+    response_sets: set[str] = set()
+    suite_inputs: str | None = None
+    for record_path in record_paths:
+        binding = validate_record(record_path)
+        record = load_json(record_path, "evaluation record")
+        if record["schema_version"] != RECORD_SCHEMA_VERSION:
+            raise EvaluationError("suite requires schema-2 records; legacy evidence cannot establish a new run")
+        check_requirements(record, binding, require_current=require_current,
+                           require_complete=require_complete, require_pass=require_pass)
+        snapshot = load_json(ROOT / record["snapshot_file"], "bound snapshot")
+        if fixture_source_path(snapshot["fixture_source"]) != expected_fixture_path:
+            raise EvaluationError(f"suite record {record_path} fixture_source must match {fixtures!r}")
+        metadata = record["metadata"]
+        if not isinstance(metadata.get("run_id"), str) or not metadata["run_id"]:
+            raise EvaluationError(f"suite record {record_path} requires a structured run_id; legacy evidence cannot establish a new run")
+        for field, expected in profile.items():
+            if metadata.get(field) != expected:
+                raise EvaluationError(f"suite record {record_path} {field} must be {expected!r}, got {metadata.get(field)!r}")
+        inputs = canonical_hash({
+            "source_binding": record["source_binding"],
+            "fixture_sha256": snapshot["fixture_sha256"],
+            "cases": {case["id"]: {"prompt": case["prompt"], "expectation": case["expectation"]}
+                      for case in record["cases"]},
+        })
+        if suite_inputs is not None and inputs != suite_inputs:
+            raise EvaluationError("suite records must use the same source, runner context, complete fixture bytes, prompts, and expectations")
+        suite_inputs = inputs
+        run_id = metadata["run_id"]
+        if run_id in run_ids:
+            raise EvaluationError(f"duplicate suite run_id: {run_id}")
+        run_ids.add(run_id)
+        responses_hash = canonical_hash({case["id"]: case["response"] for case in record["cases"]})
+        if responses_hash in response_sets and identical_responses_note is None:
+            raise EvaluationError("identical complete response sets require provenance review (--identical-responses-note); matching output alone does not prove reuse")
+        response_sets.add(responses_hash)
+    return len(run_ids)
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -435,10 +544,13 @@ def main(argv: list[str] | None = None) -> int:
     snapshot_parser = subparsers.add_parser("snapshot", help="capture immutable inputs for a fresh run")
     snapshot_parser.add_argument("--id", required=True)
     snapshot_parser.add_argument("--runner-context", required=True)
+    snapshot_parser.add_argument("--fixtures", default="tests/cases.json", help="repository-relative fixture file to freeze")
     record_parser = subparsers.add_parser("record", help="bind response text to a snapshot and manual-grading template")
     record_parser.add_argument("--snapshot", required=True)
     record_parser.add_argument("--responses", required=True, help="JSON object containing responses with exact prompts")
     record_parser.add_argument("--model", required=True)
+    record_parser.add_argument("--reasoning-effort", required=True, help="actual effort setting, such as high")
+    record_parser.add_argument("--run-id", required=True, help="unique identity for this independently captured run")
     record_parser.add_argument("--host", required=True)
     record_parser.add_argument("--host-version", required=True, help="use unknown only for a simulation")
     record_parser.add_argument("--invocation-mode", required=True, help="use intended-host for installed host acceptance")
@@ -451,29 +563,39 @@ def main(argv: list[str] | None = None) -> int:
     record_parser.add_argument("--out", required=True)
     validate_parser = subparsers.add_parser("validate", help="validate hashes, provenance, coverage, and manual verdict structure")
     validate_parser.add_argument("record")
-    validate_parser.add_argument("--require-current", action="store_true", help="fail if the bound skill, manifest, or fixture source changed; runner context remains frozen in the snapshot")
-    validate_parser.add_argument("--require-complete", action="store_true", help="fail if any assertion remains not_run")
-    validate_parser.add_argument("--require-pass", action="store_true", help="fail unless every assertion passed")
+    suite_parser = subparsers.add_parser("validate-suite", help="validate a model profile and detect duplicate run evidence")
+    suite_parser.add_argument("records", nargs="+")
+    suite_parser.add_argument("--model", required=True)
+    suite_parser.add_argument("--reasoning-effort", required=True)
+    suite_parser.add_argument("--invocation-mode", required=True)
+    suite_parser.add_argument("--min-runs", type=int, required=True)
+    suite_parser.add_argument("--fixtures", default="tests/cases.json", help="expected repository-relative fixture source for every run")
+    suite_parser.add_argument("--identical-responses-note", help="explain the provenance review confirming distinct captures with identical complete responses")
+    for validation_parser in (validate_parser, suite_parser):
+        validation_parser.add_argument("--require-current", action="store_true", help="fail if the bound skill, manifest, or fixture source changed; runner context remains frozen in the snapshot")
+        validation_parser.add_argument("--require-complete", action="store_true", help="fail if any assertion remains not_run")
+        validation_parser.add_argument("--require-pass", action="store_true", help="fail unless every assertion passed")
     args = parser.parse_args(argv)
     try:
         if args.command == "snapshot":
             create_snapshot(args)
         elif args.command == "record":
             create_record(args)
+        elif args.command == "validate-suite":
+            count = validate_suite([Path(path) for path in args.records], model=args.model,
+                                   reasoning_effort=args.reasoning_effort, invocation_mode=args.invocation_mode,
+                                   min_runs=args.min_runs, require_current=args.require_current,
+                                   require_complete=args.require_complete, require_pass=args.require_pass,
+                                   fixtures=args.fixtures, identical_responses_note=args.identical_responses_note)
+            print(f"valid evaluation suite: {count} distinct recorded runs for {args.model}/{args.reasoning_effort}/{args.invocation_mode}; execution provenance and semantic verdicts remain reviewer claims")
+            if args.identical_responses_note is not None:
+                print(f"Identical responses provenance review: {args.identical_responses_note}")
         else:
             binding = validate_record(Path(args.record))
             record = load_json(Path(args.record), "evaluation record")
             status = record["aggregate"]
-            if args.require_current and binding != "current":
-                raise EvaluationError("record is bound to historical skill or manifest inputs")
-            if args.require_complete and any(
-                assertion["status"] == "not_run"
-                for case in record["cases"]
-                for assertion in case["assertions"]
-            ):
-                raise EvaluationError("record has assertions that have not been graded")
-            if args.require_pass and status != "pass":
-                raise EvaluationError(f"record aggregate is {status}, not pass")
+            check_requirements(record, binding, require_current=args.require_current,
+                               require_complete=args.require_complete, require_pass=args.require_pass)
             print(f"valid evaluation record ({binding} source binding); assertion aggregate: {status}; semantic verdicts are manual")
     except EvaluationError as exc:
         print(f"evaluation error: {exc}", file=sys.stderr)

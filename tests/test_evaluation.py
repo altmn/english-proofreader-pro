@@ -5,7 +5,9 @@ import argparse
 import io
 import json
 import tempfile
+import threading
 import unittest
+from concurrent.futures import ThreadPoolExecutor
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 from unittest.mock import patch
@@ -59,6 +61,7 @@ class EvaluationTests(unittest.TestCase):
     def _record_args(self, *, mode: str = "independent-agent-simulation", version: str = "unknown") -> argparse.Namespace:
         return argparse.Namespace(
             snapshot=str(self.snapshot_path), responses=str(self.response_path), model="gpt-6-luna",
+            reasoning_effort="high", run_id="run-1",
             host="Codex collaboration subagent", host_version=version, invocation_mode=mode,
             date=evaluate.datetime.now(evaluate.timezone.utc).date().isoformat(),
             source="Synthetic evaluation input", reviewer="independent reviewer",
@@ -76,6 +79,293 @@ class EvaluationTests(unittest.TestCase):
 
     def _save_record(self, record: dict) -> None:
         self.record_path.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    def _competing_creates(self, target: Path, calls: list) -> list:
+        barrier = threading.Barrier(2)
+        original_open = Path.open
+
+        def simultaneous_open(path: Path, mode: str = "r", *args, **kwargs):
+            if path == target and ("x" in mode or "w" in mode):
+                barrier.wait(timeout=5)
+            return original_open(path, mode, *args, **kwargs)
+
+        def attempt(call):
+            try:
+                return call()
+            except evaluate.EvaluationError as exc:
+                return exc
+
+        with patch.object(Path, "open", simultaneous_open), ThreadPoolExecutor(max_workers=2) as pool:
+            results = list(pool.map(attempt, calls))
+        self.assertEqual(sum(isinstance(result, Path) for result in results), 1)
+        errors = [result for result in results if isinstance(result, evaluate.EvaluationError)]
+        self.assertEqual(len(errors), 1)
+        self.assertIn("refusing to overwrite", str(errors[0]))
+        return results
+
+    def _suite_records(self, snapshot_path: Path | None = None) -> list[Path]:
+        snapshot_path = snapshot_path or self.snapshot_path
+        snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
+        bundle = {"responses": [{"id": case["id"], "prompt": case["full_prompt"], "response": "Synthetic answer."}
+                                for case in snapshot["cases"]]}
+        self.response_path.write_text(json.dumps(bundle), encoding="utf-8")
+        paths = []
+        for index in range(3):
+            responses = json.loads(self.response_path.read_text(encoding="utf-8"))
+            responses["responses"][0]["response"] = f"distinct synthetic response {index}"
+            self.response_path.write_text(json.dumps(responses), encoding="utf-8")
+            args = self._record_args()
+            args.snapshot = str(snapshot_path)
+            args.run_id = f"{snapshot_path.stem}-run-{index}"
+            args.out = str(self.root / f"suite-{snapshot_path.stem}-{index}.json")
+            path = evaluate.create_record(args)
+            record = json.loads(path.read_text(encoding="utf-8"))
+            for case in record["cases"]:
+                for assertion in case["assertions"]:
+                    assertion["status"] = "pass"
+            record["aggregate"] = "pass"
+            path.write_text(json.dumps(record), encoding="utf-8")
+            paths.append(path)
+        return paths
+
+    def _validate_suite(self, paths: list[Path], **overrides) -> int:
+        options = dict(model="gpt-6-luna", reasoning_effort="high", invocation_mode="independent-agent-simulation",
+                       min_runs=3, require_current=True, require_complete=True, require_pass=True)
+        options.update(overrides)
+        return evaluate.validate_suite(paths, **options)
+
+    def test_concurrent_snapshot_creation_does_not_overwrite_winner(self) -> None:
+        second_context = self.root / "other-runner.txt"
+        second_context.write_text("A different synthetic runner.", encoding="utf-8")
+        contexts = [self.context_path, second_context]
+        target = self.root / "tests/trials/parallel-snapshot.json"
+        calls = [lambda context=context: evaluate.create_snapshot(
+            argparse.Namespace(id="parallel", runner_context=str(context))) for context in contexts]
+        results = self._competing_creates(target, calls)
+        winner = next(index for index, result in enumerate(results) if isinstance(result, Path))
+        snapshot = json.loads(target.read_text(encoding="utf-8"))
+        evaluate.validate_snapshot(snapshot)
+        self.assertEqual(snapshot["runner_context"]["text"], contexts[winner].read_text(encoding="utf-8"))
+
+    def test_concurrent_record_creation_does_not_overwrite_winner(self) -> None:
+        self._responses()
+        calls = []
+        for index in range(2):
+            args = self._record_args()
+            args.run_id = f"parallel-run-{index}"
+            bundle = json.loads(self.response_path.read_text(encoding="utf-8"))
+            bundle["responses"][0]["response"] = f"captured response {index}"
+            args.responses = str(self.root / f"responses-{index}.json")
+            Path(args.responses).write_text(json.dumps(bundle), encoding="utf-8")
+            calls.append(lambda args=args: evaluate.create_record(args))
+        results = self._competing_creates(self.record_path, calls)
+        winner = next(index for index, result in enumerate(results) if isinstance(result, Path))
+        self.assertEqual(evaluate.validate_record(self.record_path), "current")
+        record = self._load_record()
+        self.assertEqual(record["metadata"]["run_id"], f"parallel-run-{winner}")
+        self.assertEqual(record["cases"][0]["response"], f"captured response {winner}")
+
+    def test_existing_evidence_and_dangling_symlinks_are_not_overwritten(self) -> None:
+        original = self.snapshot_path.read_bytes()
+        with self.assertRaisesRegex(evaluate.EvaluationError, "refusing to overwrite"):
+            evaluate.create_snapshot(argparse.Namespace(id="run", runner_context=str(self.context_path)))
+        self.assertEqual(self.snapshot_path.read_bytes(), original)
+        self._responses()
+        missing_target = self.root / "must-not-create.json"
+        self.record_path.symlink_to(missing_target)
+        with self.assertRaisesRegex(evaluate.EvaluationError, "refusing to overwrite"):
+            evaluate.create_record(self._record_args())
+        self.assertFalse(missing_target.exists())
+
+    def test_new_records_require_structured_profile_but_legacy_records_remain_valid(self) -> None:
+        self._responses()
+        for field in ("reasoning_effort", "run_id"):
+            args = self._record_args()
+            setattr(args, field, None)
+            with self.subTest(field=field), self.assertRaisesRegex(evaluate.EvaluationError, field):
+                evaluate.create_record(args)
+        self._record()
+        record = self._load_record()
+        self.assertEqual(record["schema_version"], 2)
+        for field in ("reasoning_effort", "run_id"):
+            record["metadata"].pop(field)
+        self._save_record(record)
+        with self.assertRaisesRegex(evaluate.EvaluationError, "reasoning_effort"):
+            evaluate.validate_record(self.record_path)
+        record["schema_version"] = 1
+        self._save_record(record)
+        self.assertEqual(evaluate.validate_record(self.record_path), "current")
+        with self.assertRaisesRegex(evaluate.EvaluationError, "schema-2 records"):
+            self._validate_suite([self.record_path], min_runs=1, require_complete=False, require_pass=False)
+
+    def test_suite_rejects_legacy_records_even_with_structured_profile_fields(self) -> None:
+        paths = self._suite_records()
+        record = json.loads(paths[1].read_text(encoding="utf-8"))
+        record["schema_version"] = 1
+        paths[1].write_text(json.dumps(record), encoding="utf-8")
+        self.assertEqual(evaluate.validate_record(paths[1]), "current")
+        with self.assertRaisesRegex(evaluate.EvaluationError, "schema-2 records"):
+            self._validate_suite(paths)
+
+    def test_suite_requires_declared_profile_and_minimum_run_count(self) -> None:
+        paths = self._suite_records()
+        self.assertEqual(self._validate_suite(paths), 3)
+        with self.assertRaisesRegex(evaluate.EvaluationError, "at least 3"):
+            self._validate_suite(paths[:2])
+        with self.assertRaisesRegex(evaluate.EvaluationError, "positive integer"):
+            self._validate_suite(paths, min_runs=0)
+        original = json.loads(paths[1].read_text(encoding="utf-8"))
+        for field, value in (("model", "different-model"), ("reasoning_effort", "low"),
+                             ("invocation_mode", "different-simulation")):
+            record = json.loads(json.dumps(original))
+            record["metadata"][field] = value
+            paths[1].write_text(json.dumps(record), encoding="utf-8")
+            with self.subTest(field=field), self.assertRaisesRegex(evaluate.EvaluationError, field):
+                self._validate_suite(paths)
+
+    def test_suite_rejects_duplicate_run_ids_and_reordered_response_copies(self) -> None:
+        paths = self._suite_records()
+        first = json.loads(paths[0].read_text(encoding="utf-8"))
+        second = json.loads(paths[1].read_text(encoding="utf-8"))
+        second["metadata"]["run_id"] = first["metadata"]["run_id"]
+        paths[1].write_text(json.dumps(second), encoding="utf-8")
+        with self.assertRaisesRegex(evaluate.EvaluationError, "duplicate suite run_id"):
+            self._validate_suite(paths)
+        copied = json.loads(json.dumps(first))
+        copied["metadata"]["run_id"] = "different-id-for-the-same-capture"
+        copied["cases"].reverse()
+        paths[1].write_text(json.dumps(copied), encoding="utf-8")
+        with self.assertRaisesRegex(evaluate.EvaluationError, "identical complete response sets require provenance review"):
+            self._validate_suite(paths)
+
+    def test_identical_responses_require_explicit_review_and_distinct_run_ids(self) -> None:
+        paths = self._suite_records()
+        first = json.loads(paths[0].read_text(encoding="utf-8"))
+        second = json.loads(json.dumps(first))
+        second["metadata"]["run_id"] = "separate-capture-with-matching-output"
+        paths[1].write_text(json.dumps(second), encoding="utf-8")
+        note = "Reviewed distinct capture identities and original logs; complete outputs independently match."
+        self.assertEqual(self._validate_suite(paths, identical_responses_note=note), 3)
+        for empty_note in ("", "  \n"):
+            with self.subTest(note=empty_note), self.assertRaisesRegex(evaluate.EvaluationError, "note must be non-empty"):
+                self._validate_suite(paths, identical_responses_note=empty_note)
+        command = ["validate-suite", *(str(path) for path in paths), "--model", "gpt-6-luna",
+                   "--reasoning-effort", "high", "--invocation-mode", "independent-agent-simulation",
+                   "--min-runs", "3", "--require-current", "--require-complete", "--require-pass"]
+        with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+            self.assertEqual(evaluate.main(command), 2)
+            self.assertEqual(evaluate.main([*command, "--identical-responses-note", " "]), 2)
+        output = io.StringIO()
+        with redirect_stdout(output):
+            self.assertEqual(evaluate.main([*command, "--identical-responses-note", note]), 0)
+        self.assertIn(note, output.getvalue())
+        second["metadata"]["run_id"] = first["metadata"]["run_id"]
+        paths[1].write_text(json.dumps(second), encoding="utf-8")
+        with self.assertRaisesRegex(evaluate.EvaluationError, "duplicate suite run_id"):
+            self._validate_suite(paths, identical_responses_note=note)
+
+    def test_suite_does_not_count_different_inputs_as_repeated_runs(self) -> None:
+        paths = self._suite_records()
+        self.context_path.write_text("A different evaluation protocol.", encoding="utf-8")
+        snapshot_path = evaluate.create_snapshot(argparse.Namespace(id="other", runner_context=str(self.context_path)))
+        snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
+        bundle = {"responses": [{"id": case["id"], "prompt": case["full_prompt"], "response": "Other response."}
+                                for case in snapshot["cases"]]}
+        self.response_path.write_text(json.dumps(bundle), encoding="utf-8")
+        args = self._record_args()
+        args.snapshot = str(snapshot_path)
+        args.run_id = "other-run"
+        paths[2] = evaluate.create_record(args)
+        with self.assertRaisesRegex(evaluate.EvaluationError, "same source, runner context, complete fixture bytes, prompts, and expectations"):
+            self._validate_suite(paths, require_complete=False, require_pass=False)
+
+    def test_suite_default_fixture_gate_rejects_smaller_alternate_suite(self) -> None:
+        alternate = self.root / "tests/smaller.json"
+        fixture = {"schema_version": 1, "cases": [{"id": "small", "input": "One prompt.",
+                                                 "expect": {"facts_preserved": True}}]}
+        alternate.write_text(json.dumps(fixture), encoding="utf-8")
+        snapshot_path = evaluate.create_snapshot(argparse.Namespace(
+            id="smaller", runner_context=str(self.context_path), fixtures="tests/smaller.json"))
+        paths = self._suite_records(snapshot_path)
+        with self.assertRaisesRegex(evaluate.EvaluationError, "fixture_source must match"):
+            self._validate_suite(paths)
+        self.assertEqual(self._validate_suite(paths, fixtures="./tests/smaller.json"), 3)
+        command = ["validate-suite", *(str(path) for path in paths), "--model", "gpt-6-luna",
+                   "--reasoning-effort", "high", "--invocation-mode", "independent-agent-simulation",
+                   "--min-runs", "3", "--require-current", "--require-complete", "--require-pass"]
+        with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+            self.assertEqual(evaluate.main(command), 2)
+            self.assertEqual(evaluate.main([*command, "--fixtures", "tests/smaller.json"]), 0)
+
+    def test_suite_rejects_changed_shared_contract_even_without_current_requirement(self) -> None:
+        paths = self._suite_records()
+        fixture_path = self.root / "tests/cases.json"
+        fixture = json.loads(fixture_path.read_text(encoding="utf-8"))
+        fixture["shared_output_contract"] = {"new_rule": "A changed rubric outside individual case expectations."}
+        fixture_path.write_text(json.dumps(fixture), encoding="utf-8")
+        snapshot_path = evaluate.create_snapshot(argparse.Namespace(
+            id="changed-contract", runner_context=str(self.context_path)))
+        new_snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
+        self.assertEqual(self._snapshot()["cases"], new_snapshot["cases"])
+        new_paths = self._suite_records(snapshot_path)
+        self.assertEqual(evaluate.validate_record(paths[0]), "historical")
+        self.assertEqual(evaluate.validate_record(new_paths[2]), "current")
+        with self.assertRaisesRegex(evaluate.EvaluationError, "complete fixture bytes"):
+            self._validate_suite([paths[0], paths[1], new_paths[2]], require_current=False)
+
+    def test_suite_cli_enforces_current_complete_and_passing_requirements(self) -> None:
+        paths = self._suite_records()
+        command = ["validate-suite", *(str(path) for path in paths), "--model", "gpt-6-luna",
+                   "--reasoning-effort", "high", "--invocation-mode", "independent-agent-simulation",
+                   "--min-runs", "3", "--require-current", "--require-complete", "--require-pass"]
+        with redirect_stdout(io.StringIO()):
+            self.assertEqual(evaluate.main(command), 0)
+        original = json.loads(paths[1].read_text(encoding="utf-8"))
+        for status in ("not_run", "fail"):
+            record = json.loads(json.dumps(original))
+            record["cases"][0]["assertions"][0].update(status=status, note="synthetic gap")
+            record["aggregate"] = status
+            paths[1].write_text(json.dumps(record), encoding="utf-8")
+            with self.subTest(status=status), redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+                self.assertEqual(evaluate.main(command), 2)
+        paths[1].write_text(json.dumps(original), encoding="utf-8")
+        (self.root / "skills/proofread/SKILL.md").write_text("Changed source.", encoding="utf-8")
+        with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
+            self.assertEqual(evaluate.main(command), 2)
+
+    def test_alternate_fixture_source_controls_current_binding(self) -> None:
+        alternate = self.root / "tests/supplemental.json"
+        fixture = {"schema_version": 1, "cases": [{"id": "extra", "input": "A supplemental prompt.",
+                                                 "expect": {"facts_preserved": True}}]}
+        alternate.write_text(json.dumps(fixture), encoding="utf-8")
+        snapshot_path = evaluate.create_snapshot(argparse.Namespace(
+            id="alternate", runner_context=str(self.context_path), fixtures="tests/supplemental.json"))
+        snapshot = json.loads(snapshot_path.read_text(encoding="utf-8"))
+        self.assertEqual(snapshot["fixture_source"], "tests/supplemental.json")
+        bundle = {"responses": [{"id": case["id"], "prompt": case["full_prompt"], "response": "Synthetic answer."}
+                                for case in snapshot["cases"]]}
+        self.response_path.write_text(json.dumps(bundle), encoding="utf-8")
+        args = self._record_args()
+        args.snapshot = str(snapshot_path)
+        evaluate.create_record(args)
+        self.assertEqual(evaluate.validate_record(self.record_path), "current")
+        (self.root / "tests/cases.json").write_text("changed unrelated fixtures", encoding="utf-8")
+        self.assertEqual(evaluate.validate_record(self.record_path), "current")
+        alternate.write_text(json.dumps(fixture) + "\n", encoding="utf-8")
+        self.assertEqual(evaluate.validate_record(self.record_path), "historical")
+        alternate.unlink()
+        self.assertEqual(evaluate.validate_record(self.record_path), "historical")
+
+    def test_fixture_sources_cannot_escape_repository(self) -> None:
+        external = self.root.parent / "external-fixtures.json"
+        (self.root / "tests/escape.json").symlink_to(external)
+        for source in ("../outside.json", str(external), "tests/escape.json"):
+            with self.subTest(source=source), self.assertRaisesRegex(evaluate.EvaluationError, "inside the repository"):
+                evaluate.create_snapshot(argparse.Namespace(id="escape", runner_context=str(self.context_path), fixtures=source))
+        snapshot = self._snapshot()
+        snapshot["fixture_source"] = "../outside.json"
+        with self.assertRaisesRegex(evaluate.EvaluationError, "inside the repository"):
+            evaluate.validate_snapshot(snapshot)
 
     def test_record_template_is_not_run_then_manual_verdicts_aggregate(self) -> None:
         self._record()
@@ -280,6 +570,7 @@ class EvaluationTests(unittest.TestCase):
         self._responses()
         args = argparse.Namespace(
             snapshot=str(self.snapshot_path), responses=str(self.response_path), model="gpt-6-luna",
+            reasoning_effort="high", run_id="run-1",
             host="ChatGPT", host_version="unknown", invocation_mode="intended-host",
             date=evaluate.datetime.now(evaluate.timezone.utc).date().isoformat(), source="test", reviewer="grader",
             reviewer_context="manual", install_method=None, build_sha256=None, out=str(self.record_path),

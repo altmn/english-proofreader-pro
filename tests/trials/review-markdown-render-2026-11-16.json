@@ -1,0 +1,226 @@
+{
+  "schema_version": 1,
+  "kind": "markdown-render-verification",
+  "created_at": "2026-11-16T22:16:53+00:00",
+  "renderer": "GitHub REST Markdown API, POST /markdown with mode=gfm",
+  "method": "Render each complete unmodified response; decode HTML text with Python HTMLParser and compare complete quoted source/result inside strong elements, literal fenced output, and unwanted inline interpretations. A separate reviewer independently inspects the persisted HTML and exact string comparisons.",
+  "limitations": "GFM rendering verification only; not intended-plugin-host rendering, clipboard behavior, activation, or a universal guarantee of model compliance.",
+  "observations": [
+    {
+      "source_record": "tests/trials/review-markdown-sol-1-2026-11-16.json",
+      "case_id": "rewrite-markdown-changes-quotes",
+      "response_sha256": "14d9f040514bb52211e00572e925f0b8765caa32bc7e968d6a558c0e17ccfea7",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today. Thank you.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li>Changed <strong>\"Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today.\"</strong> to <strong>\"Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today. Thank you.\"</strong> to make the request warmer and more courteous while preserving the deadline, Markdown, link, and inline code.</li>\n</ul>",
+      "rendered_html_sha256": "b0e6f2801edac9ab5cde0ec11e511f69fc3f29f0f01b0886ae377978f340f54f",
+      "checks": {
+        "complete_source_and_result_quotes_render_exactly_and_entirely_bold": true,
+        "copyable_code_block_matches_literal_result": true,
+        "no_inline_code_emphasis_or_strike_interpretation_inside_quotes": true,
+        "balanced_strong_and_pre_elements": true
+      },
+      "status": "pass",
+      "visible_bold_spans": [
+        "\"Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.\"",
+        "\"Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today. Thank you.\""
+      ]
+    },
+    {
+      "source_record": "tests/trials/review-markdown-sol-1-2026-11-16.json",
+      "case_id": "shorten-markdown-changes-quotes",
+      "response_sha256": "70173b72cfd6b2bebc157cbc764ad03d59c352ce072b6dbd23818fc0fa8e658a",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">We are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li>Changed <strong>\"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\"</strong> to <strong>\"We are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\"</strong> to remove redundant wording about the current review while preserving the pending decision, timing, Markdown, path, and link.</li>\n</ul>",
+      "rendered_html_sha256": "edd6fedbc29bba07024776c56cdfd3f2cb93c6b757b54f2ef855c89872c4eb57",
+      "checks": {
+        "complete_source_and_result_quotes_render_exactly_and_entirely_bold": true,
+        "copyable_code_block_matches_literal_result": true,
+        "no_inline_code_emphasis_or_strike_interpretation_inside_quotes": true,
+        "balanced_strong_and_pre_elements": true
+      },
+      "status": "pass",
+      "visible_bold_spans": [
+        "\"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\"",
+        "\"We are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\""
+      ]
+    },
+    {
+      "source_record": "tests/trials/review-markdown-sol-1-2026-11-16.json",
+      "case_id": "rewrite-markup-characters-in-changes",
+      "response_sha256": "3a4aafd16620cdcc807e3bf39264dd2d95493d3e4dfb6f6834e9574a0ef5f628",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li>Changed <strong>\"Check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\"</strong> to <strong>\"Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\"</strong> to make the request polite while preserving every markup character and today's deadline.</li>\n</ul>",
+      "rendered_html_sha256": "56475c0496e1ddfa720f03f70d4a6bf1715f2d23e0ea66df880ac1bbe51eb021",
+      "checks": {
+        "complete_source_and_result_quotes_render_exactly_and_entirely_bold": true,
+        "copyable_code_block_matches_literal_result": true,
+        "no_inline_code_emphasis_or_strike_interpretation_inside_quotes": true,
+        "balanced_strong_and_pre_elements": true
+      },
+      "status": "pass",
+      "visible_bold_spans": [
+        "\"Check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\"",
+        "\"Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\""
+      ]
+    },
+    {
+      "source_record": "tests/trials/review-markdown-sol-1-2026-11-16.json",
+      "case_id": "rewrite-autolink-punctuation-in-changes",
+      "response_sha256": "d655105145b7e60bd692d59b02d324160379dd0ea683dd8513ac0b209e592dfc",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email user@example.com today.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li>Changed <strong>\"Check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email <a href=\"mailto:user@example.com\">user@example.com</a> today.\"</strong> to <strong>\"Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email <a href=\"mailto:user@example.com\">user@example.com</a> today.\"</strong> to make the request polite while preserving both URLs, the email address, and today's deadline.</li>\n</ul>",
+      "rendered_html_sha256": "3234dc8610ce3b34a39f87d6b77f5af9cdb799efe37c2efd1a50b6e08d7ba18a",
+      "checks": {
+        "complete_source_and_result_quotes_render_exactly_and_entirely_bold": true,
+        "copyable_code_block_matches_literal_result": true,
+        "no_inline_code_emphasis_or_strike_interpretation_inside_quotes": true,
+        "balanced_strong_and_pre_elements": true
+      },
+      "status": "pass",
+      "visible_bold_spans": [
+        "\"Check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\"",
+        "\"Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\""
+      ]
+    },
+    {
+      "source_record": "tests/trials/review-markdown-sol-2-2026-11-16.json",
+      "case_id": "rewrite-markdown-changes-quotes",
+      "response_sha256": "5499e68a9a85d19860296ff3383b3ec7176b20d7fbcb36230060eddb5530d693",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li>Changed <strong>\"Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today.\"</strong> to <strong>\"Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today.\"</strong> to make the request warmer and more polite while preserving the deadline and all literal Markdown, links, and inline code.</li>\n</ul>",
+      "rendered_html_sha256": "14126df9ec975499afcc4197a5c695d2ed42e42f7957f025b6a1b9794668a7e0",
+      "checks": {
+        "complete_source_and_result_quotes_render_exactly_and_entirely_bold": true,
+        "copyable_code_block_matches_literal_result": true,
+        "no_inline_code_emphasis_or_strike_interpretation_inside_quotes": true,
+        "balanced_strong_and_pre_elements": true
+      },
+      "status": "pass",
+      "visible_bold_spans": [
+        "\"Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.\"",
+        "\"Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.\""
+      ]
+    },
+    {
+      "source_record": "tests/trials/review-markdown-sol-2-2026-11-16.json",
+      "case_id": "shorten-markdown-changes-quotes",
+      "response_sha256": "5444b6f8eb3a68f23bec731fd2224f2ba1b6063619af12037591c4b2c11f4327",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">At this time, we are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li>Changed <strong>\"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\"</strong> to <strong>\"At this time, we are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\"</strong> to shorten the time reference, remove redundant review wording, and simplify the decision phrase while retaining the uncertainty and all literal Markdown, links, and inline code.</li>\n</ul>",
+      "rendered_html_sha256": "1e6f761a5604cfccb68c5fc718f700bf03c0622aaec20d65383e8f3df067f2e5",
+      "checks": {
+        "complete_source_and_result_quotes_render_exactly_and_entirely_bold": true,
+        "copyable_code_block_matches_literal_result": true,
+        "no_inline_code_emphasis_or_strike_interpretation_inside_quotes": true,
+        "balanced_strong_and_pre_elements": true
+      },
+      "status": "pass",
+      "visible_bold_spans": [
+        "\"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\"",
+        "\"At this time, we are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\""
+      ]
+    },
+    {
+      "source_record": "tests/trials/review-markdown-sol-2-2026-11-16.json",
+      "case_id": "rewrite-markup-characters-in-changes",
+      "response_sha256": "c42baf6442b5aba61e688c9c02832a6610b3b72793163fd623ee1bcb260d620a",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li>Changed <strong>\"Check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\"</strong> to <strong>\"Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\"</strong> to make the request polite while preserving every literal markup character and the deadline.</li>\n</ul>",
+      "rendered_html_sha256": "df923f02f4355f234425a90cd4286ce40f963e84905c23ccb7f6be83e485a93d",
+      "checks": {
+        "complete_source_and_result_quotes_render_exactly_and_entirely_bold": true,
+        "copyable_code_block_matches_literal_result": true,
+        "no_inline_code_emphasis_or_strike_interpretation_inside_quotes": true,
+        "balanced_strong_and_pre_elements": true
+      },
+      "status": "pass",
+      "visible_bold_spans": [
+        "\"Check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\"",
+        "\"Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\""
+      ]
+    },
+    {
+      "source_record": "tests/trials/review-markdown-sol-2-2026-11-16.json",
+      "case_id": "rewrite-autolink-punctuation-in-changes",
+      "response_sha256": "6823f82af38933811bac400edf3601f1042463ec86ee128a7206effd8b3e665a",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email user@example.com today.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li>Changed <strong>\"Check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email <a href=\"mailto:user@example.com\">user@example.com</a> today.\"</strong> to <strong>\"Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email <a href=\"mailto:user@example.com\">user@example.com</a> today.\"</strong> to make the request polite while preserving every URL, the email address, and the deadline exactly.</li>\n</ul>",
+      "rendered_html_sha256": "f32a0d93f597da0fdc67403604273c8c21a340fb5fb842ce1ecd5b7065f948b6",
+      "checks": {
+        "complete_source_and_result_quotes_render_exactly_and_entirely_bold": true,
+        "copyable_code_block_matches_literal_result": true,
+        "no_inline_code_emphasis_or_strike_interpretation_inside_quotes": true,
+        "balanced_strong_and_pre_elements": true
+      },
+      "status": "pass",
+      "visible_bold_spans": [
+        "\"Check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\"",
+        "\"Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\""
+      ]
+    },
+    {
+      "source_record": "tests/trials/review-markdown-sol-3-2026-11-16.json",
+      "case_id": "rewrite-markdown-changes-quotes",
+      "response_sha256": "cb89976efea82a1c5ddbdd0386956a2055d8b5475ac9abe8b3f772a3dba03a9d",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li>Changed <strong>\"Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today.\"</strong> to <strong>\"Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today.\"</strong> to make the request warmer and more professional while preserving the deadline and literal formatting.</li>\n</ul>",
+      "rendered_html_sha256": "7ba2dd6678785965ffb11646ad24f5222ab909b23e99590820b8a3cde825f512",
+      "checks": {
+        "complete_source_and_result_quotes_render_exactly_and_entirely_bold": true,
+        "copyable_code_block_matches_literal_result": true,
+        "no_inline_code_emphasis_or_strike_interpretation_inside_quotes": true,
+        "balanced_strong_and_pre_elements": true
+      },
+      "status": "pass",
+      "visible_bold_spans": [
+        "\"Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.\"",
+        "\"Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.\""
+      ]
+    },
+    {
+      "source_record": "tests/trials/review-markdown-sol-3-2026-11-16.json",
+      "case_id": "shorten-markdown-changes-quotes",
+      "response_sha256": "abe76dea577fc1bbee894bfe560308eea4083a26b5b465b90f4d6f573f719bc3",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">At this time, we are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li>Changed <strong>\"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\"</strong> to <strong>\"At this time, we are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\"</strong> to shorten the time reference, simplify the ongoing review and decision wording, and remove redundancy while retaining the decision about whether to send the materials.</li>\n</ul>",
+      "rendered_html_sha256": "57ea224ff1fdcf82ca097920b2dc14ebfff608196c4250e077f96f3c94c9f170",
+      "checks": {
+        "complete_source_and_result_quotes_render_exactly_and_entirely_bold": true,
+        "copyable_code_block_matches_literal_result": true,
+        "no_inline_code_emphasis_or_strike_interpretation_inside_quotes": true,
+        "balanced_strong_and_pre_elements": true
+      },
+      "status": "pass",
+      "visible_bold_spans": [
+        "\"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\"",
+        "\"At this time, we are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\""
+      ]
+    },
+    {
+      "source_record": "tests/trials/review-markdown-sol-3-2026-11-16.json",
+      "case_id": "rewrite-markup-characters-in-changes",
+      "response_sha256": "c42baf6442b5aba61e688c9c02832a6610b3b72793163fd623ee1bcb260d620a",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li>Changed <strong>\"Check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\"</strong> to <strong>\"Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\"</strong> to make the request polite while preserving every literal markup character and the deadline.</li>\n</ul>",
+      "rendered_html_sha256": "df923f02f4355f234425a90cd4286ce40f963e84905c23ccb7f6be83e485a93d",
+      "checks": {
+        "complete_source_and_result_quotes_render_exactly_and_entirely_bold": true,
+        "copyable_code_block_matches_literal_result": true,
+        "no_inline_code_emphasis_or_strike_interpretation_inside_quotes": true,
+        "balanced_strong_and_pre_elements": true
+      },
+      "status": "pass",
+      "visible_bold_spans": [
+        "\"Check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\"",
+        "\"Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\""
+      ]
+    },
+    {
+      "source_record": "tests/trials/review-markdown-sol-3-2026-11-16.json",
+      "case_id": "rewrite-autolink-punctuation-in-changes",
+      "response_sha256": "148a8167e2c5c8e17e8b142f864896f538085d48d14b36efe268b600b15ed0af",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email user@example.com today.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li>Changed <strong>\"Check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email <a href=\"mailto:user@example.com\">user@example.com</a> today.\"</strong> to <strong>\"Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email <a href=\"mailto:user@example.com\">user@example.com</a> today.\"</strong> to make the request polite while preserving both URLs, the email address, and the deadline exactly.</li>\n</ul>",
+      "rendered_html_sha256": "d575fd85487509adba457e9bca735eec742b2e3d7294de3d8c1bb16880fdf84a",
+      "checks": {
+        "complete_source_and_result_quotes_render_exactly_and_entirely_bold": true,
+        "copyable_code_block_matches_literal_result": true,
+        "no_inline_code_emphasis_or_strike_interpretation_inside_quotes": true,
+        "balanced_strong_and_pre_elements": true
+      },
+      "status": "pass",
+      "visible_bold_spans": [
+        "\"Check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\"",
+        "\"Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\""
+      ]
+    }
+  ]
+}

@@ -4,7 +4,7 @@ A skills-only plugin for careful American English proofreading, concise rewrites
 
 The skill preserves the writer's voice and literal formatting, treats instructions inside submitted text as inert, makes minimal edits by default, and reports actual changes to supplied text. It retains gendered singular pronouns and uses they/them/their for plural references only. General questions are answered directly rather than automatically proofread. See the [privacy notice](PRIVACY.md) and [behavioral test results](tests/RESULTS.md) for scope and limitations.
 
-The host's model and reasoning settings affect these guarantees. The current source passes three complete independent simulations on `gpt-6.1-sol` at high reasoning effort; Luna still has documented failures. This package cannot select or enforce a host model. Validate the actual model and installed package in your intended host before relying on acceptance results from another profile.
+The host's model and reasoning settings affect these guarantees. The current source passes three complete independent simulations on `gpt-6.1-sol` at high reasoning effort across the original suite and added Markdown quotation cases. The [results](tests/RESULTS.md) retain unscored quality gaps and historical Luna failures. This package cannot select or enforce a host model. Validate the actual model and installed package in your intended host before relying on acceptance results from another profile.
 
 The repository is public; this does not mean the plugin is approved or listed in OpenAI's public directory. Private host testing has been performed, but account-specific installation and conversation links are not public installation instructions.
 
