@@ -5,8 +5,8 @@ English Proofreader Pro is a skills-only plugin. It has no hosted service, API, 
 ## Repository roles
 
 - `plugin.json` is the canonical plugin identity, version, UI metadata, and skill-only publication description.
-- `skills/english-proofreader-pro/SKILL.md` defines proofreading, editing, rewriting, and drafting behavior. Keep it concise; the validator uses a 1 MiB UTF-8 compatibility ceiling, not the former 8,000-character project cap.
-- `skills/english-proofreader-pro/agents/openai.yaml` contains skill UI metadata. The canonical skill name is `english-proofreader-pro`; the picker label is `ProofreaderPro`. The plugin label is `EnglishProofreaderPro`.
+- `skills/proofreader-pro/SKILL.md` defines proofreading, editing, rewriting, and drafting behavior. Keep it concise; the validator uses a 1 MiB UTF-8 compatibility ceiling, not the former 8,000-character project cap.
+- `skills/proofreader-pro/agents/openai.yaml` contains skill UI metadata. The canonical skill name is `proofreader-pro`; the picker label is `ProofreaderPro`. The plugin label is `EnglishProofreaderPro`.
 - `assets/icon.webp`, `LICENSE`, and `PRIVACY.md` are runtime package assets and notices.
 - `scripts/release.py` validates the runtime inputs and creates the distributable ZIP; it also stages a local compatibility copy for development.
 - `tests/` contains synthetic behavior cases and deterministic packaging tests. Model/host acceptance checks are separate and manual.
@@ -32,4 +32,4 @@ Icon validation checks the WebP container, chunk bounds, frame headers, dimensio
 
 Build prepares and verifies temporary outputs before publication. The old ZIP stays at its final path until one atomic replacement; a failed promotion rolls back local staging or reports the preserved backup path if restoration fails. Run one build at a time. ZIP replacement and staging replacement are separate filesystem operations, so an interrupted process still requires checking outputs before distribution.
 
-Preflight recognizes only the two known runtime files under the retired `skills/proofread/` staging path so a previous generated build can be replaced. Unknown files, symlinks, and non-regular entries there still block replacement. Newly prepared staging trees and ZIPs use only the current six-file allowlist; the retired skill is never bundled as an alias.
+Preflight recognizes only the two known runtime files under each retired staging path, `skills/proofread/` and `skills/english-proofreader-pro/`, so previous generated builds can be replaced. Unknown files, symlinks, and non-regular entries there still block replacement. Newly prepared staging trees and ZIPs use only the current six-file allowlist; retired skills are never bundled as aliases.

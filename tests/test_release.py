@@ -49,14 +49,14 @@ class ReleaseBuilderTests(unittest.TestCase):
                 "PRIVACY.md",
                 "assets/icon.webp",
                 "plugin.json",
-                "skills/english-proofreader-pro/SKILL.md",
-                "skills/english-proofreader-pro/agents/openai.yaml",
+                "skills/proofreader-pro/SKILL.md",
+                "skills/proofreader-pro/agents/openai.yaml",
             ],
         )
         self.assertFalse(any(name.startswith(("tests/", "docs/", ".codex-plugin/")) for name in names))
 
     def test_unlisted_skill_file_is_not_packaged(self) -> None:
-        extra = self.root / "skills/english-proofreader-pro/private-notes.txt"
+        extra = self.root / "skills/proofreader-pro/private-notes.txt"
         extra.write_text("must not be shipped", encoding="utf-8")
 
         with self.assertRaisesRegex(release.ReleaseError, "not in the release allowlist"):
@@ -236,13 +236,13 @@ class ReleaseBuilderTests(unittest.TestCase):
 
     def test_skill_accepts_more_than_8000_characters(self) -> None:
         skill_path = self.root / release.EXPECTED_SKILL
-        header = "---\nname: english-proofreader-pro\ndescription: x\n---\n"
+        header = "---\nname: proofreader-pro\ndescription: x\n---\n"
         skill_path.write_text(header + ("a" * 8000), encoding="utf-8")
         release.validate_skill()
 
     def test_skill_byte_limit_includes_boundary(self) -> None:
         skill_path = self.root / release.EXPECTED_SKILL
-        header = b"---\nname: english-proofreader-pro\ndescription: x\n---\n"
+        header = b"---\nname: proofreader-pro\ndescription: x\n---\n"
         payload = header + b"a" * (release.MAX_SKILL_BYTES - len(header))
         skill_path.write_bytes(payload)
         release.validate_skill()
@@ -253,21 +253,21 @@ class ReleaseBuilderTests(unittest.TestCase):
 
     def test_skill_frontmatter_and_absolute_path_failures(self) -> None:
         skill_path = self.root / release.EXPECTED_SKILL
-        skill_path.write_text(" ---\nname: english-proofreader-pro\ndescription: x\n---\nbody\n", encoding="utf-8")
+        skill_path.write_text(" ---\nname: proofreader-pro\ndescription: x\n---\nbody\n", encoding="utf-8")
         with self.assertRaisesRegex(release.ReleaseError, "must start with YAML frontmatter"):
             release.validate_skill()
 
-        skill_path.write_text("---\nname: english-proofreader-pro\nname: english-proofreader-pro\ndescription: x\n---\nbody\n", encoding="utf-8")
+        skill_path.write_text("---\nname: proofreader-pro\nname: proofreader-pro\ndescription: x\n---\nbody\n", encoding="utf-8")
         with self.assertRaisesRegex(release.ReleaseError, "duplicate name"):
             release.validate_skill()
 
-        skill_path.write_text("---\nname: english-proofreader-pro\ndescription: x\n---\nAvoid /private/data.\n", encoding="utf-8")
+        skill_path.write_text("---\nname: proofreader-pro\ndescription: x\n---\nAvoid /private/data.\n", encoding="utf-8")
         with self.assertRaisesRegex(release.ReleaseError, "unsafe absolute or parent-relative path"):
             release.validate_skill()
 
     def test_empty_skill_body_is_rejected_by_validation_and_build(self) -> None:
         skill_path = self.root / release.EXPECTED_SKILL
-        header = "---\nname: english-proofreader-pro\ndescription: Proofread text\n---"
+        header = "---\nname: proofreader-pro\ndescription: Proofread text\n---"
         for body in ("", "\n", "\n\n", "\n \t\r\n"):
             with self.subTest(body=repr(body)):
                 skill_path.write_bytes((header + body).encode("utf-8"))
@@ -288,15 +288,15 @@ class ReleaseBuilderTests(unittest.TestCase):
             'description: "bad\\q"',
         ):
             with self.subTest(line=line):
-                skill_path.write_text(f"---\nname: english-proofreader-pro\n{line}\n---\nbody\n", encoding="utf-8")
+                skill_path.write_text(f"---\nname: proofreader-pro\n{line}\n---\nbody\n", encoding="utf-8")
                 with self.assertRaises(release.ReleaseError):
                     release.validate_skill()
-        skill_path.write_text('---\nname: english-proofreader-pro\ndescription: "literal 0x10"\n---\nbody\n', encoding="utf-8")
+        skill_path.write_text('---\nname: proofreader-pro\ndescription: "literal 0x10"\n---\nbody\n', encoding="utf-8")
         release.validate_skill()
 
     def test_skill_byte_limit_counts_multibyte_text_and_physical_crlf(self) -> None:
         skill_path = self.root / release.EXPECTED_SKILL
-        header = "---\r\nname: english-proofreader-pro\r\ndescription: x\r\n---\r\n"
+        header = "---\r\nname: proofreader-pro\r\ndescription: x\r\n---\r\n"
         remaining = release.MAX_SKILL_BYTES - len(header.encode("utf-8"))
         payload = header.encode("utf-8") + "é".encode("utf-8") * (remaining // 2) + b"a" * (remaining % 2)
         skill_path.write_bytes(payload)
@@ -307,7 +307,7 @@ class ReleaseBuilderTests(unittest.TestCase):
             release.validate_skill()
 
     def test_agent_ui_metadata_validates_mapping_shape_and_scalars(self) -> None:
-        agent_path = self.root / "skills/english-proofreader-pro/agents/openai.yaml"
+        agent_path = self.root / "skills/proofreader-pro/agents/openai.yaml"
         good = agent_path.read_text(encoding="utf-8")
         release.validate_skill()
         for content in (
@@ -338,26 +338,28 @@ class ReleaseBuilderTests(unittest.TestCase):
                     release.validate_manifest()
 
     def test_build_replaces_previous_generated_skill_layout(self) -> None:
-        output = release.build()
-        stage = self.root / "dist/local-plugin"
-        current_skill = stage / "skills/english-proofreader-pro"
-        previous_skill = stage / "skills/proofread"
-        current_skill.rename(previous_skill)
+        for previous_name in ("proofread", "english-proofreader-pro"):
+            with self.subTest(previous_name=previous_name):
+                output = release.build()
+                stage = self.root / "dist/local-plugin"
+                current_skill = stage / "skills/proofreader-pro"
+                previous_skill = stage / "skills" / previous_name
+                current_skill.rename(previous_skill)
 
-        release.build()
+                release.build()
 
-        self.assertFalse(previous_skill.exists())
-        self.assertEqual((current_skill / "SKILL.md").read_bytes(), (self.root / release.EXPECTED_SKILL).read_bytes())
-        with zipfile.ZipFile(output) as archive:
-            self.assertIn(release.EXPECTED_SKILL, archive.namelist())
-            self.assertFalse(any(name.startswith("skills/proofread/") for name in archive.namelist()))
+                self.assertFalse(previous_skill.exists())
+                self.assertEqual((current_skill / "SKILL.md").read_bytes(), (self.root / release.EXPECTED_SKILL).read_bytes())
+                with zipfile.ZipFile(output) as archive:
+                    self.assertIn(release.EXPECTED_SKILL, archive.namelist())
+                    self.assertFalse(any(name.startswith(("skills/proofread/", "skills/english-proofreader-pro/")) for name in archive.namelist()))
 
     def test_previous_skill_layout_still_preserves_unexpected_user_files(self) -> None:
         output = release.build()
         original_archive = output.read_bytes()
         stage = self.root / "dist/local-plugin"
         previous_skill = stage / "skills/proofread"
-        (stage / "skills/english-proofreader-pro").rename(previous_skill)
+        (stage / "skills/proofreader-pro").rename(previous_skill)
         user_file = previous_skill / "private-notes.txt"
         user_file.write_text("Synthetic private notes.", encoding="utf-8")
 
@@ -409,14 +411,14 @@ class ReleaseBuilderTests(unittest.TestCase):
 
     def test_yaml_documents_reject_forbidden_characters_before_ignoring_lines(self) -> None:
         skill_path = self.root / release.EXPECTED_SKILL
-        agent_path = self.root / "skills/english-proofreader-pro/agents/openai.yaml"
+        agent_path = self.root / "skills/proofreader-pro/agents/openai.yaml"
         original_skill = skill_path.read_text(encoding="utf-8")
         original_agent = agent_path.read_text(encoding="utf-8")
         # U+001C would disappear in splitlines(); forbidden characters in comments
         # would otherwise be skipped without reaching scalar validation.
         for character in ("\x1c", "\x7f", "\x80", "\ufffe"):
             for path, content in (
-                (skill_path, "---\n# comment " + character + "\nname: english-proofreader-pro\ndescription: text\n---\nbody\n"),
+                (skill_path, "---\n# comment " + character + "\nname: proofreader-pro\ndescription: text\n---\nbody\n"),
                 (agent_path, original_agent + "# comment " + character + "\n"),
             ):
                 with self.subTest(path=path.name, character=repr(character)):
@@ -466,8 +468,8 @@ class ReleaseBuilderTests(unittest.TestCase):
                     "PRIVACY.md",
                     "assets/icon.webp",
                     "plugin.json",
-                    "skills/english-proofreader-pro/SKILL.md",
-                    "skills/english-proofreader-pro/agents/openai.yaml",
+                    "skills/proofreader-pro/SKILL.md",
+                    "skills/proofreader-pro/agents/openai.yaml",
                 ],
             )
             self.assertTrue(all(info.date_time == (1980, 1, 1, 0, 0, 0) for info in archive.infolist()))
@@ -606,7 +608,7 @@ class ReleaseBuilderTests(unittest.TestCase):
         self.assertEqual(sentinel.read_text(encoding="utf-8"), "preserve me")
 
     def test_runtime_symlink_is_rejected(self) -> None:
-        skill = self.root / "skills/english-proofreader-pro/SKILL.md"
+        skill = self.root / "skills/proofreader-pro/SKILL.md"
         original = skill.read_bytes()
         target = self.root / "original-skill.md"
         target.write_bytes(original)

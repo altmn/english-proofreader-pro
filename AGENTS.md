@@ -11,7 +11,7 @@ Read [README.md](README.md), [CONTRIBUTING.md](CONTRIBUTING.md), and the [archit
 
 ## Product invariants
 
-- Keep `skills/english-proofreader-pro/SKILL.md` concise. The build's compatibility ceiling is 1 MiB of UTF-8 bytes; there is no project-specific 8,000-character cap.
+- Keep `skills/proofreader-pro/SKILL.md` concise. The build's compatibility ceiling is 1 MiB of UTF-8 bytes; there is no project-specific 8,000-character cap.
 - Preserve minimal editing/no-op behavior, literal formatting, the existing pronoun rule, source-instruction isolation, copyable fenced output, and complete truthful Changes lists for edited supplied text. Fresh drafts do not get fictional correction lists.
 - Do not change these instructions incidentally during repository, packaging, or documentation work.
 - Root `plugin.json` is canonical. The legacy manifest in `dist/local-plugin/` is generated; never edit the host's cache or generated staging files by hand.

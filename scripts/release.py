@@ -18,13 +18,18 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 PLUGIN_NAME = "english-proofreader-pro"
-SKILL_NAME = "english-proofreader-pro"
+SKILL_NAME = "proofreader-pro"
 EXPECTED_SKILL = f"skills/{SKILL_NAME}/SKILL.md"
 EXPECTED_AGENT = f"skills/{SKILL_NAME}/agents/openai.yaml"
 EXPECTED_SKILL_FILES = (EXPECTED_SKILL, EXPECTED_AGENT)
 # Only preflight may recognize the previous generated layout for replacement.
 # These files are never included in new archives or staging trees.
-RETIRED_SKILL_FILES = ("skills/proofread/SKILL.md", "skills/proofread/agents/openai.yaml")
+RETIRED_SKILL_FILES = (
+    "skills/proofread/SKILL.md",
+    "skills/proofread/agents/openai.yaml",
+    "skills/english-proofreader-pro/SKILL.md",
+    "skills/english-proofreader-pro/agents/openai.yaml",
+)
 EXPECTED_ICON = "assets/icon.webp"
 MAX_SKILL_BYTES = 1024 * 1024
 MAX_METADATA_URL_CHARS = 2048

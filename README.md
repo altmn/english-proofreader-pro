@@ -8,7 +8,7 @@ For routine proofreading, start with the latest Instant model available in ChatG
 
 The repository is public; this does not mean the plugin is approved or listed in OpenAI's public directory. Private host testing has been performed, but account-specific installation and conversation links are not public installation instructions.
 
-Use a starter prompt or **Try in chat**. In ChatGPT's `@` picker, the package labels are `EnglishProofreaderPro` for the plugin and `ProofreaderPro` for its skill. Select the matching entry; typing an unselected string is not a guaranteed invocation. In Codex, use `$english-proofreader-pro` or select **ProofreaderPro** through `/skills`. The distinctive name replaces the generic `$proofread` to reduce collisions. Both new picker labels still need installed-host verification. See [host compatibility](docs/host-compatibility.md) for model selection, counting tools, output controls, and invocation limits.
+Use a starter prompt or **Try in chat**. In ChatGPT's `@` picker, the package labels are `EnglishProofreaderPro` for the plugin and `ProofreaderPro` for its skill. Select the matching entry; typing an unselected string is not a guaranteed invocation. In Codex, use `$proofreader-pro` or select **ProofreaderPro** through `/skills`. The distinctive name replaces the generic `$proofread` to reduce collisions. Both new picker labels still need installed-host verification. See [host compatibility](docs/host-compatibility.md) for model selection, counting tools, output controls, and invocation limits.
 
 ## Build and install
 

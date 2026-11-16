@@ -19,10 +19,10 @@ class EvaluationTests(unittest.TestCase):
     def setUp(self) -> None:
         self.temp = tempfile.TemporaryDirectory()
         self.root = Path(self.temp.name)
-        (self.root / "skills/english-proofreader-pro").mkdir(parents=True)
+        (self.root / "skills/proofreader-pro").mkdir(parents=True)
         (self.root / "tests/trials").mkdir(parents=True)
         (self.root / "plugin.json").write_text('{"version":"1.2.3"}\n', encoding="utf-8")
-        (self.root / "skills/english-proofreader-pro/SKILL.md").write_text("Synthetic skill v1\n", encoding="utf-8")
+        (self.root / "skills/proofreader-pro/SKILL.md").write_text("Synthetic skill v1\n", encoding="utf-8")
         fixture = {
             "schema_version": 1,
             "cases": [
@@ -329,7 +329,7 @@ class EvaluationTests(unittest.TestCase):
             with self.subTest(status=status), redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
                 self.assertEqual(evaluate.main(command), 2)
         paths[1].write_text(json.dumps(original), encoding="utf-8")
-        (self.root / "skills/english-proofreader-pro/SKILL.md").write_text("Changed source.", encoding="utf-8")
+        (self.root / "skills/proofreader-pro/SKILL.md").write_text("Changed source.", encoding="utf-8")
         with redirect_stdout(io.StringIO()), redirect_stderr(io.StringIO()):
             self.assertEqual(evaluate.main(command), 2)
 
@@ -480,7 +480,7 @@ class EvaluationTests(unittest.TestCase):
         manifest_bytes = b'{"version":"1.2.3"}\r\n'
         fixture_path = self.root / "tests/cases.json"
         fixture_bytes = fixture_path.read_bytes() + b"\r\n"
-        (self.root / "skills/english-proofreader-pro/SKILL.md").write_bytes(skill_bytes)
+        (self.root / "skills/proofreader-pro/SKILL.md").write_bytes(skill_bytes)
         (self.root / "plugin.json").write_bytes(manifest_bytes)
         fixture_path.write_bytes(fixture_bytes)
         self.context_path.write_bytes(b"Keep line endings.\r\n")
@@ -563,7 +563,7 @@ class EvaluationTests(unittest.TestCase):
 
     def test_historical_snapshot_is_valid_but_not_current(self) -> None:
         self._record()
-        (self.root / "skills/english-proofreader-pro/SKILL.md").write_text("Synthetic skill v2\n", encoding="utf-8")
+        (self.root / "skills/proofreader-pro/SKILL.md").write_text("Synthetic skill v2\n", encoding="utf-8")
         self.assertEqual(evaluate.validate_record(self.record_path), "historical")
 
     def test_intended_host_and_grader_metadata_are_required(self) -> None:
