@@ -14,9 +14,11 @@ Earlier Sol/high simulations are evidence for their exact source/profile, not a 
 
 ## Invocation and collisions
 
+Invoke the skill on every turn you want it to handle. This includes follow-up revisions, questions about the current text, counting requests, and new drafts. A previous mention does not keep the plugin or skill selected for the next message. Use a fresh picker selection or explicit skill mention on each turn rather than relying on conversation context or automatic matching.
+
 The stable plugin ID remains `english-proofreader-pro`. Its plugin picker label is `EnglishProofreaderPro`; the bundled skill's picker label is `ProofreaderPro`. ChatGPT's `@` menu can select [plugins](https://learn.chatgpt.com/docs/build-plugins) and [skills](https://learn.chatgpt.com/docs/build-skills). These labels provide the two requested no-space names through those supported metadata fields. They do not register arbitrary aliases or guarantee that an unselected typed `@` string activates the plugin. Verify both entries after installation.
 
-In Codex, use `$proofreader-pro` or choose **ProofreaderPro** through `/skills`. The skill folder, frontmatter name, and starter prompt use the distinctive `proofreader-pro` name. The former `$proofread` and `$english-proofreader-pro` names are not retained as aliases. OpenAI documents that duplicate skill names are not merged and can both appear in selectors. Select the entry from this plugin if another installation uses the same distinctive name; do not rely on name precedence. Cached older installs may still expose an older name until updated through the host's normal workflow.
+In Codex, include `$proofreader-pro` in each request or choose **ProofreaderPro** through `/skills` for that turn. The skill folder, frontmatter name, and starter prompt use the distinctive `proofreader-pro` name. The former `$proofread` and `$english-proofreader-pro` names are not retained as aliases. OpenAI documents that duplicate skill names are not merged and can both appear in selectors. Select the entry from this plugin if another installation uses the same distinctive name; do not rely on name precedence. Cached older installs may still expose an older name until updated through the host's normal workflow.
 
 ## Copyable text and wrapping
 

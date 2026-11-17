@@ -54,6 +54,8 @@ Confirm the generated ZIP contains the intended skill-only package and that no u
 
 ## Behavioral and host acceptance
 
+Explicitly invoke the plugin or skill for **every test turn**, including follow-up prompts. In ChatGPT, select the plugin from the `@` picker each time; in Codex, include `$proofreader-pro` or select it through `/skills` for that turn. An earlier mention does not establish activation for a later message. Record the invocation actually used; an unmentioned response may use the host's ordinary writing workflow and cannot establish explicit-plugin behavior.
+
 Use fresh, independent sessions for three complete runs of the fixture suite. Do not reuse one conversation's prior answers or expectations. Capture a snapshot before the runs and a separate complete response record for each run; unchanged inputs may share a snapshot. Check the response against each fixture's observable assertions and record pass/fail/not-run status with concise gap notes for every run. Compare behavior, not exact wording.
 
 Then install the built package in the intended host and manually verify rendered and copied output: proofread text appears first, the outer fence safely contains source backticks, Markdown/list indentation survives copy-paste, change notes are outside the fence and enumerate only real supplied-text edits, and no-op output is exactly the specified sentence. Also check a new draft has no change list and an unrelated question is answered normally. Record the host/version, install method, checks, and any gaps; fix and rerun failures before release.
