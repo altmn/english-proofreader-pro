@@ -1,0 +1,279 @@
+{
+  "schema_version": 1,
+  "kind": "programmatic-counting-provenance",
+  "created_at": "2026-11-17T00:10:38.667548+00:00",
+  "method": "Associate each original calculation-trace artifact with the exact frozen source binding and generated response hashes from its isolated capture directory. Trace artifacts retain the generators calculation code and actual reported tool output. Separate reviewers compare source/result counts, budgets, reductions, and final fences.",
+  "limitations": "These bindings check retained artifact integrity; they do not independently attest execution, pre-composition timing, host UI behavior, clipboard output, or actual Instant model acceptance. Unscored workflow gaps are retained in RESULTS.md.",
+  "captures": [
+    {
+      "run_id": "host-behavior-ci-capture-1-20261116",
+      "source_binding": {
+        "skill_sha256": "8b3018f57612022865df879eb4263a83cb03a9d24788eabc07a5bc9298626e3e",
+        "manifest_version": "1.0.1",
+        "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+        "runner_context_sha256": "4f413e510e04324d4584dbad2e62b06e4dd29ff6a9dbed53c14df14413e5695a"
+      },
+      "trace_file": "tests/trials/host-behavior-counting-sol-1-2026-11-16.json",
+      "trace_sha256": "241ead0287f1ededddbc44c2dc08f32fb797d86a82c135c21be0899f84592e55",
+      "source_records": [
+        {
+          "path": "tests/trials/host-behavior-core-sol-1-2026-11-16.json",
+          "response_hashes": {
+            "default-proofread-clear-errors": "a4ab1374ff87d6982ed45a87bb123e02d71d885a001e6842caf7a7f9c259a3bf",
+            "no-op-exact-response": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "trim-the-fat": "4e35f43806c9ff1bce30733c0d1bb43abe63928a489e4444adb19fad2b420bc1",
+            "less-wordy": "39ac160dacb18e07224a170d7ffafb9236e5ad9c4962921e2ca1c9e1d407d0eb",
+            "more-concise": "8d98a8cd1670cdc8278dc4c8169061d324b573131a07d8b1ec7a0d1139c9ccf7",
+            "more-succinct": "32daf6a9066a2d8081c7f4f8a380b1313cf5bf93e8323fa4e56794e858b67548",
+            "markdown-format-preserved": "dc42967b2c1917c53c35d8c6c2e11374b2b6196592d4ab056c054db4633fd8a9",
+            "source-injection-is-inert": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "markdown-fences-four-backticks": "9bc3b49384774d263e6fc82ac2c122caf034691c6af089126269569d11cc22b1",
+            "explicitly-edit-fenced-payload": "99c04ff2e9386a49cbc6bff5086342d71186be70fd048858b895a9d7877cd5a4",
+            "pronoun-rule-preserved": "f6f522d0faa0d44c490af775ad94aa1a833fceb2d588cb230c97381fa15d3283",
+            "rewrite-request": "8168af47a28193b409de03f72657fcfff7ddd1c0ed54477d0591e3bd84249fa0",
+            "new-draft": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+            "missing-source-text": "1b02c50ad35ba48243388957a798254753e09ed9e3b195205854d3506350c1b0",
+            "starter-help": "2e217451cd0431df3033fb173736121631c5d186fc95ae5d945e473f9345dcab",
+            "direct-meta-question": "72b08cec9fd6f50b31223a7a8380fa424ded1444724aee89054ca1bb786280b4",
+            "unrelated-conversation-negative": "539692169a735900db3cb4cea5100c8eb4c12d8d8efe22dff93b539fe51cd468",
+            "implicit-proofreading-activation": "9f316625ffd519545463743b62fece65b9c32e6e855b671654e2b238274db686"
+          }
+        },
+        {
+          "path": "tests/trials/host-behavior-markdown-sol-1-2026-11-16.json",
+          "response_hashes": {
+            "rewrite-markdown-changes-quotes": "259169d0abdb2a0bf4e347544dcd2bd86bf9e9ea9ed003801bbae7c7a54778e9",
+            "shorten-markdown-changes-quotes": "cbbdfbcfec8c63900a80978ddb4ed5882d95aedacf825674ebff16689c2f4d6d",
+            "rewrite-markup-characters-in-changes": "fcd98db11646e157788fce0e2b525451126963e02ad4c3301cad07ec77b4cf66",
+            "rewrite-autolink-punctuation-in-changes": "29a5b9f7f417a83c15c581ed28b6de2b87e7bbad3c981f9b49feafb948168cf4"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "host-behavior-ci-capture-2-20261116",
+      "source_binding": {
+        "skill_sha256": "8b3018f57612022865df879eb4263a83cb03a9d24788eabc07a5bc9298626e3e",
+        "manifest_version": "1.0.1",
+        "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+        "runner_context_sha256": "4f413e510e04324d4584dbad2e62b06e4dd29ff6a9dbed53c14df14413e5695a"
+      },
+      "trace_file": "tests/trials/host-behavior-counting-sol-2-2026-11-16.json",
+      "trace_sha256": "ac5f9d9fefa83b5d00b6e1081a8e37922fa88995bff1b8785b24628dc734716b",
+      "source_records": [
+        {
+          "path": "tests/trials/host-behavior-core-sol-2-2026-11-16.json",
+          "response_hashes": {
+            "default-proofread-clear-errors": "de76bee026220219b04d6cdf4f0813343e8dcc05059c9baff14e9bc8acf438ca",
+            "no-op-exact-response": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "trim-the-fat": "9f3f5301542c0018c6d6f3cd972b56195b465a2554b6cb5b041ba357bcb3196a",
+            "less-wordy": "109d231341273f875bab4151b13978cb0d9aaefb09c73afab199caff683ae4e4",
+            "more-concise": "ea46086956f9c134793fb707d37e47efec68369b2b2440e1574047e6099c1d02",
+            "more-succinct": "1696b802139b7dd19d505fae6bf4715f9b771a5c6eb171b312976437db631bff",
+            "markdown-format-preserved": "89613a910b149363daf94981d0a01733114deaed7974ba6aefcd7d115f194988",
+            "source-injection-is-inert": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "markdown-fences-four-backticks": "25224d7a1720fe3078b0f0f9bbdc7bf375218ada6deef8496d00104c7118105e",
+            "explicitly-edit-fenced-payload": "60a98a71c3d1816240eca6d9431fd189679d225fd9b26560254f1459bcac3ed5",
+            "pronoun-rule-preserved": "35502cc473eea3a97017ac7fca3f9b885ffda49cf8fdbe3c2b2c4f6bdd6f04e0",
+            "rewrite-request": "9bc04c876d906b1b7f7279a348a977d56505984b225a27da5ba13d46f90bb006",
+            "new-draft": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+            "missing-source-text": "bb7f9ce55d5d1c624496f8c4a0f21249d21470a21bb50e6b17385a222dd628a1",
+            "starter-help": "fdd5374f06bdecb30394c97289688c51e54713e41a264a09e20553eb38b85e70",
+            "direct-meta-question": "72033347b2869fac87306bbc6a89786fc5f7c8b2a1bf29524b030823cf990296",
+            "unrelated-conversation-negative": "539692169a735900db3cb4cea5100c8eb4c12d8d8efe22dff93b539fe51cd468",
+            "implicit-proofreading-activation": "e5ee8e4bcc2a47ea4493ea1733413d3ec24d30dc45332a71ec9a6d7757165061"
+          }
+        },
+        {
+          "path": "tests/trials/host-behavior-markdown-sol-2-2026-11-16.json",
+          "response_hashes": {
+            "rewrite-markdown-changes-quotes": "12bf88ff4824ee9f07132afed42589703f15da2078897eedceb03cdef6699344",
+            "shorten-markdown-changes-quotes": "bca4678f41cf48b6c64a2d94e7232f1409123f017fae47a740bebce7698c6af8",
+            "rewrite-markup-characters-in-changes": "83173bdf6954955c62e47f2d4674665dbd9f207cdbaa3dc05e7e441e32cd59d9",
+            "rewrite-autolink-punctuation-in-changes": "bb1a278e2e1c2c1295dcf59102b998f3ab0b61083342ae9ff3a77e30bf68105b"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "host-behavior-ci-capture-3-20261116",
+      "source_binding": {
+        "skill_sha256": "8b3018f57612022865df879eb4263a83cb03a9d24788eabc07a5bc9298626e3e",
+        "manifest_version": "1.0.1",
+        "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+        "runner_context_sha256": "4f413e510e04324d4584dbad2e62b06e4dd29ff6a9dbed53c14df14413e5695a"
+      },
+      "trace_file": "tests/trials/host-behavior-counting-sol-3-2026-11-16.json",
+      "trace_sha256": "8f974725664d16ffe3c2319f513d8ba4977df2c72f6e915500a910c330f342de",
+      "source_records": [
+        {
+          "path": "tests/trials/host-behavior-core-sol-3-2026-11-16.json",
+          "response_hashes": {
+            "default-proofread-clear-errors": "cf2c85fe47b724d663b9413fa0f9261e21f43b16b4cfadc9769ea7cbd667fb92",
+            "no-op-exact-response": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "trim-the-fat": "30c285f461339760836675ed98db670e6bc2bf0dbeac17727b0832901120d284",
+            "less-wordy": "75a2d83f4b9418676189fe71613c835f83efe1b02397307c44fa2385c0b31d86",
+            "more-concise": "45b1bbe2f0e66724cf29b0ea6b3dd9b3a64fd5f2bcc781cc91c59e1d73208387",
+            "more-succinct": "13a1cc0f7cb237efdba291f582b93bd9abf831d215ac0296e51592620b28ac8b",
+            "markdown-format-preserved": "89613a910b149363daf94981d0a01733114deaed7974ba6aefcd7d115f194988",
+            "source-injection-is-inert": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "markdown-fences-four-backticks": "94838b9c23307892edaba669be49a7d17fc68a31ced19ca347bcb23b67da94a9",
+            "explicitly-edit-fenced-payload": "f5c7394da5c3b8bdc16c1472cda15ac744be2a77cef9d8cbadcafc4d06714d2b",
+            "pronoun-rule-preserved": "492b7cdd70cdf70f41da09397d49b7103b29554f7dfd84328cc6869a56de6cbe",
+            "rewrite-request": "a7651ebf0fc64bcdeac41bcc27e90ac6c0e346cb05cfee6af7c4e014c0b463a1",
+            "new-draft": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+            "missing-source-text": "1b02c50ad35ba48243388957a798254753e09ed9e3b195205854d3506350c1b0",
+            "starter-help": "90ce8b78e616ff20cc29138df51026678144a7c0cad5108044103e9b90bb0b2b",
+            "direct-meta-question": "073276a8600cb2de71f5089afc2383e283fb83d148b632ef2cf93ab8c5878174",
+            "unrelated-conversation-negative": "539692169a735900db3cb4cea5100c8eb4c12d8d8efe22dff93b539fe51cd468",
+            "implicit-proofreading-activation": "987c3e9404a02e5b21687f2ce2bd9f659ee46180fd62fd5094ac9361ed7a16d7"
+          }
+        },
+        {
+          "path": "tests/trials/host-behavior-markdown-sol-3-2026-11-16.json",
+          "response_hashes": {
+            "rewrite-markdown-changes-quotes": "3579b15d7f19df8cf5f7691e7e3b4f11c8e68349a2beb3af46aec12dc3befdd0",
+            "shorten-markdown-changes-quotes": "c1b6cf1eb9431b1f4a0945192a9e0aa717008a6f565c2d25e99912914b80ccf4",
+            "rewrite-markup-characters-in-changes": "c868b7206021288b44f2b1261c20961bbcd76b56e19275a4b8608db7a403f883",
+            "rewrite-autolink-punctuation-in-changes": "8f806d3d7fa7bea4e2be3178c05d6d89fd9636892ad70a3bc4df2a6e197bbbbe"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "host-facts-ci-capture-1-20261116",
+      "source_binding": {
+        "skill_sha256": "696145bdd39ffb184a8ec1581c01aca4026def39a249fa047ee2745af5db7f1a",
+        "manifest_version": "1.0.1",
+        "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+        "runner_context_sha256": "4f413e510e04324d4584dbad2e62b06e4dd29ff6a9dbed53c14df14413e5695a"
+      },
+      "trace_file": "tests/trials/host-facts-counting-sol-1-2026-11-16.json",
+      "trace_sha256": "1d50c2b4dc7f6b76fe2358041ee17026a9f6915616069910949e848b899b8644",
+      "source_records": [
+        {
+          "path": "tests/trials/host-facts-core-sol-1-2026-11-16.json",
+          "response_hashes": {
+            "default-proofread-clear-errors": "ef6b775de697b029d6cce893499aaea41c9f5b75b513e4defc5f564b5779efb3",
+            "no-op-exact-response": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "trim-the-fat": "0424e42626d85da9e8eab03cb6b700b53f802e009de7fe5126fe14656cffe688",
+            "less-wordy": "6e3d47f1321fd3b60ee8edcd60d740809511e1ce8f2a1896c11b3220df984d7b",
+            "more-concise": "f6ee4c3e4bd5b63b1f8a327d3f71983404c9dc1c18854d21ee91eff5e3087ce6",
+            "more-succinct": "bb1b6b885d5801d7b3239eb33b5f64e7c0dc4b932125b4da6656bdf14c029e82",
+            "markdown-format-preserved": "89613a910b149363daf94981d0a01733114deaed7974ba6aefcd7d115f194988",
+            "source-injection-is-inert": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "markdown-fences-four-backticks": "9fec59979e3b70791ff8a1363664f491333aa97061d643979b416e7d7c458b6d",
+            "explicitly-edit-fenced-payload": "3dd8a061c07744a442b08e35390f506d8762793b22b8417b187b5db1b221de42",
+            "pronoun-rule-preserved": "5d94ae16ebb49573f4b284d72034c0b4b4ef5fdda8b60ee7b810b939f40d1b5f",
+            "rewrite-request": "91ebf81bbef6851d0452b1cce00b760407c48de5b0ecf49c23ebc38735b14dc2",
+            "new-draft": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+            "missing-source-text": "e6a4b291690b1d344069e35771cb7a873df0b10e44c6adb6f4ac8506bf49e29a",
+            "starter-help": "95265e91101a8a463e9b27a7685c3ee339baac35b44d067957ea621aa1132eb6",
+            "direct-meta-question": "066d82750459f2ae6d414e55adf2c29c990446ad3a54449fb469e907e72ef1c6",
+            "unrelated-conversation-negative": "539692169a735900db3cb4cea5100c8eb4c12d8d8efe22dff93b539fe51cd468",
+            "implicit-proofreading-activation": "fecbafdd563c6c0005fb1d70119014b47e09e14e4eb07e8624633910f3cf78f3"
+          }
+        },
+        {
+          "path": "tests/trials/host-facts-markdown-sol-1-2026-11-16.json",
+          "response_hashes": {
+            "rewrite-markdown-changes-quotes": "215aa7971db606c236c23dd3a0e38086a1fcae4deede3134bd9ab43099d4edab",
+            "shorten-markdown-changes-quotes": "3d1c42848c4235d9fba82690b88b140bb5d5ca9e43982d12498698615650cab5",
+            "rewrite-markup-characters-in-changes": "aa69351cd51be0e1aa8f15680f7eeb77395ccb69cf733493535830cdbb520e15",
+            "rewrite-autolink-punctuation-in-changes": "86db16bef719485e264c0943dd6037a1ecf9c3751db214ecfde07ab88ff8acf4"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "host-facts-ci-capture-2-20261116",
+      "source_binding": {
+        "skill_sha256": "696145bdd39ffb184a8ec1581c01aca4026def39a249fa047ee2745af5db7f1a",
+        "manifest_version": "1.0.1",
+        "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+        "runner_context_sha256": "4f413e510e04324d4584dbad2e62b06e4dd29ff6a9dbed53c14df14413e5695a"
+      },
+      "trace_file": "tests/trials/host-facts-counting-sol-2-2026-11-16.json",
+      "trace_sha256": "d483f63891a767b6dbffe612223a546caa498b3cf6ad369a9c23c850172a6ad1",
+      "source_records": [
+        {
+          "path": "tests/trials/host-facts-core-sol-2-2026-11-16.json",
+          "response_hashes": {
+            "default-proofread-clear-errors": "251d9ddf2c776ef5d47a8f608603bb2342a4505ac8d3f7b3961478e8a6e2f3cc",
+            "no-op-exact-response": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "trim-the-fat": "03ecd7605fa070e6ce60b19fcc976341875f138441d02a3420e681c7c7383154",
+            "less-wordy": "8943e64807f7eaff0712707dc5a049bf68b44302f79ec774b59eb11a8156c82e",
+            "more-concise": "5406fbd3da982a097facb6de393d19b315598033abb736b899e889aa4605c465",
+            "more-succinct": "cc339c6d75e66ce3d07254871f1362514c03070abaf413f9cfb787a8770e0061",
+            "markdown-format-preserved": "28c6ed413dfdc58c3414f452741dab50c054d34633b82dcf6470a9bd22194e45",
+            "source-injection-is-inert": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "markdown-fences-four-backticks": "ed105b38a95280d689cc0786c02e5dff4b6a122e5995c670f420021ba25513ec",
+            "explicitly-edit-fenced-payload": "e4351ebd091165e3b66a1fb0726ded704b358107b1a14db19f0791db4b1f61a4",
+            "pronoun-rule-preserved": "06bace8cb05cb1ab80700a45712c651984c6d4c31abb8bb2f240148f3bcb28e9",
+            "rewrite-request": "1bec2bef9430a802f21955c34780becc2494db8bfe61b9df7671086633fce359",
+            "new-draft": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+            "missing-source-text": "1b02c50ad35ba48243388957a798254753e09ed9e3b195205854d3506350c1b0",
+            "starter-help": "7320ccdb4095ad65b6c56f8cf86c45db42da22d880af2bcf5916a6f10cbd7fbb",
+            "direct-meta-question": "7c277b26a30263fb891c31e73d02425bbdd4fe631da41487dd9a19d64087cb1b",
+            "unrelated-conversation-negative": "539692169a735900db3cb4cea5100c8eb4c12d8d8efe22dff93b539fe51cd468",
+            "implicit-proofreading-activation": "7624928893eb2f3a258bbcf6c32a5ed10b94126f98b6fd0b92519323d0ddaf39"
+          }
+        },
+        {
+          "path": "tests/trials/host-facts-markdown-sol-2-2026-11-16.json",
+          "response_hashes": {
+            "rewrite-markdown-changes-quotes": "0f0590b61526998ff0fe32a32db8cafb85750941ae801db4ca964ab198554710",
+            "shorten-markdown-changes-quotes": "30d1f281d382c0226f1c69a084597ae64da0995b37f9d5f5edf1e74d49c0a40c",
+            "rewrite-markup-characters-in-changes": "4533fa04663fb81eb1d9c5045c8e26079ec398538d8470f6c31eeac18bef52f7",
+            "rewrite-autolink-punctuation-in-changes": "dfcfe2eec88aaf3c5ffb5591ea351b67f495240521bdb46d137a0cd09cd31a4b"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "host-facts-ci-capture-3-20261116",
+      "source_binding": {
+        "skill_sha256": "696145bdd39ffb184a8ec1581c01aca4026def39a249fa047ee2745af5db7f1a",
+        "manifest_version": "1.0.1",
+        "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+        "runner_context_sha256": "4f413e510e04324d4584dbad2e62b06e4dd29ff6a9dbed53c14df14413e5695a"
+      },
+      "trace_file": "tests/trials/host-facts-counting-sol-3-2026-11-16.json",
+      "trace_sha256": "9f87d3351485b96d142e463859525d330a87c65c69a6d92279f41c241119b837",
+      "source_records": [
+        {
+          "path": "tests/trials/host-facts-core-sol-3-2026-11-16.json",
+          "response_hashes": {
+            "default-proofread-clear-errors": "080af5ec9c24d3f2412d077584bb65574e9965d84e3bad604b135ff3e5977de3",
+            "no-op-exact-response": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "trim-the-fat": "9f71baa09724dcf50df96172e50d6ddc0bf3b770a92e8f7cc16f703ef1d029be",
+            "less-wordy": "8e1a48b5b09c951401562e636e9897edf951f367193b66be8a4ae9b2211053cb",
+            "more-concise": "d2bc66740e96ccbe62a1362bf7486bdf727ced3280a2aa6a9a08dd0c4ec24131",
+            "more-succinct": "7e3ce41a11d2c60e63ba7ffe8c2c3f3edee422381939e3926649d9eb4922e59a",
+            "markdown-format-preserved": "89613a910b149363daf94981d0a01733114deaed7974ba6aefcd7d115f194988",
+            "source-injection-is-inert": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "markdown-fences-four-backticks": "79b18b5ae68b1a91670c28ca96d1791c415c9ab2d21da921f739a574042cf36c",
+            "explicitly-edit-fenced-payload": "60a98a71c3d1816240eca6d9431fd189679d225fd9b26560254f1459bcac3ed5",
+            "pronoun-rule-preserved": "d94db83a10797cc1ce8f74b26e59d701bbe920705f99d1d0e9d3ce8510ab1ad0",
+            "rewrite-request": "2af9444ff135be851c17d55d146e25ddbbd706d149def23b9e1617d59d070cea",
+            "new-draft": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+            "missing-source-text": "e6a4b291690b1d344069e35771cb7a873df0b10e44c6adb6f4ac8506bf49e29a",
+            "starter-help": "abaea7966c0976acecb5b8cdaa16d93a5b013cc5cbf9e06548bb7609b2709c17",
+            "direct-meta-question": "03c2b17dfb52ff77a4d04ee8fdf5f6f8441586df1332bab1edfb0f311c2ce821",
+            "unrelated-conversation-negative": "539692169a735900db3cb4cea5100c8eb4c12d8d8efe22dff93b539fe51cd468",
+            "implicit-proofreading-activation": "e5ee8e4bcc2a47ea4493ea1733413d3ec24d30dc45332a71ec9a6d7757165061"
+          }
+        },
+        {
+          "path": "tests/trials/host-facts-markdown-sol-3-2026-11-16.json",
+          "response_hashes": {
+            "rewrite-markdown-changes-quotes": "629e00e70dc1de91ad5c01e1ae514d152cdf74a068a03b8ee24230bdf8e63b4a",
+            "shorten-markdown-changes-quotes": "a8739d2ed5ec2abc0716efc57011a2ccea35acfb3bb9c9f5e51bbef51f4b2578",
+            "rewrite-markup-characters-in-changes": "8dafb493f7d4d9d99360ea58e56a286c3abdea0b3f07b2347cecb152a45219f9",
+            "rewrite-autolink-punctuation-in-changes": "500ac7933db9f339800b6fbda2e418b150f3bc46a3175acc062ec54296b2b056"
+          }
+        }
+      ]
+    }
+  ]
+}

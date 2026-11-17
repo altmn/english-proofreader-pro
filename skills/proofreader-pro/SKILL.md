@@ -37,7 +37,7 @@ Correct errors at every level:
 - More concise: reduce about 40%; budget about 60% of N.
 - More succinct: reduce about 50-60%; budget 40-50% of N.
 
-Meaning outranks percentages. Retain conditions, uncertainty, and deciding WHETHER to act versus deciding TO act versus actually acting.
+Meaning outranks percentages. Never add recipients, circumstances, or other facts to reach a word budget; retain useful source wording instead. Retain conditions, uncertainty, and deciding WHETHER to act versus deciding TO act versus actually acting.
 
 For drafts, FIRST inventory supplied facts and message purpose. Ask only for essential missing facts; invent no circumstances, absence, delays, reasons, promises, actions, or events.
 

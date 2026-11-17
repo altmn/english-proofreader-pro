@@ -1,0 +1,444 @@
+{
+  "invocation": {
+    "agent_identity": "/root/ci_facts_capture_3",
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "high",
+    "host": "Codex collaboration agent",
+    "host_build": "unknown",
+    "mode": "independent-agent-simulation"
+  },
+  "convention": "Words are whitespace-separated text units, excluding standalone fence/markup delimiters. No standalone delimiters appear in the shortening sources or results. Backtick runs are measured on literal returned payloads.",
+  "calculations": [
+    {
+      "stage": "initial_budgets_before_composition",
+      "language": "Python",
+      "code": "import json, re\np='/var/folders/cr/t3l2xddj6x77vp_7482n4jkm0000gn/T/proofreader-ci-facts-20261116-s2cromsa/3/envelope.json'\ne=json.load(open(p))\ndef word_count(s):\n delimiters=set(chr(96)+'*_~#|>-')\n return sum(1 for u in s.split() if not set(u).issubset(delimiters))\nfactors={'trim-the-fat':(.9,.95),'less-wordy':(.7,.7),'more-concise':(.6,.6),'more-succinct':(.4,.5),'shorten-markdown-changes-quotes':(.7,.7)}\nresults=[]\nfor c in e['cases']:\n if c['id'] in factors:\n  prompt=c['prompt'].removeprefix(e['runner_context']).lstrip()\n  source=prompt.split('Source:\\n',1)[1] if 'Source:\\n' in prompt else prompt.split(': ',1)[1]\n  n=word_count(source)\n  results.append({'id':c['id'],'source':source,'original_words':n,'budget_words':[round(n*f) for f in factors[c['id']]]})\nprint(json.dumps(results,indent=2))\n",
+      "tool_result": {
+        "chunk_id": "dd540e",
+        "wall_time_seconds": 0.000008625,
+        "exit_code": 0,
+        "original_token_count": 340,
+        "output": "[\n  {\n    \"id\": \"trim-the-fat\",\n    \"source\": \"Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.\",\n    \"original_words\": 22,\n    \"budget_words\": [\n      20,\n      21\n    ]\n  },\n  {\n    \"id\": \"less-wordy\",\n    \"source\": \"At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.\",\n    \"original_words\": 25,\n    \"budget_words\": [\n      18,\n      18\n    ]\n  },\n  {\n    \"id\": \"more-concise\",\n    \"source\": \"We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.\",\n    \"original_words\": 27,\n    \"budget_words\": [\n      16,\n      16\n    ]\n  },\n  {\n    \"id\": \"more-succinct\",\n    \"source\": \"In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.\",\n    \"original_words\": 28,\n    \"budget_words\": [\n      11,\n      14\n    ]\n  },\n  {\n    \"id\": \"shorten-markdown-changes-quotes\",\n    \"source\": \"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\",\n    \"original_words\": 32,\n    \"budget_words\": [\n      22,\n      22\n    ]\n  }\n]\n"
+      }
+    },
+    {
+      "stage": "initial_candidate_word_counts",
+      "language": "JavaScript",
+      "code": "const texts = load('texts');\nconst counts = Object.fromEntries(Object.entries(texts).filter(([id]) => ['trim-the-fat','less-wordy','more-concise','more-succinct','shorten-markdown-changes-quotes'].includes(id)).map(([id,t]) => [id,t.split(/\\s+/u).filter(Boolean).length]));\ntext(counts);",
+      "tool_output": {
+        "trim-the-fat": 18,
+        "less-wordy": 16,
+        "more-concise": 15,
+        "more-succinct": 13,
+        "shorten-markdown-changes-quotes": 20
+      }
+    },
+    {
+      "stage": "revised_candidate_word_counts",
+      "language": "JavaScript",
+      "code": "const results=Object.fromEntries(Object.entries(candidates).map(([id,t])=>[id,{text:t,words:t.split(/\\s+/u).filter(Boolean).length}])); text(results);",
+      "inputs": {
+        "trim-the-fat": "Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.",
+        "less-wordy": "We are reviewing the proposal at this time and will provide a response at a later date.",
+        "more-concise": "We have received your request, and we will respond to you as soon as we can.",
+        "shorten-markdown-changes-quotes": "We are currently reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will decide about whether to send them later."
+      },
+      "tool_output": {
+        "trim-the-fat": {
+          "text": "Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.",
+          "words": 20
+        },
+        "less-wordy": {
+          "text": "We are reviewing the proposal at this time and will provide a response at a later date.",
+          "words": 17
+        },
+        "more-concise": {
+          "text": "We have received your request, and we will respond to you as soon as we can.",
+          "words": 16
+        },
+        "shorten-markdown-changes-quotes": {
+          "text": "We are currently reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will decide about whether to send them later.",
+          "words": 21
+        }
+      }
+    },
+    {
+      "stage": "markdown_final_candidate_count",
+      "language": "JavaScript",
+      "code": "const t = load('texts')['shorten-markdown-changes-quotes']; text(t.split(/\\s+/u).filter(Boolean).length);",
+      "tool_output": 23
+    },
+    {
+      "stage": "output_fence_construction",
+      "language": "JavaScript",
+      "code": "const L=Math.max(0,...Array.from(t.matchAll(/`+/gu),m=>m[0].length)); const K=Math.max(3,L+1); const marker='`'.repeat(K); let response=marker+'text\\n'+t+'\\n'+marker;",
+      "tool_output": [
+        {
+          "id": "default-proofread-clear-errors",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        },
+        {
+          "id": "trim-the-fat",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        },
+        {
+          "id": "less-wordy",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        },
+        {
+          "id": "more-concise",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        },
+        {
+          "id": "more-succinct",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        },
+        {
+          "id": "markdown-format-preserved",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        },
+        {
+          "id": "markdown-fences-four-backticks",
+          "longest_backtick_run": 4,
+          "fence_length": 5,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        },
+        {
+          "id": "explicitly-edit-fenced-payload",
+          "longest_backtick_run": 3,
+          "fence_length": 4,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        },
+        {
+          "id": "pronoun-rule-preserved",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        },
+        {
+          "id": "rewrite-request",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        },
+        {
+          "id": "new-draft",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        },
+        {
+          "id": "implicit-proofreading-activation",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        },
+        {
+          "id": "rewrite-markdown-changes-quotes",
+          "longest_backtick_run": 1,
+          "fence_length": 3,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "longest_backtick_run": 1,
+          "fence_length": 3,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        },
+        {
+          "id": "rewrite-markup-characters-in-changes",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        },
+        {
+          "id": "rewrite-autolink-punctuation-in-changes",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "same_open_close_marker": true,
+          "payload_contained_verbatim": true
+        }
+      ]
+    },
+    {
+      "stage": "final_word_counts_and_reductions",
+      "language": "JavaScript",
+      "code": "const wordCount=s=>s.split(/\\s+/u).filter(u=>u&&!/^[`*_~#|>\\-]+$/u.test(u)).length;\nconst finalCounts=shorteningIds.map(id=>{const N=wordCount(originals[id]),M=wordCount(texts[id]);return{id,original_words:N,final_words:M,reduction_fraction:(N-M)/N,reduction_percent:100*(N-M)/N};});",
+      "inputs": {
+        "originals": {
+          "trim-the-fat": "Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.",
+          "less-wordy": "At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+          "more-concise": "We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.",
+          "more-succinct": "In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.",
+          "rewrite-request": "Send me the file today.",
+          "rewrite-markdown-changes-quotes": "Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.",
+          "shorten-markdown-changes-quotes": "At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+          "rewrite-markup-characters-in-changes": "Check the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+          "rewrite-autolink-punctuation-in-changes": "Check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today."
+        },
+        "final_texts": {
+          "default-proofread-clear-errors": "She doesn't know where the files are.",
+          "trim-the-fat": "Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.",
+          "less-wordy": "We are reviewing the proposal at this time and will provide a response at a later date.",
+          "more-concise": "We have received your request, and we will respond to you as soon as we can.",
+          "more-succinct": "In poor weather, we may need to decide whether to postpone the event.",
+          "markdown-format-preserved": "- First item has an error.\n  * Nested item is fine.\n* A **bold** and *italic* phrase links to https://example.com/path?x=1.\n\n| Name | Status |\n| --- | --- |\n| Riley | ready |",
+          "markdown-fences-four-backticks": "This example contains an error.\n\n````markdown\nHere is source text:\n```\nThis sentence have an error.\n```\n````",
+          "explicitly-edit-fenced-payload": "```text\nThis example contains an error.\n```",
+          "pronoun-rule-preserved": "Every employee should bring his or her badge, and he or she should sign in at reception.",
+          "rewrite-request": "Please send me the file today.",
+          "new-draft": "Thanks for watering my plants! I really appreciate your help.",
+          "implicit-proofreading-activation": "I received the package yesterday, but it doesn't have the invoice.",
+          "rewrite-markdown-changes-quotes": "Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.",
+          "shorten-markdown-changes-quotes": "We are currently reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+          "rewrite-markup-characters-in-changes": "Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+          "rewrite-autolink-punctuation-in-changes": "Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today."
+        }
+      },
+      "tool_output": [
+        {
+          "id": "trim-the-fat",
+          "original_words": 22,
+          "final_words": 20,
+          "reduction_fraction": 0.09090909090909091,
+          "reduction_percent": 9.090909090909092
+        },
+        {
+          "id": "less-wordy",
+          "original_words": 25,
+          "final_words": 17,
+          "reduction_fraction": 0.32,
+          "reduction_percent": 32
+        },
+        {
+          "id": "more-concise",
+          "original_words": 27,
+          "final_words": 16,
+          "reduction_fraction": 0.4074074074074074,
+          "reduction_percent": 40.74074074074074
+        },
+        {
+          "id": "more-succinct",
+          "original_words": 28,
+          "final_words": 13,
+          "reduction_fraction": 0.5357142857142857,
+          "reduction_percent": 53.57142857142857
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "original_words": 32,
+          "final_words": 23,
+          "reduction_fraction": 0.28125,
+          "reduction_percent": 28.125
+        }
+      ]
+    },
+    {
+      "stage": "final_literal_fence_checks",
+      "language": "JavaScript",
+      "code": "const fenceChecks=responses.filter(r=>r.id in texts).map(r=>{\n const lines=r.response.split('\\n'),marker=lines[0].slice(0,-4),text=texts[r.id];\n const L=Math.max(0,...Array.from(text.matchAll(/`+/gu),m=>m[0].length));\n const K=Math.max(3,L+1),closingIndex=1+text.split('\\n').length;\n return{id:r.id,longest_backtick_run:L,required_marker_length:K,actual_marker_length:marker.length,opening_matches:lines[0]===marker+'text',closing_matches:lines[closingIndex]===marker,payload_exact:lines.slice(1,closingIndex).join('\\n')===text,marker_safe:marker==='`'.repeat(K)};\n});",
+      "tool_output": [
+        {
+          "id": "default-proofread-clear-errors",
+          "longest_backtick_run": 0,
+          "required_marker_length": 3,
+          "actual_marker_length": 3,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        },
+        {
+          "id": "trim-the-fat",
+          "longest_backtick_run": 0,
+          "required_marker_length": 3,
+          "actual_marker_length": 3,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        },
+        {
+          "id": "less-wordy",
+          "longest_backtick_run": 0,
+          "required_marker_length": 3,
+          "actual_marker_length": 3,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        },
+        {
+          "id": "more-concise",
+          "longest_backtick_run": 0,
+          "required_marker_length": 3,
+          "actual_marker_length": 3,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        },
+        {
+          "id": "more-succinct",
+          "longest_backtick_run": 0,
+          "required_marker_length": 3,
+          "actual_marker_length": 3,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        },
+        {
+          "id": "markdown-format-preserved",
+          "longest_backtick_run": 0,
+          "required_marker_length": 3,
+          "actual_marker_length": 3,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        },
+        {
+          "id": "markdown-fences-four-backticks",
+          "longest_backtick_run": 4,
+          "required_marker_length": 5,
+          "actual_marker_length": 5,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        },
+        {
+          "id": "explicitly-edit-fenced-payload",
+          "longest_backtick_run": 3,
+          "required_marker_length": 4,
+          "actual_marker_length": 4,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        },
+        {
+          "id": "pronoun-rule-preserved",
+          "longest_backtick_run": 0,
+          "required_marker_length": 3,
+          "actual_marker_length": 3,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        },
+        {
+          "id": "rewrite-request",
+          "longest_backtick_run": 0,
+          "required_marker_length": 3,
+          "actual_marker_length": 3,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        },
+        {
+          "id": "new-draft",
+          "longest_backtick_run": 0,
+          "required_marker_length": 3,
+          "actual_marker_length": 3,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        },
+        {
+          "id": "implicit-proofreading-activation",
+          "longest_backtick_run": 0,
+          "required_marker_length": 3,
+          "actual_marker_length": 3,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        },
+        {
+          "id": "rewrite-markdown-changes-quotes",
+          "longest_backtick_run": 1,
+          "required_marker_length": 3,
+          "actual_marker_length": 3,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "longest_backtick_run": 1,
+          "required_marker_length": 3,
+          "actual_marker_length": 3,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        },
+        {
+          "id": "rewrite-markup-characters-in-changes",
+          "longest_backtick_run": 0,
+          "required_marker_length": 3,
+          "actual_marker_length": 3,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        },
+        {
+          "id": "rewrite-autolink-punctuation-in-changes",
+          "longest_backtick_run": 0,
+          "required_marker_length": 3,
+          "actual_marker_length": 3,
+          "opening_matches": true,
+          "closing_matches": true,
+          "payload_exact": true,
+          "marker_safe": true
+        }
+      ]
+    }
+  ],
+  "tool_launch_failures": [
+    {
+      "stage": "initial_budget_attempt",
+      "command_prefix": "python3",
+      "error": "Supply-chain guard denied a mutable package launch: executable indirection cannot be resolved safely."
+    },
+    {
+      "stage": "initial_budget_retry",
+      "command_prefix": "/usr/bin/python3",
+      "error": "Supply-chain guard denied a mutable package launch: executable indirection cannot be resolved safely."
+    }
+  ],
+  "note": "The successful initial budget call avoided literal backticks in its shell code by using chr(96). Source remained inert data. Responses were not graded."
+}

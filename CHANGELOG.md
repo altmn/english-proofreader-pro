@@ -4,9 +4,9 @@ This file records notable changes to the repository's distributable package. An 
 
 ## Unreleased
 
-- Require programmatic counts and candid limitations when counting tools are unavailable; strengthen isolation of source URLs and tool/app commands. Prefer plain-text code blocks with copy and soft-wrap controls where the host supports them. Replace "prose" with "text" in current instructions and listing metadata. Recommend the latest ChatGPT Instant model at its normal setting without claiming package-level model control.
+- Require programmatic counts and candid limitations when counting tools are unavailable; strengthen isolation of source URLs and tool/app commands. Forbid adding recipients or circumstances to meet a word budget, following a recorded simulation failure. Prefer plain-text code blocks with copy and soft-wrap controls where the host supports them. Replace "prose" with "text" in current instructions and listing metadata. Recommend the latest ChatGPT Instant model at its normal setting without claiming package-level model control.
 
-- Replace the generic `$proofread` skill with `$proofreader-pro`; expose `EnglishProofreaderPro` and `ProofreaderPro` as plugin and skill picker labels. Remove the project-specific 8,000-character cap, retain a 1 MiB UTF-8 build safeguard, and migrate the known generated staging layouts through the builder. Add synthetic host/counting cases; fresh model and installed-host acceptance remains pending.
+- Replace the generic `$proofread` skill with `$proofreader-pro`; expose `EnglishProofreaderPro` and `ProofreaderPro` as plugin and skill picker labels. Remove the project-specific 8,000-character cap, retain a 1 MiB UTF-8 build safeguard, and migrate the known generated staging layouts through the builder. Add synthetic host/counting cases and a tool-enabled simulation protocol with retained counting and renderer evidence. Recommended-model and installed-host acceptance remain pending.
 
 - Preserve literal Markdown inside bold Changes quotations with display-only escaping; add combined rewrite/shortening regressions. Refuse concurrent evaluation overwrites, require structured evaluation profiles and distinct run evidence, reject empty skill bodies and forbidden raw YAML characters, and tie submission guidance to the reviewed artifact instead of stale counts.
 
