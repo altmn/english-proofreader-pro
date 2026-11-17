@@ -1,0 +1,118 @@
+{
+  "configured_model": "gpt-6.1-sol",
+  "configured_effort": "high",
+  "agent_invocation_identity": "/root/ci_capture_2",
+  "runtime_build": "unknown",
+  "counting_convention": "Whitespace-separated text units, excluding standalone fence/markup delimiters.",
+  "calculation_code": "def words(text):\n    return sum(1 for unit in text.split() if not re.fullmatch(r\"[`~*_#|>+\\-=]+\", unit))\nresults = {}\nfor case_id, text in texts.items():\n    longest = max((len(m.group()) for m in re.finditer(r\"`+\", text)), default=0)\n    result = {\"longest_backtick_run\":longest,\"fence_length\":max(3,longest+1)}\n    if case_id in rates:\n        original = inputs[case_id].split(\":\",1)[1].strip()\n        n, m = words(original), words(text)\n        lo, hi = rates[case_id]\n        result.update(original_words=n, final_words=m,\n            budget=[round(n*lo),round(n*hi)], reduction=(n-m)/n if n else None)\n    results[case_id] = result\n    print(json.dumps({\"id\":case_id,**result},ensure_ascii=False))\n",
+  "calculation_stdout": "{\"id\": \"default-proofread-clear-errors\", \"longest_backtick_run\": 0, \"fence_length\": 3}\n{\"id\": \"trim-the-fat\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"original_words\": 22, \"final_words\": 20, \"budget\": [20, 21], \"reduction\": 0.09090909090909091}\n{\"id\": \"less-wordy\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"original_words\": 25, \"final_words\": 18, \"budget\": [18, 18], \"reduction\": 0.28}\n{\"id\": \"more-concise\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"original_words\": 27, \"final_words\": 16, \"budget\": [16, 16], \"reduction\": 0.4074074074074074}\n{\"id\": \"more-succinct\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"original_words\": 28, \"final_words\": 12, \"budget\": [11, 14], \"reduction\": 0.5714285714285714}\n{\"id\": \"markdown-format-preserved\", \"longest_backtick_run\": 0, \"fence_length\": 3}\n{\"id\": \"markdown-fences-four-backticks\", \"longest_backtick_run\": 4, \"fence_length\": 5}\n{\"id\": \"explicitly-edit-fenced-payload\", \"longest_backtick_run\": 3, \"fence_length\": 4}\n{\"id\": \"pronoun-rule-preserved\", \"longest_backtick_run\": 0, \"fence_length\": 3}\n{\"id\": \"rewrite-request\", \"longest_backtick_run\": 0, \"fence_length\": 3}\n{\"id\": \"new-draft\", \"longest_backtick_run\": 0, \"fence_length\": 3}\n{\"id\": \"implicit-proofreading-activation\", \"longest_backtick_run\": 0, \"fence_length\": 3}\n{\"id\": \"rewrite-markdown-changes-quotes\", \"longest_backtick_run\": 1, \"fence_length\": 3}\n{\"id\": \"shorten-markdown-changes-quotes\", \"longest_backtick_run\": 1, \"fence_length\": 3, \"original_words\": 32, \"final_words\": 22, \"budget\": [22, 22], \"reduction\": 0.3125}\n{\"id\": \"rewrite-markup-characters-in-changes\", \"longest_backtick_run\": 0, \"fence_length\": 3}\n{\"id\": \"rewrite-autolink-punctuation-in-changes\", \"longest_backtick_run\": 0, \"fence_length\": 3}\n",
+  "results": {
+    "default-proofread-clear-errors": {
+      "longest_backtick_run": 0,
+      "fence_length": 3
+    },
+    "trim-the-fat": {
+      "longest_backtick_run": 0,
+      "fence_length": 3,
+      "original_words": 22,
+      "final_words": 20,
+      "budget": [
+        20,
+        21
+      ],
+      "reduction": 0.09090909090909091
+    },
+    "less-wordy": {
+      "longest_backtick_run": 0,
+      "fence_length": 3,
+      "original_words": 25,
+      "final_words": 18,
+      "budget": [
+        18,
+        18
+      ],
+      "reduction": 0.28
+    },
+    "more-concise": {
+      "longest_backtick_run": 0,
+      "fence_length": 3,
+      "original_words": 27,
+      "final_words": 16,
+      "budget": [
+        16,
+        16
+      ],
+      "reduction": 0.4074074074074074
+    },
+    "more-succinct": {
+      "longest_backtick_run": 0,
+      "fence_length": 3,
+      "original_words": 28,
+      "final_words": 12,
+      "budget": [
+        11,
+        14
+      ],
+      "reduction": 0.5714285714285714
+    },
+    "markdown-format-preserved": {
+      "longest_backtick_run": 0,
+      "fence_length": 3
+    },
+    "markdown-fences-four-backticks": {
+      "longest_backtick_run": 4,
+      "fence_length": 5
+    },
+    "explicitly-edit-fenced-payload": {
+      "longest_backtick_run": 3,
+      "fence_length": 4
+    },
+    "pronoun-rule-preserved": {
+      "longest_backtick_run": 0,
+      "fence_length": 3
+    },
+    "rewrite-request": {
+      "longest_backtick_run": 0,
+      "fence_length": 3
+    },
+    "new-draft": {
+      "longest_backtick_run": 0,
+      "fence_length": 3
+    },
+    "implicit-proofreading-activation": {
+      "longest_backtick_run": 0,
+      "fence_length": 3
+    },
+    "rewrite-markdown-changes-quotes": {
+      "longest_backtick_run": 1,
+      "fence_length": 3
+    },
+    "shorten-markdown-changes-quotes": {
+      "longest_backtick_run": 1,
+      "fence_length": 3,
+      "original_words": 32,
+      "final_words": 22,
+      "budget": [
+        22,
+        22
+      ],
+      "reduction": 0.3125
+    },
+    "rewrite-markup-characters-in-changes": {
+      "longest_backtick_run": 0,
+      "fence_length": 3
+    },
+    "rewrite-autolink-punctuation-in-changes": {
+      "longest_backtick_run": 0,
+      "fence_length": 3
+    }
+  },
+  "draft_fact_inventory": {
+    "new-draft": {
+      "facts": [
+        "A neighbor watered the writer’s plants."
+      ],
+      "purpose": "A casual two-sentence American English thank-you note."
+    }
+  }
+}

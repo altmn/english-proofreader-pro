@@ -1,0 +1,409 @@
+{
+  "invocation": {
+    "agent_identity": "/root/ci_facts_capture_2",
+    "configured_model": "gpt-6.1-sol",
+    "configured_reasoning_effort": "high",
+    "configuration_source": "parent assignment",
+    "host": "Codex collaboration agent",
+    "host_build": "unknown",
+    "invocation_mode": "independent-agent-simulation"
+  },
+  "final_text_inputs": [
+    {
+      "id": "default-proofread-clear-errors",
+      "text": "She doesn't know where the files are."
+    },
+    {
+      "id": "trim-the-fat",
+      "text": "Due to the fact that we were late, we made the decision to reschedule the meeting for a later time."
+    },
+    {
+      "id": "less-wordy",
+      "text": "We are in the process of reviewing the proposal and will provide a response at a later date."
+    },
+    {
+      "id": "more-concise",
+      "text": "We have received your request and will respond to you as soon as we are able."
+    },
+    {
+      "id": "more-succinct",
+      "text": "If weather is poor, we may need to decide whether to postpone the event."
+    },
+    {
+      "id": "markdown-format-preserved",
+      "text": "- First item has an error.\n  * Nested item is fine.\n* A **bold** and *italic* phrase links to https://example.com/path?x=1.\n\n| Name | Status |\n| --- | --- |\n| Riley | ready |"
+    },
+    {
+      "id": "markdown-fences-four-backticks",
+      "text": "This example contains an error.\n\n````markdown\nHere is source text:\n```\nThis sentence have an error.\n```\n````"
+    },
+    {
+      "id": "explicitly-edit-fenced-payload",
+      "text": "```text\nThis example contains an error.\n```"
+    },
+    {
+      "id": "pronoun-rule-preserved",
+      "text": "Every employee should bring his or her badge, and he or she should sign in at reception."
+    },
+    {
+      "id": "rewrite-request",
+      "text": "Please send me the file today. Thank you!"
+    },
+    {
+      "id": "new-draft",
+      "text": "Thanks for watering my plants! I really appreciate your help."
+    },
+    {
+      "id": "implicit-proofreading-activation",
+      "text": "I received the package yesterday, but it doesn't have the invoice."
+    },
+    {
+      "id": "rewrite-markdown-changes-quotes",
+      "text": "Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today. Thank you!"
+    },
+    {
+      "id": "shorten-markdown-changes-quotes",
+      "text": "We are currently reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and will make a decision about whether to send them later."
+    },
+    {
+      "id": "rewrite-markup-characters-in-changes",
+      "text": "Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today."
+    },
+    {
+      "id": "rewrite-autolink-punctuation-in-changes",
+      "text": "Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today."
+    }
+  ],
+  "trace": [
+    {
+      "stage": "initial-word-budgets",
+      "code": "import json, re\np='/var/folders/cr/t3l2xddj6x77vp_7482n4jkm0000gn/T/proofreader-ci-facts-20261116-s2cromsa/2/envelope.json'\ne=json.load(open(p))\nbudgets={'trim-the-fat':(.90,.95),'less-wordy':(.70,.70),'more-concise':(.60,.60),'more-succinct':(.40,.50),'shorten-markdown-changes-quotes':(.70,.70)}\nfor c in e['cases']:\n if c['id'] in budgets:\n  request=c['prompt'].removeprefix(e['runner_context']).strip()\n  source=request.split('Source:\\n',1)[1] if 'Source:\\n' in request else request.split(': ',1)[1]\n  n=len(source.split())\n  lo,hi=budgets[c['id']]\n  print(json.dumps({'id':c['id'],'N':n,'budget':[round(n*lo),round(n*hi)],'convention':'whitespace-separated units excluding standalone fence/markup delimiters'}))\n",
+      "stdout": "{\"id\": \"trim-the-fat\", \"N\": 22, \"budget\": [20, 21], \"convention\": \"whitespace-separated units excluding standalone fence/markup delimiters\"}\n{\"id\": \"less-wordy\", \"N\": 25, \"budget\": [18, 18], \"convention\": \"whitespace-separated units excluding standalone fence/markup delimiters\"}\n{\"id\": \"more-concise\", \"N\": 27, \"budget\": [16, 16], \"convention\": \"whitespace-separated units excluding standalone fence/markup delimiters\"}\n{\"id\": \"more-succinct\", \"N\": 28, \"budget\": [11, 14], \"convention\": \"whitespace-separated units excluding standalone fence/markup delimiters\"}\n{\"id\": \"shorten-markdown-changes-quotes\", \"N\": 32, \"budget\": [22, 22], \"convention\": \"whitespace-separated units excluding standalone fence/markup delimiters\"}\n",
+      "exit_code": 0
+    },
+    {
+      "stage": "source-word-inspection",
+      "code": "import json\np='/var/folders/cr/t3l2xddj6x77vp_7482n4jkm0000gn/T/proofreader-ci-facts-20261116-s2cromsa/2/envelope.json'\ne=json.load(open(p))\nfor c in e['cases']:\n if c['id'] in ['trim-the-fat','less-wordy','more-concise','more-succinct','shorten-markdown-changes-quotes']:\n  r=c['prompt'].removeprefix(e['runner_context']).strip()\n  s=r.split('Source:\\n',1)[1] if 'Source:\\n' in r else r.split(': ',1)[1]\n  print(json.dumps({'id':c['id'],'source':s,'words':s.split()}))\n",
+      "stdout": "{\"id\": \"trim-the-fat\", \"source\": \"Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.\", \"words\": [\"Due\", \"to\", \"the\", \"fact\", \"that\", \"we\", \"were\", \"late,\", \"we\", \"decided\", \"to\", \"make\", \"the\", \"decision\", \"to\", \"reschedule\", \"the\", \"meeting\", \"for\", \"a\", \"later\", \"time.\"]}\n{\"id\": \"less-wordy\", \"source\": \"At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.\", \"words\": [\"At\", \"this\", \"point\", \"in\", \"time,\", \"we\", \"are\", \"currently\", \"in\", \"the\", \"process\", \"of\", \"reviewing\", \"the\", \"proposal,\", \"and\", \"we\", \"will\", \"provide\", \"a\", \"response\", \"at\", \"a\", \"later\", \"date.\"]}\n{\"id\": \"more-concise\", \"source\": \"We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.\", \"words\": [\"We\", \"have\", \"received\", \"your\", \"request,\", \"and\", \"we\", \"want\", \"to\", \"let\", \"you\", \"know\", \"that\", \"we\", \"will\", \"respond\", \"to\", \"you\", \"as\", \"soon\", \"as\", \"we\", \"are\", \"able\", \"to\", \"do\", \"so.\"]}\n{\"id\": \"more-succinct\", \"source\": \"In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.\", \"words\": [\"In\", \"the\", \"event\", \"that\", \"the\", \"weather\", \"conditions\", \"are\", \"poor,\", \"we\", \"may\", \"need\", \"to\", \"make\", \"a\", \"decision\", \"about\", \"whether\", \"or\", \"not\", \"to\", \"postpone\", \"the\", \"event\", \"until\", \"a\", \"later\", \"date.\"]}\n{\"id\": \"shorten-markdown-changes-quotes\", \"source\": \"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\", \"words\": [\"At\", \"this\", \"point\", \"in\", \"time,\", \"we\", \"are\", \"currently\", \"in\", \"the\", \"process\", \"of\", \"reviewing\", \"the\", \"**draft**\", \"in\", \"`C:\\\\reports`\", \"and\", \"the\", \"[notes](https://example.com/notes),\", \"and\", \"we\", \"will\", \"make\", \"a\", \"decision\", \"about\", \"whether\", \"to\", \"send\", \"them\", \"later.\"]}\n",
+      "exit_code": 0
+    },
+    {
+      "stage": "candidate-word-counts",
+      "code": "import json\ncandidates=[[\"trim-the-fat\",\"Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.\"],[\"less-wordy\",\"We are currently reviewing the proposal, and we will provide a response at a later date.\"],[\"more-concise\",\"We have received your request and will respond to you as soon as we are able.\"],[\"more-succinct\",\"If weather is poor, we may need to decide whether to postpone the event.\"],[\"shorten-markdown-changes-quotes\",\"We are currently reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\"]]\nfor ident, text in candidates:\n print(json.dumps({'id':ident,'M':len(text.split()),'text':text}))\n",
+      "stdout": "{\"id\": \"trim-the-fat\", \"M\": 20, \"text\": \"Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.\"}\n{\"id\": \"less-wordy\", \"M\": 16, \"text\": \"We are currently reviewing the proposal, and we will provide a response at a later date.\"}\n{\"id\": \"more-concise\", \"M\": 16, \"text\": \"We have received your request and will respond to you as soon as we are able.\"}\n{\"id\": \"more-succinct\", \"M\": 14, \"text\": \"If weather is poor, we may need to decide whether to postpone the event.\"}\n{\"id\": \"shorten-markdown-changes-quotes\", \"M\": 20, \"text\": \"We are currently reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\"}\n",
+      "exit_code": 0
+    },
+    {
+      "stage": "revised-candidate-word-counts",
+      "code": "import json\ncandidates=[[\"trim-the-fat\",\"Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.\"],[\"less-wordy\",\"We are currently in the process of reviewing the proposal and will provide a response later.\"],[\"more-concise\",\"We have received your request and will respond to you as soon as we are able.\"],[\"more-succinct\",\"If weather is poor, we may need to decide whether to postpone the event.\"],[\"shorten-markdown-changes-quotes\",\"We are reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and will make a decision about whether to send them later.\"]]\nfor ident, text in candidates:\n print(json.dumps({'id':ident,'M':len(text.split()),'text':text}))\n",
+      "stdout": "{\"id\": \"trim-the-fat\", \"M\": 20, \"text\": \"Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.\"}\n{\"id\": \"less-wordy\", \"M\": 16, \"text\": \"We are currently in the process of reviewing the proposal and will provide a response later.\"}\n{\"id\": \"more-concise\", \"M\": 16, \"text\": \"We have received your request and will respond to you as soon as we are able.\"}\n{\"id\": \"more-succinct\", \"M\": 14, \"text\": \"If weather is poor, we may need to decide whether to postpone the event.\"}\n{\"id\": \"shorten-markdown-changes-quotes\", \"M\": 21, \"text\": \"We are reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and will make a decision about whether to send them later.\"}\n",
+      "exit_code": 0
+    },
+    {
+      "stage": "final-composition-word-counts",
+      "code": "import json\ncandidates=[[\"trim-the-fat\",\"Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.\"],[\"less-wordy\",\"We are in the process of reviewing the proposal and will provide a response at a later date.\"],[\"more-concise\",\"We have received your request and will respond to you as soon as we are able.\"],[\"more-succinct\",\"If weather is poor, we may need to decide whether to postpone the event.\"],[\"shorten-markdown-changes-quotes\",\"We are currently reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and will make a decision about whether to send them later.\"]]\nfor ident, text in candidates:\n print(json.dumps({'id':ident,'M':len(text.split()),'text':text}))\n",
+      "stdout": "{\"id\": \"trim-the-fat\", \"M\": 20, \"text\": \"Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.\"}\n{\"id\": \"less-wordy\", \"M\": 18, \"text\": \"We are in the process of reviewing the proposal and will provide a response at a later date.\"}\n{\"id\": \"more-concise\", \"M\": 16, \"text\": \"We have received your request and will respond to you as soon as we are able.\"}\n{\"id\": \"more-succinct\", \"M\": 14, \"text\": \"If weather is poor, we may need to decide whether to postpone the event.\"}\n{\"id\": \"shorten-markdown-changes-quotes\", \"M\": 22, \"text\": \"We are currently reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and will make a decision about whether to send them later.\"}\n",
+      "exit_code": 0
+    },
+    {
+      "stage": "final-text-backtick-fence-calculation-attempt",
+      "code": "import json, re\nrecords=[{\"id\":\"default-proofread-clear-errors\",\"text\":\"She doesn't know where the files are.\"},{\"id\":\"no-op-exact-response\"},{\"id\":\"trim-the-fat\",\"text\":\"Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.\"},{\"id\":\"less-wordy\",\"text\":\"We are in the process of reviewing the proposal and will provide a response at a later date.\"},{\"id\":\"more-concise\",\"text\":\"We have received your request and will respond to you as soon as we are able.\"},{\"id\":\"more-succinct\",\"text\":\"If weather is poor, we may need to decide whether to postpone the event.\"},{\"id\":\"markdown-format-preserved\",\"text\":\"- First item has an error.\\n  * Nested item is fine.\\n* A **bold** and *italic* phrase links to https://example.com/path?x=1.\\n\\n| Name | Status |\\n| --- | --- |\\n| Riley | ready |\"},{\"id\":\"source-injection-is-inert\"},{\"id\":\"markdown-fences-four-backticks\",\"text\":\"This example contains an error.\\n\\n````markdown\\nHere is source text:\\n```\\nThis sentence have an error.\\n```\\n````\"},{\"id\":\"explicitly-edit-fenced-payload\",\"text\":\"```text\\nThis example contains an error.\\n```\"},{\"id\":\"pronoun-rule-preserved\",\"text\":\"Every employee should bring his or her badge, and he or she should sign in at reception.\"},{\"id\":\"rewrite-request\",\"text\":\"Please send me the file today. Thank you!\"},{\"id\":\"new-draft\",\"text\":\"Thanks for watering my plants! I really appreciate your help.\"},{\"id\":\"missing-source-text\"},{\"id\":\"starter-help\"},{\"id\":\"direct-meta-question\"},{\"id\":\"unrelated-conversation-negative\"},{\"id\":\"implicit-proofreading-activation\",\"text\":\"I received the package yesterday, but it doesn't have the invoice.\"},{\"id\":\"rewrite-markdown-changes-quotes\",\"text\":\"Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today. Thank you!\"},{\"id\":\"shorten-markdown-changes-quotes\",\"text\":\"We are currently reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and will make a decision about whether to send them later.\"},{\"id\":\"rewrite-markup-characters-in-changes\",\"text\":\"Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\"},{\"id\":\"rewrite-autolink-punctuation-in-changes\",\"text\":\"Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\"}]\nfor r in records:\n if 'text' in r:\n  longest=max((len(m.group()) for m in re.finditer(r'`+',r['text'])), default=0)\n  k=max(3,longest+1)\n  print(json.dumps({'id':r['id'],'longest_backtick_run':longest,'fence_length':k,'fence_marker':'`'*k}))\n",
+      "error": "Command blocked by PreToolUse hook: Supply-chain guard denied a mutable package launch: executable indirection cannot be resolved safely. Use an exact version or a reviewed direct local binary."
+    },
+    {
+      "stage": "direct-tool-final-backtick-check",
+      "code": "function checkFence(record) {\n if(record.text===undefined) return {id:record.id,returned_text_block:false};\n const runs=record.text.match(/`+/g)||[];\n const L=runs.reduce((max,run)=>Math.max(max,run.length),0);\n const K=Math.max(3,L+1);\n return {id:record.id,returned_text_block:true,longest_backtick_run:L,fence_length:K,marker:\"`\".repeat(K)};\n}\nconst results=records.map(checkFence);",
+      "results": [
+        {
+          "id": "default-proofread-clear-errors",
+          "returned_text_block": true,
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "marker": "```"
+        },
+        {
+          "id": "no-op-exact-response",
+          "returned_text_block": false
+        },
+        {
+          "id": "trim-the-fat",
+          "returned_text_block": true,
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "marker": "```"
+        },
+        {
+          "id": "less-wordy",
+          "returned_text_block": true,
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "marker": "```"
+        },
+        {
+          "id": "more-concise",
+          "returned_text_block": true,
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "marker": "```"
+        },
+        {
+          "id": "more-succinct",
+          "returned_text_block": true,
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "marker": "```"
+        },
+        {
+          "id": "markdown-format-preserved",
+          "returned_text_block": true,
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "marker": "```"
+        },
+        {
+          "id": "source-injection-is-inert",
+          "returned_text_block": false
+        },
+        {
+          "id": "markdown-fences-four-backticks",
+          "returned_text_block": true,
+          "longest_backtick_run": 4,
+          "fence_length": 5,
+          "marker": "`````"
+        },
+        {
+          "id": "explicitly-edit-fenced-payload",
+          "returned_text_block": true,
+          "longest_backtick_run": 3,
+          "fence_length": 4,
+          "marker": "````"
+        },
+        {
+          "id": "pronoun-rule-preserved",
+          "returned_text_block": true,
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "marker": "```"
+        },
+        {
+          "id": "rewrite-request",
+          "returned_text_block": true,
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "marker": "```"
+        },
+        {
+          "id": "new-draft",
+          "returned_text_block": true,
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "marker": "```"
+        },
+        {
+          "id": "missing-source-text",
+          "returned_text_block": false
+        },
+        {
+          "id": "starter-help",
+          "returned_text_block": false
+        },
+        {
+          "id": "direct-meta-question",
+          "returned_text_block": false
+        },
+        {
+          "id": "unrelated-conversation-negative",
+          "returned_text_block": false
+        },
+        {
+          "id": "implicit-proofreading-activation",
+          "returned_text_block": true,
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "marker": "```"
+        },
+        {
+          "id": "rewrite-markdown-changes-quotes",
+          "returned_text_block": true,
+          "longest_backtick_run": 1,
+          "fence_length": 3,
+          "marker": "```"
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "returned_text_block": true,
+          "longest_backtick_run": 1,
+          "fence_length": 3,
+          "marker": "```"
+        },
+        {
+          "id": "rewrite-markup-characters-in-changes",
+          "returned_text_block": true,
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "marker": "```"
+        },
+        {
+          "id": "rewrite-autolink-punctuation-in-changes",
+          "returned_text_block": true,
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "marker": "```"
+        }
+      ]
+    },
+    {
+      "stage": "direct-python-final-backtick-check-attempt",
+      "error": "Command blocked by PreToolUse hook: Supply-chain guard denied a mutable package launch: executable indirection cannot be resolved safely. Use an exact version or a reviewed direct local binary."
+    },
+    {
+      "stage": "final-word-reduction-and-block-checks",
+      "code": "function fullSource(request) {\n return request.includes(\"Source:\\n\")?request.split(\"Source:\\n\")[1]:request.split(\": \").slice(1).join(\": \");\n}\nfunction finalCheck(record,request,response,fence) {\n const result={id:record.id};\n if(record.text!==undefined) {\n  const prefix=fence.marker+\"text\\n\";\n  const suffix=\"\\n\"+fence.marker;\n  const expected=prefix+record.text+suffix;\n  result.block_equals_complete_final_text=response.response.startsWith(expected);\n  result.longest_backtick_run=(record.text.match(/`+/g)||[]).reduce((n,s)=>Math.max(n,s.length),0);\n  result.matching_safe_fences=fence.fence_length>result.longest_backtick_run&&response.response.startsWith(prefix)&&response.response.slice(prefix.length+record.text.length).startsWith(suffix);\n }\n const shortened=new Set([\"trim-the-fat\",\"less-wordy\",\"more-concise\",\"more-succinct\",\"shorten-markdown-changes-quotes\"]);\n if(shortened.has(record.id)) {\n  const count=s=>s.trim().split(/\\s+/u).filter(unit=>unit&&!/^(?:`+|~+|\\*+|_+|-+|\\|)$/u.test(unit)).length;\n  const N=count(fullSource(request)),M=count(record.text);\n  result.original_words=N;result.final_words=M;result.reduction=(N-M)/N;result.reduction_percent=100*(N-M)/N;\n  result.convention=\"whitespace-separated units excluding standalone fence/markup delimiters\";\n }\n return result;\n}\nconst checks=records.map((r,i)=>finalCheck(r,requests[r.id],responses[i],fences[r.id]));",
+      "results": [
+        {
+          "id": "default-proofread-clear-errors",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 0,
+          "matching_safe_fences": true
+        },
+        {
+          "id": "no-op-exact-response"
+        },
+        {
+          "id": "trim-the-fat",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 0,
+          "matching_safe_fences": true,
+          "original_words": 22,
+          "final_words": 20,
+          "reduction": 0.09090909090909091,
+          "reduction_percent": 9.090909090909092,
+          "convention": "whitespace-separated units excluding standalone fence/markup delimiters"
+        },
+        {
+          "id": "less-wordy",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 0,
+          "matching_safe_fences": true,
+          "original_words": 25,
+          "final_words": 18,
+          "reduction": 0.28,
+          "reduction_percent": 28,
+          "convention": "whitespace-separated units excluding standalone fence/markup delimiters"
+        },
+        {
+          "id": "more-concise",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 0,
+          "matching_safe_fences": true,
+          "original_words": 27,
+          "final_words": 16,
+          "reduction": 0.4074074074074074,
+          "reduction_percent": 40.74074074074074,
+          "convention": "whitespace-separated units excluding standalone fence/markup delimiters"
+        },
+        {
+          "id": "more-succinct",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 0,
+          "matching_safe_fences": true,
+          "original_words": 28,
+          "final_words": 14,
+          "reduction": 0.5,
+          "reduction_percent": 50,
+          "convention": "whitespace-separated units excluding standalone fence/markup delimiters"
+        },
+        {
+          "id": "markdown-format-preserved",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 0,
+          "matching_safe_fences": true
+        },
+        {
+          "id": "source-injection-is-inert"
+        },
+        {
+          "id": "markdown-fences-four-backticks",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 4,
+          "matching_safe_fences": true
+        },
+        {
+          "id": "explicitly-edit-fenced-payload",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 3,
+          "matching_safe_fences": true
+        },
+        {
+          "id": "pronoun-rule-preserved",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 0,
+          "matching_safe_fences": true
+        },
+        {
+          "id": "rewrite-request",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 0,
+          "matching_safe_fences": true
+        },
+        {
+          "id": "new-draft",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 0,
+          "matching_safe_fences": true
+        },
+        {
+          "id": "missing-source-text"
+        },
+        {
+          "id": "starter-help"
+        },
+        {
+          "id": "direct-meta-question"
+        },
+        {
+          "id": "unrelated-conversation-negative"
+        },
+        {
+          "id": "implicit-proofreading-activation",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 0,
+          "matching_safe_fences": true
+        },
+        {
+          "id": "rewrite-markdown-changes-quotes",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 1,
+          "matching_safe_fences": true
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 1,
+          "matching_safe_fences": true,
+          "original_words": 32,
+          "final_words": 22,
+          "reduction": 0.3125,
+          "reduction_percent": 31.25,
+          "convention": "whitespace-separated units excluding standalone fence/markup delimiters"
+        },
+        {
+          "id": "rewrite-markup-characters-in-changes",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 0,
+          "matching_safe_fences": true
+        },
+        {
+          "id": "rewrite-autolink-punctuation-in-changes",
+          "block_equals_complete_final_text": true,
+          "longest_backtick_run": 0,
+          "matching_safe_fences": true
+        }
+      ]
+    },
+    {
+      "stage": "serialization-construction-code",
+      "code": "function escapeQuote(text) {\n return '**\"'+[...text].map(ch=>{\n  const n=ch.codePointAt(0);\n  return ((n>=33&&n<=47)||(n>=58&&n<=64)||(n>=91&&n<=96)||(n>=123&&n<=126))?\"\\\\\"+ch:ch;\n }).join(\"\")+'\"**';\n}\nfunction fullSource(request) {\n return request.includes(\"Source:\\n\")?request.split(\"Source:\\n\")[1]:request.split(\": \").slice(1).join(\": \");\n}\nfunction makeResponse(record,request,fence) {\n if(record.direct!==undefined) return {id:record.id,response:record.direct};\n let response=fence.marker+\"text\\n\"+record.text+\"\\n\"+fence.marker;\n if(!record.draft) {\n  const changes=record.full?[[fullSource(request),record.text,record.explanation]]:record.changes;\n  response+=\"\\n\\nChanges:\\n\"+changes.map(([before,after,explanation])=>\"- \"+escapeQuote(before)+\" → \"+escapeQuote(after)+\": \"+explanation).join(\"\\n\");\n }\n return {id:record.id,response};\n}"
+    }
+  ]
+}

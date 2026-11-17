@@ -8,7 +8,7 @@ Describe the change and why it is useful.
 - [ ] `python3 scripts/release.py validate`
 - [ ] `python3 scripts/release.py build` (when package inputs or release tooling change)
 - [ ] Examples and fixtures use synthetic text only
-- [ ] Skill behavior and the under-8,000-character limit remain intentional
+- [ ] Skill behavior remains intentional and the skill meets the UTF-8 byte ceiling
 
 ## Notes for review
 

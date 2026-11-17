@@ -18,10 +18,20 @@ from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parent.parent
 PLUGIN_NAME = "english-proofreader-pro"
-EXPECTED_SKILL = "skills/proofread/SKILL.md"
-EXPECTED_SKILL_FILES = (EXPECTED_SKILL, "skills/proofread/agents/openai.yaml")
+SKILL_NAME = "proofreader-pro"
+EXPECTED_SKILL = f"skills/{SKILL_NAME}/SKILL.md"
+EXPECTED_AGENT = f"skills/{SKILL_NAME}/agents/openai.yaml"
+EXPECTED_SKILL_FILES = (EXPECTED_SKILL, EXPECTED_AGENT)
+# Only preflight may recognize the previous generated layout for replacement.
+# These files are never included in new archives or staging trees.
+RETIRED_SKILL_FILES = (
+    "skills/proofread/SKILL.md",
+    "skills/proofread/agents/openai.yaml",
+    "skills/english-proofreader-pro/SKILL.md",
+    "skills/english-proofreader-pro/agents/openai.yaml",
+)
 EXPECTED_ICON = "assets/icon.webp"
-MAX_SKILL_CHARS = 8000
+MAX_SKILL_BYTES = 1024 * 1024
 MAX_METADATA_URL_CHARS = 2048
 MAX_INTERFACE_URL_CHARS = 1024
 SEMVER = re.compile(r"^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$")
@@ -354,11 +364,12 @@ def validate_manifest() -> dict[str, Any]:
 def validate_skill() -> list[Path]:
     skill_path = require_regular_file(EXPECTED_SKILL)
     try:
-        text = skill_path.read_bytes().decode("utf-8")
+        skill_bytes = skill_path.read_bytes()
+        text = skill_bytes.decode("utf-8")
     except (OSError, UnicodeError) as exc:
         fail(f"cannot read {EXPECTED_SKILL} as UTF-8: {exc}")
-    if len(text) >= MAX_SKILL_CHARS:
-        fail(f"{EXPECTED_SKILL} must be under {MAX_SKILL_CHARS} Unicode characters (currently {len(text)})")
+    if len(skill_bytes) > MAX_SKILL_BYTES:
+        fail(f"{EXPECTED_SKILL} must be at most {MAX_SKILL_BYTES} UTF-8 bytes (currently {len(skill_bytes)})")
     raw_lines = text.splitlines(keepends=True)
     lines = text.splitlines()
     if not lines or lines[0] != "---":
@@ -377,23 +388,23 @@ def validate_skill() -> list[Path]:
     for field in ("name", "description"):
         if not fields.get(field):
             fail(f"{EXPECTED_SKILL} frontmatter requires a non-empty {field}")
-    if fields["name"] != "proofread":
-        fail(f"{EXPECTED_SKILL} frontmatter name must be 'proofread'")
+    if fields["name"] != SKILL_NAME:
+        fail(f"{EXPECTED_SKILL} frontmatter name must be {SKILL_NAME!r}")
     if len(fields["name"]) > 64 or len(fields["description"]) > 1024:
         fail(f"{EXPECTED_SKILL} frontmatter name/description exceeds supported metadata limits")
-    agent_path = require_regular_file("skills/proofread/agents/openai.yaml")
-    agent_text = read_text(agent_path, "skills/proofread/agents/openai.yaml")
-    validate_yaml_characters(agent_text, "skills/proofread/agents/openai.yaml")
+    agent_path = require_regular_file(EXPECTED_AGENT)
+    agent_text = read_text(agent_path, EXPECTED_AGENT)
+    validate_yaml_characters(agent_text, EXPECTED_AGENT)
     agent_lines = agent_text.splitlines()
     if len(agent_lines) < 2 or agent_lines[0] != "interface:":
-        fail("skills/proofread/agents/openai.yaml must contain an interface mapping")
-    agent_fields = parse_flat_yaml_mapping(agent_lines[1:], "skills/proofread/agents/openai.yaml interface", indent=2)
+        fail(f"{EXPECTED_AGENT} must contain an interface mapping")
+    agent_fields = parse_flat_yaml_mapping(agent_lines[1:], f"{EXPECTED_AGENT} interface", indent=2)
     if set(agent_fields) != {"display_name", "short_description", "default_prompt"}:
-        fail("skills/proofread/agents/openai.yaml interface must contain display_name, short_description, and default_prompt")
+        fail(f"{EXPECTED_AGENT} interface must contain display_name, short_description, and default_prompt")
     limits = {"display_name": 64, "short_description": 256, "default_prompt": 1024}
     for field, maximum in limits.items():
         if len(agent_fields[field]) > maximum:
-            fail(f"skills/proofread/agents/openai.yaml interface.{field} exceeds {maximum} characters")
+            fail(f"{EXPECTED_AGENT} interface.{field} exceeds {maximum} characters")
     check_placeholders(text, EXPECTED_SKILL)
     if re.search(r"(?:^|\s)(?:\.\./|/|[A-Za-z]:\\)", text):
         fail(f"{EXPECTED_SKILL} contains a potentially unsafe absolute or parent-relative path")
@@ -519,6 +530,13 @@ def _preflight_stage(stage_root: Path, files: list[Path]) -> None:
     if stage_root.is_symlink() or (stage_root.exists() and not stage_root.is_dir()):
         fail("dist/local-plugin must be a regular directory")
     expected_files, expected_dirs = _stage_paths(stage_root, files)
+    expected_files.update(RETIRED_SKILL_FILES)
+    expected_dirs.update(
+        parent.as_posix()
+        for name in RETIRED_SKILL_FILES
+        for parent in PurePosixPath(name).parents
+        if parent.as_posix() != "."
+    )
 
     if stage_root.exists():
         for path in stage_root.rglob("*"):

@@ -44,7 +44,7 @@ class PublicRepositoryTests(unittest.TestCase):
                     self.assertTrue(destination.is_file(), f"missing link target: {target}")
 
     def test_behavior_fixtures_have_unique_ids_and_observable_expectations(self) -> None:
-        for relative in ("tests/cases.json", "tests/changes-markdown-cases.json"):
+        for relative in ("tests/cases.json", "tests/changes-markdown-cases.json", "tests/host-behavior-cases.json"):
             with self.subTest(fixture=relative):
                 fixture = json.loads((ROOT / relative).read_text(encoding="utf-8"))
                 self.assertEqual(fixture["schema_version"], 1)

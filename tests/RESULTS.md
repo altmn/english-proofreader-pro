@@ -1,6 +1,48 @@
 # Validation evidence
 
+## CI regression acceptance — November 16, 2026
+
+Proposed package: **1.0.1**. Canonical invocation: `$proofreader-pro`. Current skill: **10,694 Unicode characters / 10,694 UTF-8 bytes**, SHA-256 `696145bdd39ffb184a8ec1581c01aca4026def39a249fa047ee2745af5db7f1a`. Manifest SHA-256: `9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b`. Verified six-file ZIP SHA-256: `9b847ee4e0274be67dd014f6269cb07a7d8ea0e900ffbc1d7816fe3c01901622`.
+
+The [tool-enabled protocol](tool-enabled-runner.txt) uses three fresh `gpt-6.1-sol` / high agents per source revision, with no inherited conversation. Each receives only the frozen public skill and raw prompts/context, performs programmatic calculations, and saves complete ungraded responses once. Expectations and prior answers are withheld. Separate reviewers grade the original and supplemental assertions after generation; the actual GFM renderer processes every complete supplemental response. This is the established CI regression profile, not the recommended proofreading setting or installed-host acceptance. The collaboration host's exact build is unknown.
+
+The first tool-enabled round exposed an unsupported recipient in a less-wordy result: the model added `to you`. Its original-suite scores were [83/83](trials/host-behavior-core-sol-1-2026-11-16.json), [82/83](trials/host-behavior-core-sol-2-2026-11-16.json), and [83/83](trials/host-behavior-core-sol-3-2026-11-16.json); all [supplemental](trials/host-behavior-markdown-2026-11-16-snapshot.json) assertions passed. Every response and failed verdict is retained. The skill now explicitly forbids adding recipients, circumstances, or other facts to reach a word budget and directs the model to retain useful source wording instead.
+
+Three new agents then ran the revised frozen [original](trials/host-facts-core-2026-11-16-snapshot.json) and [supplemental](trials/host-facts-markdown-2026-11-16-snapshot.json) suites. No earlier output was edited or relabeled as a new run.
+
+| Final capture | Original assertions | Markdown assertions |
+| --- | ---: | ---: |
+| 1 | [83/83](trials/host-facts-core-sol-1-2026-11-16.json) | [37/37](trials/host-facts-markdown-sol-1-2026-11-16.json) |
+| 2 | [83/83](trials/host-facts-core-sol-2-2026-11-16.json) | [37/37](trials/host-facts-markdown-sol-2-2026-11-16.json) |
+| 3 | [83/83](trials/host-facts-core-sol-3-2026-11-16.json) | [37/37](trials/host-facts-markdown-sol-3-2026-11-16.json) |
+
+Both final suites pass the unchanged current-source, complete, passing, profile, fixture, and distinct-run requirements: **249/249 original and 111/111 supplemental assertions**. Complete response sets and run identities are distinct; no identical-response override was used. All **76 standard-library unit tests**, release validation/build, ZIP CRC and source comparisons, and whitespace checks pass. There are **6 current and 31 historical** valid evaluation records. CI points to the final records and continues checking historical record completeness, including the genuine failed candidate.
+
+[Counting provenance](trials/host-counting-provenance-2026-11-16.json) binds all six retained calculation traces to exact source and response hashes. Independent review recomputed shortening counts and backtick runs. The [candidate](trials/host-behavior-markdown-render-2026-11-16.json) and [final](trials/host-facts-markdown-render-2026-11-16.json) GFM proofs retain actual HTML for all 24 fresh supplemental responses; all literal-text and full-bold-quotation checks pass. Offline tests preserve those bindings and the earlier renderer proof.
+
+Passing the selected assertions does not certify every workflow gate. In the first round, capture 2's combined calculation did not establish pre-composition budget timing, and capture 3 finished one word below two computed budgets. In the final round, core capture 3 finishes at 17 words against an 18-word budget; its 32% reduction passes the original approximate 30% assertion under the existing whole-word precedent. Final captures 2/3 do not retain draft fact inventories, so that ordering lacks recorded evidence even though the drafts contain no unsupported circumstances. The traces establish retained calculations and integrity, not independently attested execution order.
+
+**Intended-host and recommended Instant/default acceptance remain pending.** The 13 host-behavior cases still need their actual tool/UI/clipboard checks, including both no-space `@` entries, copy/wrap controls, and source-action isolation. No live plugin was installed or updated, and no directory submission was made. CI regression acceptance is separate from release acceptance in the intended host.
+
+## Host compatibility revision — November 16, 2026
+
+This section records the earlier source and its then-pending CI status. Current regression acceptance is documented above.
+
+Proposed package: **1.0.1**. Canonical skill: `skills/proofreader-pro/SKILL.md`, **10,580 Unicode characters / 10,580 UTF-8 bytes**; SHA-256 `8b3018f57612022865df879eb4263a83cb03a9d24788eabc07a5bc9298626e3e`. Manifest SHA-256: `9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b`. The canonical invocation is `$proofreader-pro`; the builder migrates either previous generated skill layout.
+
+This revision requires programmatic text counts, strengthens source/tool boundaries, requests plain-text blocks with host-supported copy/soft-wrap controls, replaces current product wording with "text," recommends the latest ChatGPT Instant model at its normal setting, and introduces distinctive plugin/skill picker labels. The former 8,000-character project cap is removed; the builder retains a 1 MiB UTF-8 compatibility ceiling. The known old generated skill layout is migrated by the builder, never by manual staging edits. See [host compatibility](../docs/host-compatibility.md) for supported fields and host limitations.
+
+All **75 standard-library unit tests** pass. Release validation/build, ZIP CRC and exact six-file source comparisons, fixture loading, and whitespace checks pass. ZIP SHA-256: `ede30b5e0a16cd359e42a41fa969b5f6fc3f0abe04f91e7a52fac907980944ce`. All **25 existing evaluation records** still validate as historical evidence; none is current for these new skill/manifest bytes. Original fixtures, responses, verdicts, and CI's current-source requirement remain unchanged.
+
+The optional bundled skill-creator `quick_validate.py` could not start because its interpreter lacks PyYAML. No dependency was installed; the repository's standard-library skill/frontmatter/package validation passed independently.
+
+**Behavioral acceptance is pending; full CI is not green.** Both existing current-source suite commands fail with `record is bound to historical skill, manifest, or fixture inputs`, as expected. No model response was regenerated or relabeled, and no inherited agent profile was guessed. The previous Sol/high simulations are a separate regression profile, not the recommended runtime setting. The old engineering runner forbids tools for solving cases, so it cannot demonstrate compliance with the new programmatic-count requirement. A fresh tool-enabled protocol and authentic current runs are required before acceptance.
+
+The [13 new synthetic cases](host-behavior-cases.json) describe counting, source-command isolation, authorized verification, and output checks; they have not been executed as model/host acceptance. Counting and source isolation require actual tool traces. Copy/wrapping and the two `@` labels require intended-host UI/clipboard checks. Latest Instant/default acceptance remains pending. No live plugin was installed or updated and no public submission was made.
+
 ## Engineering review fixes — November 16, 2026
+
+This section describes the earlier source snapshot. Its references to current inputs apply to that snapshot, not the host compatibility revision above.
 
 Proposed package: **1.0.1**. Skill: **7,448 Unicode characters**, including frontmatter, spaces, and physical newlines; SHA-256 `257bcb051e347875580ad0516cd2bcc39c48fefedd2f3980476f64afdd31840a`.
 
