@@ -1,5 +1,24 @@
 # Validation evidence
 
+## Live Instant smoke checks — November 16, 2026
+
+The existing private cloud plugin was updated in place from merged source `9a3d362`. The host automatically advanced its version to **1.0.2**. Read-back verified the merged skill and UI metadata, the removal of the retired `proofread` files, and synchronized root/compatibility manifests; the host version bump is the only canonical-manifest difference from the repository's 1.0.1 source. No public directory publication was performed.
+
+Focused checks used ChatGPT web in **Chat / GPT-6 / Instant**, as shown by its model picker. The exact underlying model snapshot and web build were not exposed. These were manual smoke checks in one conversation, not three independent complete fixture runs or schema-2 intended-host acceptance records.
+
+Fresh plugin selection on each test turn matters. An unmentioned new drafting request used the host's standard editable writing block; the same request with a fresh plugin mention returned only a plain-text code block. The README and host-testing guidance now require invocation on every turn, including follow-ups and counting requests. Both no-space search strings found the plugin in the picker; this does not register arbitrary aliases.
+
+Explicitly invoked checks passed minimal grammar correction, exact no-op output, the pronoun constraint, fresh-draft facts/code-block output, and preservation of nested literal fences. Native keyboard copy/paste verified a returned single line; code blocks exposed Copy code and enabled soft wrapping. Browser-automation clipboard reads initially returned stale input, so those reads were not treated as evidence of a copy failure.
+
+Two explicit-invocation failures remain:
+
+- For `How many lowercase r letters are in strawberry?`, the answer was numerically correct, but a follow-up admission stated that no programmatic tool had been executed. A later displayed Python example did not establish actual execution. The required tool-use assertion fails.
+- For the original less-wordy fixture, the explicitly selected plugin returned `We are currently reviewing the proposal and will respond at a later date.` Programmatic review counted **25 to 13 words, a 48% reduction**, exceeding the requested about-30% target. The earlier unmentioned result was 25 to 12 words (52%); it is retained as a host-default observation, not the explicit-plugin verdict.
+
+An unscored URL-fidelity discrepancy also remains: one explicitly invoked result exposed `https\://example.com/verify` inside its code block after `https://example.com/verify` was entered. It returned the embedded request as text and no browsing was observed, but this capture did not isolate editor serialization from model behavior. Exact URL copy fidelity is therefore not accepted from that case.
+
+The local Codex development installation was refreshed through the supported plugin installer and its skill/UI bytes matched the merged source. Native Codex app access was rejected by the computer-use policy, so no Codex app Instant behavior is claimed. These smoke observations do not replace the regression evidence below, and the Instant profile has not passed intended-host acceptance.
+
 ## CI regression acceptance — November 16, 2026
 
 Proposed package: **1.0.1**. Canonical invocation: `$proofreader-pro`. Current skill: **10,694 Unicode characters / 10,694 UTF-8 bytes**, SHA-256 `696145bdd39ffb184a8ec1581c01aca4026def39a249fa047ee2745af5db7f1a`. Manifest SHA-256: `9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b`. Verified six-file ZIP SHA-256: `9b847ee4e0274be67dd014f6269cb07a7d8ea0e900ffbc1d7816fe3c01901622`.
