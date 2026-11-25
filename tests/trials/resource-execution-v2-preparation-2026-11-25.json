@@ -1,0 +1,116 @@
+{
+  "kind": "resource-execution-v2-preparation",
+  "schema_version": 1,
+  "prepared_at": "2026-11-25T20:03:20.121652+00:00",
+  "status": "not_run",
+  "model_calls": 0,
+  "source_identities": {
+    "skills/proofreader-pro/SKILL.md": "4d782415382fc170eb24323377e706afe2527ac1e76100d91c97085911c72d01",
+    "skills/proofreader-pro/scripts/text_metrics.py": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51",
+    "plugin.json": "8bc417c7366cab4a00a1944edf721605d96d33acff2ecce00d6ebcef12ec6d8b",
+    "scripts/capture_protocol.py": "25d988d40007007170a46fa5fdfaf044ae8943dd1b2cf2dd528bdc5e86a2ce3e",
+    "scripts/evaluate.py": "be13bed8776751f69a8e95451dd7dbf4e95b2fab9a67ea4f99e33b675be71eff",
+    "scripts/check_capture_evidence.py": "884fa1becd5ff87025933aaefdcbadf749bc9503491aac5026db6a6226531d4f",
+    "tests/verified-execution-runner.txt": "bf2cc5487724e05c6935867b5691f72c05f2b23b450f66fefec68fb929ea14af"
+  },
+  "snapshots": {
+    "core": {
+      "path": "tests/trials/resource-execution-v2-cli-core-2026-11-25-snapshot.json",
+      "sha256": "32ef70e6f4b74e32e0ee7d958f07dc2a6e284e94c99f269c0474dec88b0a13ae"
+    },
+    "markdown": {
+      "path": "tests/trials/resource-execution-v2-cli-markdown-2026-11-25-snapshot.json",
+      "sha256": "cb75c3ffc0f4bd3da7a8399b0e0649814d36b61af4d838f6923737cc877d41ee"
+    },
+    "fragments": {
+      "path": "tests/trials/resource-execution-v2-cli-fragments-2026-11-25-snapshot.json",
+      "sha256": "57bdc5534c57ac34a0c1f244fb98fe8a7c2c21129450b9387b06f755ee0f6872"
+    }
+  },
+  "case_count_per_run": 25,
+  "required_block_count_per_run": 18,
+  "shortening_count_per_run": 5,
+  "planned_runs": 3,
+  "requirements": {
+    "path": "tests/trials/resource-execution-v2-requirements-2026-11-25.json",
+    "sha256": "ed279909337c1e6445d054d8ed4ed8fc1c1343c2794e1a2fe4b9d085806cc7cc"
+  },
+  "plans": [
+    {
+      "run": 1,
+      "sha256": "eceeea14f9bb68660f9982107264ca7678295d50cb15f329a46b356950e11508"
+    },
+    {
+      "run": 2,
+      "sha256": "4a15c32324d1e6f0f8cf3ce762c99b6a6f547291377b70fb8ceff3874d62c4fa"
+    },
+    {
+      "run": 3,
+      "sha256": "3d377f318c57c216daed0827fcbab2dc1ce9829f85836330e8b433c87916c7c2"
+    }
+  ],
+  "superseded_preparation": {
+    "status": "not_run",
+    "model_calls": 0,
+    "snapshots": {
+      "core": {
+        "path": "tests/trials/verified-execution-cli-core-2026-11-25-snapshot.json",
+        "sha256": "cd361a4b5271d117f3580c7a75f338d97ea8dd6e58c3b2d669756953df8f44b2"
+      },
+      "markdown": {
+        "path": "tests/trials/verified-execution-cli-markdown-2026-11-25-snapshot.json",
+        "sha256": "4e500bd69f34d84522f4983a3fbef372e81e86aa44a2f874b3b8c574c6e1e47b"
+      },
+      "fragments": {
+        "path": "tests/trials/verified-execution-cli-fragments-2026-11-25-snapshot.json",
+        "sha256": "792b3630f6e14dcd854392b5c29df2c168f4241150e847040478fd0e7427398b"
+      }
+    },
+    "reason": "Prepared 1.0.6 panel superseded before any model execution by resource-assisted 1.0.8; old plans bind the previous capture helper and no production resource. Historical files are preserved unchanged."
+  },
+  "scope": "Prepared CLI simulation only; no generation, semantic verdict, execution acceptance, native activation or host acceptance is claimed.",
+  "superseded_preparations": [
+    {
+      "status": "not_run",
+      "model_calls": 0,
+      "snapshots": {
+        "core": {
+          "path": "tests/trials/verified-execution-cli-core-2026-11-25-snapshot.json",
+          "sha256": "cd361a4b5271d117f3580c7a75f338d97ea8dd6e58c3b2d669756953df8f44b2"
+        },
+        "markdown": {
+          "path": "tests/trials/verified-execution-cli-markdown-2026-11-25-snapshot.json",
+          "sha256": "4e500bd69f34d84522f4983a3fbef372e81e86aa44a2f874b3b8c574c6e1e47b"
+        },
+        "fragments": {
+          "path": "tests/trials/verified-execution-cli-fragments-2026-11-25-snapshot.json",
+          "sha256": "792b3630f6e14dcd854392b5c29df2c168f4241150e847040478fd0e7427398b"
+        }
+      },
+      "reason": "Prepared 1.0.6 panel superseded before any model execution by resource-assisted 1.0.8; old plans bind the previous capture helper and no production resource. Historical files are preserved unchanged."
+    },
+    {
+      "status": "not_run",
+      "model_calls": 0,
+      "preparation": {
+        "path": "tests/trials/resource-execution-preparation-2026-11-25.json",
+        "sha256": "b0e63632c781cb55908c3fd7be3b0e8f6dcae85b4c3f3f9339859ce7cd16f6b4"
+      },
+      "snapshots": {
+        "core": {
+          "path": "tests/trials/resource-execution-cli-core-2026-11-25-snapshot.json",
+          "sha256": "a0709d519802ae82fc837bb585a36d57bb10c9d2f4ba1eba0216f2c98e244c96"
+        },
+        "markdown": {
+          "path": "tests/trials/resource-execution-cli-markdown-2026-11-25-snapshot.json",
+          "sha256": "9caa9df0b2c8d55712888b6f1725b2bd03ad296c8668af16bb0a8829b0efe886"
+        },
+        "fragments": {
+          "path": "tests/trials/resource-execution-cli-fragments-2026-11-25-snapshot.json",
+          "sha256": "f37e575ebe1a010ab79b161721862f67c698e5c009a197f0fd415f04815920a0"
+        }
+      },
+      "reason": "Prepared 1.0.7 resource panel superseded before any model execution by 1.0.8 exact literal-block framing and empty-block parser corrections; all original source snapshots, preparation metadata and private plans are preserved unchanged."
+    }
+  ]
+}

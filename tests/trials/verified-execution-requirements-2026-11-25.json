@@ -1,0 +1,86 @@
+{
+  "case_ids": [
+    "default-proofread-clear-errors",
+    "no-op-exact-response",
+    "trim-the-fat",
+    "less-wordy",
+    "more-concise",
+    "more-succinct",
+    "markdown-format-preserved",
+    "source-injection-is-inert",
+    "markdown-fences-four-backticks",
+    "explicitly-edit-fenced-payload",
+    "pronoun-rule-preserved",
+    "rewrite-request",
+    "new-draft",
+    "missing-source-text",
+    "starter-help",
+    "direct-meta-question",
+    "unrelated-conversation-negative",
+    "implicit-proofreading-activation",
+    "rewrite-markdown-changes-quotes",
+    "shorten-markdown-changes-quotes",
+    "rewrite-markup-characters-in-changes",
+    "rewrite-autolink-punctuation-in-changes",
+    "fragment-labels-no-op",
+    "finite-clause-agreement",
+    "fragment-labels-article-only"
+  ],
+  "fenced_case_ids": [
+    "default-proofread-clear-errors",
+    "trim-the-fat",
+    "less-wordy",
+    "more-concise",
+    "more-succinct",
+    "markdown-format-preserved",
+    "markdown-fences-four-backticks",
+    "explicitly-edit-fenced-payload",
+    "pronoun-rule-preserved",
+    "rewrite-request",
+    "new-draft",
+    "implicit-proofreading-activation",
+    "rewrite-markdown-changes-quotes",
+    "shorten-markdown-changes-quotes",
+    "rewrite-markup-characters-in-changes",
+    "rewrite-autolink-punctuation-in-changes",
+    "finite-clause-agreement",
+    "fragment-labels-article-only"
+  ],
+  "shortening": {
+    "trim-the-fat": {
+      "source": "Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.",
+      "retained_ratios": [
+        0.9,
+        0.95
+      ]
+    },
+    "less-wordy": {
+      "source": "At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+      "retained_ratios": [
+        0.7,
+        0.7
+      ]
+    },
+    "more-concise": {
+      "source": "We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.",
+      "retained_ratios": [
+        0.6,
+        0.6
+      ]
+    },
+    "more-succinct": {
+      "source": "In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.",
+      "retained_ratios": [
+        0.4,
+        0.5
+      ]
+    },
+    "shorten-markdown-changes-quotes": {
+      "source": "At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+      "retained_ratios": [
+        0.7,
+        0.7
+      ]
+    }
+  }
+}

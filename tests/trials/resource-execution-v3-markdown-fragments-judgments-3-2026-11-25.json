@@ -1,0 +1,557 @@
+{
+  "schema_version": 1,
+  "kind": "independent-semantic-and-rendered-assertion-review",
+  "date": "2026-11-25",
+  "reviewer_identity": "/root/resource_calibration",
+  "scope": "One accepted resource-execution-v3 CLI run 3 capture; all 37 Markdown and 17 fragment named expectations, including task/target expectation fields.",
+  "independence": {
+    "new_model_calls": false,
+    "network_calls_by_reviewer": false,
+    "subagents_spawned": false,
+    "prior_candidate_grades_read": false,
+    "consistency_with_prior_runs_not_used_as_evidence": true,
+    "rendering_provenance": "Root supplied actual GitHub GFM run 3 HTML and its source-bound request plan. Reviewer independently inspected these exact HTML files and request bodies, response identity, complete strong-element visible text, and literal result text; reviewer did not issue remote rendering requests."
+  },
+  "calibration_reuse": {
+    "new_blinding_claimed": false,
+    "rubric_id": "fragment-agreement-calibration",
+    "rubric_version": "1.0",
+    "prior_blind_judgments_path": "/var/folders/cr/t3l2xddj6x77vp_7482n4jkm0000gn/T/proofreader-final-counting-20261125-czqfdxlk/fragment-calibration-judgments.json",
+    "prior_blind_judgments_sha256": "aabe3bbb9a699430ab3622c9c54069d21b2ccaa374f7731a5ab272968c599b4a",
+    "neutral_input_sha256": "22246f6bc4704eebc98224581b7f912029dffe074cf2434cac09ed0c53f00b61",
+    "fixture_sha256": "d80c8d9e2359c7a5633f082f15aed9fdd5dc39d10d4e4d5d510e18019af6e1cd",
+    "controller_reported_matching_verdicts": 6,
+    "controller_reported_total": 6,
+    "notes": "Reuses this reviewer’s original pre-capture six-example blind predictions. Root reported its separate gold comparison passed 6/6 before the captures; no new blind calibration is claimed and no prior candidate grade files were read."
+  },
+  "sources": {
+    "accepted_raw": {
+      "path": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/resource-execution-v3-cli-raw-3-2026-11-25.json",
+      "sha256": "b9774a1085bfaa918358d02ffc4f12f39bd64990d8a86425de5e5ec093c66350"
+    },
+    "snapshots": [
+      {
+        "suite": "markdown",
+        "path": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/resource-execution-v3-cli-markdown-2026-11-25-snapshot.json",
+        "sha256": "a319f352a0a0610bda3ce83cb8f719bdb00870a0c69b3e4915c70c621b4cc8c2",
+        "fixture_source": "tests/changes-markdown-cases.json",
+        "fixture_sha256": "048e832118e454da045b7dfd7e109ca9062e1d572b869ed4950a6b2c4f6adc52",
+        "skill_sha256": "47ecee80432daf25759bb894664f944cecef1cabd2cbc3cb9573795e3653ede6",
+        "manifest_sha256": "672419e08661ea920568613a7607c13ae658b5f5a936638c3bd0c8110dbf9369",
+        "runner_context_sha256": "bf2cc5487724e05c6935867b5691f72c05f2b23b450f66fefec68fb929ea14af",
+        "resources": [
+          {
+            "path": "skills/proofreader-pro/scripts/text_metrics.py",
+            "sha256": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51",
+            "utf8_byte_count": 12024
+          }
+        ]
+      },
+      {
+        "suite": "fragments",
+        "path": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/resource-execution-v3-cli-fragments-2026-11-25-snapshot.json",
+        "sha256": "15b2bcf81f93c6d54e1ef8b2bf4371fe9eedc9899c9a79ae8ea151a5cf228168",
+        "fixture_source": "tests/fragment-calibration-cases.json",
+        "fixture_sha256": "d80c8d9e2359c7a5633f082f15aed9fdd5dc39d10d4e4d5d510e18019af6e1cd",
+        "skill_sha256": "47ecee80432daf25759bb894664f944cecef1cabd2cbc3cb9573795e3653ede6",
+        "manifest_sha256": "672419e08661ea920568613a7607c13ae658b5f5a936638c3bd0c8110dbf9369",
+        "runner_context_sha256": "bf2cc5487724e05c6935867b5691f72c05f2b23b450f66fefec68fb929ea14af",
+        "resources": [
+          {
+            "path": "skills/proofreader-pro/scripts/text_metrics.py",
+            "sha256": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51",
+            "utf8_byte_count": 12024
+          }
+        ]
+      }
+    ],
+    "render_plan": {
+      "path": "/var/folders/cr/t3l2xddj6x77vp_7482n4jkm0000gn/T/proofreader-final-counting-20261125-czqfdxlk/v3-run3-render-plan.json",
+      "sha256": "75f91cb3a2dc0c537a2482624cde998c46b5f5e6afcec9b63f7f4744a99ea462"
+    },
+    "render_bindings": [
+      {
+        "case_id": "rewrite-markdown-changes-quotes",
+        "response_sha256": "f37f8b62677a2794e6ff2bb34943846dd3105776086edb1aa0c58c88499bcb24",
+        "request_path": "/var/folders/cr/t3l2xddj6x77vp_7482n4jkm0000gn/T/proofreader-final-counting-20261125-czqfdxlk/v3-run3-markdown-1-request.json",
+        "request_sha256": "1c93c3e5d53ced3c14ff8bde48ac9a2efe3b9f4ca6c86ba4e45cfcc758643c82",
+        "html_path": "/var/folders/cr/t3l2xddj6x77vp_7482n4jkm0000gn/T/proofreader-final-counting-20261125-czqfdxlk/v3-run3-markdown-1.html",
+        "html_sha256": "07e9756d6ba4668d19ca8e7ad199c0b9c7e148d600575d0dee6627e3eed6d7d5",
+        "mode": "gfm",
+        "repository_context": "altmn/english-proofreader-pro",
+        "visible_complete_quotes_equal_source_and_result": true,
+        "two_uninterrupted_strong_elements": true,
+        "result_literal_text_equal": true
+      },
+      {
+        "case_id": "shorten-markdown-changes-quotes",
+        "response_sha256": "7dd2540dff2f360157d639dd4233f32d5689f0e6a64f222fbaea0458900053b2",
+        "request_path": "/var/folders/cr/t3l2xddj6x77vp_7482n4jkm0000gn/T/proofreader-final-counting-20261125-czqfdxlk/v3-run3-markdown-2-request.json",
+        "request_sha256": "cd5e76748de59f5803407eb768d4e9decf805883afcf185824dfad4269a6001c",
+        "html_path": "/var/folders/cr/t3l2xddj6x77vp_7482n4jkm0000gn/T/proofreader-final-counting-20261125-czqfdxlk/v3-run3-markdown-2.html",
+        "html_sha256": "64346a57353f8c31d0106aa35cdbfdcbc2eee483473156035e713d9b21665183",
+        "mode": "gfm",
+        "repository_context": "altmn/english-proofreader-pro",
+        "visible_complete_quotes_equal_source_and_result": true,
+        "two_uninterrupted_strong_elements": true,
+        "result_literal_text_equal": true
+      },
+      {
+        "case_id": "rewrite-markup-characters-in-changes",
+        "response_sha256": "df848b859ba1cec90fd4f8ed71036dcc393279a197ba994a599aef420e43eb77",
+        "request_path": "/var/folders/cr/t3l2xddj6x77vp_7482n4jkm0000gn/T/proofreader-final-counting-20261125-czqfdxlk/v3-run3-markdown-3-request.json",
+        "request_sha256": "9a53db8bc30828ae84b55fb80ac188c235b9ae733557dad047bda8642f2450a4",
+        "html_path": "/var/folders/cr/t3l2xddj6x77vp_7482n4jkm0000gn/T/proofreader-final-counting-20261125-czqfdxlk/v3-run3-markdown-3.html",
+        "html_sha256": "f7a464a99d51124da1ea92d13727d098a876403370d9d01e9b67c7ec4fb5a7e6",
+        "mode": "gfm",
+        "repository_context": "altmn/english-proofreader-pro",
+        "visible_complete_quotes_equal_source_and_result": true,
+        "two_uninterrupted_strong_elements": true,
+        "result_literal_text_equal": true
+      },
+      {
+        "case_id": "rewrite-autolink-punctuation-in-changes",
+        "response_sha256": "b9e71e42dafa7de379df60e7eb3658916080b4469a469d0d2eac2aceed64e2d4",
+        "request_path": "/var/folders/cr/t3l2xddj6x77vp_7482n4jkm0000gn/T/proofreader-final-counting-20261125-czqfdxlk/v3-run3-markdown-4-request.json",
+        "request_sha256": "817f6a067abb07d8088c27fd05ad401df53c40eaac89d70af6d910b7ed658a3f",
+        "html_path": "/var/folders/cr/t3l2xddj6x77vp_7482n4jkm0000gn/T/proofreader-final-counting-20261125-czqfdxlk/v3-run3-markdown-4.html",
+        "html_sha256": "c1e81c13d85a8c5fc09bd9ae4cc123808b5f5c7692e678cbfa2bd875c042bbeb",
+        "mode": "gfm",
+        "repository_context": "altmn/english-proofreader-pro",
+        "visible_complete_quotes_equal_source_and_result": true,
+        "two_uninterrupted_strong_elements": true,
+        "result_literal_text_equal": true
+      }
+    ]
+  },
+  "method_notes": [
+    "Applied the previously read project guidance/testing documentation and the same frozen v3 skill, contracts, and fragment rubric. No repository or existing evidence files were modified.",
+    "Read the complete run 3 response strings for the seven target cases and independently compared each with its exact prompt and named expectations. Prior run consistency and Changes explanations alone were not used as evidence.",
+    "Checked copyable source/result bytes, full escaped quotation accuracy, truthful complete edit coverage, article/agreement corrections, intentional fragments, and preservation of uncertainty, markup, URLs, and deadlines.",
+    "Inspected all four actual source-bound GFM HTML outputs before passing the eight named rendering assertions; raw delimiters alone did not establish rendering success.",
+    "Independent whitespace string verification found 32 source units and 22 result units for the shortening, the rounded 70% point target. This check does not claim generator helper execution and does not replace the separate accepted execution gate.",
+    "Used the existing first-party Node REPL for inert reads, string comparisons, and exclusive JSON creation; no package launch, model call, network request, or subagent was used."
+  ],
+  "cases": [
+    {
+      "suite": "markdown",
+      "id": "rewrite-markdown-changes-quotes",
+      "input_sha256": "3387623ca8b4eac3dc1a600ae9f99a890e31fc7347814af849d9bb4889a15f11",
+      "expectation_sha256": "597847d585c7906bb442909a4d208d763408af12f8720bc3e6f3b86602460c20",
+      "response_sha256": "f37f8b62677a2794e6ff2bb34943846dd3105776086edb1aa0c58c88499bcb24",
+      "assertions": [
+        {
+          "name": "task",
+          "expected": "rewrite_supplied_text",
+          "status": "pass",
+          "notes": "The response rewrites the supplied request and returns complete revised text followed by Changes."
+        },
+        {
+          "name": "honors_tone_and_keeps_today_deadline",
+          "expected": true,
+          "status": "pass",
+          "notes": "Please send is polite and professional; Thank you! adds the requested warmth. The request still explicitly requires delivery today."
+        },
+        {
+          "name": "preserves_literal_emphasis_link_url_and_inline_code_in_result",
+          "expected": true,
+          "status": "pass",
+          "notes": "The exact **draft**, *notes*, bracketed folder link including ?a=1&b=2, and `review_queue` syntax remain intact."
+        },
+        {
+          "name": "returns_complete_text_first_in_safe_fence",
+          "expected": true,
+          "status": "pass",
+          "notes": "The complete revised paragraph, including its warm closing, appears first in a safe text-labeled three-backtick fence; embedded code has only single backticks."
+        },
+        {
+          "name": "changes_quote_complete_original_and_revised_sentences",
+          "expected": true,
+          "status": "pass",
+          "notes": "The quotation pair gives the complete original sentence and complete revised paragraph, including both the request and Thank you! closing, using the exact punctuation-escaping convention."
+        },
+        {
+          "name": "all_quoted_spans_render_entirely_bold",
+          "expected": true,
+          "status": "pass",
+          "notes": "The actual source-bound GitHub GFM HTML contains exactly two uninterrupted strong elements enclosing the complete original/revised sentences including their quotation marks. Neither nested emphasis nor inline code splits the bold quotations.",
+          "render_evidence_html_sha256": "07e9756d6ba4668d19ca8e7ad199c0b9c7e148d600575d0dee6627e3eed6d7d5"
+        },
+        {
+          "name": "rendered_quotes_show_literal_markdown_including_backticks_brackets_and_ampersand",
+          "expected": true,
+          "status": "pass",
+          "notes": "The actual GFM strong-element visible text exactly matches the complete source/result: emphasis stars, bracketed link syntax, inline backticks, underscore, and URL ampersand remain literal.",
+          "render_evidence_html_sha256": "07e9756d6ba4668d19ca8e7ad199c0b9c7e148d600575d0dee6627e3eed6d7d5"
+        },
+        {
+          "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+          "expected": true,
+          "status": "pass",
+          "notes": "The copyable result contains original literal markup with no display escapes. The Changes explanation attributes the alterations to polite wording and the closing, not to escaping."
+        },
+        {
+          "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+          "expected": true,
+          "status": "pass",
+          "notes": "The full paragraph pair exposes the added Please, lowercased send, and added Thank you! closing. The explanation accurately covers the polite opening and warm closing, without invented factual or formatting changes."
+        }
+      ]
+    },
+    {
+      "suite": "markdown",
+      "id": "shorten-markdown-changes-quotes",
+      "input_sha256": "575f8e80312b99684ef75898362dfb9653b8db6dffd9c839afe3c2f5339df68d",
+      "expectation_sha256": "d9dcac64ac7bb6bf810ac4b02f6c37f24052dfbaef7973487f6bdd8b2406b6fd",
+      "response_sha256": "7dd2540dff2f360157d639dd4233f32d5689f0e6a64f222fbaea0458900053b2",
+      "assertions": [
+        {
+          "name": "task",
+          "expected": "proofread_and_shorten_supplied_text",
+          "status": "pass",
+          "notes": "The response shortens the supplied sentence while returning its complete revised form and Changes."
+        },
+        {
+          "name": "requested_reduction_target",
+          "expected": "about 30%",
+          "status": "pass",
+          "notes": "Independent whitespace-unit comparison gives 32 source units and 22 result units, matching the rounded 70% point target of 22; the accepted capture has separately gated helper-execution evidence."
+        },
+        {
+          "name": "preserves_review_and_future_decision_whether_to_send",
+          "expected": true,
+          "status": "pass",
+          "notes": "The result still describes ongoing review and a future decision about whether to send the items later. It does not convert uncertainty into a decision to send or a completed sending action."
+        },
+        {
+          "name": "preserves_literal_emphasis_link_and_code_path_in_result",
+          "expected": true,
+          "status": "pass",
+          "notes": "The result preserves **draft**, the literal `C:\\reports` inline-code path, and the full notes Markdown link."
+        },
+        {
+          "name": "returns_complete_text_first_in_safe_fence",
+          "expected": true,
+          "status": "pass",
+          "notes": "The full revised sentence appears first in a text-labeled three-backtick fence that safely contains its inline single backticks."
+        },
+        {
+          "name": "changes_quote_complete_original_and_revised_sentences",
+          "expected": true,
+          "status": "pass",
+          "notes": "The Changes pair contains the exact complete original and revised sentences, with full punctuation and correctly escaped literal markup."
+        },
+        {
+          "name": "all_quoted_spans_render_entirely_bold",
+          "expected": true,
+          "status": "pass",
+          "notes": "The actual source-bound GitHub GFM HTML contains exactly two uninterrupted strong elements enclosing the complete original/revised sentences including their quotation marks. Neither nested emphasis nor inline code splits the bold quotations.",
+          "render_evidence_html_sha256": "64346a57353f8c31d0106aa35cdbfdcbc2eee483473156035e713d9b21665183"
+        },
+        {
+          "name": "rendered_quotes_preserve_source_backslash_and_literal_markdown",
+          "expected": true,
+          "status": "pass",
+          "notes": "The actual GFM HTML retains one visible source path backslash together with literal backticks, emphasis stars, and Markdown link syntax; decoded strong text equals the exact source/result.",
+          "render_evidence_html_sha256": "64346a57353f8c31d0106aa35cdbfdcbc2eee483473156035e713d9b21665183"
+        },
+        {
+          "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+          "expected": true,
+          "status": "pass",
+          "notes": "Display escaping is confined to Changes; the copyable result contains no added escape characters and the explanation does not claim escape additions as edits."
+        },
+        {
+          "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+          "expected": true,
+          "status": "pass",
+          "notes": "The complete quotation pair exposes the deletions of redundant time/process wording and adjusted sentence-initial case. The explanation accurately identifies those edits and preserves the future whether-decision."
+        }
+      ]
+    },
+    {
+      "suite": "markdown",
+      "id": "rewrite-markup-characters-in-changes",
+      "input_sha256": "b296133c1ef2d763caeff6d8c1be0d07b60c7ad9371f5cd835958d1dd51698c5",
+      "expectation_sha256": "4e1b786f9caecdb40df7d585798ceebdde6af94d4b42fe4f0ab5835d4fe4765b",
+      "response_sha256": "df848b859ba1cec90fd4f8ed71036dcc393279a197ba994a599aef420e43eb77",
+      "assertions": [
+        {
+          "name": "task",
+          "expected": "rewrite_supplied_text",
+          "status": "pass",
+          "notes": "The response rewrites the supplied request and supplies the complete revised sentence plus Changes."
+        },
+        {
+          "name": "makes_request_polite_and_keeps_today_deadline",
+          "expected": true,
+          "status": "pass",
+          "notes": "Please check is a polite request and retains today as its deadline."
+        },
+        {
+          "name": "preserves_literal_emphasis_tag_entity_and_strikethrough_in_result",
+          "expected": true,
+          "status": "pass",
+          "notes": "The copyable result retains the exact **draft**, <ready>, &copy;, and ~~pending~~ characters."
+        },
+        {
+          "name": "returns_complete_text_first_in_safe_fence",
+          "expected": true,
+          "status": "pass",
+          "notes": "The complete result is first in a safe text-labeled three-backtick fence, with no source backtick runs."
+        },
+        {
+          "name": "changes_quote_complete_original_and_revised_sentences",
+          "expected": true,
+          "status": "pass",
+          "notes": "Complete original/revised sentences are quoted exactly with the required display escaping, rather than abbreviated fragments."
+        },
+        {
+          "name": "all_quoted_spans_render_entirely_bold",
+          "expected": true,
+          "status": "pass",
+          "notes": "The actual source-bound GitHub GFM HTML contains exactly two uninterrupted strong elements enclosing the complete original/revised sentences including their quotation marks. Neither nested emphasis nor inline code splits the bold quotations.",
+          "render_evidence_html_sha256": "f7a464a99d51124da1ea92d13727d098a876403370d9d01e9b67c7ec4fb5a7e6"
+        },
+        {
+          "name": "rendered_quotes_show_angle_brackets_entity_spelling_and_tildes_literally",
+          "expected": true,
+          "status": "pass",
+          "notes": "The actual GFM HTML encodes the angle brackets and entity ampersand as literal visible characters, preserving <ready>, &copy;, and ~~pending~~ inside uninterrupted strong quotations; no tag or entity substitution occurs.",
+          "render_evidence_html_sha256": "f7a464a99d51124da1ea92d13727d098a876403370d9d01e9b67c7ec4fb5a7e6"
+        },
+        {
+          "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+          "expected": true,
+          "status": "pass",
+          "notes": "The copyable sentence has no added display backslashes; Changes describes politeness and lowercase editing, not display escaping."
+        },
+        {
+          "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+          "expected": true,
+          "status": "pass",
+          "notes": "The full-sentence pair covers Please and Check to check. The explanation explicitly discloses both the polite opening and lowercased following verb, with no fictitious edits."
+        }
+      ]
+    },
+    {
+      "suite": "markdown",
+      "id": "rewrite-autolink-punctuation-in-changes",
+      "input_sha256": "1636062f872878736d5712818b9ab35a386acae10a4c470528aafd7dc29c5fc5",
+      "expectation_sha256": "24273406cdf6c5e7d218392df560c805400d25a01ec950ba4e09446bd8dc8ec9",
+      "response_sha256": "b9e71e42dafa7de379df60e7eb3658916080b4469a469d0d2eac2aceed64e2d4",
+      "assertions": [
+        {
+          "name": "task",
+          "expected": "rewrite_supplied_text",
+          "status": "pass",
+          "notes": "The response rewrites the supplied request and presents its complete revised text and Changes."
+        },
+        {
+          "name": "makes_request_polite_and_keeps_today_deadline",
+          "expected": true,
+          "status": "pass",
+          "notes": "Please check makes the request polite while today remains the unchanged deadline."
+        },
+        {
+          "name": "preserves_exact_urls_and_email_in_result",
+          "expected": true,
+          "status": "pass",
+          "notes": "Both URL strings, their query/underscore punctuation, and user@example.com remain exactly intact in the copyable result."
+        },
+        {
+          "name": "returns_complete_text_first_in_safe_fence",
+          "expected": true,
+          "status": "pass",
+          "notes": "The entire revised sentence appears first in a safe text-labeled three-backtick fence; it contains no backtick runs."
+        },
+        {
+          "name": "changes_quote_complete_original_and_revised_sentences",
+          "expected": true,
+          "status": "pass",
+          "notes": "Both complete sentences, including all URL/email punctuation and the deadline, appear as exact escaped before/after quotations."
+        },
+        {
+          "name": "all_quoted_spans_render_entirely_bold",
+          "expected": true,
+          "status": "pass",
+          "notes": "The actual source-bound GitHub GFM HTML contains exactly two uninterrupted strong elements enclosing the complete original/revised sentences including their quotation marks. Neither nested emphasis nor inline code splits the bold quotations.",
+          "render_evidence_html_sha256": "c1e81c13d85a8c5fc09bd9ae4cc123808b5f5c7692e678cbfa2bd875c042bbeb"
+        },
+        {
+          "name": "rendered_quotes_preserve_urls_and_email_without_added_backslashes",
+          "expected": true,
+          "status": "pass",
+          "notes": "The actual GFM HTML shows the exact URL/email characters with no added visible backslashes. The email autolink remains wholly inside strong, which the shared contract permits, and decoded visible quotation text equals source/result.",
+          "render_evidence_html_sha256": "c1e81c13d85a8c5fc09bd9ae4cc123808b5f5c7692e678cbfa2bd875c042bbeb"
+        },
+        {
+          "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+          "expected": true,
+          "status": "pass",
+          "notes": "The result shows literal addresses with no display backslashes; escaped punctuation is confined to Changes and is not listed as a source edit."
+        },
+        {
+          "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+          "expected": true,
+          "status": "pass",
+          "notes": "The complete quotation pair covers Please and Check to check. The explanation explicitly accounts for the opening and lowercase verb and correctly states that URLs, email, and deadline were retained."
+        }
+      ]
+    },
+    {
+      "suite": "fragments",
+      "id": "fragment-labels-no-op",
+      "input_sha256": "b92582228d4cd2d9cecbd7609685dd6c8722645740fa77c23c325e947af8699c",
+      "expectation_sha256": "d4e3463e3a0aaf07866e08733d42854111b712dc86fd0d19c68b18780ab87193",
+      "response_sha256": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+      "assertions": [
+        {
+          "name": "task",
+          "expected": "proofread_intentional_noun_phrase_labels",
+          "status": "pass",
+          "notes": "The response applies the explicit intentional-noun-phrase direction and selects the no-edit contract."
+        },
+        {
+          "name": "response_exactly",
+          "expected": "The text does not require any adjustments.",
+          "status": "pass",
+          "notes": "The entire response is exactly The text does not require any adjustments., with no other characters."
+        },
+        {
+          "name": "retains_intentional_noun_phrases_without_invented_agreement_edit",
+          "expected": true,
+          "status": "pass",
+          "notes": "No change is made or claimed to either intentional noun-phrase label; phrase link is not misread as a finite verb error."
+        },
+        {
+          "name": "no_revised_text_fence_or_changes_list",
+          "expected": true,
+          "status": "pass",
+          "notes": "Only the required no-op sentence is returned, with no code block or Changes list."
+        }
+      ]
+    },
+    {
+      "suite": "fragments",
+      "id": "finite-clause-agreement",
+      "input_sha256": "11d6fe64626fb168244686a5674abc22b188bdfcc7cd34fdcfa7d12241b9d93a",
+      "expectation_sha256": "131da80b274d116593a49764fef0c9008d5d3f6ed98ecdb7354944011465f339",
+      "response_sha256": "04d5abc82c2690dd17105e215034c9d4f9b7153c2c2b0e0946613d57d383753f",
+      "assertions": [
+        {
+          "name": "task",
+          "expected": "proofread_explicit_finite_clause",
+          "status": "pass",
+          "notes": "The response treats the supplied items as complete sentences and corrects the clear finite-clause agreement error."
+        },
+        {
+          "name": "corrects_link_to_links_for_singular_subject_and_direct_object",
+          "expected": true,
+          "status": "pass",
+          "notes": "The singular subject phrase now has links, while readers remains its direct object."
+        },
+        {
+          "name": "changes_no_other_source_characters",
+          "expected": true,
+          "status": "pass",
+          "notes": "Exact source/result comparison confirms that link to links is the only source change."
+        },
+        {
+          "name": "preserves_list_emphasis_url_and_line_breaks",
+          "expected": true,
+          "status": "pass",
+          "notes": "Both list markers, emphasis delimiters, exact URL, and inter-item newline are preserved."
+        },
+        {
+          "name": "complete_revised_text_first_in_safe_fence",
+          "expected": true,
+          "status": "pass",
+          "notes": "The complete two-sentence list appears first in a safe text-labeled three-backtick fence."
+        },
+        {
+          "name": "truthful_changes_list_accounts_only_for_link_to_links",
+          "expected": true,
+          "status": "pass",
+          "notes": "The before/after pair quotes the exact complete first sentence, using escaped literal markup inside bold wrappers, and accounts only for link to links with the correct agreement explanation."
+        }
+      ]
+    },
+    {
+      "suite": "fragments",
+      "id": "fragment-labels-article-only",
+      "input_sha256": "54455ae026c16b531a8bfdfe534c92293b8604a0a10359a75828d329614f19dd",
+      "expectation_sha256": "1546288a9e15c7e43d90e85300b0af983801269716f97208ab64c1ffbf197e54",
+      "response_sha256": "a1a9cf06269254f71473594a4f87346a868f87bc6474a1585099fc7c965930c9",
+      "assertions": [
+        {
+          "name": "task",
+          "expected": "proofread_noun_phrases_with_clear_article_error",
+          "status": "pass",
+          "notes": "The response retains the explicitly intentional noun-phrase labels while correcting the clear article error."
+        },
+        {
+          "name": "corrects_a_unusual_to_an_unusual",
+          "expected": true,
+          "status": "pass",
+          "notes": "The second label correctly changes A unusual to An unusual."
+        },
+        {
+          "name": "retains_phrase_link_as_an_intentional_noun_phrase",
+          "expected": true,
+          "status": "pass",
+          "notes": "The first label still contains phrase link to and remains unchanged as an intentional noun phrase."
+        },
+        {
+          "name": "changes_no_other_source_characters",
+          "expected": true,
+          "status": "pass",
+          "notes": "Exact source/result comparison confirms that A to An is the sole source edit."
+        },
+        {
+          "name": "preserves_list_emphasis_url_and_line_breaks",
+          "expected": true,
+          "status": "pass",
+          "notes": "The original list markers, emphasis delimiters, exact URL, and single inter-item newline are preserved."
+        },
+        {
+          "name": "complete_revised_text_first_in_safe_fence",
+          "expected": true,
+          "status": "pass",
+          "notes": "The full two-label result appears first in a safe text-labeled three-backtick fence."
+        },
+        {
+          "name": "truthful_changes_list_accounts_only_for_article_correction",
+          "expected": true,
+          "status": "pass",
+          "notes": "The exact complete second-label quotations truthfully disclose only the article correction; the escaped terminal period is display-only and no change to phrase link is invented."
+        }
+      ]
+    }
+  ],
+  "suite_totals": {
+    "markdown": {
+      "total": 37,
+      "pass": 37,
+      "fail": 0,
+      "not_run": 0
+    },
+    "fragments": {
+      "total": 17,
+      "pass": 17,
+      "fail": 0,
+      "not_run": 0
+    }
+  },
+  "totals": {
+    "total": 54,
+    "pass": 54,
+    "fail": 0,
+    "not_run": 0
+  },
+  "limitations": [
+    "Seven known synthetic regression cases in one CLI simulation do not establish broad reliability or intended-host acceptance.",
+    "The four actual GitHub GFM outputs establish the named Markdown render properties for these response bytes; native UI rendering, clipboard behavior, copy controls, and wrapping remain separate.",
+    "Root’s capture acceptance and execution provenance are separate mechanical evidence; this semantic/render review does not independently audit the generator event stream."
+  ]
+}

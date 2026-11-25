@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "kind": "source-final-and-auxiliary-execution-review",
+  "source_version": "1.0.9",
+  "controller_retries": 0,
+  "runs": [
+    {
+      "run": 1,
+      "actual_final_gate": "failed",
+      "source_command": "executed_successfully",
+      "final_command": "not_run",
+      "accepted_output": false,
+      "observation": "Actual PreToolUse denial of optional inline runpy presentation call; stopped with no candidate. Denial retained, no bypass."
+    },
+    {
+      "run": 2,
+      "actual_final_gate": "passed",
+      "required_commands": "Exactly one successful source and final command each, observed started/completed in order; exact candidatehash and productionresourcehash matched.",
+      "observation": "Optional measurements used shipped measure API. Host startup cache-install error retained separately; no generator security-hook denial observed."
+    },
+    {
+      "run": 3,
+      "actual_final_gate": "passed",
+      "required_commands": "Exactly one successful source and final command each, observed started/completed in order; exact candidatehash and productionresourcehash matched.",
+      "auxiliary_checker_items": [
+        "item_16",
+        "item_19",
+        "item_21"
+      ],
+      "auxiliary_word_budget_delegation": "Recorded auxiliary Python programs call shipped measure() for word counts, rounding/budgets, comparison and presentation. No substitute word split/regex/arithmetic counter in recorded executed command bodies.",
+      "boundary_split": "item_14 splits on literal Source:\n only to extract the frozen source string; this does not count words.",
+      "retained_auxiliary_failure": {
+        "item": "item_19",
+        "exit_code": 1,
+        "actual_helper_comparison": {
+          "id": "shorten-markdown-changes-quotes",
+          "source_words": 32,
+          "candidate_words": 21,
+          "within_budget": false
+        },
+        "later_item": "item_21",
+        "later_exit_code": 0,
+        "sequence": "Draft composition changed before the first candidate save, then checker repeated. Exact final command itself was not retried; no saved-candidate edits or controller retry."
+      },
+      "scope_limit": "CLI JSONL omits CodeMode cell bodies and private model composition; cannot attest every unobserved JavaScript/internal calculation."
+    }
+  ],
+  "helper_sha256": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51",
+  "capture_helper_sha256": "25d988d40007007170a46fa5fdfaf044ae8943dd1b2cf2dd528bdc5e86a2ce3e",
+  "semantic_verdict": "not_run",
+  "scope": "Mechanical observed-execution review only. Does not alter or retroactively relabel authentic final-gate receipts, certify all optional tools, claim three clean runs, or transfer acceptance to native ChatGPT."
+}
