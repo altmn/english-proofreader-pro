@@ -1,0 +1,274 @@
+{
+  "schema_version": 1,
+  "kind": "resource-execution-v2-cli-attempts",
+  "created_at": "2026-11-25T20:09:06.772148+00:00",
+  "outcome": "failed",
+  "planned_runs": 3,
+  "attempted_runs": 3,
+  "accepted_captures": 0,
+  "retries": 0,
+  "semantic_verdict": "not_run",
+  "source_identities": {
+    "skills/proofreader-pro/SKILL.md": "4d782415382fc170eb24323377e706afe2527ac1e76100d91c97085911c72d01",
+    "skills/proofreader-pro/scripts/text_metrics.py": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51",
+    "plugin.json": "8bc417c7366cab4a00a1944edf721605d96d33acff2ecce00d6ebcef12ec6d8b",
+    "scripts/capture_protocol.py": "25d988d40007007170a46fa5fdfaf044ae8943dd1b2cf2dd528bdc5e86a2ce3e",
+    "scripts/evaluate.py": "be13bed8776751f69a8e95451dd7dbf4e95b2fab9a67ea4f99e33b675be71eff",
+    "scripts/check_capture_evidence.py": "884fa1becd5ff87025933aaefdcbadf749bc9503491aac5026db6a6226531d4f",
+    "tests/verified-execution-runner.txt": "bf2cc5487724e05c6935867b5691f72c05f2b23b450f66fefec68fb929ea14af"
+  },
+  "snapshots": {
+    "core": {
+      "path": "tests/trials/resource-execution-v2-cli-core-2026-11-25-snapshot.json",
+      "sha256": "32ef70e6f4b74e32e0ee7d958f07dc2a6e284e94c99f269c0474dec88b0a13ae"
+    },
+    "markdown": {
+      "path": "tests/trials/resource-execution-v2-cli-markdown-2026-11-25-snapshot.json",
+      "sha256": "cb75c3ffc0f4bd3da7a8399b0e0649814d36b61af4d838f6923737cc877d41ee"
+    },
+    "fragments": {
+      "path": "tests/trials/resource-execution-v2-cli-fragments-2026-11-25-snapshot.json",
+      "sha256": "57bdc5534c57ac34a0c1f244fb98fe8a7c2c21129450b9387b06f755ee0f6872"
+    }
+  },
+  "cli_identity": {
+    "kind": "resource-execution-v2-cli-identity",
+    "binary_sha256": "e14fc83739c13c1074b12bd1acce4010c893c7f6fbfc1593b4a31d74cabb57af",
+    "version_exit_code": 0,
+    "version_stdout": "codex-cli 0.170.0",
+    "python_path": "/opt/homebrew/Cellar/python@3.15/3.15.2/Frameworks/Python.framework/Versions/3.15/bin/python3.15",
+    "python_version": "3.15.2",
+    "platform": "Darwin 27.0.0 arm64",
+    "configured_model": "gpt-6.1-sol",
+    "configured_reasoning_effort": "high",
+    "model_identity_scope": "CLI requested configuration; underlying serving model or provider dispatch not independently attested."
+  },
+  "execution_profile": {
+    "preserves_user_config": true,
+    "preserves_security_hooks": true,
+    "sandbox": "workspace-write",
+    "approval_policy": "never",
+    "configured_mcp_servers_disabled": true,
+    "web_search": "disabled",
+    "code_mode_host_disabled": true,
+    "scope": "Explicit per-invocation tool isolation made the required host execution route unavailable. No source iteration, silent retry or weaker gate followed."
+  },
+  "security_preflight": {
+    "outcome": "passed",
+    "exit_code": 0,
+    "elapsed_seconds": 9.976386999944225,
+    "inputs_unchanged": true
+  },
+  "attempts": [
+    {
+      "run": 1,
+      "status": "failed",
+      "failure_class": "harness_tool_unavailable",
+      "observed_cause": "code-mode host is disabled",
+      "cli_exit_code": 0,
+      "stop_reason": null,
+      "protocol_outcome": "failed",
+      "protocol_reason": "cannot read protocol input: candidate.json",
+      "started_at": "2026-11-25T20:06:36.439437+00:00",
+      "elapsed_seconds": 16.33532870898489,
+      "candidate_exists": false,
+      "accepted_output_exists": false,
+      "source_measurement_execution_observed": false,
+      "final_measurement_execution_observed": false,
+      "command_execution_event_count": 0,
+      "semantic_verdict": "not_run",
+      "usage": {
+        "input_tokens": 47817,
+        "cached_input_tokens": 26880,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 196,
+        "reasoning_output_tokens": 67
+      },
+      "usage_source": "Actual turn.completed event; underlying accounting not independently attested.",
+      "cost": null,
+      "cost_status": "unknown",
+      "storage_limits": {
+        "stdout": 16777216,
+        "stderr": 1048576
+      },
+      "observed_bytes": {
+        "stdout": 1895,
+        "stderr": 133
+      },
+      "retained_bytes": {
+        "stdout": 1895,
+        "stderr": 133
+      },
+      "owned_cleanup_remaining": [],
+      "events": {
+        "path": "tests/trials/resource-execution-v2-cli-events-1-2026-11-25.jsonl.gz",
+        "sha256": "bba59a604393739bc2d68e2c4d98c12cabe1d0838d95fde3ec5d522932f671c1"
+      },
+      "events_uncompressed_sha256": "b4527433889c789faa5db67fa3b4b2b117d2b6c17354875b720f40fe6e54605e",
+      "original_plan_path": "/Users/routerhealthchecker/.codex/audit-runs/resource-execution-v2-20261125-30fqebv4/controller/run-1/plan.json",
+      "plan": {
+        "path": "tests/trials/resource-execution-v2-cli-plan-1-2026-11-25.json",
+        "sha256": "eceeea14f9bb68660f9982107264ca7678295d50cb15f329a46b356950e11508"
+      },
+      "protocol_receipt": {
+        "path": "tests/trials/resource-execution-v2-cli-protocol-1-2026-11-25.json",
+        "sha256": "df6dec42a91be88450486ba10b63c46c2e1d596df9f1d49ba6c2560de5bf3abb"
+      },
+      "completion": {
+        "path": "tests/trials/resource-execution-v2-cli-completion-1-2026-11-25.txt",
+        "sha256": "4ea855be33870d2e07da6ca6e235e8773d2d67d5aad74190964fbe97adb5048a"
+      },
+      "stderr": {
+        "path": "tests/trials/resource-execution-v2-cli-stderr-1-2026-11-25.txt",
+        "sha256": "f547d082d20da69a8ae3346b7ef142cb80daa7df8e034cb245d25a71c02e9583"
+      },
+      "private_attempt_receipt_sha256": "e0b1b6de57d1a9e0666193348b5a916990529c59011bf4c5bf88852c4b3d7031"
+    },
+    {
+      "run": 2,
+      "status": "failed",
+      "failure_class": "harness_tool_unavailable",
+      "observed_cause": "code-mode host is disabled",
+      "cli_exit_code": 0,
+      "stop_reason": null,
+      "protocol_outcome": "failed",
+      "protocol_reason": "cannot read protocol input: candidate.json",
+      "started_at": "2026-11-25T20:06:36.408422+00:00",
+      "elapsed_seconds": 16.24376687500626,
+      "candidate_exists": false,
+      "accepted_output_exists": false,
+      "source_measurement_execution_observed": false,
+      "final_measurement_execution_observed": false,
+      "command_execution_event_count": 0,
+      "semantic_verdict": "not_run",
+      "usage": {
+        "input_tokens": 47795,
+        "cached_input_tokens": 23808,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 159,
+        "reasoning_output_tokens": 51
+      },
+      "usage_source": "Actual turn.completed event; underlying accounting not independently attested.",
+      "cost": null,
+      "cost_status": "unknown",
+      "storage_limits": {
+        "stdout": 16777216,
+        "stderr": 1048576
+      },
+      "observed_bytes": {
+        "stdout": 1895,
+        "stderr": 133
+      },
+      "retained_bytes": {
+        "stdout": 1895,
+        "stderr": 133
+      },
+      "owned_cleanup_remaining": [],
+      "events": {
+        "path": "tests/trials/resource-execution-v2-cli-events-2-2026-11-25.jsonl.gz",
+        "sha256": "7c7297b7df669434abdbfb02612941eea82253dfaa2e1966aa6621c5ea6e9dd6"
+      },
+      "events_uncompressed_sha256": "717e943802006b30f44a1b6d9dd6f3ec89c47117f04c57f47279858b6770eff5",
+      "original_plan_path": "/Users/routerhealthchecker/.codex/audit-runs/resource-execution-v2-20261125-30fqebv4/controller/run-2/plan.json",
+      "plan": {
+        "path": "tests/trials/resource-execution-v2-cli-plan-2-2026-11-25.json",
+        "sha256": "4a15c32324d1e6f0f8cf3ce762c99b6a6f547291377b70fb8ceff3874d62c4fa"
+      },
+      "protocol_receipt": {
+        "path": "tests/trials/resource-execution-v2-cli-protocol-2-2026-11-25.json",
+        "sha256": "19f580cb51d68dd7f4f9acd94041ec1e7f18782582ba33203c389b20c51a55bb"
+      },
+      "completion": {
+        "path": "tests/trials/resource-execution-v2-cli-completion-2-2026-11-25.txt",
+        "sha256": "0562a1ac6977a715603b59ffb5eef93f5a38c2a0890aff18879132d7f0af74af"
+      },
+      "stderr": {
+        "path": "tests/trials/resource-execution-v2-cli-stderr-2-2026-11-25.txt",
+        "sha256": "7e51cb9edf20ae91c6f3b66c1bd34a63d11d6adadce9a6c8ee1d31220ae232b3"
+      },
+      "private_attempt_receipt_sha256": "30dd2ff9885d7d07608fa7e3ab59435bad70d5a0be6285eee6a384b8eaa15dba"
+    },
+    {
+      "run": 3,
+      "status": "failed",
+      "failure_class": "harness_tool_unavailable",
+      "observed_cause": "code-mode host is disabled",
+      "cli_exit_code": 0,
+      "stop_reason": null,
+      "protocol_outcome": "failed",
+      "protocol_reason": "cannot read protocol input: candidate.json",
+      "started_at": "2026-11-25T20:06:36.408341+00:00",
+      "elapsed_seconds": 15.091782000032254,
+      "candidate_exists": false,
+      "accepted_output_exists": false,
+      "source_measurement_execution_observed": false,
+      "final_measurement_execution_observed": false,
+      "command_execution_event_count": 0,
+      "semantic_verdict": "not_run",
+      "usage": {
+        "input_tokens": 47791,
+        "cached_input_tokens": 23680,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 152,
+        "reasoning_output_tokens": 49
+      },
+      "usage_source": "Actual turn.completed event; underlying accounting not independently attested.",
+      "cost": null,
+      "cost_status": "unknown",
+      "storage_limits": {
+        "stdout": 16777216,
+        "stderr": 1048576
+      },
+      "observed_bytes": {
+        "stdout": 1847,
+        "stderr": 133
+      },
+      "retained_bytes": {
+        "stdout": 1847,
+        "stderr": 133
+      },
+      "owned_cleanup_remaining": [],
+      "events": {
+        "path": "tests/trials/resource-execution-v2-cli-events-3-2026-11-25.jsonl.gz",
+        "sha256": "0a70852f65c56d1ff182e1da61b7b193db70710c1eecd8825f36e34ff06617e0"
+      },
+      "events_uncompressed_sha256": "12952469aaa7bec1bc007e91b46542fbbaed94b0b300ba2fd8f3d538360e30d6",
+      "original_plan_path": "/Users/routerhealthchecker/.codex/audit-runs/resource-execution-v2-20261125-30fqebv4/controller/run-3/plan.json",
+      "plan": {
+        "path": "tests/trials/resource-execution-v2-cli-plan-3-2026-11-25.json",
+        "sha256": "3d377f318c57c216daed0827fcbab2dc1ce9829f85836330e8b433c87916c7c2"
+      },
+      "protocol_receipt": {
+        "path": "tests/trials/resource-execution-v2-cli-protocol-3-2026-11-25.json",
+        "sha256": "8258868321ee89f626ce5f1c26aad4f333ec9368f3a22df553b9148cb49368ae"
+      },
+      "completion": {
+        "path": "tests/trials/resource-execution-v2-cli-completion-3-2026-11-25.txt",
+        "sha256": "43ef3eb73a34a218a8a0e614ef546f096ecf321b71b6274bcf9a6d9a9448bcf8"
+      },
+      "stderr": {
+        "path": "tests/trials/resource-execution-v2-cli-stderr-3-2026-11-25.txt",
+        "sha256": "ad51212c7c66da754ac6a7e17472744f5ad200a0df39bbca1ec1e4429524c69a"
+      },
+      "private_attempt_receipt_sha256": "cccc14bd04fafd4e0ef0dec6f10207fb74f96286ca9620c4728b94be83b5921b"
+    }
+  ],
+  "cost": null,
+  "cost_status": "unknown",
+  "usage_totals": {
+    "input_tokens": 143403,
+    "cached_input_tokens": 74368,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 507,
+    "reasoning_output_tokens": 167
+  },
+  "privacy_review": {
+    "reviewed": "Full short event, stderr, completion streams and frozen synthetic plan payloads; no redaction or event alteration.",
+    "excluded_private_material": "Account configuration, security-hook inventories, full private launch files and controller-only audit logs remain local."
+  },
+  "limits": [
+    "No candidate, behavioral output, semantic grade or native-host acceptance exists for these attempts.",
+    "CLI configured model and reported token usage are observed; actual model dispatch and monetary cost are not independently attested.",
+    "Trusted local event collector and previously tested sandbox boundary are assumptions, not universal attestation."
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "kind": "independent-judgment-application",
+  "date": "2026-11-25",
+  "review_path": "tests/trials/resource-execution-v3-markdown-fragments-judgments-3-2026-11-25.json",
+  "review_sha256": "649dca4340a8c2d8161e6bfb3a9031dbaf0d9081abf4a6cc103a47320bcdae95",
+  "records": [
+    {
+      "path": "tests/trials/resource-execution-v3-markdown-sol-3-2026-11-25.json",
+      "before_sha256": "e779560944f5137a6723a349b8aaa7b9208f7d4716dfd4f26faa6977e13f1408",
+      "after_sha256": "f285ddea8a0c9a2e03029c522d9659b0fa34cb1a1f3675484e37ca7861352584",
+      "assertions": 37
+    },
+    {
+      "path": "tests/trials/resource-execution-v3-fragments-sol-3-2026-11-25.json",
+      "before_sha256": "b86f5ebbdcd3ed2409f453b24e7d0e36fb4dfaa98d54f8c71fe5609e2b8946b0",
+      "after_sha256": "a618f77e4ba36784d4e393a014efe4dade60bc656bdacaef2207951031f831ab",
+      "assertions": 17
+    }
+  ],
+  "scope": "Only assertion status/note and aggregate fields changed. Actual GFM reviewed; exact accepted responses, expected values and source bindings preserved."
+}

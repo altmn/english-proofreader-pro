@@ -1,0 +1,56 @@
+{
+  "date": "2026-11-25",
+  "kind": "blind-fragment-calibration-result",
+  "reviewer": "Independent Codex agent /root/resource_calibration; fresh context; no model override",
+  "rubric_id": "fragment-agreement-calibration",
+  "rubric_version": "1.0",
+  "fixture_sha256": "d80c8d9e2359c7a5633f082f15aed9fdd5dc39d10d4e4d5d510e18019af6e1cd",
+  "input_sha256": "22246f6bc4704eebc98224581b7f912029dffe074cf2434cac09ed0c53f00b61",
+  "judgments_sha256": "aabe3bbb9a699430ab3622c9c54069d21b2ccaa374f7731a5ab272968c599b4a",
+  "comparison": [
+    {
+      "id": "calibration-fragment-preserved",
+      "prediction_id": "example-1",
+      "predicted_verdict": "pass",
+      "expected_verdict": "pass",
+      "match": true
+    },
+    {
+      "id": "calibration-fragment-converted",
+      "prediction_id": "example-2",
+      "predicted_verdict": "fail",
+      "expected_verdict": "fail",
+      "match": true
+    },
+    {
+      "id": "calibration-finite-corrected",
+      "prediction_id": "example-3",
+      "predicted_verdict": "pass",
+      "expected_verdict": "pass",
+      "match": true
+    },
+    {
+      "id": "calibration-finite-missed",
+      "prediction_id": "example-4",
+      "predicted_verdict": "fail",
+      "expected_verdict": "fail",
+      "match": true
+    },
+    {
+      "id": "calibration-mixed-article-corrected",
+      "prediction_id": "example-5",
+      "predicted_verdict": "pass",
+      "expected_verdict": "pass",
+      "match": true
+    },
+    {
+      "id": "calibration-mixed-article-missed",
+      "prediction_id": "example-6",
+      "predicted_verdict": "fail",
+      "expected_verdict": "fail",
+      "match": true
+    }
+  ],
+  "passed": true,
+  "scope": "Six synthetic rubric examples judged before gold comparison and before new generated captures. No new behavioral capture has been graded or accepted."
+}

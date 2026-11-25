@@ -1,0 +1,43 @@
+{
+  "purpose": "Independent calibration before new capture review. Expected verdicts and rationales withheld. Judge whether each complete response satisfies the prompt and common output contract. Record pass/fail and rationale; do not read the fixture or historical answers.",
+  "fixture_sha256": "d80c8d9e2359c7a5633f082f15aed9fdd5dc39d10d4e4d5d510e18019af6e1cd",
+  "rubric_id": "fragment-agreement-calibration",
+  "rubric_version": "1.0",
+  "shared_output_contract": {
+    "minimal_editing": "Preserve intentional noun phrases and literal formatting; correct only clear errors. Do not infer an agreement error merely from the substring phrase link.",
+    "no_edit": "When the source needs no correction, return exactly The text does not require any adjustments.",
+    "edited_source": "Return the complete minimally corrected source first in a safe text-labeled fence, followed by a truthful Changes list accounting for every actual edit with bold before-and-after quotations. Preserve list markers, emphasis, URL characters, and line breaks."
+  },
+  "examples": [
+    {
+      "id": "example-1",
+      "prompt": "Proofread these intentional noun-phrase list labels. Keep them as noun phrases; do not turn them into sentences:\n- A **bold** and *italic* phrase link to https://example.com/path?x=1.\n- A helpful report summary.",
+      "response": "The text does not require any adjustments."
+    },
+    {
+      "id": "example-2",
+      "prompt": "Proofread these intentional noun-phrase list labels. Keep them as noun phrases; do not turn them into sentences:\n- A **bold** and *italic* phrase link to https://example.com/path?x=1.\n- A helpful report summary.",
+      "response": "```text\n- A **bold** and *italic* phrase links to https://example.com/path?x=1.\n- A helpful report summary.\n```\n\nChanges:\n- **\"link\"** \u2192 **\"links\"**: Corrected subject\u2013verb agreement."
+    },
+    {
+      "id": "example-3",
+      "prompt": "Proofread these complete sentences; retain their sentence structure:\n- The **bold** and *italic* phrase link readers to https://example.com/path?x=1.\n- The summary is helpful.",
+      "response": "```text\n- The **bold** and *italic* phrase links readers to https://example.com/path?x=1.\n- The summary is helpful.\n```\n\nChanges:\n- **\"link\"** \u2192 **\"links\"**: Corrected agreement with the singular subject."
+    },
+    {
+      "id": "example-4",
+      "prompt": "Proofread these complete sentences; retain their sentence structure:\n- The **bold** and *italic* phrase link readers to https://example.com/path?x=1.\n- The summary is helpful.",
+      "response": "The text does not require any adjustments."
+    },
+    {
+      "id": "example-5",
+      "prompt": "Proofread these intentional noun-phrase list labels. Keep them as noun phrases and correct only clear errors:\n- A **bold** and *italic* phrase link to https://example.com/path?x=1.\n- A unusual report summary.",
+      "response": "```text\n- A **bold** and *italic* phrase link to https://example.com/path?x=1.\n- An unusual report summary.\n```\n\nChanges:\n- **\"A unusual\"** \u2192 **\"An unusual\"**: Corrected the article before a vowel sound."
+    },
+    {
+      "id": "example-6",
+      "prompt": "Proofread these intentional noun-phrase list labels. Keep them as noun phrases and correct only clear errors:\n- A **bold** and *italic* phrase link to https://example.com/path?x=1.\n- A unusual report summary.",
+      "response": "The text does not require any adjustments."
+    }
+  ]
+}

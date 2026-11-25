@@ -1,0 +1,71 @@
+{
+  "kind": "code-mode-profile-boundary-attempt",
+  "started_at": "2026-11-25T20:16:55.060887+00:00",
+  "elapsed_seconds": 32.64389804110397,
+  "cli_exit_code": 0,
+  "stop_reason": null,
+  "retained_bytes": {
+    "stdout": 3492,
+    "stderr": 489
+  },
+  "observed_bytes": {
+    "stdout": 3492,
+    "stderr": 489
+  },
+  "owned_cleanup_remaining": [],
+  "protected_bytes_unchanged": {
+    "controller_sentinel": true,
+    "capture_copy": true,
+    "metrics_copy": true,
+    "actual_capture_helper": true,
+    "actual_metrics_resource": true
+  },
+  "actual_nested_command_boundary": "passed",
+  "actual_nested_command_result": {
+    "kind": "executed-code-mode-nested-command-boundary",
+    "challenge": "8104ee9e8586a5ba2d80f6a733672cb4578030114beb41c364bd4df56b0fd5cd",
+    "paths": {
+      "controller_sentinel": {
+        "readable": true,
+        "write_open_denied": true,
+        "write_open_allowed": false
+      },
+      "capture_copy": {
+        "readable": true,
+        "write_open_denied": true,
+        "write_open_allowed": false
+      },
+      "metrics_copy": {
+        "readable": true,
+        "write_open_denied": true,
+        "write_open_allowed": false
+      },
+      "actual_capture_helper": {
+        "readable": true,
+        "write_open_denied": true,
+        "write_open_allowed": false
+      },
+      "actual_metrics_resource": {
+        "readable": true,
+        "write_open_denied": true,
+        "write_open_allowed": false
+      }
+    },
+    "workspace_write_allowed": true
+  },
+  "usage": {
+    "input_tokens": 153460,
+    "cached_input_tokens": 127104,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 777,
+    "reasoning_output_tokens": 0
+  },
+  "cost": null,
+  "cost_status": "unknown",
+  "direct_code_mode_fs_and_apply_patch_boundary": "requires_review_of_actual_results",
+  "outcome": "review_required",
+  "events_sha256": "428138fa3c3cb9a06197a5bab41a6b2b10a5c6e04ca733b9d755d6aabd51bc98",
+  "stderr_sha256": "03c49da907aee071bdb82aff35fd403a7491a84adccb1d12d60c9bee779adaa0",
+  "profile_review_sha256": "769b94be814e66323c031057e5e3d77b4b290165384cfe1603fa532ea61faa60",
+  "scope": "One transport/executor probe. No semantic cases or skill acceptance; actual tool results and bytes require independent review. No retries."
+}
