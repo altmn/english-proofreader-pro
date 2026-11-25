@@ -2,9 +2,27 @@
   "$schema": "https://github.com/garrytan/gstack/docs/pregate.md#pregate-v1",
   "runner": "python3 -m unittest -v {files}",
   "dependencies": {
-    "docs/open-source-readiness.md": ["tests/test_repository.py"],
-    "docs/releasing.md": ["tests/test_repository.py"],
-    ".github/dependabot.yml": ["tests/test_repository.py"],
-    ".gstack/pregate.json": ["tests/test_repository.py"]
-  }
+    "docs/open-source-readiness.md": [
+      "tests/test_repository.py"
+    ],
+    "docs/releasing.md": [
+      "tests/test_repository.py"
+    ],
+    ".github/dependabot.yml": [
+      "tests/test_repository.py"
+    ],
+    ".gstack/pregate.json": [
+      "tests/test_repository.py"
+    ]
+  },
+  "allowlist": [
+    {
+      "finding": "env.kv",
+      "paths": [
+        "skills/proofreader-pro/scripts/text_metrics.py"
+      ],
+      "pattern": "re\\.compile\\(r\"\\(\\?:\\[`\\*_~#>\\+\\\\-\\]\\+\\|\\[0-9\\]\\+\\[\\.\\)\\]\\)\"\\)$",
+      "reason": "Exact Python Markdown-token regex, not a credential. Scope is this one source line only."
+    }
+  ]
 }
