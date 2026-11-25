@@ -1,0 +1,105 @@
+{
+  "date": "2026-11-25",
+  "kind": "native-work-mode-smoke-observations",
+  "version": "1.0.9",
+  "release_id": "pluginrel_6b07425d14dc81919b98caab134a641f",
+  "host": {
+    "browser": "Safari",
+    "host": "ChatGPT web",
+    "mode": "Work",
+    "model_observed": "GPT-6.2 Sol Light",
+    "power_picker": "Light, 2 of 6",
+    "fast_mode": false,
+    "model_snapshot": "unknown",
+    "web_build": "unknown",
+    "invocation": "Real plugin @picker selected in a fresh conversation for each submitted request."
+  },
+  "scope": "Separate Work-mode diagnostics. They do not replace failed Chat/Instant original fixtures or constitute a complete native acceptance panel. No account screenshots or private chat URLs retained.",
+  "attempts": [
+    {
+      "id": "explicit-helper-capability",
+      "prompt": "Run the bundled scripts/text_metrics.py helper through an actual execution tool with {\"text\":\"strawberry\",\"needle\":\"r\"}. Show the returned measurement and the executed helper path. If the helper or executor is unavailable, say exactly \"I can't verify an exact count without a successful programmatic measurement.\" Do not give a count without that execution.",
+      "response_visible_text": "The helper returned literal_occurrences: 3 for r in strawberry.\n\nExecuted helper path /home/agent/.codex/plugins/cache/created-by-me-remote/english-proofreader-pro/1.0.9/skills/proofreader-pro/scripts/text_metrics.py",
+      "activity": {
+        "elapsed_label": "Worked for 14s",
+        "reported_command_count": 2,
+        "visible_titles": [
+          "Listed files",
+          "Calculating Text Character Metrics",
+          "Calculating Character Metrics"
+        ],
+        "raw_command_and_returned_json": "not exposed by inspected UI"
+      },
+      "outcome": "partial execution evidence",
+      "limits": "UI command activity and model-reported path/result observed; exact commands, helper runtime hash and returned JSON unverified."
+    },
+    {
+      "id": "original-less-wordy-in-work",
+      "prompt": "Proofread and make it less wordy: At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+      "copied_payload": "We are in the process of reviewing the proposal and will provide a response at a later date.",
+      "response_visible_text": "We are in the process of reviewing the proposal and will provide a response at a later date.\n\nChanges\n- \"At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.\" → \"We are in the process of reviewing the proposal and will provide a response at a later date.\" Removed the redundant time phrases, capitalized the opening pronoun, and dropped the comma and repeated subject so both verbs share one subject.",
+      "activity": {
+        "elapsed_label": "Worked for 23s",
+        "reported_command_count": 4,
+        "visible_titles": [
+          "Evaluating Text Conciseness",
+          "Assessing Text Conciseness Metrics",
+          "Evaluating Conciseness of Revised Proposal Sentence",
+          "Evaluating Less Wordy Text Revision"
+        ],
+        "raw_command_and_returned_json": "not exposed by inspected UI"
+      },
+      "rendering": {
+        "plain_text_code_block": true,
+        "word_wrap_enabled": true,
+        "complete_original_and_revised_sentence_quotes": true,
+        "all_quoted_spans_visibly_bold": true,
+        "changes_complete_and_truthful": "Manual before/after comparison found both deleted redundant phrases, opening capitalization, comma deletion, and repeated-subject deletion accounted for."
+      },
+      "clipboard": "Native Copy code -> paste into empty composer matched exact single-line candidate; unsent pasted text cleared.",
+      "outcome": "visible output and payload copy passed this bounded smoke check",
+      "limits": "Actual source/final helper JSON not visible; no full execution or native acceptance inferred."
+    },
+    {
+      "id": "original-count-in-work",
+      "prompt": "How many lowercase r letters are in strawberry?",
+      "response_visible_text": "“Strawberry” contains 3 lowercase rs.",
+      "activity": {
+        "elapsed_label": "Worked for 17s",
+        "visible_titles": [
+          "Measuring Offline Text Metrics"
+        ],
+        "raw_command_and_returned_json": "not exposed by inspected UI"
+      },
+      "outcome": "correct visible answer with calculation-command activity",
+      "limits": "Underlying exact command/source/result identity unverified; separate from failed Instant routing."
+    }
+  ],
+  "regenerations": 0,
+  "cleanup": "Unsent copied payload cleared; fresh empty composer returned to Chat mode after Work diagnostics.",
+  "source_identity": {
+    "version": "1.0.9",
+    "prior_release": "pluginrel_6b073f0fdf4c8191abf68f914f954a37",
+    "scope": "USER",
+    "audience": "PRIVATE",
+    "metadata_fields_changed": [
+      "version"
+    ],
+    "archive_sha256": "2d4c2accbe42dcf27dda066690a48df629e6a3519c1f664c5f3a775d0e55b6b1",
+    "files": {
+      "LICENSE": "8fab3ea5b69feb68dab60d2ebc8e6ec55523b562180f2ce5ad032040e558e9f4",
+      "PRIVACY.md": "c9f3b0abcef11c62b964b54c09b0d635aac3bc3f08bf768aa26648063bf78bda",
+      "assets/icon.webp": "1f679ce2a85371f79da2e28a952ea1c22eff987fe050bce709da0c270a9708b4",
+      "plugin.json": "672419e08661ea920568613a7607c13ae658b5f5a936638c3bd0c8110dbf9369",
+      "skills/proofreader-pro/SKILL.md": "47ecee80432daf25759bb894664f944cecef1cabd2cbc3cb9573795e3653ede6",
+      "skills/proofreader-pro/agents/openai.yaml": "85d8aa78ae3f55b6df193b3f61274f82aac68853199b8bec2bf5dd54d489b134",
+      "skills/proofreader-pro/scripts/text_metrics.py": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51"
+    },
+    "deletions": []
+  },
+  "independent_later_measurement": {
+    "path": "tests/trials/resource-counting-work-independent-measurement-2026-11-25.json",
+    "sha256": "e84d1908c391df5f07952536205e11c3854356509993f3228968a02bb02de264",
+    "scope": "Root executed current helper on copied payload after native run; this cannot replace missing native source/final tool JSON."
+  }
+}

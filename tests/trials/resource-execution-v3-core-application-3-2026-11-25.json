@@ -1,0 +1,15 @@
+{
+  "kind": "independent-judgment-application",
+  "date": "2026-11-25",
+  "review_path": "tests/trials/resource-execution-v3-core-judgments-3-2026-11-25.json",
+  "review_sha256": "a2d7c2568a14e055d2648a41aaec9d24e7330877b1012b5dd3a605002dd7b807",
+  "records": [
+    {
+      "path": "tests/trials/resource-execution-v3-core-sol-3-2026-11-25.json",
+      "before_sha256": "aee0bce05d4cd78de94788cd3e7e7a1516b209cf109ecdeca4c924e469ffb4e0",
+      "after_sha256": "69641d738173ae0cace52b68be975cc1c790edee3c1b17201900c5c14265ccad",
+      "assertions": 83
+    }
+  ],
+  "scope": "Only assertion status/note and aggregate fields changed. Exact accepted responses, expected values and source bindings preserved."
+}

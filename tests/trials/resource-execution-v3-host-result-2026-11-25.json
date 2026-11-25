@@ -1,0 +1,52 @@
+{
+  "kind": "direct-code-mode-host-component-probe",
+  "model_calls": 0,
+  "outcome": "passed",
+  "host_exit_code": 0,
+  "reason": null,
+  "host_binary_sha256": "7007fd77fcc428d80542dc272013a187691f5aab3014b0c7a4f11fad3b47c40e",
+  "source_sha256": "8f5a83d3466be4ae0f0d12a4e7f92d2da44090a7cea4e4161d86fa2fdd3c24d5",
+  "returned_report": {
+    "kind": "executed-code-mode-surface-probe",
+    "challenge": "8104ee9e8586a5ba2d80f6a733672cb4578030114beb41c364bd4df56b0fd5cd",
+    "globals": {
+      "process": "undefined",
+      "require": "undefined",
+      "fetch": "undefined",
+      "Deno": "undefined",
+      "Bun": "undefined",
+      "fs": "undefined",
+      "open": "undefined",
+      "readFile": "undefined",
+      "writeFile": "undefined",
+      "readTextFile": "undefined",
+      "writeTextFile": "undefined",
+      "showSaveFilePicker": "undefined"
+    },
+    "exposed_tool_names": [],
+    "imports": {
+      "node:fs": {
+        "rejected": true,
+        "error": "unsupported import in exec"
+      },
+      "node:fs/promises": {
+        "rejected": true,
+        "error": "unsupported import in exec"
+      },
+      "fs": {
+        "rejected": true,
+        "error": "unsupported import in exec"
+      }
+    }
+  },
+  "sent_sha256": "f07237a54e49fc53ad9acf3654a4ec8990857ef9dd6a87aac1d41c3c86ca2c1c",
+  "received_sha256": "946f80613dd2c18b7ccc7310002fc30914f9fa181195dd319d58411fc3408e62",
+  "protected_bytes_unchanged": {
+    "controller_sentinel": true,
+    "capture_copy": true,
+    "metrics_copy": true,
+    "actual_capture_helper": true,
+    "actual_metrics_resource": true
+  },
+  "scope": "Actual installed host stdio/V8 component output with zero delegated tools. Separate observation from CLI model probe; not evidence of its omitted JS cell output or proof against V8 vulnerabilities."
+}

@@ -1,0 +1,4 @@
+Reading additional input from stdin...
+2026-11-25T20:17:17.872350Z ERROR codex_core::tools::router: error=patch rejected: writing outside of the project; rejected by user approval settings
+2026-11-25T20:17:20.863908Z ERROR codex_core::tools::router: error=patch rejected: writing outside of the project; rejected by user approval settings
+2026-11-25T20:17:23.801057Z ERROR codex_core::tools::router: error=patch rejected: writing outside of the project; rejected by user approval settings

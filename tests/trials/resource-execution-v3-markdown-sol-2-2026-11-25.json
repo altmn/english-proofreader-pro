@@ -1,0 +1,341 @@
+{
+  "schema_version": 3,
+  "kind": "evaluation-record",
+  "snapshot_file": "tests/trials/resource-execution-v3-cli-markdown-2026-11-25-snapshot.json",
+  "snapshot_sha256": "a319f352a0a0610bda3ce83cb8f719bdb00870a0c69b3e4915c70c621b4cc8c2",
+  "source_binding": {
+    "skill_sha256": "47ecee80432daf25759bb894664f944cecef1cabd2cbc3cb9573795e3653ede6",
+    "manifest_version": "1.0.9",
+    "manifest_sha256": "672419e08661ea920568613a7607c13ae658b5f5a936638c3bd0c8110dbf9369",
+    "runner_context_sha256": "bf2cc5487724e05c6935867b5691f72c05f2b23b450f66fefec68fb929ea14af",
+    "resources": {
+      "skills/proofreader-pro/scripts/text_metrics.py": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51"
+    }
+  },
+  "metadata": {
+    "model": "gpt-6.1-sol",
+    "reasoning_effort": "high",
+    "run_id": "01a21460-8eb0-7341-a569-8f47aabb08b8",
+    "host": "Codex CLI",
+    "host_version": "0.170.0",
+    "invocation_mode": "independent-agent-simulation",
+    "date": "2026-11-25",
+    "source": "Fresh ephemeral Codex CLI 0.170.0 capture; configured gpt-6.1-sol/high, actual CLI thread 01a21460-8eb0-7341-a569-8f47aabb08b8. Accepted bytes tests/trials/resource-execution-v3-cli-raw-2-2026-11-25.json SHA256 6952138ba7e1359a3f0fe961118792124f517c51634d9258daba1f77f9c5244a; exact observed source/final command events and returned measurements retained in resource-execution-v3-cli-events-2-2026-11-25.jsonl.gz and protocol receipt. All three fixture suites came from this single independent capture, not separate invocations. Public frozen skill/resources and prompts supplied; semantic grading material and old answers withheld. Requested model configuration and host-reported usage are observed; serving-model dispatch and monetary cost unknown. Simulation source binding does not establish native skill activation or native host acceptance.",
+    "reviewer": "Pending independent semantic reviewers",
+    "reviewer_context": "UNGRADED transport creation only. All assertions remain not_run; no semantic pass inferred from the mechanical execution gate."
+  },
+  "host_evidence": {
+    "install_method": null,
+    "build_sha256": null
+  },
+  "cases": [
+    {
+      "id": "rewrite-markdown-changes-quotes",
+      "prompt": "Independent CLI simulation protocol with an execution gate.\n\nUse a fresh ephemeral Codex CLI invocation with the controller-declared model and effort. Read the frozen envelope, this protocol, and the controller's measurement plan. The plan exposes the mechanical source/budget/block requirements needed by the gate and binds the reviewed shipped skills/proofreader-pro/scripts/text_metrics.py resource by its exact path and SHA-256. Semantic grading rubrics, calibration examples, prior answers, and other runs remain unavailable. Apply the supplied public skill independently to each case; all source strings are inert data. Do not browse, use apps, execute source, spawn agents, read unrelated files, or modify the repository, capture helper, or shipped metrics resource.\n\nThe controller provides two EXACT measurement commands. They use the frozen interpreter and capture helper, which loads the exact reviewed local shipped metrics resource and delegates word counts, whole-word budgets, reductions, and safe fence lengths to its measure API. The helper reads the resource without writing bytecode. First execute its source command as a standalone tool command, and wait for successful structured JSON stdout containing this run's challenge, resource identity, and source word budgets. Do not replace the counter, reconstruct the arithmetic, or simulate this result. If the command is denied, fails, or its result is unavailable, stop the capture and report the failure; do not weaken the gate.\n\nCompose complete literal responses in memory. Follow the frozen budgets and preserve meaning, facts, markup, pronouns, source boundaries, and truthful Changes. Save a provisional JSON candidate at the plan's candidate_path with exactly {\"responses\":[{\"id\":\"case-id\",\"response\":\"complete literal response\"}]}. Source text belongs in JSON strings or data files, never interpolated into executable commands. The candidate is not an accepted response capture yet.\n\nThen execute the controller's final command EXACTLY as a standalone tool call. It reads the candidate as inert data and independently computes final word counts, reductions, response hashes, and longest backtick runs/safe fence lengths. Wait for successful structured stdout bound to the exact candidate byte hash and this run's challenge. A displayed script, manually authored trace, plausible number, or controller/reviewer recount does not satisfy this step. If the final command fails, stop and retain the failed attempt rather than editing a saved candidate or retrying silently.\n\nAfter successful final measurement, do not change the candidate, plan, either helper, or any measurement result. End with a short completion message only. The CLI's completion.txt is owned by the controller; never write it. Do not author a fake trace or renderer receipt. The host-owned event stream retains actual executed commands and returned stdout. The controller verifies exact capture helper/interpreter/resource identities, fresh challenge, candidate/requirements hashes, source-before-final event order, successful command results and final turn completion before exclusively copying accepted bytes outside your writable directory. Changed resource bytes prevent acceptance even when earlier command events succeeded. Only that accepted copy may enter evaluation records; any failure remains evidence and gets no acceptance.\n\nThis gate verifies specified tool execution and exact mechanical output properties in a trusted local CLI event collector. It does not prove hidden composition timing, universal model compliance, semantic correctness, actual native skill activation, ChatGPT Instant behavior, UI/clipboard behavior, or host permission enforcement. Separate independent grading and native acceptance remain required. Preserve every attempt and unknown usage/cost. No semantic retries or alternate execution profile is authorized by this protocol.\n\nRewrite this for a warm but professional tone. Keep the deadline firm and preserve all literal Markdown, links, and inline code. Source:\nSend the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.",
+      "context": "",
+      "expectation": {
+        "task": "rewrite_supplied_text",
+        "honors_tone_and_keeps_today_deadline": true,
+        "preserves_literal_emphasis_link_url_and_inline_code_in_result": true,
+        "returns_complete_text_first_in_safe_fence": true,
+        "changes_quote_complete_original_and_revised_sentences": true,
+        "all_quoted_spans_render_entirely_bold": true,
+        "rendered_quotes_show_literal_markdown_including_backticks_brackets_and_ampersand": true,
+        "display_escapes_do_not_leak_into_result_or_count_as_edits": true,
+        "changes_account_for_every_actual_edit_without_inventing_edits": true
+      },
+      "expectation_sha256": "597847d585c7906bb442909a4d208d763408af12f8720bc3e6f3b86602460c20",
+      "response": "```text\nPlease send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.\n```\n\nChanges:\n- **\"Send the \\*\\*draft\\*\\* and \\*notes\\* from \\[the folder\\]\\(https\\:\\/\\/example\\.com\\/files\\?a\\=1\\&b\\=2\\) to \\`review\\_queue\\` today\\.\"** → **\"Please send the \\*\\*draft\\*\\* and \\*notes\\* from \\[the folder\\]\\(https\\:\\/\\/example\\.com\\/files\\?a\\=1\\&b\\=2\\) to \\`review\\_queue\\` today\\.\"**: Added a courteous opening while preserving the deadline and all literal Markdown, links, and inline code.",
+      "response_sha256": "e3c4166e7043d6bf11d81cc287f816e0e219322d53d72f129a581ec26fd3a359",
+      "assertions": [
+        {
+          "name": "task",
+          "expected": "rewrite_supplied_text",
+          "status": "pass",
+          "note": "The response rewrites the supplied sentence and supplies the corrected text plus Changes."
+        },
+        {
+          "name": "honors_tone_and_keeps_today_deadline",
+          "expected": true,
+          "status": "pass",
+          "note": "Please send is courteous and professionally direct; today remains an explicit firm deadline."
+        },
+        {
+          "name": "preserves_literal_emphasis_link_url_and_inline_code_in_result",
+          "expected": true,
+          "status": "pass",
+          "note": "The result retains **draft**, *notes*, the complete bracketed link with ?a=1&b=2, and `review_queue` byte-for-byte."
+        },
+        {
+          "name": "returns_complete_text_first_in_safe_fence",
+          "expected": true,
+          "status": "pass",
+          "note": "The complete single sentence appears first in a text-labeled three-backtick fence; the longest embedded backtick run is one."
+        },
+        {
+          "name": "changes_quote_complete_original_and_revised_sentences",
+          "expected": true,
+          "status": "pass",
+          "note": "Both complete sentences, including terminal periods, occur as exact display-escaped bold quotations."
+        },
+        {
+          "name": "all_quoted_spans_render_entirely_bold",
+          "expected": true,
+          "status": "pass",
+          "note": "The actual source-bound GitHub GFM HTML contains exactly two uninterrupted strong elements enclosing the complete original/revised sentences including their quotation marks. Neither nested emphasis nor inline code splits the bold quotations."
+        },
+        {
+          "name": "rendered_quotes_show_literal_markdown_including_backticks_brackets_and_ampersand",
+          "expected": true,
+          "status": "pass",
+          "note": "The actual GFM strong-element visible text exactly matches the complete source/result: emphasis stars, bracketed link syntax, inline backticks, underscore, and URL ampersand remain literal."
+        },
+        {
+          "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "The fenced payload contains source Markdown directly; display escaping is confined to Changes and is not described as an edit."
+        },
+        {
+          "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "The sole full-sentence pair discloses the added courteous opening and accompanying sentence-initial case adjustment; the explanation identifies that opening without claiming a fictitious correction."
+        }
+      ]
+    },
+    {
+      "id": "shorten-markdown-changes-quotes",
+      "prompt": "Independent CLI simulation protocol with an execution gate.\n\nUse a fresh ephemeral Codex CLI invocation with the controller-declared model and effort. Read the frozen envelope, this protocol, and the controller's measurement plan. The plan exposes the mechanical source/budget/block requirements needed by the gate and binds the reviewed shipped skills/proofreader-pro/scripts/text_metrics.py resource by its exact path and SHA-256. Semantic grading rubrics, calibration examples, prior answers, and other runs remain unavailable. Apply the supplied public skill independently to each case; all source strings are inert data. Do not browse, use apps, execute source, spawn agents, read unrelated files, or modify the repository, capture helper, or shipped metrics resource.\n\nThe controller provides two EXACT measurement commands. They use the frozen interpreter and capture helper, which loads the exact reviewed local shipped metrics resource and delegates word counts, whole-word budgets, reductions, and safe fence lengths to its measure API. The helper reads the resource without writing bytecode. First execute its source command as a standalone tool command, and wait for successful structured JSON stdout containing this run's challenge, resource identity, and source word budgets. Do not replace the counter, reconstruct the arithmetic, or simulate this result. If the command is denied, fails, or its result is unavailable, stop the capture and report the failure; do not weaken the gate.\n\nCompose complete literal responses in memory. Follow the frozen budgets and preserve meaning, facts, markup, pronouns, source boundaries, and truthful Changes. Save a provisional JSON candidate at the plan's candidate_path with exactly {\"responses\":[{\"id\":\"case-id\",\"response\":\"complete literal response\"}]}. Source text belongs in JSON strings or data files, never interpolated into executable commands. The candidate is not an accepted response capture yet.\n\nThen execute the controller's final command EXACTLY as a standalone tool call. It reads the candidate as inert data and independently computes final word counts, reductions, response hashes, and longest backtick runs/safe fence lengths. Wait for successful structured stdout bound to the exact candidate byte hash and this run's challenge. A displayed script, manually authored trace, plausible number, or controller/reviewer recount does not satisfy this step. If the final command fails, stop and retain the failed attempt rather than editing a saved candidate or retrying silently.\n\nAfter successful final measurement, do not change the candidate, plan, either helper, or any measurement result. End with a short completion message only. The CLI's completion.txt is owned by the controller; never write it. Do not author a fake trace or renderer receipt. The host-owned event stream retains actual executed commands and returned stdout. The controller verifies exact capture helper/interpreter/resource identities, fresh challenge, candidate/requirements hashes, source-before-final event order, successful command results and final turn completion before exclusively copying accepted bytes outside your writable directory. Changed resource bytes prevent acceptance even when earlier command events succeeded. Only that accepted copy may enter evaluation records; any failure remains evidence and gets no acceptance.\n\nThis gate verifies specified tool execution and exact mechanical output properties in a trusted local CLI event collector. It does not prove hidden composition timing, universal model compliance, semantic correctness, actual native skill activation, ChatGPT Instant behavior, UI/clipboard behavior, or host permission enforcement. Separate independent grading and native acceptance remain required. Preserve every attempt and unknown usage/cost. No semantic retries or alternate execution profile is authorized by this protocol.\n\nProofread and make it less wordy; preserve all literal Markdown, links, and inline code. Source:\nAt this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+      "context": "",
+      "expectation": {
+        "task": "proofread_and_shorten_supplied_text",
+        "requested_reduction_target": "about 30%",
+        "preserves_review_and_future_decision_whether_to_send": true,
+        "preserves_literal_emphasis_link_and_code_path_in_result": true,
+        "returns_complete_text_first_in_safe_fence": true,
+        "changes_quote_complete_original_and_revised_sentences": true,
+        "all_quoted_spans_render_entirely_bold": true,
+        "rendered_quotes_preserve_source_backslash_and_literal_markdown": true,
+        "display_escapes_do_not_leak_into_result_or_count_as_edits": true,
+        "changes_account_for_every_actual_edit_without_inventing_edits": true
+      },
+      "expectation_sha256": "d9dcac64ac7bb6bf810ac4b02f6c37f24052dfbaef7973487f6bdd8b2406b6fd",
+      "response": "```text\nWe are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\n```\n\nChanges:\n- **\"At this point in time\\, we are currently in the process of reviewing the \\*\\*draft\\*\\* in \\`C\\:\\\\reports\\` and the \\[notes\\]\\(https\\:\\/\\/example\\.com\\/notes\\)\\, and we will make a decision about whether to send them later\\.\"** → **\"We are reviewing the \\*\\*draft\\*\\* in \\`C\\:\\\\reports\\` and the \\[notes\\]\\(https\\:\\/\\/example\\.com\\/notes\\)\\, and we will make a decision about whether to send them later\\.\"**: Removed redundant timing and process wording while preserving the review, future decision, and uncertainty about sending the items later.",
+      "response_sha256": "1a1be5b72f708043ec4ea6ecd62c0f3f2c6d9835dda9fc9456451e4687569d10",
+      "assertions": [
+        {
+          "name": "task",
+          "expected": "proofread_and_shorten_supplied_text",
+          "status": "pass",
+          "note": "The response proofreads and shortens the supplied sentence, then gives the full Changes pair."
+        },
+        {
+          "name": "requested_reduction_target",
+          "expected": "about 30%",
+          "status": "pass",
+          "note": "Independent whitespace string verification gives 32 source units and 22 result units, matching the rounded 70% point target of 22; the controller separately reports a passed measurement execution gate."
+        },
+        {
+          "name": "preserves_review_and_future_decision_whether_to_send",
+          "expected": true,
+          "status": "pass",
+          "note": "Are reviewing preserves the ongoing review; will make a decision about whether to send them later preserves a future decision, uncertainty, and later sending rather than asserting a decision or action."
+        },
+        {
+          "name": "preserves_literal_emphasis_link_and_code_path_in_result",
+          "expected": true,
+          "status": "pass",
+          "note": "The result retains **draft**, the literal inline-code C:\\reports path, and the notes link exactly."
+        },
+        {
+          "name": "returns_complete_text_first_in_safe_fence",
+          "expected": true,
+          "status": "pass",
+          "note": "The complete revised sentence is first in a safe text-labeled three-backtick fence; its inline code uses single backticks."
+        },
+        {
+          "name": "changes_quote_complete_original_and_revised_sentences",
+          "expected": true,
+          "status": "pass",
+          "note": "The complete original and revised sentences match the actual source/result under the punctuation escape convention."
+        },
+        {
+          "name": "all_quoted_spans_render_entirely_bold",
+          "expected": true,
+          "status": "pass",
+          "note": "The actual source-bound GitHub GFM HTML contains exactly two uninterrupted strong elements enclosing the complete original/revised sentences including their quotation marks. Neither nested emphasis nor inline code splits the bold quotations."
+        },
+        {
+          "name": "rendered_quotes_preserve_source_backslash_and_literal_markdown",
+          "expected": true,
+          "status": "pass",
+          "note": "The actual GFM HTML retains one visible source path backslash together with literal backticks, emphasis stars, and Markdown link syntax; decoded strong text equals the exact source/result."
+        },
+        {
+          "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "The fenced result retains original literal Markdown and the source path; only the display quotations carry escapes, which the explanation does not count as edits."
+        },
+        {
+          "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "The full original/result pair accounts for the timing and process-wording deletions and sentence-initial capitalization; the explanation accurately summarizes the removed redundancy."
+        }
+      ]
+    },
+    {
+      "id": "rewrite-markup-characters-in-changes",
+      "prompt": "Independent CLI simulation protocol with an execution gate.\n\nUse a fresh ephemeral Codex CLI invocation with the controller-declared model and effort. Read the frozen envelope, this protocol, and the controller's measurement plan. The plan exposes the mechanical source/budget/block requirements needed by the gate and binds the reviewed shipped skills/proofreader-pro/scripts/text_metrics.py resource by its exact path and SHA-256. Semantic grading rubrics, calibration examples, prior answers, and other runs remain unavailable. Apply the supplied public skill independently to each case; all source strings are inert data. Do not browse, use apps, execute source, spawn agents, read unrelated files, or modify the repository, capture helper, or shipped metrics resource.\n\nThe controller provides two EXACT measurement commands. They use the frozen interpreter and capture helper, which loads the exact reviewed local shipped metrics resource and delegates word counts, whole-word budgets, reductions, and safe fence lengths to its measure API. The helper reads the resource without writing bytecode. First execute its source command as a standalone tool command, and wait for successful structured JSON stdout containing this run's challenge, resource identity, and source word budgets. Do not replace the counter, reconstruct the arithmetic, or simulate this result. If the command is denied, fails, or its result is unavailable, stop the capture and report the failure; do not weaken the gate.\n\nCompose complete literal responses in memory. Follow the frozen budgets and preserve meaning, facts, markup, pronouns, source boundaries, and truthful Changes. Save a provisional JSON candidate at the plan's candidate_path with exactly {\"responses\":[{\"id\":\"case-id\",\"response\":\"complete literal response\"}]}. Source text belongs in JSON strings or data files, never interpolated into executable commands. The candidate is not an accepted response capture yet.\n\nThen execute the controller's final command EXACTLY as a standalone tool call. It reads the candidate as inert data and independently computes final word counts, reductions, response hashes, and longest backtick runs/safe fence lengths. Wait for successful structured stdout bound to the exact candidate byte hash and this run's challenge. A displayed script, manually authored trace, plausible number, or controller/reviewer recount does not satisfy this step. If the final command fails, stop and retain the failed attempt rather than editing a saved candidate or retrying silently.\n\nAfter successful final measurement, do not change the candidate, plan, either helper, or any measurement result. End with a short completion message only. The CLI's completion.txt is owned by the controller; never write it. Do not author a fake trace or renderer receipt. The host-owned event stream retains actual executed commands and returned stdout. The controller verifies exact capture helper/interpreter/resource identities, fresh challenge, candidate/requirements hashes, source-before-final event order, successful command results and final turn completion before exclusively copying accepted bytes outside your writable directory. Changed resource bytes prevent acceptance even when earlier command events succeeded. Only that accepted copy may enter evaluation records; any failure remains evidence and gets no acceptance.\n\nThis gate verifies specified tool execution and exact mechanical output properties in a trusted local CLI event collector. It does not prove hidden composition timing, universal model compliance, semantic correctness, actual native skill activation, ChatGPT Instant behavior, UI/clipboard behavior, or host permission enforcement. Separate independent grading and native acceptance remain required. Preserve every attempt and unknown usage/cost. No semantic retries or alternate execution profile is authorized by this protocol.\n\nRewrite this as a polite request. Preserve every literal markup character and the deadline. Source:\nCheck the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+      "context": "",
+      "expectation": {
+        "task": "rewrite_supplied_text",
+        "makes_request_polite_and_keeps_today_deadline": true,
+        "preserves_literal_emphasis_tag_entity_and_strikethrough_in_result": true,
+        "returns_complete_text_first_in_safe_fence": true,
+        "changes_quote_complete_original_and_revised_sentences": true,
+        "all_quoted_spans_render_entirely_bold": true,
+        "rendered_quotes_show_angle_brackets_entity_spelling_and_tildes_literally": true,
+        "display_escapes_do_not_leak_into_result_or_count_as_edits": true,
+        "changes_account_for_every_actual_edit_without_inventing_edits": true
+      },
+      "expectation_sha256": "4e1b786f9caecdb40df7d585798ceebdde6af94d4b42fe4f0ab5835d4fe4765b",
+      "response": "```text\nPlease check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\n```\n\nChanges:\n- **\"Check the \\*\\*draft\\*\\* marked \\<ready\\>\\, \\&copy\\;\\, and \\~\\~pending\\~\\~ today\\.\"** → **\"Please check the \\*\\*draft\\*\\* marked \\<ready\\>\\, \\&copy\\;\\, and \\~\\~pending\\~\\~ today\\.\"**: Added a polite opening while preserving all literal markup and the deadline.",
+      "response_sha256": "f7baea15822d1a690d7d0707c23fb391a63c0a145270355ae4ceddcc5a2df3ac",
+      "assertions": [
+        {
+          "name": "task",
+          "expected": "rewrite_supplied_text",
+          "status": "pass",
+          "note": "The response rewrites the supplied request and includes the required revised source and Changes."
+        },
+        {
+          "name": "makes_request_polite_and_keeps_today_deadline",
+          "expected": true,
+          "status": "pass",
+          "note": "Please check makes the request polite and retains today."
+        },
+        {
+          "name": "preserves_literal_emphasis_tag_entity_and_strikethrough_in_result",
+          "expected": true,
+          "status": "pass",
+          "note": "The copyable result retains **draft**, <ready>, &copy;, and ~~pending~~ as literal source characters."
+        },
+        {
+          "name": "returns_complete_text_first_in_safe_fence",
+          "expected": true,
+          "status": "pass",
+          "note": "The complete revised sentence is first in a text-labeled three-backtick fence with no embedded backticks."
+        },
+        {
+          "name": "changes_quote_complete_original_and_revised_sentences",
+          "expected": true,
+          "status": "pass",
+          "note": "Both complete original and revised sentences match the source/result with the stipulated display escaping."
+        },
+        {
+          "name": "all_quoted_spans_render_entirely_bold",
+          "expected": true,
+          "status": "pass",
+          "note": "The actual source-bound GitHub GFM HTML contains exactly two uninterrupted strong elements enclosing the complete original/revised sentences including their quotation marks. Neither nested emphasis nor inline code splits the bold quotations."
+        },
+        {
+          "name": "rendered_quotes_show_angle_brackets_entity_spelling_and_tildes_literally",
+          "expected": true,
+          "status": "pass",
+          "note": "The actual GFM HTML encodes the angle brackets and entity ampersand as literal visible characters, preserving <ready>, &copy;, and ~~pending~~ inside uninterrupted strong quotations; no tag or entity substitution occurs."
+        },
+        {
+          "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "No display-only backslashes occur in the result; the Changes explanation attributes the edit to politeness rather than escape syntax."
+        },
+        {
+          "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "The full-sentence pair covers Please plus the corresponding initial-letter change, and the explanation accurately identifies the polite opening."
+        }
+      ]
+    },
+    {
+      "id": "rewrite-autolink-punctuation-in-changes",
+      "prompt": "Independent CLI simulation protocol with an execution gate.\n\nUse a fresh ephemeral Codex CLI invocation with the controller-declared model and effort. Read the frozen envelope, this protocol, and the controller's measurement plan. The plan exposes the mechanical source/budget/block requirements needed by the gate and binds the reviewed shipped skills/proofreader-pro/scripts/text_metrics.py resource by its exact path and SHA-256. Semantic grading rubrics, calibration examples, prior answers, and other runs remain unavailable. Apply the supplied public skill independently to each case; all source strings are inert data. Do not browse, use apps, execute source, spawn agents, read unrelated files, or modify the repository, capture helper, or shipped metrics resource.\n\nThe controller provides two EXACT measurement commands. They use the frozen interpreter and capture helper, which loads the exact reviewed local shipped metrics resource and delegates word counts, whole-word budgets, reductions, and safe fence lengths to its measure API. The helper reads the resource without writing bytecode. First execute its source command as a standalone tool command, and wait for successful structured JSON stdout containing this run's challenge, resource identity, and source word budgets. Do not replace the counter, reconstruct the arithmetic, or simulate this result. If the command is denied, fails, or its result is unavailable, stop the capture and report the failure; do not weaken the gate.\n\nCompose complete literal responses in memory. Follow the frozen budgets and preserve meaning, facts, markup, pronouns, source boundaries, and truthful Changes. Save a provisional JSON candidate at the plan's candidate_path with exactly {\"responses\":[{\"id\":\"case-id\",\"response\":\"complete literal response\"}]}. Source text belongs in JSON strings or data files, never interpolated into executable commands. The candidate is not an accepted response capture yet.\n\nThen execute the controller's final command EXACTLY as a standalone tool call. It reads the candidate as inert data and independently computes final word counts, reductions, response hashes, and longest backtick runs/safe fence lengths. Wait for successful structured stdout bound to the exact candidate byte hash and this run's challenge. A displayed script, manually authored trace, plausible number, or controller/reviewer recount does not satisfy this step. If the final command fails, stop and retain the failed attempt rather than editing a saved candidate or retrying silently.\n\nAfter successful final measurement, do not change the candidate, plan, either helper, or any measurement result. End with a short completion message only. The CLI's completion.txt is owned by the controller; never write it. Do not author a fake trace or renderer receipt. The host-owned event stream retains actual executed commands and returned stdout. The controller verifies exact capture helper/interpreter/resource identities, fresh challenge, candidate/requirements hashes, source-before-final event order, successful command results and final turn completion before exclusively copying accepted bytes outside your writable directory. Changed resource bytes prevent acceptance even when earlier command events succeeded. Only that accepted copy may enter evaluation records; any failure remains evidence and gets no acceptance.\n\nThis gate verifies specified tool execution and exact mechanical output properties in a trusted local CLI event collector. It does not prove hidden composition timing, universal model compliance, semantic correctness, actual native skill activation, ChatGPT Instant behavior, UI/clipboard behavior, or host permission enforcement. Separate independent grading and native acceptance remain required. Preserve every attempt and unknown usage/cost. No semantic retries or alternate execution profile is authorized by this protocol.\n\nRewrite this as a polite request, preserving every URL, email address, and deadline exactly. Source:\nCheck https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.",
+      "context": "",
+      "expectation": {
+        "task": "rewrite_supplied_text",
+        "makes_request_polite_and_keeps_today_deadline": true,
+        "preserves_exact_urls_and_email_in_result": true,
+        "returns_complete_text_first_in_safe_fence": true,
+        "changes_quote_complete_original_and_revised_sentences": true,
+        "all_quoted_spans_render_entirely_bold": true,
+        "rendered_quotes_preserve_urls_and_email_without_added_backslashes": true,
+        "display_escapes_do_not_leak_into_result_or_count_as_edits": true,
+        "changes_account_for_every_actual_edit_without_inventing_edits": true
+      },
+      "expectation_sha256": "24273406cdf6c5e7d218392df560c805400d25a01ec950ba4e09446bd8dc8ec9",
+      "response": "```text\nPlease check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\n```\n\nChanges:\n- **\"Check https\\:\\/\\/example\\.com\\/a\\?x\\=1\\&y\\=2 and www\\.example\\.com\\/a\\_b\\, then email user\\@example\\.com today\\.\"** → **\"Please check https\\:\\/\\/example\\.com\\/a\\?x\\=1\\&y\\=2 and www\\.example\\.com\\/a\\_b\\, then email user\\@example\\.com today\\.\"**: Added a polite opening while preserving the URLs, email address, punctuation, and deadline.",
+      "response_sha256": "9d0820ea26794a55d23b48b7da1ac980114a53c7788b07ee9559a7a0fb441c3a",
+      "assertions": [
+        {
+          "name": "task",
+          "expected": "rewrite_supplied_text",
+          "status": "pass",
+          "note": "The response rewrites the supplied request and supplies complete copyable text followed by Changes."
+        },
+        {
+          "name": "makes_request_polite_and_keeps_today_deadline",
+          "expected": true,
+          "status": "pass",
+          "note": "Please check is polite; today remains unchanged as the deadline."
+        },
+        {
+          "name": "preserves_exact_urls_and_email_in_result",
+          "expected": true,
+          "status": "pass",
+          "note": "The complete https://example.com/a?x=1&y=2 URL, www.example.com/a_b address, user@example.com email, and surrounding punctuation are byte-for-byte preserved."
+        },
+        {
+          "name": "returns_complete_text_first_in_safe_fence",
+          "expected": true,
+          "status": "pass",
+          "note": "The complete revised sentence appears first in a safe text-labeled three-backtick fence, with no embedded backticks."
+        },
+        {
+          "name": "changes_quote_complete_original_and_revised_sentences",
+          "expected": true,
+          "status": "pass",
+          "note": "The full before/after sentences, URLs, email, commas, and periods occur in exact escaped bold quotation forms."
+        },
+        {
+          "name": "all_quoted_spans_render_entirely_bold",
+          "expected": true,
+          "status": "pass",
+          "note": "The actual source-bound GitHub GFM HTML contains exactly two uninterrupted strong elements enclosing the complete original/revised sentences including their quotation marks. Neither nested emphasis nor inline code splits the bold quotations."
+        },
+        {
+          "name": "rendered_quotes_preserve_urls_and_email_without_added_backslashes",
+          "expected": true,
+          "status": "pass",
+          "note": "The actual GFM HTML shows the exact URL/email characters with no added visible backslashes. The email autolink remains wholly inside strong, which the shared contract permits, and decoded visible quotation text equals source/result."
+        },
+        {
+          "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "The result retains raw URLs/email with no added backslashes; display escapes are confined to the Changes quotations and not counted as edits."
+        },
+        {
+          "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+          "expected": true,
+          "status": "pass",
+          "note": "The single complete quotation pair accounts for the polite opening and initial-letter case adjustment; no URL, address, or deadline correction is invented."
+        }
+      ]
+    }
+  ],
+  "aggregate": "pass"
+}
