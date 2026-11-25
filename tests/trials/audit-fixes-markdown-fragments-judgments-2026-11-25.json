@@ -1,0 +1,1192 @@
+{
+  "reviewer": {
+    "identity": "/root/calibrated_reviewer",
+    "role": "Independent calibrated literal-output reviewer",
+    "scope": "Markdown and fragment suites, captures 1, 2, and 3; read-only review of frozen records and snapshots"
+  },
+  "calibration": {
+    "rubric_id": "fragment-agreement-calibration",
+    "rubric_version": "1.0",
+    "rubric_file": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/fragment-calibration-cases.json",
+    "rubric_fixture_sha256": "d80c8d9e2359c7a5633f082f15aed9fdd5dc39d10d4e4d5d510e18019af6e1cd",
+    "judgments_file": "/private/tmp/proofreader-audit-fixes-20261125-mgyo1078/calibration-judgments.json",
+    "comparison_reference": "/private/tmp/proofreader-audit-fixes-20261125-mgyo1078/calibration-result.json",
+    "comparison_basis": "Parent reported all six committed blind calibration judgments matched gold before authorizing live-capture review. This reviewer did not read the comparison file.",
+    "fixture_matches_frozen_snapshot": true
+  },
+  "snapshot_bindings": [
+    {
+      "suite": "markdown",
+      "path": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-cli-markdown-2026-11-25-snapshot.json",
+      "snapshot_sha256": "b65819de676ae29f4548cf19a3c981784e036a5588a4a46eb812e9cbd092e95f",
+      "fixture_sha256": "048e832118e454da045b7dfd7e109ca9062e1d572b869ed4950a6b2c4f6adc52",
+      "skill_sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+      "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+    },
+    {
+      "suite": "fragments",
+      "path": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-cli-fragments-2026-11-25-snapshot.json",
+      "snapshot_sha256": "18a10dedbe9e3126e61a23820f6669a03b01fa83f242fdbf7ab6fbd5ca3f9b10",
+      "fixture_sha256": "d80c8d9e2359c7a5633f082f15aed9fdd5dc39d10d4e4d5d510e18019af6e1cd",
+      "skill_sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+      "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+    }
+  ],
+  "uncertainties": [
+    {
+      "case_id": "markdown-format-preserved",
+      "status": "uncertain",
+      "note": "The historical original permits noun-fragment and finite-clause readings; a link-to-links edit alone establishes neither a definite failure nor a definitely necessary correction. It was not regraded or modified here."
+    }
+  ],
+  "limitations": [
+    "Independently inspected actual frozen-response GFM HTML supplied in the renderer artifact, including exact code text and complete quotations inside uninterrupted strong elements. This establishes those GFM assertions only; no native ChatGPT/Codex UI, CSS, clipboard, or soft-wrapping proof is claimed.",
+    "These are known synthetic regression cases captured through independent-agent CLI simulation, not a holdout or intended-host acceptance. Installed-plugin activation, actual ChatGPT Instant, clipboard, soft wrapping, and portal scans were not tested.",
+    "This review independently computes final word budgets and fence safety from frozen strings. It does not inspect generator counting traces or establish the timing/execution of generator checks.",
+    "Read access was confined to assigned capture records, their bound snapshots, the fragment rubric, the earlier assigned blind calibration material, and the separately authorized actual GFM renderer artifact. No source responses or repository files were changed."
+  ],
+  "records": [
+    {
+      "path": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-sol-1-2026-11-25.json",
+      "record_sha256": "03278f40a9804bf1646494f8821e0909de14ed16247d017f7c7877f6ac4e642a",
+      "snapshot_file": "tests/trials/audit-fixes-cli-markdown-2026-11-25-snapshot.json",
+      "snapshot_sha256": "b65819de676ae29f4548cf19a3c981784e036a5588a4a46eb812e9cbd092e95f",
+      "cases": [
+        {
+          "id": "rewrite-markdown-changes-quotes",
+          "response_sha256": "c10f6e218b393cd101757ce94c896655621d9cc29d8d819a5481c1b1608ac05a",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Performs the requested warm professional rewrite without changing the instruction, recipient destination, or deadline."
+            },
+            {
+              "name": "honors_tone_and_keeps_today_deadline",
+              "status": "pass",
+              "note": "Please adds professional courtesy; any thank-you closing is appropriate for the requested warmth. The firm today deadline remains."
+            },
+            {
+              "name": "preserves_literal_emphasis_link_url_and_inline_code_in_result",
+              "status": "pass",
+              "note": "The result retains **draft**, *notes*, the complete linked-folder Markdown and exact URL query, and `review_queue` literally."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "The complete revised payload is first, with matching text-labeled fences; independently computed L=1, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "note": "Decoded Changes quotations exactly equal the complete original sentence and complete revised text, including all punctuation and any added closing sentence."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "note": "Independently inspected the saved actual GFM HTML: complete original and revised quotations each occupy one uninterrupted <strong> element, with no code/emphasis boundary that removes bold. Any email anchor remains nested inside <strong>.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "rendered_quotes_show_literal_markdown_including_backticks_brackets_and_ampersand",
+              "status": "pass",
+              "note": "Independently decoded the saved actual GFM HTML text once and compared it exactly with complete original/result quotations. Literal Markdown, backticks, backslash, brackets, angle brackets, entity spelling, tildes, URL punctuation, ampersands, and email characters are preserved where present, without added display backslashes.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "note": "Canonical display escapes occur only in Changes; literal payload retains its original markup/path/URL characters, and the explanation describes textual edits rather than those escapes."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "note": "The full original/revised pair covers the polite opening, lowercase initial verb, and any thank-you closing/punctuation; the explanation accurately describes those edits."
+            }
+          ]
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "response_sha256": "ea14d7eb78955f614c07376b1b68bdead6d2a70670bb63e63669e5afbe74b257",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Shortens the supplied sentence while preserving the ongoing review and future decision whether to send."
+            },
+            {
+              "name": "requested_reduction_target",
+              "status": "pass",
+              "note": "Independent whitespace-unit calculation excluding wrappers: N=32, M=22, reduction=31.25%; round(0.70*N)=22, so the about-30% target is met."
+            },
+            {
+              "name": "preserves_review_and_future_decision_whether_to_send",
+              "status": "pass",
+              "note": "Ongoing review remains distinct from the future decision whether to send later; no decision to send or completed sending is asserted."
+            },
+            {
+              "name": "preserves_literal_emphasis_link_and_code_path_in_result",
+              "status": "pass",
+              "note": "The result retains **draft**, the exact `C:\\reports` code path, and the complete [notes] Markdown link and URL."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "The complete revised payload is first, with matching text-labeled fences; independently computed L=1, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "note": "Decoded Changes quotations exactly equal the complete original sentence and complete revised text, including all punctuation and any added closing sentence."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "note": "Independently inspected the saved actual GFM HTML: complete original and revised quotations each occupy one uninterrupted <strong> element, with no code/emphasis boundary that removes bold. Any email anchor remains nested inside <strong>.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "rendered_quotes_preserve_source_backslash_and_literal_markdown",
+              "status": "pass",
+              "note": "Independently decoded the saved actual GFM HTML text once and compared it exactly with complete original/result quotations. Literal Markdown, backticks, backslash, brackets, angle brackets, entity spelling, tildes, URL punctuation, ampersands, and email characters are preserved where present, without added display backslashes.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "note": "Canonical display escapes occur only in Changes; literal payload retains its original markup/path/URL characters, and the explanation describes textual edits rather than those escapes."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "note": "The full original/revised pair covers every removed or replaced word and punctuation change; the explanation accurately describes condensation and adds no fictional correction."
+            }
+          ],
+          "independent_word_check": {
+            "N": 32,
+            "M": 22,
+            "reduction": 0.3125,
+            "target_words": 22
+          }
+        },
+        {
+          "id": "rewrite-markup-characters-in-changes",
+          "response_sha256": "ce42527748d18da932eb164dadd41444966ec5000db54b3d988330baf1a0b682",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Returns a polite rewrite of the supplied request while keeping the specified literal markup."
+            },
+            {
+              "name": "makes_request_polite_and_keeps_today_deadline",
+              "status": "pass",
+              "note": "Please check makes the request polite while retaining today exactly."
+            },
+            {
+              "name": "preserves_literal_emphasis_tag_entity_and_strikethrough_in_result",
+              "status": "pass",
+              "note": "The fenced result preserves **draft**, <ready>, &copy;, and ~~pending~~ with their literal punctuation."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "The complete revised payload is first, with matching text-labeled fences; independently computed L=0, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "note": "Decoded Changes quotations exactly equal the complete original sentence and complete revised text, including all punctuation and any added closing sentence."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "note": "Independently inspected the saved actual GFM HTML: complete original and revised quotations each occupy one uninterrupted <strong> element, with no code/emphasis boundary that removes bold. Any email anchor remains nested inside <strong>.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "rendered_quotes_show_angle_brackets_entity_spelling_and_tildes_literally",
+              "status": "pass",
+              "note": "Independently decoded the saved actual GFM HTML text once and compared it exactly with complete original/result quotations. Literal Markdown, backticks, backslash, brackets, angle brackets, entity spelling, tildes, URL punctuation, ampersands, and email characters are preserved where present, without added display backslashes.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "note": "Canonical display escapes occur only in Changes; literal payload retains its original markup/path/URL characters, and the explanation describes textual edits rather than those escapes."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "note": "The full original/revised pair covers the polite opening, lowercase initial verb, and any thank-you closing/punctuation; the explanation accurately describes those edits."
+            }
+          ]
+        },
+        {
+          "id": "rewrite-autolink-punctuation-in-changes",
+          "response_sha256": "62a86fe0d59b78aa8147c4720dab93bcdcce03eac34e6147d4f19e32e8c6633e",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Returns a polite rewrite of the supplied request while keeping the URLs, email, and deadline."
+            },
+            {
+              "name": "makes_request_polite_and_keeps_today_deadline",
+              "status": "pass",
+              "note": "Please check makes the request polite while retaining today exactly."
+            },
+            {
+              "name": "preserves_exact_urls_and_email_in_result",
+              "status": "pass",
+              "note": "Both URLs, including query delimiters and underscore, and user@example.com match the source exactly; surrounding comma and deadline are retained."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "The complete revised payload is first, with matching text-labeled fences; independently computed L=0, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "note": "Decoded Changes quotations exactly equal the complete original sentence and complete revised text, including all punctuation and any added closing sentence."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "note": "Independently inspected the saved actual GFM HTML: complete original and revised quotations each occupy one uninterrupted <strong> element, with no code/emphasis boundary that removes bold. Any email anchor remains nested inside <strong>.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "rendered_quotes_preserve_urls_and_email_without_added_backslashes",
+              "status": "pass",
+              "note": "Independently decoded the saved actual GFM HTML text once and compared it exactly with complete original/result quotations. Literal Markdown, backticks, backslash, brackets, angle brackets, entity spelling, tildes, URL punctuation, ampersands, and email characters are preserved where present, without added display backslashes.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "note": "Canonical display escapes occur only in Changes; literal payload retains its original markup/path/URL characters, and the explanation describes textual edits rather than those escapes."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "note": "The full original/revised pair covers the polite opening, lowercase initial verb, and any thank-you closing/punctuation; the explanation accurately describes those edits."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-sol-2-2026-11-25.json",
+      "record_sha256": "cae3d4de1e7d61a68b16c2b8686262b6a90cb3069872c9b27779c516ae506998",
+      "snapshot_file": "tests/trials/audit-fixes-cli-markdown-2026-11-25-snapshot.json",
+      "snapshot_sha256": "b65819de676ae29f4548cf19a3c981784e036a5588a4a46eb812e9cbd092e95f",
+      "cases": [
+        {
+          "id": "rewrite-markdown-changes-quotes",
+          "response_sha256": "ea04f2357c0453ff8754179885aced0277926850216227fe32165f9037bbbff4",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Performs the requested warm professional rewrite without changing the instruction, recipient destination, or deadline."
+            },
+            {
+              "name": "honors_tone_and_keeps_today_deadline",
+              "status": "pass",
+              "note": "Please adds professional courtesy; any thank-you closing is appropriate for the requested warmth. The firm today deadline remains."
+            },
+            {
+              "name": "preserves_literal_emphasis_link_url_and_inline_code_in_result",
+              "status": "pass",
+              "note": "The result retains **draft**, *notes*, the complete linked-folder Markdown and exact URL query, and `review_queue` literally."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "The complete revised payload is first, with matching text-labeled fences; independently computed L=1, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "note": "Decoded Changes quotations exactly equal the complete original sentence and complete revised text, including all punctuation and any added closing sentence."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "note": "Independently inspected the saved actual GFM HTML: complete original and revised quotations each occupy one uninterrupted <strong> element, with no code/emphasis boundary that removes bold. Any email anchor remains nested inside <strong>.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "rendered_quotes_show_literal_markdown_including_backticks_brackets_and_ampersand",
+              "status": "pass",
+              "note": "Independently decoded the saved actual GFM HTML text once and compared it exactly with complete original/result quotations. Literal Markdown, backticks, backslash, brackets, angle brackets, entity spelling, tildes, URL punctuation, ampersands, and email characters are preserved where present, without added display backslashes.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "note": "Canonical display escapes occur only in Changes; literal payload retains its original markup/path/URL characters, and the explanation describes textual edits rather than those escapes."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "note": "The full original/revised pair covers the polite opening, lowercase initial verb, and any thank-you closing/punctuation; the explanation accurately describes those edits."
+            }
+          ]
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "response_sha256": "4de0fdfe95e5d2482db1c681680305d60c7be4d765ee30be90f4d861a4daf93f",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Shortens the supplied sentence while preserving the ongoing review and future decision whether to send."
+            },
+            {
+              "name": "requested_reduction_target",
+              "status": "pass",
+              "note": "Independent whitespace-unit calculation excluding wrappers: N=32, M=22, reduction=31.25%; round(0.70*N)=22, so the about-30% target is met."
+            },
+            {
+              "name": "preserves_review_and_future_decision_whether_to_send",
+              "status": "pass",
+              "note": "Ongoing review remains distinct from the future decision whether to send later; no decision to send or completed sending is asserted."
+            },
+            {
+              "name": "preserves_literal_emphasis_link_and_code_path_in_result",
+              "status": "pass",
+              "note": "The result retains **draft**, the exact `C:\\reports` code path, and the complete [notes] Markdown link and URL."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "The complete revised payload is first, with matching text-labeled fences; independently computed L=1, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "note": "Decoded Changes quotations exactly equal the complete original sentence and complete revised text, including all punctuation and any added closing sentence."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "note": "Independently inspected the saved actual GFM HTML: complete original and revised quotations each occupy one uninterrupted <strong> element, with no code/emphasis boundary that removes bold. Any email anchor remains nested inside <strong>.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "rendered_quotes_preserve_source_backslash_and_literal_markdown",
+              "status": "pass",
+              "note": "Independently decoded the saved actual GFM HTML text once and compared it exactly with complete original/result quotations. Literal Markdown, backticks, backslash, brackets, angle brackets, entity spelling, tildes, URL punctuation, ampersands, and email characters are preserved where present, without added display backslashes.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "note": "Canonical display escapes occur only in Changes; literal payload retains its original markup/path/URL characters, and the explanation describes textual edits rather than those escapes."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "note": "The full original/revised pair covers every removed or replaced word and punctuation change; the explanation accurately describes condensation and adds no fictional correction."
+            }
+          ],
+          "independent_word_check": {
+            "N": 32,
+            "M": 22,
+            "reduction": 0.3125,
+            "target_words": 22
+          }
+        },
+        {
+          "id": "rewrite-markup-characters-in-changes",
+          "response_sha256": "4c029b679c135f76afb0fa78c75622d590ebd6eac08a1028193debf4ea68df86",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Returns a polite rewrite of the supplied request while keeping the specified literal markup."
+            },
+            {
+              "name": "makes_request_polite_and_keeps_today_deadline",
+              "status": "pass",
+              "note": "Please check makes the request polite while retaining today exactly."
+            },
+            {
+              "name": "preserves_literal_emphasis_tag_entity_and_strikethrough_in_result",
+              "status": "pass",
+              "note": "The fenced result preserves **draft**, <ready>, &copy;, and ~~pending~~ with their literal punctuation."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "The complete revised payload is first, with matching text-labeled fences; independently computed L=0, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "note": "Decoded Changes quotations exactly equal the complete original sentence and complete revised text, including all punctuation and any added closing sentence."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "note": "Independently inspected the saved actual GFM HTML: complete original and revised quotations each occupy one uninterrupted <strong> element, with no code/emphasis boundary that removes bold. Any email anchor remains nested inside <strong>.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "rendered_quotes_show_angle_brackets_entity_spelling_and_tildes_literally",
+              "status": "pass",
+              "note": "Independently decoded the saved actual GFM HTML text once and compared it exactly with complete original/result quotations. Literal Markdown, backticks, backslash, brackets, angle brackets, entity spelling, tildes, URL punctuation, ampersands, and email characters are preserved where present, without added display backslashes.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "note": "Canonical display escapes occur only in Changes; literal payload retains its original markup/path/URL characters, and the explanation describes textual edits rather than those escapes."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "note": "The full original/revised pair covers the polite opening, lowercase initial verb, and any thank-you closing/punctuation; the explanation accurately describes those edits."
+            }
+          ]
+        },
+        {
+          "id": "rewrite-autolink-punctuation-in-changes",
+          "response_sha256": "17bbdaac54c515ef050cae5e1ce448fed587b3500c2013f47cce40a205a9d57d",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Returns a polite rewrite of the supplied request while keeping the URLs, email, and deadline."
+            },
+            {
+              "name": "makes_request_polite_and_keeps_today_deadline",
+              "status": "pass",
+              "note": "Please check makes the request polite while retaining today exactly."
+            },
+            {
+              "name": "preserves_exact_urls_and_email_in_result",
+              "status": "pass",
+              "note": "Both URLs, including query delimiters and underscore, and user@example.com match the source exactly; surrounding comma and deadline are retained."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "The complete revised payload is first, with matching text-labeled fences; independently computed L=0, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "note": "Decoded Changes quotations exactly equal the complete original sentence and complete revised text, including all punctuation and any added closing sentence."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "note": "Independently inspected the saved actual GFM HTML: complete original and revised quotations each occupy one uninterrupted <strong> element, with no code/emphasis boundary that removes bold. Any email anchor remains nested inside <strong>.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "rendered_quotes_preserve_urls_and_email_without_added_backslashes",
+              "status": "pass",
+              "note": "Independently decoded the saved actual GFM HTML text once and compared it exactly with complete original/result quotations. Literal Markdown, backticks, backslash, brackets, angle brackets, entity spelling, tildes, URL punctuation, ampersands, and email characters are preserved where present, without added display backslashes.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "note": "Canonical display escapes occur only in Changes; literal payload retains its original markup/path/URL characters, and the explanation describes textual edits rather than those escapes."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "note": "The full original/revised pair covers the polite opening, lowercase initial verb, and any thank-you closing/punctuation; the explanation accurately describes those edits."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-sol-3-2026-11-25.json",
+      "record_sha256": "50d17e70459624aa94dfa632e059589a1db72af1ef1bdc33fb2ebfc3dc7b19a0",
+      "snapshot_file": "tests/trials/audit-fixes-cli-markdown-2026-11-25-snapshot.json",
+      "snapshot_sha256": "b65819de676ae29f4548cf19a3c981784e036a5588a4a46eb812e9cbd092e95f",
+      "cases": [
+        {
+          "id": "rewrite-markdown-changes-quotes",
+          "response_sha256": "97ed959857a2601ee5644ffe525bfa04fcacb93e835a05a4bd038b160567284e",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Performs the requested warm professional rewrite without changing the instruction, recipient destination, or deadline."
+            },
+            {
+              "name": "honors_tone_and_keeps_today_deadline",
+              "status": "pass",
+              "note": "Please adds professional courtesy; any thank-you closing is appropriate for the requested warmth. The firm today deadline remains."
+            },
+            {
+              "name": "preserves_literal_emphasis_link_url_and_inline_code_in_result",
+              "status": "pass",
+              "note": "The result retains **draft**, *notes*, the complete linked-folder Markdown and exact URL query, and `review_queue` literally."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "The complete revised payload is first, with matching text-labeled fences; independently computed L=1, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "note": "Decoded Changes quotations exactly equal the complete original sentence and complete revised text, including all punctuation and any added closing sentence."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "note": "Independently inspected the saved actual GFM HTML: complete original and revised quotations each occupy one uninterrupted <strong> element, with no code/emphasis boundary that removes bold. Any email anchor remains nested inside <strong>.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "rendered_quotes_show_literal_markdown_including_backticks_brackets_and_ampersand",
+              "status": "pass",
+              "note": "Independently decoded the saved actual GFM HTML text once and compared it exactly with complete original/result quotations. Literal Markdown, backticks, backslash, brackets, angle brackets, entity spelling, tildes, URL punctuation, ampersands, and email characters are preserved where present, without added display backslashes.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "note": "Canonical display escapes occur only in Changes; literal payload retains its original markup/path/URL characters, and the explanation describes textual edits rather than those escapes."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "note": "The full original/revised pair covers the polite opening, lowercase initial verb, and any thank-you closing/punctuation; the explanation accurately describes those edits."
+            }
+          ]
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "response_sha256": "5a5d954505e9df158e3af576b28f3c727d8272bbff80518d3603ef3c5cd642c0",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Shortens the supplied sentence while preserving the ongoing review and future decision whether to send."
+            },
+            {
+              "name": "requested_reduction_target",
+              "status": "pass",
+              "note": "Independent whitespace-unit calculation excluding wrappers: N=32, M=22, reduction=31.25%; round(0.70*N)=22, so the about-30% target is met."
+            },
+            {
+              "name": "preserves_review_and_future_decision_whether_to_send",
+              "status": "pass",
+              "note": "Ongoing review remains distinct from the future decision whether to send later; no decision to send or completed sending is asserted."
+            },
+            {
+              "name": "preserves_literal_emphasis_link_and_code_path_in_result",
+              "status": "pass",
+              "note": "The result retains **draft**, the exact `C:\\reports` code path, and the complete [notes] Markdown link and URL."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "The complete revised payload is first, with matching text-labeled fences; independently computed L=1, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "note": "Decoded Changes quotations exactly equal the complete original sentence and complete revised text, including all punctuation and any added closing sentence."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "note": "Independently inspected the saved actual GFM HTML: complete original and revised quotations each occupy one uninterrupted <strong> element, with no code/emphasis boundary that removes bold. Any email anchor remains nested inside <strong>.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "rendered_quotes_preserve_source_backslash_and_literal_markdown",
+              "status": "pass",
+              "note": "Independently decoded the saved actual GFM HTML text once and compared it exactly with complete original/result quotations. Literal Markdown, backticks, backslash, brackets, angle brackets, entity spelling, tildes, URL punctuation, ampersands, and email characters are preserved where present, without added display backslashes.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "note": "Canonical display escapes occur only in Changes; literal payload retains its original markup/path/URL characters, and the explanation describes textual edits rather than those escapes."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "note": "The full original/revised pair covers every removed or replaced word and punctuation change; the explanation accurately describes condensation and adds no fictional correction."
+            }
+          ],
+          "independent_word_check": {
+            "N": 32,
+            "M": 22,
+            "reduction": 0.3125,
+            "target_words": 22
+          }
+        },
+        {
+          "id": "rewrite-markup-characters-in-changes",
+          "response_sha256": "1ae847717dc9d7407c59a8aa79c6a4c6a2ef4b2464da3c06af059bfb2e6bbe20",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Returns a polite rewrite of the supplied request while keeping the specified literal markup."
+            },
+            {
+              "name": "makes_request_polite_and_keeps_today_deadline",
+              "status": "pass",
+              "note": "Please check makes the request polite while retaining today exactly."
+            },
+            {
+              "name": "preserves_literal_emphasis_tag_entity_and_strikethrough_in_result",
+              "status": "pass",
+              "note": "The fenced result preserves **draft**, <ready>, &copy;, and ~~pending~~ with their literal punctuation."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "The complete revised payload is first, with matching text-labeled fences; independently computed L=0, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "note": "Decoded Changes quotations exactly equal the complete original sentence and complete revised text, including all punctuation and any added closing sentence."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "note": "Independently inspected the saved actual GFM HTML: complete original and revised quotations each occupy one uninterrupted <strong> element, with no code/emphasis boundary that removes bold. Any email anchor remains nested inside <strong>.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "rendered_quotes_show_angle_brackets_entity_spelling_and_tildes_literally",
+              "status": "pass",
+              "note": "Independently decoded the saved actual GFM HTML text once and compared it exactly with complete original/result quotations. Literal Markdown, backticks, backslash, brackets, angle brackets, entity spelling, tildes, URL punctuation, ampersands, and email characters are preserved where present, without added display backslashes.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "note": "Canonical display escapes occur only in Changes; literal payload retains its original markup/path/URL characters, and the explanation describes textual edits rather than those escapes."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "note": "The full original/revised pair covers the polite opening, lowercase initial verb, and any thank-you closing/punctuation; the explanation accurately describes those edits."
+            }
+          ]
+        },
+        {
+          "id": "rewrite-autolink-punctuation-in-changes",
+          "response_sha256": "b5c603bc8259d9999cb2355470fff49284b1bd68ece7511b4fe7afd845042ae4",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Returns a polite rewrite of the supplied request while keeping the URLs, email, and deadline."
+            },
+            {
+              "name": "makes_request_polite_and_keeps_today_deadline",
+              "status": "pass",
+              "note": "Please check makes the request polite while retaining today exactly."
+            },
+            {
+              "name": "preserves_exact_urls_and_email_in_result",
+              "status": "pass",
+              "note": "Both URLs, including query delimiters and underscore, and user@example.com match the source exactly; surrounding comma and deadline are retained."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "The complete revised payload is first, with matching text-labeled fences; independently computed L=0, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "note": "Decoded Changes quotations exactly equal the complete original sentence and complete revised text, including all punctuation and any added closing sentence."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "note": "Independently inspected the saved actual GFM HTML: complete original and revised quotations each occupy one uninterrupted <strong> element, with no code/emphasis boundary that removes bold. Any email anchor remains nested inside <strong>.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "rendered_quotes_preserve_urls_and_email_without_added_backslashes",
+              "status": "pass",
+              "note": "Independently decoded the saved actual GFM HTML text once and compared it exactly with complete original/result quotations. Literal Markdown, backticks, backslash, brackets, angle brackets, entity spelling, tildes, URL punctuation, ampersands, and email characters are preserved where present, without added display backslashes.",
+              "evidence": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json"
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "note": "Canonical display escapes occur only in Changes; literal payload retains its original markup/path/URL characters, and the explanation describes textual edits rather than those escapes."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "note": "The full original/revised pair covers the polite opening, lowercase initial verb, and any thank-you closing/punctuation; the explanation accurately describes those edits."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-fragments-sol-1-2026-11-25.json",
+      "record_sha256": "57756d2ec2e028ccf43361ec7f49a714313e62be9676af804ea1a2cf69be3126",
+      "snapshot_file": "tests/trials/audit-fixes-cli-fragments-2026-11-25-snapshot.json",
+      "snapshot_sha256": "18a10dedbe9e3126e61a23820f6669a03b01fa83f242fdbf7ab6fbd5ca3f9b10",
+      "cases": [
+        {
+          "id": "fragment-labels-no-op",
+          "response_sha256": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Recognizes the explicit noun-phrase-label task and returns the required no-edit response."
+            },
+            {
+              "name": "response_exactly",
+              "status": "pass",
+              "note": "The response exactly equals The text does not require any adjustments. with no prefix, suffix, or extra formatting."
+            },
+            {
+              "name": "retains_intentional_noun_phrases_without_invented_agreement_edit",
+              "status": "pass",
+              "note": "No-op honors the explicit noun-phrase labels; noun link is not converted into a finite verb."
+            },
+            {
+              "name": "no_revised_text_fence_or_changes_list",
+              "status": "pass",
+              "note": "The exact no-op response contains neither a revised-text fence nor a Changes list."
+            }
+          ]
+        },
+        {
+          "id": "finite-clause-agreement",
+          "response_sha256": "f99f812f5dddb0c4a8f90a9f8b344e56a1956de5bd193351900ae47ce7a7a93a",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Corrects the explicit finite sentence with singular subject phrase and direct object readers."
+            },
+            {
+              "name": "corrects_link_to_links_for_singular_subject_and_direct_object",
+              "status": "pass",
+              "note": "The finite verb is links for singular phrase, and readers remains its direct object."
+            },
+            {
+              "name": "changes_no_other_source_characters",
+              "status": "pass",
+              "note": "Exact payload comparison shows only insertion of s in link; every other source character is unchanged."
+            },
+            {
+              "name": "preserves_list_emphasis_url_and_line_breaks",
+              "status": "pass",
+              "note": "Both list markers, emphasis delimiters, exact URL punctuation, and the line break between labels/sentences are preserved."
+            },
+            {
+              "name": "complete_revised_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "Both complete source lines appear first in matching text-labeled fences; independently computed L=0, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "truthful_changes_list_accounts_only_for_link_to_links",
+              "status": "pass",
+              "note": "The quoted before/after spans are literal source/result spans, and replacing the old span reproduces the entire revised payload. The sole reported edit is the necessary link-to-links agreement correction."
+            }
+          ]
+        },
+        {
+          "id": "fragment-labels-article-only",
+          "response_sha256": "4f938d03bc057f10b34914e58dadd868202b778de7a309897089afec25eee85e",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Preserves intentional noun phrases and corrects the clear article error."
+            },
+            {
+              "name": "corrects_a_unusual_to_an_unusual",
+              "status": "pass",
+              "note": "The second label uses An unusual, the correct indefinite article before its vowel sound."
+            },
+            {
+              "name": "retains_phrase_link_as_an_intentional_noun_phrase",
+              "status": "pass",
+              "note": "The first label retains phrase link exactly and remains an intentional noun phrase."
+            },
+            {
+              "name": "changes_no_other_source_characters",
+              "status": "pass",
+              "note": "Exact payload comparison shows only insertion of n in A unusual; every other source character is unchanged."
+            },
+            {
+              "name": "preserves_list_emphasis_url_and_line_breaks",
+              "status": "pass",
+              "note": "Both list markers, emphasis delimiters, exact URL punctuation, and the line break between labels/sentences are preserved."
+            },
+            {
+              "name": "complete_revised_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "Both complete source lines appear first in matching text-labeled fences; independently computed L=0, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "truthful_changes_list_accounts_only_for_article_correction",
+              "status": "pass",
+              "note": "The quoted before/after spans are literal source/result spans, and replacing the old span reproduces the entire revised payload. Only the necessary A-to-An article correction is reported."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-fragments-sol-2-2026-11-25.json",
+      "record_sha256": "b80eb2efdf7e027ffa15aad15e609c7a124df0e3f91e5580cac6cfa476a06cb0",
+      "snapshot_file": "tests/trials/audit-fixes-cli-fragments-2026-11-25-snapshot.json",
+      "snapshot_sha256": "18a10dedbe9e3126e61a23820f6669a03b01fa83f242fdbf7ab6fbd5ca3f9b10",
+      "cases": [
+        {
+          "id": "fragment-labels-no-op",
+          "response_sha256": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Recognizes the explicit noun-phrase-label task and returns the required no-edit response."
+            },
+            {
+              "name": "response_exactly",
+              "status": "pass",
+              "note": "The response exactly equals The text does not require any adjustments. with no prefix, suffix, or extra formatting."
+            },
+            {
+              "name": "retains_intentional_noun_phrases_without_invented_agreement_edit",
+              "status": "pass",
+              "note": "No-op honors the explicit noun-phrase labels; noun link is not converted into a finite verb."
+            },
+            {
+              "name": "no_revised_text_fence_or_changes_list",
+              "status": "pass",
+              "note": "The exact no-op response contains neither a revised-text fence nor a Changes list."
+            }
+          ]
+        },
+        {
+          "id": "finite-clause-agreement",
+          "response_sha256": "ea7221b9ab041fc1f2ff45542d63b04cf054a0dedd2535a24c69534b4547ddc5",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Corrects the explicit finite sentence with singular subject phrase and direct object readers."
+            },
+            {
+              "name": "corrects_link_to_links_for_singular_subject_and_direct_object",
+              "status": "pass",
+              "note": "The finite verb is links for singular phrase, and readers remains its direct object."
+            },
+            {
+              "name": "changes_no_other_source_characters",
+              "status": "pass",
+              "note": "Exact payload comparison shows only insertion of s in link; every other source character is unchanged."
+            },
+            {
+              "name": "preserves_list_emphasis_url_and_line_breaks",
+              "status": "pass",
+              "note": "Both list markers, emphasis delimiters, exact URL punctuation, and the line break between labels/sentences are preserved."
+            },
+            {
+              "name": "complete_revised_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "Both complete source lines appear first in matching text-labeled fences; independently computed L=0, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "truthful_changes_list_accounts_only_for_link_to_links",
+              "status": "pass",
+              "note": "The quoted before/after spans are literal source/result spans, and replacing the old span reproduces the entire revised payload. The sole reported edit is the necessary link-to-links agreement correction."
+            }
+          ]
+        },
+        {
+          "id": "fragment-labels-article-only",
+          "response_sha256": "c4587cb8939ce3cfccb7daff1d052ccb423a96dbf6cb4f5ded35baf0e2188ded",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Preserves intentional noun phrases and corrects the clear article error."
+            },
+            {
+              "name": "corrects_a_unusual_to_an_unusual",
+              "status": "pass",
+              "note": "The second label uses An unusual, the correct indefinite article before its vowel sound."
+            },
+            {
+              "name": "retains_phrase_link_as_an_intentional_noun_phrase",
+              "status": "pass",
+              "note": "The first label retains phrase link exactly and remains an intentional noun phrase."
+            },
+            {
+              "name": "changes_no_other_source_characters",
+              "status": "pass",
+              "note": "Exact payload comparison shows only insertion of n in A unusual; every other source character is unchanged."
+            },
+            {
+              "name": "preserves_list_emphasis_url_and_line_breaks",
+              "status": "pass",
+              "note": "Both list markers, emphasis delimiters, exact URL punctuation, and the line break between labels/sentences are preserved."
+            },
+            {
+              "name": "complete_revised_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "Both complete source lines appear first in matching text-labeled fences; independently computed L=0, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "truthful_changes_list_accounts_only_for_article_correction",
+              "status": "pass",
+              "note": "The quoted before/after spans are literal source/result spans, and replacing the old span reproduces the entire revised payload. Only the necessary A-to-An article correction is reported."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-fragments-sol-3-2026-11-25.json",
+      "record_sha256": "6cfaf4cc0fe6dbca300da6bb61c79609ceb115034eaf4ee7b5f90e5364eb6496",
+      "snapshot_file": "tests/trials/audit-fixes-cli-fragments-2026-11-25-snapshot.json",
+      "snapshot_sha256": "18a10dedbe9e3126e61a23820f6669a03b01fa83f242fdbf7ab6fbd5ca3f9b10",
+      "cases": [
+        {
+          "id": "fragment-labels-no-op",
+          "response_sha256": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Recognizes the explicit noun-phrase-label task and returns the required no-edit response."
+            },
+            {
+              "name": "response_exactly",
+              "status": "pass",
+              "note": "The response exactly equals The text does not require any adjustments. with no prefix, suffix, or extra formatting."
+            },
+            {
+              "name": "retains_intentional_noun_phrases_without_invented_agreement_edit",
+              "status": "pass",
+              "note": "No-op honors the explicit noun-phrase labels; noun link is not converted into a finite verb."
+            },
+            {
+              "name": "no_revised_text_fence_or_changes_list",
+              "status": "pass",
+              "note": "The exact no-op response contains neither a revised-text fence nor a Changes list."
+            }
+          ]
+        },
+        {
+          "id": "finite-clause-agreement",
+          "response_sha256": "2e200a6b026b7998770c24f46c6ebc4253e193349c6dda5fb0cf22ebc006269b",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Corrects the explicit finite sentence with singular subject phrase and direct object readers."
+            },
+            {
+              "name": "corrects_link_to_links_for_singular_subject_and_direct_object",
+              "status": "pass",
+              "note": "The finite verb is links for singular phrase, and readers remains its direct object."
+            },
+            {
+              "name": "changes_no_other_source_characters",
+              "status": "pass",
+              "note": "Exact payload comparison shows only insertion of s in link; every other source character is unchanged."
+            },
+            {
+              "name": "preserves_list_emphasis_url_and_line_breaks",
+              "status": "pass",
+              "note": "Both list markers, emphasis delimiters, exact URL punctuation, and the line break between labels/sentences are preserved."
+            },
+            {
+              "name": "complete_revised_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "Both complete source lines appear first in matching text-labeled fences; independently computed L=0, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "truthful_changes_list_accounts_only_for_link_to_links",
+              "status": "pass",
+              "note": "The quoted before/after spans are literal source/result spans, and replacing the old span reproduces the entire revised payload. The sole reported edit is the necessary link-to-links agreement correction."
+            }
+          ]
+        },
+        {
+          "id": "fragment-labels-article-only",
+          "response_sha256": "8c122dab0e0f09253176907b494bce67a147ba965bca534a834558ce49d69668",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "note": "Preserves intentional noun phrases and corrects the clear article error."
+            },
+            {
+              "name": "corrects_a_unusual_to_an_unusual",
+              "status": "pass",
+              "note": "The second label uses An unusual, the correct indefinite article before its vowel sound."
+            },
+            {
+              "name": "retains_phrase_link_as_an_intentional_noun_phrase",
+              "status": "pass",
+              "note": "The first label retains phrase link exactly and remains an intentional noun phrase."
+            },
+            {
+              "name": "changes_no_other_source_characters",
+              "status": "pass",
+              "note": "Exact payload comparison shows only insertion of n in A unusual; every other source character is unchanged."
+            },
+            {
+              "name": "preserves_list_emphasis_url_and_line_breaks",
+              "status": "pass",
+              "note": "Both list markers, emphasis delimiters, exact URL punctuation, and the line break between labels/sentences are preserved."
+            },
+            {
+              "name": "complete_revised_text_first_in_safe_fence",
+              "status": "pass",
+              "note": "Both complete source lines appear first in matching text-labeled fences; independently computed L=0, K=3 satisfies K=max(3,L+1)."
+            },
+            {
+              "name": "truthful_changes_list_accounts_only_for_article_correction",
+              "status": "pass",
+              "note": "The quoted before/after spans are literal source/result spans, and replacing the old span reproduces the entire revised payload. Only the necessary A-to-An article correction is reported."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "renderer_evidence": {
+    "path": "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/audit-fixes-markdown-render-2026-11-25.json",
+    "sha256": "12d1b90211ed837d6fa907f68a29687ff38929c8a7483ee857016f5e2e32f832",
+    "renderer": "GitHub Markdown API, mode=gfm",
+    "prior_status": "Render-dependent assertions were initially not_run and were resolved only after independent HTML inspection.",
+    "observations": [
+      {
+        "source_record": "tests/trials/audit-fixes-markdown-sol-1-2026-11-25.json",
+        "case_id": "rewrite-markdown-changes-quotes",
+        "response_sha256": "c10f6e218b393cd101757ce94c896655621d9cc29d8d819a5481c1b1608ac05a",
+        "rendered_html_sha256": "68d7acc9ead00fe6f7869f6f81cef74f16d33bef8d859f44005d11e2ca7d5d85",
+        "exact_code_payload": true,
+        "exact_original_and_result_quote_text": true,
+        "complete_quotes_inside_strong": true
+      },
+      {
+        "source_record": "tests/trials/audit-fixes-markdown-sol-1-2026-11-25.json",
+        "case_id": "shorten-markdown-changes-quotes",
+        "response_sha256": "ea14d7eb78955f614c07376b1b68bdead6d2a70670bb63e63669e5afbe74b257",
+        "rendered_html_sha256": "f063049988744c7c1a907fc4d6ccaafef9c6304287a985b03f6a352d6e567873",
+        "exact_code_payload": true,
+        "exact_original_and_result_quote_text": true,
+        "complete_quotes_inside_strong": true
+      },
+      {
+        "source_record": "tests/trials/audit-fixes-markdown-sol-1-2026-11-25.json",
+        "case_id": "rewrite-markup-characters-in-changes",
+        "response_sha256": "ce42527748d18da932eb164dadd41444966ec5000db54b3d988330baf1a0b682",
+        "rendered_html_sha256": "dc1d110eb686654e9b2ee32a0a18559bc4036201bf24317beea7f935c31018d5",
+        "exact_code_payload": true,
+        "exact_original_and_result_quote_text": true,
+        "complete_quotes_inside_strong": true
+      },
+      {
+        "source_record": "tests/trials/audit-fixes-markdown-sol-1-2026-11-25.json",
+        "case_id": "rewrite-autolink-punctuation-in-changes",
+        "response_sha256": "62a86fe0d59b78aa8147c4720dab93bcdcce03eac34e6147d4f19e32e8c6633e",
+        "rendered_html_sha256": "af442665680f9e68f5296390ee96af6adadef7d084917ee84a4eddac2bd613be",
+        "exact_code_payload": true,
+        "exact_original_and_result_quote_text": true,
+        "complete_quotes_inside_strong": true
+      },
+      {
+        "source_record": "tests/trials/audit-fixes-markdown-sol-2-2026-11-25.json",
+        "case_id": "rewrite-markdown-changes-quotes",
+        "response_sha256": "ea04f2357c0453ff8754179885aced0277926850216227fe32165f9037bbbff4",
+        "rendered_html_sha256": "b62842c3c52a5c069651b9331723774cfe2cb592d381fcf26d09dd6d05f69342",
+        "exact_code_payload": true,
+        "exact_original_and_result_quote_text": true,
+        "complete_quotes_inside_strong": true
+      },
+      {
+        "source_record": "tests/trials/audit-fixes-markdown-sol-2-2026-11-25.json",
+        "case_id": "shorten-markdown-changes-quotes",
+        "response_sha256": "4de0fdfe95e5d2482db1c681680305d60c7be4d765ee30be90f4d861a4daf93f",
+        "rendered_html_sha256": "12ce4ab1b07df52987e125ff2f4c14d4f11b1ab671ab22e5b9e3a736be1ffc3a",
+        "exact_code_payload": true,
+        "exact_original_and_result_quote_text": true,
+        "complete_quotes_inside_strong": true
+      },
+      {
+        "source_record": "tests/trials/audit-fixes-markdown-sol-2-2026-11-25.json",
+        "case_id": "rewrite-markup-characters-in-changes",
+        "response_sha256": "4c029b679c135f76afb0fa78c75622d590ebd6eac08a1028193debf4ea68df86",
+        "rendered_html_sha256": "c9cdff7a532ce1407b6614386696f148b75ce477b6c6b0366879039de9777519",
+        "exact_code_payload": true,
+        "exact_original_and_result_quote_text": true,
+        "complete_quotes_inside_strong": true
+      },
+      {
+        "source_record": "tests/trials/audit-fixes-markdown-sol-2-2026-11-25.json",
+        "case_id": "rewrite-autolink-punctuation-in-changes",
+        "response_sha256": "17bbdaac54c515ef050cae5e1ce448fed587b3500c2013f47cce40a205a9d57d",
+        "rendered_html_sha256": "87bd570c7ba5a1f9e59009a7eb73ac08df30993675d91606f2bfdcbfd82c5e48",
+        "exact_code_payload": true,
+        "exact_original_and_result_quote_text": true,
+        "complete_quotes_inside_strong": true
+      },
+      {
+        "source_record": "tests/trials/audit-fixes-markdown-sol-3-2026-11-25.json",
+        "case_id": "rewrite-markdown-changes-quotes",
+        "response_sha256": "97ed959857a2601ee5644ffe525bfa04fcacb93e835a05a4bd038b160567284e",
+        "rendered_html_sha256": "1c9639f13f1920cbd9e088404b9d3a8ffff511e8d3abdd661132f3619e82cf15",
+        "exact_code_payload": true,
+        "exact_original_and_result_quote_text": true,
+        "complete_quotes_inside_strong": true
+      },
+      {
+        "source_record": "tests/trials/audit-fixes-markdown-sol-3-2026-11-25.json",
+        "case_id": "shorten-markdown-changes-quotes",
+        "response_sha256": "5a5d954505e9df158e3af576b28f3c727d8272bbff80518d3603ef3c5cd642c0",
+        "rendered_html_sha256": "0b76bff2141a21e684a5d2ca397549d016842f4ebcfb8b9a9165490f2620bc6d",
+        "exact_code_payload": true,
+        "exact_original_and_result_quote_text": true,
+        "complete_quotes_inside_strong": true
+      },
+      {
+        "source_record": "tests/trials/audit-fixes-markdown-sol-3-2026-11-25.json",
+        "case_id": "rewrite-markup-characters-in-changes",
+        "response_sha256": "1ae847717dc9d7407c59a8aa79c6a4c6a2ef4b2464da3c06af059bfb2e6bbe20",
+        "rendered_html_sha256": "f97e3699aaab7728e8fd087379081febe31f7fc325887095041b4aba5c7a1220",
+        "exact_code_payload": true,
+        "exact_original_and_result_quote_text": true,
+        "complete_quotes_inside_strong": true
+      },
+      {
+        "source_record": "tests/trials/audit-fixes-markdown-sol-3-2026-11-25.json",
+        "case_id": "rewrite-autolink-punctuation-in-changes",
+        "response_sha256": "b5c603bc8259d9999cb2355470fff49284b1bd68ece7511b4fe7afd845042ae4",
+        "rendered_html_sha256": "ca419e38fa7c0c5a8b23e732fa88d0db3e795bbfffcf62f8f0a9dbd6cf079072",
+        "exact_code_payload": true,
+        "exact_original_and_result_quote_text": true,
+        "complete_quotes_inside_strong": true
+      }
+    ]
+  }
+}

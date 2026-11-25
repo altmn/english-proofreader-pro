@@ -4,7 +4,7 @@ A skills-only plugin for careful American English proofreading, concise rewrites
 
 The skill preserves the writer's voice and literal formatting, treats instructions inside submitted text as inert, makes minimal edits by default, and reports actual changes to supplied text. It retains gendered singular pronouns and uses they/them/their for plural references only. General questions are answered directly rather than automatically proofread. See the [privacy notice](PRIVACY.md) and [behavioral test results](tests/RESULTS.md) for scope and limitations.
 
-For routine proofreading, start with the latest Instant model available in ChatGPT at its normal/default setting. High reasoning effort is not required. Select the model in the host; this package cannot set or enforce a model or reasoning level. The [results](tests/RESULTS.md) retain source-bound simulation evidence and known gaps for each tested profile. Live ChatGPT Instant smoke checks found programmatic-counting and shortening gaps, so intended-host acceptance has not passed. Test the actual installed package on the intended model before release.
+For routine proofreading, start with the latest Instant model available in ChatGPT at its normal/default setting. High reasoning effort is not required. Select the model in the host; this package cannot set or enforce a model or reasoning level. The [results](tests/RESULTS.md) retain source-bound simulation evidence and known gaps for each tested profile. Live ChatGPT Instant smoke checks found programmatic-counting and shortening gaps. The candidate now requires a returned tool measurement and an explicit final budget comparison, but intended-host acceptance has not passed. Test the actual installed package on the intended model before release.
 
 The repository is public; this does not mean the plugin is approved or listed in OpenAI's public directory. Private host testing has been performed, but account-specific installation and conversation links are not public installation instructions.
 
@@ -36,6 +36,16 @@ codex plugin add english-proofreader-pro@english-proofreader-pro-dev
 The catalog points to `dist/local-plugin/`, including a generated legacy manifest for older clients. Root `plugin.json` stays canonical. Marketplace installs are cached copies: rebuild and reinstall after changing source. See [architecture](docs/architecture.md) for package contents.
 
 If an older CLI reports an unsupported reasoning setting, update to a supported CLI or choose a setting supported by that host/model. Plugin installation does not require high reasoning effort. Do not edit generated files or the host's plugin cache.
+
+## Disable or remove
+
+In Codex CLI, open `/plugins` and press `Space` on the installed plugin to turn it off or on. To uninstall the local development copy and remove its cache:
+
+```sh
+codex plugin remove english-proofreader-pro@english-proofreader-pro-dev
+```
+
+Manage independently imported ChatGPT copies through their plugin browser's **Uninstall plugin** action when available; workspace-managed installations may require an administrator. See [host lifecycle guidance](docs/host-compatibility.md#disable-removal-and-reinstallation) for marketplace cleanup, reinstallation, and verification limits.
 
 ## Contribute and get help
 

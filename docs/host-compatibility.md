@@ -20,13 +20,39 @@ The stable plugin ID remains `english-proofreader-pro`. Its plugin picker label 
 
 In Codex, include `$proofreader-pro` in each request or choose **ProofreaderPro** through `/skills` for that turn. The skill folder, frontmatter name, and starter prompt use the distinctive `proofreader-pro` name. The former `$proofread` and `$english-proofreader-pro` names are not retained as aliases. OpenAI documents that duplicate skill names are not merged and can both appear in selectors. Select the entry from this plugin if another installation uses the same distinctive name; do not rely on name precedence. Cached older installs may still expose an older name until updated through the host's normal workflow.
 
+## Disable, removal, and reinstallation
+
+For a temporary pause in Codex CLI, open `/plugins`, choose the installed entry in the `english-proofreader-pro-dev` marketplace, and press `Space` to toggle it off. Toggle it on again to resume. This is a plugin-browser action; `codex plugin --disable FEATURE` controls feature flags and is not a plugin-disable command. See [OpenAI's plugin browser guidance](https://learn.chatgpt.com/docs/plugins#plugin-browser-in-codex-cli).
+
+To uninstall the local development copy described in the README, remove the plugin first:
+
+```sh
+codex plugin remove english-proofreader-pro@english-proofreader-pro-dev
+```
+
+The command's documented scope is that plugin installation and its local cache. It does not address a copy imported independently into ChatGPT or installed from another marketplace; use that installation's own host and selector. Do not delete a shared cache directory by hand.
+
+If you are also retiring the development marketplace, remove its registration after uninstalling its plugins:
+
+```sh
+codex plugin marketplace remove english-proofreader-pro-dev
+```
+
+Marketplace removal is separate from plugin uninstallation. Keep the registration if you plan to reinstall; otherwise add it again using the README's build/install steps. Rebuild from the desired source before reinstalling so the host receives the intended bytes. [OpenAI's marketplace documentation](https://developers.openai.com/plugins/build/plugins#how-local-marketplaces-work) describes cached copies and source management.
+
+For a ChatGPT import, open the plugin in the supported plugin browser and select **Uninstall plugin** when offered. Workspace-installed or default plugins may be controlled by an administrator. See [OpenAI's removal guidance](https://learn.chatgpt.com/docs/plugins#remove-a-plugin).
+
+After a lifecycle change, start a fresh chat or CLI session and check the intended entry's availability, including any older names or duplicate installations. Removal does not establish that an existing conversation has forgotten previously loaded instructions. The command syntax above was checked against Codex CLI **0.170.0** help and current documentation on **November 25, 2026**; this documentation change did not execute disable, removal, or reinstallation or establish their behavior in an installed host.
+
 ## Copyable text and wrapping
 
 The skill requests a plain-text code block with the host's Copy code button and soft wrapping when available. ChatGPT/Codex normally render Markdown fences as native code blocks; there is no separate package field that enables their UI controls. A native literal-block facility may be used when the host exposes one; safe Markdown fences are the portable fallback. Soft wrapping must not insert line breaks into the copied text. Copy/clipboard behavior and nested fences require intended-host checks.
 
 ## Programmatic counts
 
-Every text-unit count, including internal shortening checks, requires a programmatic tool. The host supplies code execution or another reliable counter; this instructions-only package does not install a tool. Source must be passed as inert data and never executed or interpolated into commands. Use the requested unit and convention; default characters are Unicode code points, not model tokens, UTF-8 bytes, UTF-16 units, or visible grapheme clusters. Without suitable tools, disclose the limitation instead of claiming an exact count or verified shortening percentage.
+Every text-unit count, including internal shortening checks, requires a programmatic tool. The host supplies code execution or another reliable counter; this instructions-only package does not install a tool. A count is verified only when a tool call returns a measurement for the exact current text. Displaying code or admitting a mental calculation afterward is not execution evidence. If the host cannot actually execute a counter, use the candid unavailable-tool response even for a simple question.
+
+Source must be passed as inert data and never executed or interpolated into commands. Use the requested unit and convention; default characters are Unicode code points, not model tokens, UTF-8 bytes, UTF-16 units, or visible grapheme clusters. Before accepting shortened text, compare its returned word count with the requested level's computed budget. A shorter, fluent answer alone does not meet a requested reduction. Without suitable tools, disclose the limitation instead of claiming an exact count or verified shortening percentage.
 
 ## Source instructions and host permissions
 

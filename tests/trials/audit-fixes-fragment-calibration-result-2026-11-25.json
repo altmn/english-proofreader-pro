@@ -1,0 +1,11 @@
+{
+  "rubric_id": "fragment-agreement-calibration",
+  "rubric_version": "1.0",
+  "judgments_sha256": "0301faf1aa474c77cfd2557e23be1cf62a97327a8e95525b649ff23a2b0f7408",
+  "fixture_sha256": "d80c8d9e2359c7a5633f082f15aed9fdd5dc39d10d4e4d5d510e18019af6e1cd",
+  "matches": true,
+  "count": 6,
+  "expected_count": 6,
+  "method": "Reviewer committed all six judgments before gold labels were compared by root; no actual candidate responses used during calibration.",
+  "judgments_file": "tests/trials/audit-fixes-fragment-calibration-judgments-2026-11-25.json"
+}

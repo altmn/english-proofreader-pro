@@ -474,6 +474,46 @@ class ReleaseBuilderTests(unittest.TestCase):
             )
             self.assertTrue(all(info.date_time == (1980, 1, 1, 0, 0, 0) for info in archive.infolist()))
 
+    def test_source_edit_before_archive_write_uses_only_validated_snapshot(self) -> None:
+        original = {path.relative_to(self.root).as_posix(): path.read_bytes() for path in release.validate()}
+        original_write = release._write_archive
+
+        def edit_source_then_write(path, snapshot) -> None:
+            skill = self.root / release.EXPECTED_SKILL
+            skill.write_bytes(original[release.EXPECTED_SKILL] + b"\nTODO: synthetic concurrent edit.\n")
+            manifest = self.read_manifest()
+            manifest["version"] = "99.0.0"
+            self.write_manifest(manifest)
+            original_write(path, snapshot)
+
+        with patch.object(release, "_write_archive", side_effect=edit_source_then_write):
+            output = release.build()
+
+        with zipfile.ZipFile(output) as archive:
+            self.assertEqual({name: archive.read(name) for name in archive.namelist()}, original)
+        stage = output.parent / "local-plugin"
+        self.assertEqual({name: (stage / name).read_bytes() for name in original}, original)
+        overlay = json.loads((stage / ".codex-plugin/plugin.json").read_text(encoding="utf-8"))
+        self.assertEqual(overlay["version"], json.loads(original["plugin.json"])["version"])
+        self.assertNotEqual(self.read_manifest()["version"], overlay["version"])
+
+    def test_source_edit_after_archive_verification_cannot_change_staging(self) -> None:
+        original = {path.relative_to(self.root).as_posix(): path.read_bytes() for path in release.validate()}
+        original_verify = release._verify_archive
+
+        def verify_then_edit_source(path, snapshot) -> None:
+            original_verify(path, snapshot)
+            skill = self.root / release.EXPECTED_SKILL
+            skill.write_bytes(original[release.EXPECTED_SKILL] + b"\nTODO: synthetic concurrent edit.\n")
+
+        with patch.object(release, "_verify_archive", side_effect=verify_then_edit_source):
+            output = release.build()
+
+        with zipfile.ZipFile(output) as archive:
+            self.assertEqual({name: archive.read(name) for name in archive.namelist()}, original)
+        stage = output.parent / "local-plugin"
+        self.assertEqual({name: (stage / name).read_bytes() for name in original}, original)
+
     def test_archive_prepare_failure_preserves_previous_archive_and_stage(self) -> None:
         archive_path = release.build()
         old_archive = archive_path.read_bytes()
@@ -492,14 +532,55 @@ class ReleaseBuilderTests(unittest.TestCase):
         self.assertEqual({path.relative_to(stage).as_posix(): path.read_bytes() for path in stage.rglob("*") if path.is_file()}, old_stage)
         self.assertFalse(list(archive_path.parent.glob(".*.tmp")))
 
-    def test_stage_copy_failure_preserves_previous_archive_and_stage(self) -> None:
+    def test_stage_write_failure_preserves_previous_archive_and_stage(self) -> None:
         archive_path = release.build()
         old_archive = archive_path.read_bytes()
         stage = archive_path.parent / "local-plugin"
         old_stage = {path.relative_to(stage).as_posix(): path.read_bytes() for path in stage.rglob("*") if path.is_file()}
-        with patch.object(release.shutil, "copyfile", side_effect=OSError("synthetic staging copy failure")):
+        def partial_stage_then_fail(stage_root, snapshot, manifest) -> None:
+            (stage_root / "LICENSE").write_bytes(b"synthetic partial stage")
+            raise OSError("synthetic staging write failure")
+
+        with patch.object(release, "_populate_stage", side_effect=partial_stage_then_fail):
             with self.assertRaisesRegex(release.ReleaseError, "could not be prepared"):
                 release.build()
+        self.assertEqual(archive_path.read_bytes(), old_archive)
+        self.assertEqual({path.relative_to(stage).as_posix(): path.read_bytes() for path in stage.rglob("*") if path.is_file()}, old_stage)
+
+    def test_prepared_archive_payload_mismatch_preserves_previous_outputs(self) -> None:
+        archive_path = release.build()
+        old_archive = archive_path.read_bytes()
+        stage = archive_path.parent / "local-plugin"
+        old_stage = {path.relative_to(stage).as_posix(): path.read_bytes() for path in stage.rglob("*") if path.is_file()}
+        original_write = release._write_archive
+
+        def write_different_payload(path, snapshot) -> None:
+            changed = dict(snapshot)
+            changed[release.EXPECTED_SKILL] += b"\nSynthetic unexpected payload.\n"
+            original_write(path, changed)
+
+        with patch.object(release, "_write_archive", side_effect=write_different_payload):
+            with self.assertRaisesRegex(release.ReleaseError, "ZIP payload differs from the validated snapshot"):
+                release.build()
+
+        self.assertEqual(archive_path.read_bytes(), old_archive)
+        self.assertEqual({path.relative_to(stage).as_posix(): path.read_bytes() for path in stage.rglob("*") if path.is_file()}, old_stage)
+
+    def test_prepared_stage_payload_mismatch_preserves_previous_outputs(self) -> None:
+        archive_path = release.build()
+        old_archive = archive_path.read_bytes()
+        stage = archive_path.parent / "local-plugin"
+        old_stage = {path.relative_to(stage).as_posix(): path.read_bytes() for path in stage.rglob("*") if path.is_file()}
+        original_populate = release._populate_stage
+
+        def populate_then_change(stage_root, snapshot, manifest) -> None:
+            original_populate(stage_root, snapshot, manifest)
+            (stage_root / release.EXPECTED_SKILL).write_bytes(b"Synthetic unexpected payload.")
+
+        with patch.object(release, "_populate_stage", side_effect=populate_then_change):
+            with self.assertRaisesRegex(release.ReleaseError, "staging output differs from the validated snapshot"):
+                release.build()
+
         self.assertEqual(archive_path.read_bytes(), old_archive)
         self.assertEqual({path.relative_to(stage).as_posix(): path.read_bytes() for path in stage.rglob("*") if path.is_file()}, old_stage)
 

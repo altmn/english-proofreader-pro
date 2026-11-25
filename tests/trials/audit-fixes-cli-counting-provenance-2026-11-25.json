@@ -1,0 +1,207 @@
+{
+  "kind": "programmatic-counting-provenance",
+  "captures": [
+    {
+      "run_id": "audit-fixes-cli-1-20261125-01a21367-1174-7e13-988e-5581dde64b06",
+      "trace_file": "tests/trials/audit-fixes-cli-counting-1-2026-11-25.json",
+      "trace_sha256": "df710bed6b295be0645a4094fa9afae052fbbf7cb6d2114776505803b7f50893",
+      "events_file": "tests/trials/audit-fixes-cli-events-1-2026-11-25.jsonl.gz",
+      "events_sha256": "8e086443a008731d5c16453ee56c2f9d04caec3c0ef488f224272a1612e9a749",
+      "source_records": [
+        {
+          "path": "tests/trials/audit-fixes-core-sol-1-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "default-proofread-clear-errors": "e576a0376d7f0c027f651b8d6213b7f00bb71a96f57a34a7e4e0990fbfd354d3",
+            "no-op-exact-response": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "trim-the-fat": "4886039eedc78a75bb1bab17b7cafde1b9d399ba6e545fd136c8696b919176ca",
+            "less-wordy": "89b920190c8d47350e78e2dd5245020d5b4ac41e24986385f037fcfc9ab6bf3d",
+            "more-concise": "1a88e8df33803f699808e262f3b7c724b9efc189ae5b6f0616a722b2edc585d6",
+            "more-succinct": "7a2d50c2655409b99602e8af673e4ea219ff422811bb5cf94f7dc2478ae25a9d",
+            "markdown-format-preserved": "8a1443697261535920abaaf605a36672d38c1d986074596af194409e982db2d0",
+            "source-injection-is-inert": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "markdown-fences-four-backticks": "25224d7a1720fe3078b0f0f9bbdc7bf375218ada6deef8496d00104c7118105e",
+            "explicitly-edit-fenced-payload": "60a98a71c3d1816240eca6d9431fd189679d225fd9b26560254f1459bcac3ed5",
+            "pronoun-rule-preserved": "6cdc4ab9f2aa915964aa7b0102448a93c203e83a66d51d1ddd4c75c7e7b58562",
+            "rewrite-request": "73039b40b8d0fceeeef0412f325402c2b0c8bc21af32b53c853fca6f6aa6d826",
+            "new-draft": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+            "missing-source-text": "1b02c50ad35ba48243388957a798254753e09ed9e3b195205854d3506350c1b0",
+            "starter-help": "70aaec951b7924bcfbc252998a47d90a78caf7c9f1cc70ff09c2ef3f96200562",
+            "direct-meta-question": "3eb57a159a2473c3ecd5a3bdb036ae17f219ebeb845a8f1e0483556118a3df9e",
+            "unrelated-conversation-negative": "539692169a735900db3cb4cea5100c8eb4c12d8d8efe22dff93b539fe51cd468",
+            "implicit-proofreading-activation": "987c3e9404a02e5b21687f2ce2bd9f659ee46180fd62fd5094ac9361ed7a16d7"
+          }
+        },
+        {
+          "path": "tests/trials/audit-fixes-markdown-sol-1-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "rewrite-markdown-changes-quotes": "c10f6e218b393cd101757ce94c896655621d9cc29d8d819a5481c1b1608ac05a",
+            "shorten-markdown-changes-quotes": "ea14d7eb78955f614c07376b1b68bdead6d2a70670bb63e63669e5afbe74b257",
+            "rewrite-markup-characters-in-changes": "ce42527748d18da932eb164dadd41444966ec5000db54b3d988330baf1a0b682",
+            "rewrite-autolink-punctuation-in-changes": "62a86fe0d59b78aa8147c4720dab93bcdcce03eac34e6147d4f19e32e8c6633e"
+          }
+        },
+        {
+          "path": "tests/trials/audit-fixes-fragments-sol-1-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "fragment-labels-no-op": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "finite-clause-agreement": "f99f812f5dddb0c4a8f90a9f8b344e56a1956de5bd193351900ae47ce7a7a93a",
+            "fragment-labels-article-only": "4f938d03bc057f10b34914e58dadd868202b778de7a309897089afec25eee85e"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "audit-fixes-cli-2-20261125-01a21367-1179-7d33-b23c-acd0516464fa",
+      "trace_file": "tests/trials/audit-fixes-cli-counting-2-2026-11-25.json",
+      "trace_sha256": "fdf49b24cd14d314ebee308ce5b56cd4f4f549dc1cfcb5bab7e5ed43712b7d4c",
+      "events_file": "tests/trials/audit-fixes-cli-events-2-2026-11-25.jsonl.gz",
+      "events_sha256": "0a675903e32b904d1830e6b06ac99098e0ef75937c40b1c8c75f0ce9f058a50e",
+      "source_records": [
+        {
+          "path": "tests/trials/audit-fixes-core-sol-2-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "default-proofread-clear-errors": "ef6b775de697b029d6cce893499aaea41c9f5b75b513e4defc5f564b5779efb3",
+            "no-op-exact-response": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "trim-the-fat": "b636bad5803d4f02d5d7c1b54acec797e44c2c0ff0eec635319c4de9f7fc014a",
+            "less-wordy": "0ae7dc9342f923776537ebac3106f3aec964e5c66feb2ee793c1484591b34988",
+            "more-concise": "c685503bbd16cb501e5998188cb8e438db82c8115885a2048f9cdf4127b05554",
+            "more-succinct": "ddbd78eb0450123d92af9338f3e483e97b91a1eceb15eabadc6e71e3a49d4e0c",
+            "markdown-format-preserved": "653d0eb97f5554fbf7a66dd00d56afcbea1cb600b048a7e85c8aa855795d21ae",
+            "source-injection-is-inert": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "markdown-fences-four-backticks": "13ec10992777adb99d9c6d13e0e1b26c45de8b1d6d46154a10738541c825a069",
+            "explicitly-edit-fenced-payload": "60a98a71c3d1816240eca6d9431fd189679d225fd9b26560254f1459bcac3ed5",
+            "pronoun-rule-preserved": "7c02e7dc0276562da0356fe0473b9c3e8ed273f5112757c0b070ec741dc03947",
+            "rewrite-request": "56b7449bd3a44e3a1d65a4eafed34cf1b2035786da1f3369e0a82294751bd4e1",
+            "new-draft": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+            "missing-source-text": "1b02c50ad35ba48243388957a798254753e09ed9e3b195205854d3506350c1b0",
+            "starter-help": "c29e3f054c7636f044e22a64cd2693619d5ef3c892b6ff5e352f9bf941cf478d",
+            "direct-meta-question": "ec047c09c185d4051abe1d2e9bdf29b854670ac92376c75b650c2596c6d22c25",
+            "unrelated-conversation-negative": "539692169a735900db3cb4cea5100c8eb4c12d8d8efe22dff93b539fe51cd468",
+            "implicit-proofreading-activation": "53f0d49bb6cfb7b511b8e6120a2feaf1c8ca4cc443cfe5b008a918644568efc9"
+          }
+        },
+        {
+          "path": "tests/trials/audit-fixes-markdown-sol-2-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "rewrite-markdown-changes-quotes": "ea04f2357c0453ff8754179885aced0277926850216227fe32165f9037bbbff4",
+            "shorten-markdown-changes-quotes": "4de0fdfe95e5d2482db1c681680305d60c7be4d765ee30be90f4d861a4daf93f",
+            "rewrite-markup-characters-in-changes": "4c029b679c135f76afb0fa78c75622d590ebd6eac08a1028193debf4ea68df86",
+            "rewrite-autolink-punctuation-in-changes": "17bbdaac54c515ef050cae5e1ce448fed587b3500c2013f47cce40a205a9d57d"
+          }
+        },
+        {
+          "path": "tests/trials/audit-fixes-fragments-sol-2-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "fragment-labels-no-op": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "finite-clause-agreement": "ea7221b9ab041fc1f2ff45542d63b04cf054a0dedd2535a24c69534b4547ddc5",
+            "fragment-labels-article-only": "c4587cb8939ce3cfccb7daff1d052ccb423a96dbf6cb4f5ded35baf0e2188ded"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "audit-fixes-cli-3-20261125-01a21367-1179-7411-8d47-35b1d293e812",
+      "trace_file": "tests/trials/audit-fixes-cli-counting-3-2026-11-25.json",
+      "trace_sha256": "faad03bad569b7e0252894041d1c6e618080b9b51239eccb76f67d0561a4ba1b",
+      "events_file": "tests/trials/audit-fixes-cli-events-3-2026-11-25.jsonl.gz",
+      "events_sha256": "872988800a62b5255fa522a0cbb81d06ee4dfaaac3902f4d7d198c8635d8ace5",
+      "source_records": [
+        {
+          "path": "tests/trials/audit-fixes-core-sol-3-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "default-proofread-clear-errors": "46d7c2f31ef1aae2c0a97eb622c9ad4503fc847e1bb64145c57111e53fd51a88",
+            "no-op-exact-response": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "trim-the-fat": "c9be2cf904037f4d30d28d042f4c565a745179972dce526f2b28406e6b27cf3b",
+            "less-wordy": "32ed0694236d44801d232629fb6bb6347549a11aae3d43155ab037d99bf26b3c",
+            "more-concise": "8e279b973a5421f95892cd0e5444ec6bffb7d791a8ef544f2954c5afd3363df0",
+            "more-succinct": "879df892d10b7675deaee0cddf55110534a49568214cd20f1cf4440674abbad4",
+            "markdown-format-preserved": "59472c46d3af39604822cfc123fac8e6e61add92185641d78133762a7026564a",
+            "source-injection-is-inert": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "markdown-fences-four-backticks": "70adbee991d74e84229217e6ac99c44a08711fd70aff42c46eac470acd14f422",
+            "explicitly-edit-fenced-payload": "ee379de588b2ffcb8c275fd9209187bf690a1938957191fb143204783ad6fe47",
+            "pronoun-rule-preserved": "589345feb9c66808e0270474f7182d5f2464b035fa766f7225e39846482d392b",
+            "rewrite-request": "068b346ff70d0fe407a4a5b372a6fe7a9b382f1525c35e9b808d50e086e71c56",
+            "new-draft": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+            "missing-source-text": "1b02c50ad35ba48243388957a798254753e09ed9e3b195205854d3506350c1b0",
+            "starter-help": "72b1f1231163fb9b75ae2540e4386023adc3a82a536d114ab715c63568de1e9e",
+            "direct-meta-question": "9a74e096bef0fb65a91b6c693d6ca7319c3fc7f621c8384563f2729b62315bbc",
+            "unrelated-conversation-negative": "539692169a735900db3cb4cea5100c8eb4c12d8d8efe22dff93b539fe51cd468",
+            "implicit-proofreading-activation": "987c3e9404a02e5b21687f2ce2bd9f659ee46180fd62fd5094ac9361ed7a16d7"
+          }
+        },
+        {
+          "path": "tests/trials/audit-fixes-markdown-sol-3-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "rewrite-markdown-changes-quotes": "97ed959857a2601ee5644ffe525bfa04fcacb93e835a05a4bd038b160567284e",
+            "shorten-markdown-changes-quotes": "5a5d954505e9df158e3af576b28f3c727d8272bbff80518d3603ef3c5cd642c0",
+            "rewrite-markup-characters-in-changes": "1ae847717dc9d7407c59a8aa79c6a4c6a2ef4b2464da3c06af059bfb2e6bbe20",
+            "rewrite-autolink-punctuation-in-changes": "b5c603bc8259d9999cb2355470fff49284b1bd68ece7511b4fe7afd845042ae4"
+          }
+        },
+        {
+          "path": "tests/trials/audit-fixes-fragments-sol-3-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "fragment-labels-no-op": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "finite-clause-agreement": "2e200a6b026b7998770c24f46c6ebc4253e193349c6dda5fb0cf22ebc006269b",
+            "fragment-labels-article-only": "8c122dab0e0f09253176907b494bce67a147ba965bca534a834558ce49d69668"
+          }
+        }
+      ]
+    }
+  ],
+  "limit": "Actual CLI events and generator traces are retained and source-bound. Integrity is not independent execution-order or native-host attestation."
+}

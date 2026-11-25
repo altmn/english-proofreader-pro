@@ -1,5 +1,13 @@
 # Validation evidence
 
+## Audit-fix candidate — November 25, 2026
+
+The [audit repairs and evidence](../docs/audit-fixes.md) add validated immutable build snapshots, explicit fragment/finite-clause calibration, managed removal guidance, and stricter actual-execution/count-budget gates. Three fresh ephemeral Codex CLI 0.170.0 runs of the frozen `gpt-6.1-sol` / high simulation profile each generated the original, Markdown, and new fragment suites. Independent review passed **249/249 original, 111/111 Markdown, and 51/51 fragment assertions**. All three less-wordy outputs are 25 to 18 words, a 28% reduction. Twelve actual GFM renders preserve literal code and bold full quotations. All transport attempts, including four excluded preflights, are retained; no saved response or historical verdict was rewritten.
+
+The candidate skill SHA-256 is `4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207`; the stable six-file ZIP SHA-256 is `e803ad70cfaa447b98be0ad5f4a3ecad491b89fb5250c1c767ed21cbb7d95729`. CI uses the new `audit-fixes` records, while earlier captures remain historical for their own bytes. References to current inputs in the dated sections below describe those earlier snapshots.
+
+**Intended-host acceptance remains blocked.** The available ChatGPT test surface was logged out. No native trial or live update was performed, so the retained November 16 Instant counting/shortening failures are not declared resolved. Use the [native protocol](host-acceptance-runner.txt) on the exact candidate before release.
+
 ## Live Instant smoke checks — November 16, 2026
 
 The existing private cloud plugin was updated in place from merged source `9a3d362`. The host automatically advanced its version to **1.0.2**. Read-back verified the merged skill and UI metadata, the removal of the retired `proofread` files, and synchronized root/compatibility manifests; the host version bump is the only canonical-manifest difference from the repository's 1.0.1 source. No public directory publication was performed.

@@ -6,6 +6,16 @@
 
 `host-behavior-cases.json` adds synthetic checks for source URL/app-command isolation, explicit verification outside source, programmatic letter/Unicode/word counts, honest behavior without tools, and native/fallback code-block presentation. Count and isolation assertions need tool traces; copy/wrapping assertions need actual UI and clipboard observations. Valid fixture JSON is not behavioral acceptance. Keep these separate from the unchanged historical suites.
 
+## Fragment and agreement calibration
+
+[The supplemental calibration fixture](fragment-calibration-cases.json) separates explicit noun-phrase labels from an explicit finite clause. It also pairs fragment preservation with a clear article error, so a blanket no-op cannot pass. The oracle comes from the user directions and grammatical roles; it does not treat the ambiguous original fixture as proof of a failure or a necessary correction.
+
+Use `--fixtures tests/fragment-calibration-cases.json` with the snapshot/record workflow below. The complete frozen fixture includes reviewer rubric `fragment-agreement-calibration` version `1.0` and six calibration examples. Withhold expectations, rubric, and calibration examples from generators. Before reviewing new captures, an independent reviewer commits judgments on all six examples, then checks the expected verdicts. Retain every disagreement; a reviewer who misses an example must recalibrate under a new rubric version before scoring. Bind the calibration judgments to the rubric version and snapshot/fixture hashes, then grade every assertion against the complete captured output.
+
+These three cases are synthetic known-case regressions, not a holdout. Fixture validation and reviewer calibration do not establish model behavior or installed-host acceptance. Keep the original fixtures and historical responses, notes, and verdicts unchanged.
+
+The November 25 [audit-fix panel](../docs/audit-fixes.md) uses `audit-fixes-runner.txt`, three fresh ephemeral Codex CLI 0.170.0 invocations, and the unchanged `gpt-6.1-sol` / high regression profile. CI requires the current original, Markdown, and fragment suites. Calculation, calibration, judgment, and actual GFM renderer evidence remain bound to those captures; earlier profiles and transport failures are retained. Use the separate [native acceptance protocol](host-acceptance-runner.txt) for installed-host testing rather than reusing a simulation runner's host claims.
+
 ## Local package checks
 
 From the repository root, run:
