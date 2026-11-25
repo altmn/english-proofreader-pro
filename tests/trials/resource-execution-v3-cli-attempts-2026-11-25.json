@@ -1,0 +1,295 @@
+{
+  "schema_version": 1,
+  "kind": "resource-execution-v3-cli-attempts",
+  "outcome": "partial",
+  "attempted_runs": 3,
+  "mechanically_accepted_runs": 2,
+  "failed_runs": 1,
+  "controller_retries": 0,
+  "semantic_verdict": "not_run",
+  "configured_model": "gpt-6.1-sol",
+  "configured_reasoning_effort": "high",
+  "configured_cli_version": "0.170.0",
+  "attempts": [
+    {
+      "kind": "raw-capture-publication",
+      "run": 1,
+      "protocol_outcome": "failed",
+      "protocol_reason": "cannot read protocol input: candidate.json",
+      "semantic_verdict": "not_run",
+      "original_plan_path": "/Users/routerhealthchecker/.codex/audit-runs/resource-execution-v3-20261125-q8rk2b6n/controller/run-1/plan.json",
+      "artifacts": {
+        "plan": {
+          "path": "tests/trials/resource-execution-v3-cli-plan-1-2026-11-25.json",
+          "sha256": "b0a9ea45913d5452b354e35badcdf0e6d87b9d29973491f2fe78a3119aaa75f6"
+        },
+        "events": {
+          "path": "tests/trials/resource-execution-v3-cli-events-1-2026-11-25.jsonl.gz",
+          "sha256": "20edaff00c9de72b56bbd879223743626d39c8a9a3a6fbe3f11647b21228a57c"
+        },
+        "receipt": {
+          "path": "tests/trials/resource-execution-v3-cli-protocol-1-2026-11-25.json",
+          "sha256": "eb094e48348a7cf66c3629db1ad2041209f96222db18fb1090c2e7d4a1835490"
+        },
+        "stderr": {
+          "path": "tests/trials/resource-execution-v3-cli-stderr-1-2026-11-25.txt",
+          "sha256": "73d16769b720928f1ff0dcb8f11fe1d74fa234ded5f6f2596ae24a1963ed7b49"
+        },
+        "completion": {
+          "path": "tests/trials/resource-execution-v3-cli-completion-1-2026-11-25.txt",
+          "sha256": "e5717cc064795730902b2f0642b251d4cbd45d78350b81d97f155a2c120ea8de"
+        }
+      },
+      "measurements": {
+        "source": {
+          "item_id": "item_6",
+          "exit_code": 0,
+          "reference": {
+            "path": "tests/trials/resource-execution-v3-cli-source-measurement-1-2026-11-25.json",
+            "sha256": "c723027e60ca6d3738ba1fcd1cbefa1245afad2da6627fba4b5f9842e408b601"
+          }
+        }
+      },
+      "events_uncompressed_sha256": "540ff620ff809c22764717b1a786beadf70814dc23cf89d5002b4f1139259445",
+      "source_snapshots": {
+        "core": {
+          "path": "tests/trials/resource-execution-v3-cli-core-2026-11-25-snapshot.json",
+          "sha256": "c9695e494d9dc6a44e6a7d403cd67a3c5be775b97c23859ddc7ac024da88af66"
+        },
+        "markdown": {
+          "path": "tests/trials/resource-execution-v3-cli-markdown-2026-11-25-snapshot.json",
+          "sha256": "a319f352a0a0610bda3ce83cb8f719bdb00870a0c69b3e4915c70c621b4cc8c2"
+        },
+        "fragments": {
+          "path": "tests/trials/resource-execution-v3-cli-fragments-2026-11-25-snapshot.json",
+          "sha256": "15b2bcf81f93c6d54e1ef8b2bf4371fe9eedc9899c9a79ae8ea151a5cf228168"
+        }
+      },
+      "cli_exit_code": 0,
+      "elapsed_seconds": 105.6332928329939,
+      "stop_reason": null,
+      "storage_limits": {
+        "stdout": 16777216,
+        "stderr": 1048576
+      },
+      "observed_bytes": {
+        "stdout": 209707,
+        "stderr": 2011
+      },
+      "retained_bytes": {
+        "stdout": 209707,
+        "stderr": 2011
+      },
+      "owned_cleanup_remaining": [],
+      "usage": {
+        "input_tokens": 313857,
+        "cached_input_tokens": 264448,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 4174,
+        "reasoning_output_tokens": 1008
+      },
+      "cost": null,
+      "cost_status": "unknown",
+      "privacy_review": "Frozen public/synthetic inputs and complete failure streams reviewed; no accepted output existed to review.",
+      "observations": "Active PreToolUse guard denied optional inline runpy helper loading; agent stopped, no candidate/final execution."
+    },
+    {
+      "kind": "raw-capture-publication",
+      "run": 2,
+      "protocol_outcome": "passed",
+      "protocol_reason": null,
+      "semantic_verdict": "not_run",
+      "original_plan_path": "/Users/routerhealthchecker/.codex/audit-runs/resource-execution-v3-20261125-q8rk2b6n/controller/run-2/plan.json",
+      "artifacts": {
+        "plan": {
+          "path": "tests/trials/resource-execution-v3-cli-plan-2-2026-11-25.json",
+          "sha256": "79879dc606d5a457d6ef0b040874ead930fe505fce450f8c746e398e39de3580"
+        },
+        "events": {
+          "path": "tests/trials/resource-execution-v3-cli-events-2-2026-11-25.jsonl.gz",
+          "sha256": "a8540d4920f76490659fa6ac942fa45f2433278d78717cd11a51417fcc0a6f5f"
+        },
+        "receipt": {
+          "path": "tests/trials/resource-execution-v3-cli-protocol-2-2026-11-25.json",
+          "sha256": "e7f3f8b34baa385520695af65742629c27399d826b4cf4fcfcb8b1b92f81ad4c"
+        },
+        "stderr": {
+          "path": "tests/trials/resource-execution-v3-cli-stderr-2-2026-11-25.txt",
+          "sha256": "8ebf4550896423483cb7a5a2ff794441ae415d2e96600fc86b0478ef0e429e0d"
+        },
+        "completion": {
+          "path": "tests/trials/resource-execution-v3-cli-completion-2-2026-11-25.txt",
+          "sha256": "c50fb156225a12deb89e96ac243706242f69e89551a38f50aaf30ced42dd68b9"
+        },
+        "accepted": {
+          "path": "tests/trials/resource-execution-v3-cli-raw-2-2026-11-25.json",
+          "sha256": "6952138ba7e1359a3f0fe961118792124f517c51634d9258daba1f77f9c5244a"
+        }
+      },
+      "measurements": {
+        "source": {
+          "item_id": "item_6",
+          "exit_code": 0,
+          "reference": {
+            "path": "tests/trials/resource-execution-v3-cli-source-measurement-2-2026-11-25.json",
+            "sha256": "7a5b174e84053a160069d4aa8c71bf08ea70b680bd7a59bee41043c771de2ea1"
+          }
+        },
+        "final": {
+          "item_id": "item_20",
+          "exit_code": 0,
+          "reference": {
+            "path": "tests/trials/resource-execution-v3-cli-final-measurement-2-2026-11-25.json",
+            "sha256": "adb0ad3c503ea7b1541336dd130cffebcb894f80ac6b9ffd6db867079dcc0338"
+          }
+        }
+      },
+      "events_uncompressed_sha256": "d6761178112be2e69f1de92588c75366728aa9d0fd8c327fc55e7abd221e563a",
+      "source_snapshots": {
+        "core": {
+          "path": "tests/trials/resource-execution-v3-cli-core-2026-11-25-snapshot.json",
+          "sha256": "c9695e494d9dc6a44e6a7d403cd67a3c5be775b97c23859ddc7ac024da88af66"
+        },
+        "markdown": {
+          "path": "tests/trials/resource-execution-v3-cli-markdown-2026-11-25-snapshot.json",
+          "sha256": "a319f352a0a0610bda3ce83cb8f719bdb00870a0c69b3e4915c70c621b4cc8c2"
+        },
+        "fragments": {
+          "path": "tests/trials/resource-execution-v3-cli-fragments-2026-11-25-snapshot.json",
+          "sha256": "15b2bcf81f93c6d54e1ef8b2bf4371fe9eedc9899c9a79ae8ea151a5cf228168"
+        }
+      },
+      "cli_exit_code": 0,
+      "elapsed_seconds": 160.6896949580405,
+      "stop_reason": null,
+      "storage_limits": {
+        "stdout": 16777216,
+        "stderr": 1048576
+      },
+      "observed_bytes": {
+        "stdout": 254087,
+        "stderr": 228
+      },
+      "retained_bytes": {
+        "stdout": 254087,
+        "stderr": 228
+      },
+      "owned_cleanup_remaining": [],
+      "usage": {
+        "input_tokens": 620145,
+        "cached_input_tokens": 559872,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6676,
+        "reasoning_output_tokens": 2298
+      },
+      "cost": null,
+      "cost_status": "unknown",
+      "privacy_review": "Actual commands confined to public frozen envelope/plan/helpers and synthetic workspace data; complete accepted output reviewed. No redaction or event changes. Account config/private launch inventories remain local.",
+      "observations": "Required source/final commands succeeded once each; host startup reported system-skill installation cache error, retained in stderr."
+    },
+    {
+      "kind": "raw-capture-publication",
+      "run": 3,
+      "protocol_outcome": "passed",
+      "protocol_reason": null,
+      "semantic_verdict": "not_run",
+      "original_plan_path": "/Users/routerhealthchecker/.codex/audit-runs/resource-execution-v3-20261125-q8rk2b6n/controller/run-3/plan.json",
+      "artifacts": {
+        "plan": {
+          "path": "tests/trials/resource-execution-v3-cli-plan-3-2026-11-25.json",
+          "sha256": "992db4783a3e1bfe13c6ca36a7151185be5ebfa0e8e8be5b1863363699c1d15f"
+        },
+        "events": {
+          "path": "tests/trials/resource-execution-v3-cli-events-3-2026-11-25.jsonl.gz",
+          "sha256": "794f01c19da4c5a8a916bdb8f8a82c51d535d49e62e3759f1ba3399857eff9cd"
+        },
+        "receipt": {
+          "path": "tests/trials/resource-execution-v3-cli-protocol-3-2026-11-25.json",
+          "sha256": "7e3180a29bc9882676f97be029e4988fe8ea782170865d7dc16c75770184dc6f"
+        },
+        "stderr": {
+          "path": "tests/trials/resource-execution-v3-cli-stderr-3-2026-11-25.txt",
+          "sha256": "1aa26269eb1cc57f86b235a03cda53c004edb5b1e9fc99d4da4f00843293d721"
+        },
+        "completion": {
+          "path": "tests/trials/resource-execution-v3-cli-completion-3-2026-11-25.txt",
+          "sha256": "2b3ede00039b718f2cb4efaa39ae618052af92dc0f2b6750388eb470cc203a65"
+        },
+        "accepted": {
+          "path": "tests/trials/resource-execution-v3-cli-raw-3-2026-11-25.json",
+          "sha256": "b9774a1085bfaa918358d02ffc4f12f39bd64990d8a86425de5e5ec093c66350"
+        }
+      },
+      "measurements": {
+        "source": {
+          "item_id": "item_7",
+          "exit_code": 0,
+          "reference": {
+            "path": "tests/trials/resource-execution-v3-cli-source-measurement-3-2026-11-25.json",
+            "sha256": "2a1ae4aaae709de3dba03c206059f969d819ee3499c390025e57477702ab7c58"
+          }
+        },
+        "final": {
+          "item_id": "item_24",
+          "exit_code": 0,
+          "reference": {
+            "path": "tests/trials/resource-execution-v3-cli-final-measurement-3-2026-11-25.json",
+            "sha256": "f5163453fc089d67ace195a15086fce5aac7c37be29c443759cf22250814a882"
+          }
+        }
+      },
+      "events_uncompressed_sha256": "f488eab54fd19862a0ac616b87dc6aebed3910eea1b6be49b954367f1c1086cb",
+      "source_snapshots": {
+        "core": {
+          "path": "tests/trials/resource-execution-v3-cli-core-2026-11-25-snapshot.json",
+          "sha256": "c9695e494d9dc6a44e6a7d403cd67a3c5be775b97c23859ddc7ac024da88af66"
+        },
+        "markdown": {
+          "path": "tests/trials/resource-execution-v3-cli-markdown-2026-11-25-snapshot.json",
+          "sha256": "a319f352a0a0610bda3ce83cb8f719bdb00870a0c69b3e4915c70c621b4cc8c2"
+        },
+        "fragments": {
+          "path": "tests/trials/resource-execution-v3-cli-fragments-2026-11-25-snapshot.json",
+          "sha256": "15b2bcf81f93c6d54e1ef8b2bf4371fe9eedc9899c9a79ae8ea151a5cf228168"
+        }
+      },
+      "cli_exit_code": 0,
+      "elapsed_seconds": 208.3910820829915,
+      "stop_reason": null,
+      "storage_limits": {
+        "stdout": 16777216,
+        "stderr": 1048576
+      },
+      "observed_bytes": {
+        "stdout": 270349,
+        "stderr": 39
+      },
+      "retained_bytes": {
+        "stdout": 270349,
+        "stderr": 39
+      },
+      "owned_cleanup_remaining": [],
+      "usage": {
+        "input_tokens": 822510,
+        "cached_input_tokens": 760192,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8646,
+        "reasoning_output_tokens": 2893
+      },
+      "cost": null,
+      "cost_status": "unknown",
+      "privacy_review": "Actual commands confined to public frozen envelope/plan/helpers and synthetic workspace data; complete accepted output reviewed. No redaction or event changes. Account config/private launch inventories remain local.",
+      "observations": "Pre-save auxiliary draft budget check failed at21words against22word target; auxiliary composition revised before first candidate, check repeated successfully; exact source/final commands each succeeded once. No saved-candidate edits or controller retry."
+    }
+  ],
+  "usage_totals": {
+    "input_tokens": 1756512,
+    "cached_input_tokens": 1584512,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 19496,
+    "reasoning_output_tokens": 6199
+  },
+  "cost": null,
+  "cost_status": "unknown",
+  "scope": "Actual source/final gate accepted runs2and3 only. All three attempts and auxiliary failures retained; no three-clean-run or native-host acceptance claim. Assertions remain for independent semantic reviewers."
+}

@@ -1,0 +1,115 @@
+{
+  "kind": "markdown-render-verification",
+  "renderer": "GitHub Markdown API, mode=gfm",
+  "observations": [
+    {
+      "source_record": "tests/trials/resource-execution-v4-markdown-sol-1-2026-11-25.json",
+      "case_id": "rewrite-markdown-changes-quotes",
+      "response_sha256": "c7cc3eeda34cc6f471aab352800aa1ba893d3a597c02a5af4cd1308f5c66e902",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today. Thank you!\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>\"Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today.\"</strong> → <strong>\"Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today. Thank you!\"</strong>: Added polite wording and a warm closing, preserving the deadline, Markdown, link, and inline code.</li>\n</ul>",
+      "rendered_html_sha256": "788d62444faae5db8d25abbfc84e5e3d44cd12b99498a0ae72e27ef2dee98c20",
+      "renderer": "GitHub Markdown API, mode=gfm",
+      "rendered_at": "2026-11-25T20:51:14.818Z"
+    },
+    {
+      "source_record": "tests/trials/resource-execution-v4-markdown-sol-1-2026-11-25.json",
+      "case_id": "shorten-markdown-changes-quotes",
+      "response_sha256": "c77c0abc8b46c31c73b360dd7f898862d3643bff816cda45aab95ae6617f7063",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">We are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>\"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\"</strong> → <strong>\"We are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\"</strong>: Removed redundant timing and process wording while preserving the ongoing review, the future decision about whether to send, the timing, and all Markdown, links, and inline code.</li>\n</ul>",
+      "rendered_html_sha256": "81d9e96c29d0254b0d24a07f223a27c90164701910899faca644638f43b95bcd",
+      "renderer": "GitHub Markdown API, mode=gfm",
+      "rendered_at": "2026-11-25T20:51:14.824Z"
+    },
+    {
+      "source_record": "tests/trials/resource-execution-v4-markdown-sol-1-2026-11-25.json",
+      "case_id": "rewrite-markup-characters-in-changes",
+      "response_sha256": "3f615f176e75f9213fd2f5b2efb36f7d7c0525ee440b1feadda61111ccc8d529",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>\"Check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\"</strong> → <strong>\"Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\"</strong>: Added polite wording while preserving every literal markup character and the deadline.</li>\n</ul>",
+      "rendered_html_sha256": "a2971240154516974afde541c84f4051f3bc2338e9e734024d70a727a8d8288f",
+      "renderer": "GitHub Markdown API, mode=gfm",
+      "rendered_at": "2026-11-25T20:51:14.824Z"
+    },
+    {
+      "source_record": "tests/trials/resource-execution-v4-markdown-sol-1-2026-11-25.json",
+      "case_id": "rewrite-autolink-punctuation-in-changes",
+      "response_sha256": "9a07df48816c16042b0f7b8f5ae56a14f683a76e5041b1cbbc3696603a83944d",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email user@example.com today.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>\"Check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email <a href=\"mailto:user@example.com\">user@example.com</a> today.\"</strong> → <strong>\"Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email <a href=\"mailto:user@example.com\">user@example.com</a> today.\"</strong>: Added polite wording while preserving every URL, the email address, and the deadline exactly.</li>\n</ul>",
+      "rendered_html_sha256": "c20ff4065c01cb1d7bc972e059ea21076a453b052a836cc4f6d99efb56db7e5f",
+      "renderer": "GitHub Markdown API, mode=gfm",
+      "rendered_at": "2026-11-25T20:51:14.825Z"
+    },
+    {
+      "source_record": "tests/trials/resource-execution-v4-markdown-sol-2-2026-11-25.json",
+      "case_id": "rewrite-markdown-changes-quotes",
+      "response_sha256": "41a6b613792c2893c3ffa5feb5415e80ecae1e7d1411c7360081bd1fd078eeb9",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today. Thank you!\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>\"Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today.\"</strong> → <strong>\"Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today. Thank you!\"</strong> — Added a polite opening and an expression of thanks while retaining the firm deadline and all literal Markdown, links, and inline code.</li>\n</ul>",
+      "rendered_html_sha256": "39a67737385d54f1fb7de8a171795a421408d60ca01c2c906cdc13fabda074f1",
+      "renderer": "GitHub Markdown API, mode=gfm",
+      "rendered_at": "2026-11-25T20:51:14.825Z"
+    },
+    {
+      "source_record": "tests/trials/resource-execution-v4-markdown-sol-2-2026-11-25.json",
+      "case_id": "shorten-markdown-changes-quotes",
+      "response_sha256": "3482d7697352fcbd04accd1848999f533d2f7bc66d0f574711680a81e39ae56d",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">We are currently reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes) and will make a decision about whether to send them later.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>\"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\"</strong> → <strong>\"We are currently reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes) and will make a decision about whether to send them later.\"</strong> — Removed redundant time and process wording, the repeated subject, and the comma before the shared-subject predicate; preserved the ongoing review, the future decision about whether to send the materials later, and all literal Markdown, links, and inline code.</li>\n</ul>",
+      "rendered_html_sha256": "f39e43070fa5f2bc9f1148d5c7bb99563f1d97f92049c32f68b5ffc2f67e9dc9",
+      "renderer": "GitHub Markdown API, mode=gfm",
+      "rendered_at": "2026-11-25T20:51:14.825Z"
+    },
+    {
+      "source_record": "tests/trials/resource-execution-v4-markdown-sol-2-2026-11-25.json",
+      "case_id": "rewrite-markup-characters-in-changes",
+      "response_sha256": "c2f4fc1a27f12a9cd862e9a92798fa970404a0285a04e86d85d027c5d9df1a4e",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>\"Check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\"</strong> → <strong>\"Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\"</strong> — Added a polite opening while preserving every literal markup character and today's deadline.</li>\n</ul>",
+      "rendered_html_sha256": "b72569a8131e4376940554ab0a4b7f82780353c8d809c51147269f0685487974",
+      "renderer": "GitHub Markdown API, mode=gfm",
+      "rendered_at": "2026-11-25T20:51:14.825Z"
+    },
+    {
+      "source_record": "tests/trials/resource-execution-v4-markdown-sol-2-2026-11-25.json",
+      "case_id": "rewrite-autolink-punctuation-in-changes",
+      "response_sha256": "16c6a9252c3118ca8ce85f39f5a59d43e6cacbffa345b2d23c09c67ca28348fa",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email user@example.com today.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>\"Check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email <a href=\"mailto:user@example.com\">user@example.com</a> today.\"</strong> → <strong>\"Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email <a href=\"mailto:user@example.com\">user@example.com</a> today.\"</strong> — Added a polite opening while preserving both URLs, the email address, and today's deadline exactly.</li>\n</ul>",
+      "rendered_html_sha256": "65f79aa38a0f7629160ebeeac09a4d9f20d1ba35789fca3136f96ed21c9916f6",
+      "renderer": "GitHub Markdown API, mode=gfm",
+      "rendered_at": "2026-11-25T20:51:14.825Z"
+    },
+    {
+      "source_record": "tests/trials/resource-execution-v4-markdown-sol-3-2026-11-25.json",
+      "case_id": "rewrite-markdown-changes-quotes",
+      "response_sha256": "03ef4544a1c468eb0202217e8fda453c8a8d323db72083fd6e00b58be47c6f92",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today. Thank you!\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>\"Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today.\"</strong> → <strong>\"Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today. Thank you!\"</strong>: Made the request polite and added thanks while preserving the deadline and all literal Markdown, links, and inline code.</li>\n</ul>",
+      "rendered_html_sha256": "caf73f999bbe3751c6bbb82dc7199fd14106a9ceee2bf62b725d4ab4cf879161",
+      "renderer": "GitHub Markdown API, mode=gfm",
+      "rendered_at": "2026-11-25T20:51:14.825Z"
+    },
+    {
+      "source_record": "tests/trials/resource-execution-v4-markdown-sol-3-2026-11-25.json",
+      "case_id": "shorten-markdown-changes-quotes",
+      "response_sha256": "60729df6a2185d6023d6126a89fd5d412c4eb2e8f1cc802613e0363b2fd5a6cb",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">We are currently reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes) and will make a decision about whether to send them later.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>\"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\"</strong> → <strong>\"We are currently reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes) and will make a decision about whether to send them later.\"</strong>: Removed the redundant opening phrase and review-process wording, then combined the clauses under one subject while preserving the pending decision and all literal Markdown, links, and inline code.</li>\n</ul>",
+      "rendered_html_sha256": "62b3e107c83d3b0dfb48259f619c722cd03c8e4a98a200a5fc3c3c3bf5eb77a5",
+      "renderer": "GitHub Markdown API, mode=gfm",
+      "rendered_at": "2026-11-25T20:51:14.826Z"
+    },
+    {
+      "source_record": "tests/trials/resource-execution-v4-markdown-sol-3-2026-11-25.json",
+      "case_id": "rewrite-markup-characters-in-changes",
+      "response_sha256": "3e74a5e399b575751209eba38477a5b7c43386682e1858b4f4e553ea7e25cbee",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>\"Check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\"</strong> → <strong>\"Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.\"</strong>: Added a polite request marker while preserving all literal markup and today's deadline.</li>\n</ul>",
+      "rendered_html_sha256": "15674dbd9cba53a40ca4d3d05b463fa82ff56a68888bcefdfcc81a225ad229d6",
+      "renderer": "GitHub Markdown API, mode=gfm",
+      "rendered_at": "2026-11-25T20:51:14.826Z"
+    },
+    {
+      "source_record": "tests/trials/resource-execution-v4-markdown-sol-3-2026-11-25.json",
+      "case_id": "rewrite-autolink-punctuation-in-changes",
+      "response_sha256": "f7ebcaec7296ccd8f0d4f91a66dd55d74bb7abf619e1963af1144d86d5b8d77e",
+      "rendered_html": "<pre lang=\"text\" class=\"notranslate\"><code class=\"notranslate\">Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email user@example.com today.\n</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>\"Check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email <a href=\"mailto:user@example.com\">user@example.com</a> today.\"</strong> → <strong>\"Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email <a href=\"mailto:user@example.com\">user@example.com</a> today.\"</strong>: Added a polite request marker while preserving every URL, the email address, and today's deadline.</li>\n</ul>",
+      "rendered_html_sha256": "f42dbc46f32f9438a32e9d387946e1cb757c5f2e2db9f39658e83c0e12b6492a",
+      "renderer": "GitHub Markdown API, mode=gfm",
+      "rendered_at": "2026-11-25T20:51:14.826Z"
+    }
+  ],
+  "limit": "Twelve actual GFM renders of exact accepted V4 model responses; not native clipboard/UI or model execution attestation."
+}

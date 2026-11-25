@@ -1,0 +1,1 @@
+Stopped: tool execution was denied because the code-mode host is disabled. I couldn’t read `envelope.json`; no commands ran and no candidate was saved.

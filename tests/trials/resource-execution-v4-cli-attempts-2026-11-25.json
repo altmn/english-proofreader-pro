@@ -1,0 +1,700 @@
+{
+  "schema_version": 1,
+  "kind": "resource-execution-v4-cli-attempts",
+  "harvested_at": "2026-11-25T20:43:44.575681+00:00",
+  "mechanical_protocol_outcome": "passed",
+  "attempted_runs": 3,
+  "mechanically_accepted_runs": 3,
+  "controller_retries": 0,
+  "semantic_acceptance": "pending_independent_judgments",
+  "portable_passing_panel": "not_created",
+  "native_host_acceptance": "not_established_by_these_CLI_simulations",
+  "source_identities": {
+    "skills/proofreader-pro/SKILL.md": "47ecee80432daf25759bb894664f944cecef1cabd2cbc3cb9573795e3653ede6",
+    "skills/proofreader-pro/scripts/text_metrics.py": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51",
+    "plugin.json": "672419e08661ea920568613a7607c13ae658b5f5a936638c3bd0c8110dbf9369",
+    "scripts/capture_protocol.py": "25d988d40007007170a46fa5fdfaf044ae8943dd1b2cf2dd528bdc5e86a2ce3e",
+    "scripts/evaluate.py": "be13bed8776751f69a8e95451dd7dbf4e95b2fab9a67ea4f99e33b675be71eff",
+    "scripts/check_capture_evidence.py": "884fa1becd5ff87025933aaefdcbadf749bc9503491aac5026db6a6226531d4f",
+    "tests/verified-execution-runner.txt": "2f0a7e893b7e8b17d64c46dde764359bdc83d2d62393706f70f88850af9a5441"
+  },
+  "snapshots": {
+    "core": {
+      "path": "tests/trials/resource-execution-v4-cli-core-2026-11-25-snapshot.json",
+      "sha256": "12da6c0659c1ec817ffed1a9ca2e08e637de4979d941469af799e5719e88ac4b"
+    },
+    "markdown": {
+      "path": "tests/trials/resource-execution-v4-cli-markdown-2026-11-25-snapshot.json",
+      "sha256": "57332dc6591894bbd310421623ebd7673eb841d287fb03c068f72d1463efa9b4"
+    },
+    "fragments": {
+      "path": "tests/trials/resource-execution-v4-cli-fragments-2026-11-25-snapshot.json",
+      "sha256": "e6dfe4b95bb726071d4e6294cd67c78bd87cd893ba7041c0a431e2ac7e7a38a8"
+    }
+  },
+  "configured_cli_version": "0.170.0",
+  "configured_model": "gpt-6.1-sol",
+  "configured_reasoning_effort": "high",
+  "attempts": [
+    {
+      "kind": "raw-capture-publication",
+      "run": 1,
+      "protocol_outcome": "passed",
+      "protocol_reason": null,
+      "semantic_verdict": "not_run",
+      "original_plan_path": "/Users/routerhealthchecker/.codex/audit-runs/resource-execution-v4-20261125-etzv_ecy/controller/run-1/plan.json",
+      "artifacts": {
+        "plan": {
+          "path": "tests/trials/resource-execution-v4-cli-plan-1-2026-11-25.json",
+          "sha256": "4288894a8ab104dde5d440d2ab7bab30d172c87940ddd76849a9972c5165d5e0"
+        },
+        "events": {
+          "path": "tests/trials/resource-execution-v4-cli-events-1-2026-11-25.jsonl.gz",
+          "sha256": "cff611ecdc40e6cce73689f95fdb89f3160756beb991271239f1ef9c05ec5c30"
+        },
+        "receipt": {
+          "path": "tests/trials/resource-execution-v4-cli-protocol-1-2026-11-25.json",
+          "sha256": "d135b8bc877d4ea9291ed97950ac02b328000c07cee79f6e368bc1b07f18afc2"
+        },
+        "stderr": {
+          "path": "tests/trials/resource-execution-v4-cli-stderr-1-2026-11-25.txt",
+          "sha256": "a637e5547a679896cf46ce0bb874e421ee25e49d8393be53d1a7c57b0f6a0c25"
+        },
+        "completion": {
+          "path": "tests/trials/resource-execution-v4-cli-completion-1-2026-11-25.txt",
+          "sha256": "bf270d57c7b760092fae2ba28f429827e557bb5af8ad6d54ecdc8d46a1ae00eb"
+        },
+        "accepted": {
+          "path": "tests/trials/resource-execution-v4-cli-raw-1-2026-11-25.json",
+          "sha256": "e3df6bbae52132e854fb88ad55e144248b3696b41e20d7616f110e6371a0dad2"
+        }
+      },
+      "measurements": {
+        "source": {
+          "item_id": "item_6",
+          "exit_code": 0,
+          "reference": {
+            "path": "tests/trials/resource-execution-v4-cli-source-measurement-1-2026-11-25.json",
+            "sha256": "db1b76cfbd30666f5c5027690707356f95a4f7f27938c12df2dff8954c949b7e"
+          }
+        },
+        "final": {
+          "item_id": "item_63",
+          "exit_code": 0,
+          "reference": {
+            "path": "tests/trials/resource-execution-v4-cli-final-measurement-1-2026-11-25.json",
+            "sha256": "e6a328db76fe71cb6321e79f6291269a2d0b9dafce2122c7e996d582761b98d8"
+          }
+        }
+      },
+      "events_uncompressed_sha256": "8660c23b14dfb701dcfc3c42a09eb031dafac06e79f7f00a854323d65add5ab9",
+      "source_snapshots": {
+        "core": {
+          "path": "tests/trials/resource-execution-v4-cli-core-2026-11-25-snapshot.json",
+          "sha256": "12da6c0659c1ec817ffed1a9ca2e08e637de4979d941469af799e5719e88ac4b"
+        },
+        "markdown": {
+          "path": "tests/trials/resource-execution-v4-cli-markdown-2026-11-25-snapshot.json",
+          "sha256": "57332dc6591894bbd310421623ebd7673eb841d287fb03c068f72d1463efa9b4"
+        },
+        "fragments": {
+          "path": "tests/trials/resource-execution-v4-cli-fragments-2026-11-25-snapshot.json",
+          "sha256": "e6dfe4b95bb726071d4e6294cd67c78bd87cd893ba7041c0a431e2ac7e7a38a8"
+        }
+      },
+      "cli_exit_code": 0,
+      "elapsed_seconds": 232.826482375036,
+      "stop_reason": null,
+      "storage_limits": {
+        "stdout": 16777216,
+        "stderr": 1048576
+      },
+      "observed_bytes": {
+        "stdout": 367490,
+        "stderr": 228
+      },
+      "retained_bytes": {
+        "stdout": 367490,
+        "stderr": 228
+      },
+      "owned_cleanup_remaining": [],
+      "usage": {
+        "input_tokens": 1123591,
+        "cached_input_tokens": 1055488,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 9369,
+        "reasoning_output_tokens": 3187
+      },
+      "cost": null,
+      "cost_status": "unknown",
+      "privacy_review": "Actual commands confined to public frozen envelope/plan/helpers and synthetic workspace data; complete accepted output reviewed when present. No redaction or event changes. Account config/private launch inventories remain local.",
+      "records": [
+        {
+          "path": "tests/trials/resource-execution-v4-core-sol-1-2026-11-25.json",
+          "sha256": "dcf1baaec3c036c994d56aa62e26d6343ea3f35b5a17f3e9f04f2c18351d0173",
+          "aggregate_at_harvest": "not_run",
+          "not_run_assertions_at_harvest": 83
+        },
+        {
+          "path": "tests/trials/resource-execution-v4-markdown-sol-1-2026-11-25.json",
+          "sha256": "2c7a75a57e4fe279a70667af2c2ea495ee0fdb8d06f370c6bb865d9b42230002",
+          "aggregate_at_harvest": "not_run",
+          "not_run_assertions_at_harvest": 37
+        },
+        {
+          "path": "tests/trials/resource-execution-v4-fragments-sol-1-2026-11-25.json",
+          "sha256": "f491078ccb1b0cb4b6dadc98ef00f097b574fb24d4eb2209c6f4118e71dcd46f",
+          "aggregate_at_harvest": "not_run",
+          "not_run_assertions_at_harvest": 17
+        }
+      ],
+      "configured_run_id": "01a2146d-0e3d-7c13-bd2a-4ad9751ba4c9",
+      "observed_direct_optional_helper_calls": 41,
+      "observed_failed_command_count": 0,
+      "optional_pre_save_out_of_budget_drafts": [
+        {
+          "item_id": "item_16",
+          "source_words": 22,
+          "candidate_words": 18,
+          "budget": {
+            "kind": "range",
+            "max_words": 21,
+            "min_words": 20
+          }
+        },
+        {
+          "item_id": "item_18",
+          "source_words": 25,
+          "candidate_words": 16,
+          "budget": {
+            "kind": "point",
+            "max_words": 18,
+            "min_words": 18
+          }
+        },
+        {
+          "item_id": "item_40",
+          "source_words": 32,
+          "candidate_words": 20,
+          "budget": {
+            "kind": "point",
+            "max_words": 22,
+            "min_words": 22
+          }
+        },
+        {
+          "item_id": "item_55",
+          "source_words": 25,
+          "candidate_words": 16,
+          "budget": {
+            "kind": "point",
+            "max_words": 18,
+            "min_words": 18
+          }
+        },
+        {
+          "item_id": "item_58",
+          "source_words": 25,
+          "candidate_words": 16,
+          "budget": {
+            "kind": "point",
+            "max_words": 18,
+            "min_words": 18
+          }
+        }
+      ],
+      "shortening_final_measurements": [
+        {
+          "id": "trim-the-fat",
+          "source_words": 22,
+          "final_words": 20,
+          "reduction": 0.09090909090909091,
+          "within_budget": true
+        },
+        {
+          "id": "less-wordy",
+          "source_words": 25,
+          "final_words": 18,
+          "reduction": 0.28,
+          "within_budget": true
+        },
+        {
+          "id": "more-concise",
+          "source_words": 27,
+          "final_words": 16,
+          "reduction": 0.4074074074074074,
+          "within_budget": true
+        },
+        {
+          "id": "more-succinct",
+          "source_words": 28,
+          "final_words": 14,
+          "reduction": 0.5,
+          "within_budget": true
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "source_words": 32,
+          "final_words": 22,
+          "reduction": 0.3125,
+          "within_budget": true
+        }
+      ],
+      "actual_required_matching_events": {
+        "final": {
+          "end": 122,
+          "item_id": "item_63",
+          "measurement_sha256": "35a148d984fd1086cbd8d04f172bff3d958fd52d9f56c702b31a2862aee9f8fb",
+          "start": 121
+        },
+        "source": {
+          "end": 11,
+          "item_id": "item_6",
+          "measurement_sha256": "d4c06bc1a4bc6c9b165fd421f50d0dff356f282cf71ce60c8ade8dd544da96b0",
+          "start": 10
+        }
+      }
+    },
+    {
+      "kind": "raw-capture-publication",
+      "run": 2,
+      "protocol_outcome": "passed",
+      "protocol_reason": null,
+      "semantic_verdict": "not_run",
+      "original_plan_path": "/Users/routerhealthchecker/.codex/audit-runs/resource-execution-v4-20261125-etzv_ecy/controller/run-2/plan.json",
+      "artifacts": {
+        "plan": {
+          "path": "tests/trials/resource-execution-v4-cli-plan-2-2026-11-25.json",
+          "sha256": "9e36d14cb2ee226692b1a670475475aec742ca3def2926134c0fee9b78e1ba1c"
+        },
+        "events": {
+          "path": "tests/trials/resource-execution-v4-cli-events-2-2026-11-25.jsonl.gz",
+          "sha256": "e87027705bb90ecb02e294b6748c315278c6f05298d20a52a61a271ba9d8ae0e"
+        },
+        "receipt": {
+          "path": "tests/trials/resource-execution-v4-cli-protocol-2-2026-11-25.json",
+          "sha256": "b12fbb8d915410eb126658e1fb92608f0a701a9c9e6157aac3d8e2125fa6788f"
+        },
+        "stderr": {
+          "path": "tests/trials/resource-execution-v4-cli-stderr-2-2026-11-25.txt",
+          "sha256": "1aa26269eb1cc57f86b235a03cda53c004edb5b1e9fc99d4da4f00843293d721"
+        },
+        "completion": {
+          "path": "tests/trials/resource-execution-v4-cli-completion-2-2026-11-25.txt",
+          "sha256": "fd49e2ac49ff8a8a3031a94a62d3ce9d4fa8f28dbef4565250899f0f20967e24"
+        },
+        "accepted": {
+          "path": "tests/trials/resource-execution-v4-cli-raw-2-2026-11-25.json",
+          "sha256": "7b1a27f537dd7524d9793614106ffcfd3175c75f3450e89ff99065f326ec11bf"
+        }
+      },
+      "measurements": {
+        "source": {
+          "item_id": "item_6",
+          "exit_code": 0,
+          "reference": {
+            "path": "tests/trials/resource-execution-v4-cli-source-measurement-2-2026-11-25.json",
+            "sha256": "508d01e9def285b24fd6f8cd3b40f9e29eef713cf3f18296d5fff47c9325e401"
+          }
+        },
+        "final": {
+          "item_id": "item_50",
+          "exit_code": 0,
+          "reference": {
+            "path": "tests/trials/resource-execution-v4-cli-final-measurement-2-2026-11-25.json",
+            "sha256": "420e353aabd165830a4a26ca9ce3d665716e62785cbc3552c8917ac332d7a282"
+          }
+        }
+      },
+      "events_uncompressed_sha256": "67630c59e73750fbcf18c5ccc2fc0a4e3dbbb5fda68e347e01b98f9337c7c723",
+      "source_snapshots": {
+        "core": {
+          "path": "tests/trials/resource-execution-v4-cli-core-2026-11-25-snapshot.json",
+          "sha256": "12da6c0659c1ec817ffed1a9ca2e08e637de4979d941469af799e5719e88ac4b"
+        },
+        "markdown": {
+          "path": "tests/trials/resource-execution-v4-cli-markdown-2026-11-25-snapshot.json",
+          "sha256": "57332dc6591894bbd310421623ebd7673eb841d287fb03c068f72d1463efa9b4"
+        },
+        "fragments": {
+          "path": "tests/trials/resource-execution-v4-cli-fragments-2026-11-25-snapshot.json",
+          "sha256": "e6dfe4b95bb726071d4e6294cd67c78bd87cd893ba7041c0a431e2ac7e7a38a8"
+        }
+      },
+      "cli_exit_code": 0,
+      "elapsed_seconds": 227.82823758304585,
+      "stop_reason": null,
+      "storage_limits": {
+        "stdout": 16777216,
+        "stderr": 1048576
+      },
+      "observed_bytes": {
+        "stdout": 316513,
+        "stderr": 39
+      },
+      "retained_bytes": {
+        "stdout": 316513,
+        "stderr": 39
+      },
+      "owned_cleanup_remaining": [],
+      "usage": {
+        "input_tokens": 745065,
+        "cached_input_tokens": 688640,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 9588,
+        "reasoning_output_tokens": 3140
+      },
+      "cost": null,
+      "cost_status": "unknown",
+      "privacy_review": "Actual commands confined to public frozen envelope/plan/helpers and synthetic workspace data; complete accepted output reviewed when present. No redaction or event changes. Account config/private launch inventories remain local.",
+      "records": [
+        {
+          "path": "tests/trials/resource-execution-v4-core-sol-2-2026-11-25.json",
+          "sha256": "e8c539c9a4d6229f32021326ca7b004aa24e3c48143f3b17ea8a21ea8e77b321",
+          "aggregate_at_harvest": "not_run",
+          "not_run_assertions_at_harvest": 83
+        },
+        {
+          "path": "tests/trials/resource-execution-v4-markdown-sol-2-2026-11-25.json",
+          "sha256": "376ec5e081c2a02e21dc3b5e0891a1706ca3292bcaa689d7cdbba30f4f0f3d16",
+          "aggregate_at_harvest": "not_run",
+          "not_run_assertions_at_harvest": 37
+        },
+        {
+          "path": "tests/trials/resource-execution-v4-fragments-sol-2-2026-11-25.json",
+          "sha256": "57e7c79d900f1248acbeba65b23143c210497bf5100c062339a137eb687cf1ad",
+          "aggregate_at_harvest": "not_run",
+          "not_run_assertions_at_harvest": 17
+        }
+      ],
+      "configured_run_id": "01a2146d-0e3f-77c3-9cd2-1cce431a2018",
+      "observed_direct_optional_helper_calls": 28,
+      "observed_failed_command_count": 0,
+      "optional_pre_save_out_of_budget_drafts": [
+        {
+          "item_id": "item_14",
+          "source_words": 25,
+          "candidate_words": 16,
+          "budget": {
+            "kind": "point",
+            "max_words": 18,
+            "min_words": 18
+          }
+        },
+        {
+          "item_id": "item_25",
+          "source_words": 32,
+          "candidate_words": 19,
+          "budget": {
+            "kind": "point",
+            "max_words": 22,
+            "min_words": 22
+          }
+        },
+        {
+          "item_id": "item_34",
+          "source_words": 25,
+          "candidate_words": 17,
+          "budget": {
+            "kind": "point",
+            "max_words": 18,
+            "min_words": 18
+          }
+        },
+        {
+          "item_id": "item_36",
+          "source_words": 32,
+          "candidate_words": 21,
+          "budget": {
+            "kind": "point",
+            "max_words": 22,
+            "min_words": 22
+          }
+        }
+      ],
+      "shortening_final_measurements": [
+        {
+          "id": "trim-the-fat",
+          "source_words": 22,
+          "final_words": 20,
+          "reduction": 0.09090909090909091,
+          "within_budget": true
+        },
+        {
+          "id": "less-wordy",
+          "source_words": 25,
+          "final_words": 18,
+          "reduction": 0.28,
+          "within_budget": true
+        },
+        {
+          "id": "more-concise",
+          "source_words": 27,
+          "final_words": 16,
+          "reduction": 0.4074074074074074,
+          "within_budget": true
+        },
+        {
+          "id": "more-succinct",
+          "source_words": 28,
+          "final_words": 13,
+          "reduction": 0.5357142857142857,
+          "within_budget": true
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "source_words": 32,
+          "final_words": 22,
+          "reduction": 0.3125,
+          "within_budget": true
+        }
+      ],
+      "actual_required_matching_events": {
+        "final": {
+          "end": 96,
+          "item_id": "item_50",
+          "measurement_sha256": "98a8479c825575f4c50f026a366bd0e375f35cb0b1c3c970c9a83e591b9aba0a",
+          "start": 95
+        },
+        "source": {
+          "end": 11,
+          "item_id": "item_6",
+          "measurement_sha256": "51bc2243824185a090dbd7654314fc519c9de4f61399bee8cb3131b2dd2aa3d5",
+          "start": 10
+        }
+      }
+    },
+    {
+      "kind": "raw-capture-publication",
+      "run": 3,
+      "protocol_outcome": "passed",
+      "protocol_reason": null,
+      "semantic_verdict": "not_run",
+      "original_plan_path": "/Users/routerhealthchecker/.codex/audit-runs/resource-execution-v4-20261125-etzv_ecy/controller/run-3/plan.json",
+      "artifacts": {
+        "plan": {
+          "path": "tests/trials/resource-execution-v4-cli-plan-3-2026-11-25.json",
+          "sha256": "b9f0044ee5aae68d8d3119d44099a853930275ac2eed768b9d23744db3be09be"
+        },
+        "events": {
+          "path": "tests/trials/resource-execution-v4-cli-events-3-2026-11-25.jsonl.gz",
+          "sha256": "eaf2417e4e027114a186f369cec9a81487d1d93083b35edf1a9ba6c90e9e8d9a"
+        },
+        "receipt": {
+          "path": "tests/trials/resource-execution-v4-cli-protocol-3-2026-11-25.json",
+          "sha256": "e7e3c5caa3d0862e3879f54d7b1b02534cf85656faa821d6834e8ad2105aa492"
+        },
+        "stderr": {
+          "path": "tests/trials/resource-execution-v4-cli-stderr-3-2026-11-25.txt",
+          "sha256": "1aa26269eb1cc57f86b235a03cda53c004edb5b1e9fc99d4da4f00843293d721"
+        },
+        "completion": {
+          "path": "tests/trials/resource-execution-v4-cli-completion-3-2026-11-25.txt",
+          "sha256": "c50fb156225a12deb89e96ac243706242f69e89551a38f50aaf30ced42dd68b9"
+        },
+        "accepted": {
+          "path": "tests/trials/resource-execution-v4-cli-raw-3-2026-11-25.json",
+          "sha256": "7b5ff0968709f2a29d19311fc0f0372267aaf3a4edbe41ea107fc2ee2392ba92"
+        }
+      },
+      "measurements": {
+        "source": {
+          "item_id": "item_6",
+          "exit_code": 0,
+          "reference": {
+            "path": "tests/trials/resource-execution-v4-cli-source-measurement-3-2026-11-25.json",
+            "sha256": "037659f44e7e4801afb74045f586373dbfae0228cf8912e0a2087d8b4641967b"
+          }
+        },
+        "final": {
+          "item_id": "item_43",
+          "exit_code": 0,
+          "reference": {
+            "path": "tests/trials/resource-execution-v4-cli-final-measurement-3-2026-11-25.json",
+            "sha256": "43c130e66e2b657c590a93d4b79f2cff577cb03b9ca58bab879c0ee264f8c7d0"
+          }
+        }
+      },
+      "events_uncompressed_sha256": "06a6de3ef2d6170303f58a17217c9b8767b3e673a72196577ae32dd9f27ccf37",
+      "source_snapshots": {
+        "core": {
+          "path": "tests/trials/resource-execution-v4-cli-core-2026-11-25-snapshot.json",
+          "sha256": "12da6c0659c1ec817ffed1a9ca2e08e637de4979d941469af799e5719e88ac4b"
+        },
+        "markdown": {
+          "path": "tests/trials/resource-execution-v4-cli-markdown-2026-11-25-snapshot.json",
+          "sha256": "57332dc6591894bbd310421623ebd7673eb841d287fb03c068f72d1463efa9b4"
+        },
+        "fragments": {
+          "path": "tests/trials/resource-execution-v4-cli-fragments-2026-11-25-snapshot.json",
+          "sha256": "e6dfe4b95bb726071d4e6294cd67c78bd87cd893ba7041c0a431e2ac7e7a38a8"
+        }
+      },
+      "cli_exit_code": 0,
+      "elapsed_seconds": 159.4393561249599,
+      "stop_reason": null,
+      "storage_limits": {
+        "stdout": 16777216,
+        "stderr": 1048576
+      },
+      "observed_bytes": {
+        "stdout": 304915,
+        "stderr": 39
+      },
+      "retained_bytes": {
+        "stdout": 304915,
+        "stderr": 39
+      },
+      "owned_cleanup_remaining": [],
+      "usage": {
+        "input_tokens": 760500,
+        "cached_input_tokens": 693632,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 6239,
+        "reasoning_output_tokens": 1848
+      },
+      "cost": null,
+      "cost_status": "unknown",
+      "privacy_review": "Actual commands confined to public frozen envelope/plan/helpers and synthetic workspace data; complete accepted output reviewed when present. No redaction or event changes. Account config/private launch inventories remain local.",
+      "records": [
+        {
+          "path": "tests/trials/resource-execution-v4-core-sol-3-2026-11-25.json",
+          "sha256": "6198ce39ebb4d5bb7774bd6d731b11675417527998760f12f9ab3eaa850ace61",
+          "aggregate_at_harvest": "not_run",
+          "not_run_assertions_at_harvest": 83
+        },
+        {
+          "path": "tests/trials/resource-execution-v4-markdown-sol-3-2026-11-25.json",
+          "sha256": "b89516426b0f2557984b9917545b3c4601c73e54b142ca67966fc6761f847dbe",
+          "aggregate_at_harvest": "not_run",
+          "not_run_assertions_at_harvest": 37
+        },
+        {
+          "path": "tests/trials/resource-execution-v4-fragments-sol-3-2026-11-25.json",
+          "sha256": "8b318f549cd8b1a1695235be02a3009b91ce6555f2805aa926545a82484ae89a",
+          "aggregate_at_harvest": "not_run",
+          "not_run_assertions_at_harvest": 17
+        }
+      ],
+      "configured_run_id": "01a2146d-0e3e-7900-a6ec-c57445dbf698",
+      "observed_direct_optional_helper_calls": 26,
+      "observed_failed_command_count": 0,
+      "optional_pre_save_out_of_budget_drafts": [
+        {
+          "item_id": "item_24",
+          "source_words": 25,
+          "candidate_words": 16,
+          "budget": {
+            "kind": "point",
+            "max_words": 18,
+            "min_words": 18
+          }
+        },
+        {
+          "item_id": "item_29",
+          "source_words": 32,
+          "candidate_words": 19,
+          "budget": {
+            "kind": "point",
+            "max_words": 22,
+            "min_words": 22
+          }
+        },
+        {
+          "item_id": "item_32",
+          "source_words": 32,
+          "candidate_words": 21,
+          "budget": {
+            "kind": "point",
+            "max_words": 22,
+            "min_words": 22
+          }
+        }
+      ],
+      "shortening_final_measurements": [
+        {
+          "id": "trim-the-fat",
+          "source_words": 22,
+          "final_words": 20,
+          "reduction": 0.09090909090909091,
+          "within_budget": true
+        },
+        {
+          "id": "less-wordy",
+          "source_words": 25,
+          "final_words": 18,
+          "reduction": 0.28,
+          "within_budget": true
+        },
+        {
+          "id": "more-concise",
+          "source_words": 27,
+          "final_words": 16,
+          "reduction": 0.4074074074074074,
+          "within_budget": true
+        },
+        {
+          "id": "more-succinct",
+          "source_words": 28,
+          "final_words": 12,
+          "reduction": 0.5714285714285714,
+          "within_budget": true
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "source_words": 32,
+          "final_words": 22,
+          "reduction": 0.3125,
+          "within_budget": true
+        }
+      ],
+      "actual_required_matching_events": {
+        "final": {
+          "end": 82,
+          "item_id": "item_43",
+          "measurement_sha256": "02508cefa8e8996e26c124aa0df9dea75442baafe2f05dce62205b252177870a",
+          "start": 81
+        },
+        "source": {
+          "end": 11,
+          "item_id": "item_6",
+          "measurement_sha256": "15bd9e90d93d19e491224bd6ca69ea31133a578ec578c1e524b2ff6db1f3ac1b",
+          "start": 10
+        }
+      }
+    }
+  ],
+  "usage_totals": {
+    "input_tokens": 2629156,
+    "cached_input_tokens": 2437760,
+    "cache_write_input_tokens": 0,
+    "output_tokens": 25196,
+    "reasoning_output_tokens": 8175
+  },
+  "cost": null,
+  "cost_status": "unknown",
+  "observations": [
+    "All required source/final commands observed successfully once each in correct order with exact candidate/resource bindings.",
+    "Recorded optional measurements use direct shipped-helper CLI with inert JSON files. No rejected hook calls, failed completed commands, inline runpy/helper loaders or substitute counters found in recorded command bodies.",
+    "Pre-save draft measurements sometimes reported outside budget; drafts were revised before the first saved candidate. Those observations remain in actual logs; no final measurement or saved candidate was retried.",
+    "Run1 retains a host startup system-skill cache installation error; generation command execution succeeded.",
+    "CLI JSONL omits direct CodeMode cell bodies; unobserved internal computation cannot be universally attested."
+  ],
+  "prior_attempts_retained": [
+    {
+      "path": "tests/trials/resource-execution-v2-cli-attempts-2026-11-25.json",
+      "outcome": "three_failed_tool_availability_attempts"
+    },
+    {
+      "path": "tests/trials/resource-execution-v3-cli-attempts-2026-11-25.json",
+      "outcome": "two_gate_passes_one_guard_denial"
+    }
+  ],
+  "remaining_todos": [
+    "Independent semantic grades for all nine v4 records (preserve exact response and source bindings).",
+    "Build and validate a portable execution panel only after actual complete passing judgments; do not mix frozen runner revisions.",
+    "Resolve or scope intended-host/native acceptance separately.",
+    "Review retained CLI host system-skill cache startup warning if maintaining the capture harness."
+  ],
+  "stop_state": "User requested wrap-up; no further repairs, probes, model launches, runner revisions or semantic retries are planned."
+}

@@ -12,6 +12,8 @@ The documented plugin and [skill metadata](https://learn.chatgpt.com/docs/build-
 
 Earlier Sol/high simulations are evidence for their exact source/profile, not a default setting or proof of Instant behavior. The November 25 private candidate checks in Safari showed **Instant / 1 of 5** in the picker, but still did not pass counting-evidence and shortening checks. The underlying model snapshot and web build were not exposed. This revision has not passed intended-host acceptance on the recommended setting. See [validation evidence](../tests/RESULTS.md).
 
+The private 1.0.9 [Work-mode smoke checks](../tests/trials/resource-counting-safari-work-1.0.9-2026-11-25.json) used **GPT-6.2 Sol Light / 2 of 6**, with fast mode off. They exposed calculation-command activity, a correct count, and an 18-word less-wordy result in a copyable code block with full bold Changes quotations. Native copy preserved the single-line payload. The inspected UI did not expose raw command bodies or returned helper JSON; these bounded observations do not accept hidden execution identity or the separate failing Chat/Instant profile.
+
 ## Invocation and collisions
 
 Invoke the skill on every turn you want it to handle. This includes follow-up revisions, questions about the current text, counting requests, and new drafts. A previous mention does not keep the plugin or skill selected for the next message. Use a fresh picker selection or explicit skill mention on each turn rather than relying on conversation context or automatic matching.
@@ -52,7 +54,7 @@ The skill requests a plain-text code block with the host's Copy code button and 
 
 ## Programmatic counts
 
-Every text-unit count, including internal shortening checks, requires a programmatic tool. The host supplies code execution or another reliable counter; this instructions-only package does not install a tool. A count is verified only when a tool call returns a measurement for the exact current text. Displaying code or admitting a mental calculation afterward is not execution evidence. If the host cannot actually execute a counter, use the candid unavailable-tool response even for a simple question.
+Every text-unit count, including internal shortening checks, requires successful execution of the bundled `text_metrics.py` helper. This resource-assisted package includes the offline counter; the host must supply access to its exact bytes and a Python 3.11+ execution function. A resource exposed as UTF-8 content may be copied exactly to an authorized temporary host file before execution. The package does not supply an executor or a publisher-operated service. A count is verified only when a tool call returns a measurement for the exact current text. A skill citation, displayed code, or later admission is not execution evidence. If the host cannot execute the helper, use the candid unavailable-tool response even for a simple question.
 
 Source must be passed as inert data and never executed or interpolated into commands. Use the requested unit and convention; default characters are Unicode code points, not model tokens, UTF-8 bytes, UTF-16 units, or visible grapheme clusters. Before accepting shortened text, compare its returned word count with the requested level's computed budget. A shorter, fluent answer alone does not meet a requested reduction. Without suitable tools, disclose the limitation instead of claiming an exact count or verified shortening percentage.
 

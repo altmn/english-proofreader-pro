@@ -1,0 +1,1062 @@
+{
+  "kind": "independent-supplemental-semantic-review",
+  "date": "2026-11-25",
+  "reviewer": "Independent Codex agent /root/ship_markdown",
+  "scope": "All 37 Markdown and 17 fragment assertions in each of three accepted V4 captures; exact generated output reviewed individually, not generated again.",
+  "calibration": {
+    "rubric_id": "fragment-agreement-calibration",
+    "rubric_version": "1.0",
+    "retained_result": "tests/trials/resource-execution-v2-calibration-result-2026-11-25.json",
+    "retained_result_sha256": "042442e469151e1a774e9eeec719e7a1240b53a6bc9d3f8066ad19a039eec180",
+    "disclosure": "Reuses the retained six-example 6/6 rubric calibration. This reviewer saw the fixture gold before grading and does not claim a new blind calibration."
+  },
+  "render_evidence": "tests/trials/resource-execution-v4-markdown-render-2026-11-25.json",
+  "render_evidence_sha256": "fa9078395e467bb7d373ca4a7b36f38625b57365caddb6abc0ddd081dce91523",
+  "records": [
+    {
+      "path": "tests/trials/resource-execution-v4-markdown-sol-1-2026-11-25.json",
+      "before_sha256": "2c7a75a57e4fe279a70667af2c2ea495ee0fdb8d06f370c6bb865d9b42230002",
+      "snapshot_sha256": "57332dc6591894bbd310421623ebd7673eb841d287fb03c068f72d1463efa9b4",
+      "source_binding": {
+        "skill_sha256": "47ecee80432daf25759bb894664f944cecef1cabd2cbc3cb9573795e3653ede6",
+        "manifest_version": "1.0.9",
+        "manifest_sha256": "672419e08661ea920568613a7607c13ae658b5f5a936638c3bd0c8110dbf9369",
+        "runner_context_sha256": "2f0a7e893b7e8b17d64c46dde764359bdc83d2d62393706f70f88850af9a5441",
+        "resources": {
+          "skills/proofreader-pro/scripts/text_metrics.py": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51"
+        }
+      },
+      "cases": [
+        {
+          "id": "rewrite-markdown-changes-quotes",
+          "response_sha256": "c7cc3eeda34cc6f471aab352800aa1ba893d3a597c02a5af4cd1308f5c66e902",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles rewrite_supplied_text directly on the submitted text."
+            },
+            {
+              "name": "honors_tone_and_keeps_today_deadline",
+              "status": "pass",
+              "notes": "Please and Thank you add warmth while the today deadline remains explicit."
+            },
+            {
+              "name": "preserves_literal_emphasis_link_url_and_inline_code_in_result",
+              "status": "pass",
+              "notes": "The fenced result retains the exact **draft**, *notes*, link destination/query string, and `review_queue` characters."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete revised text is first in a text fence longer than any internal backtick run."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "notes": "The Changes entry quotes the full source and full revised text, including the added thanks where present."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "notes": "Actual GitHub GFM HTML has two uninterrupted strong spans containing the full original and revised quotations."
+            },
+            {
+              "name": "rendered_quotes_show_literal_markdown_including_backticks_brackets_and_ampersand",
+              "status": "pass",
+              "notes": "Actual rendered strong text preserves emphasis markers, link brackets, parentheses, inline backticks, and ampersand characters literally."
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "notes": "Display escapes occur only in Changes quotations; the fenced result retains source syntax without added escape characters, and explanations do not claim escaping as edits."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "notes": "The complete before/after pair exposes every edit; the explanation accurately identifies the polite opening and any warm closing, with no fictional corrections."
+            }
+          ]
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "response_sha256": "c77c0abc8b46c31c73b360dd7f898862d3643bff816cda45aab95ae6617f7063",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles proofread_and_shorten_supplied_text directly on the submitted text."
+            },
+            {
+              "name": "requested_reduction_target",
+              "status": "pass",
+              "notes": "Direct shipped-helper review measurement returned source_words 32, candidate_words 22, rounded point budget 22, within_budget true (31.25% reduction). This later recount is separate from generator execution evidence."
+            },
+            {
+              "name": "preserves_review_and_future_decision_whether_to_send",
+              "status": "pass",
+              "notes": "The ongoing review and future decision about whether to send the materials later remain explicit; no decision or sending is asserted to have occurred."
+            },
+            {
+              "name": "preserves_literal_emphasis_link_and_code_path_in_result",
+              "status": "pass",
+              "notes": "The result retains **draft**, the exact C:\\reports code path, and the notes link unchanged."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete revised text is first in a text fence longer than any internal backtick run."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "notes": "The Changes entry quotes the full source and full revised text, including the added thanks where present."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "notes": "Actual GitHub GFM HTML has two uninterrupted strong spans containing the full original and revised quotations."
+            },
+            {
+              "name": "rendered_quotes_preserve_source_backslash_and_literal_markdown",
+              "status": "pass",
+              "notes": "Actual rendered strong text preserves the literal path backslash, emphasis/backticks, and full link syntax."
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "notes": "Display escapes occur only in Changes quotations; the fenced result retains source syntax without added escape characters, and explanations do not claim escaping as edits."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "notes": "The full before/after quotations show all deletions and capitalization changes; the explanation truthfully describes removed timing/process redundancy and shared-subject combination where used, without claiming invented edits."
+            }
+          ]
+        },
+        {
+          "id": "rewrite-markup-characters-in-changes",
+          "response_sha256": "3f615f176e75f9213fd2f5b2efb36f7d7c0525ee440b1feadda61111ccc8d529",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles rewrite_supplied_text directly on the submitted text."
+            },
+            {
+              "name": "makes_request_polite_and_keeps_today_deadline",
+              "status": "pass",
+              "notes": "Please check makes the request polite and retains today."
+            },
+            {
+              "name": "preserves_literal_emphasis_tag_entity_and_strikethrough_in_result",
+              "status": "pass",
+              "notes": "The fenced result retains **draft**, <ready>, &copy;, and ~~pending~~ literally."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete revised text is first in a text fence longer than any internal backtick run."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "notes": "The Changes entry quotes the full source and full revised text, including the added thanks where present."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "notes": "Actual GitHub GFM HTML has two uninterrupted strong spans containing the full original and revised quotations."
+            },
+            {
+              "name": "rendered_quotes_show_angle_brackets_entity_spelling_and_tildes_literally",
+              "status": "pass",
+              "notes": "Actual rendered strong text reads <ready>, &copy;, and ~~pending~~ literally, without interpreting them as tags/entities/strikethrough."
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "notes": "Display escapes occur only in Changes quotations; the fenced result retains source syntax without added escape characters, and explanations do not claim escaping as edits."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "notes": "The complete before/after pair exposes every edit; the explanation accurately identifies the polite opening and any warm closing, with no fictional corrections."
+            }
+          ]
+        },
+        {
+          "id": "rewrite-autolink-punctuation-in-changes",
+          "response_sha256": "9a07df48816c16042b0f7b8f5ae56a14f683a76e5041b1cbbc3696603a83944d",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles rewrite_supplied_text directly on the submitted text."
+            },
+            {
+              "name": "makes_request_polite_and_keeps_today_deadline",
+              "status": "pass",
+              "notes": "Please check makes the request polite and retains today."
+            },
+            {
+              "name": "preserves_exact_urls_and_email_in_result",
+              "status": "pass",
+              "notes": "Both complete URLs, their punctuation/query parameters, and user@example.com are unchanged in the result."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete revised text is first in a text fence longer than any internal backtick run."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "notes": "The Changes entry quotes the full source and full revised text, including the added thanks where present."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "notes": "Actual GitHub GFM HTML has two uninterrupted strong spans containing the full original and revised quotations."
+            },
+            {
+              "name": "rendered_quotes_preserve_urls_and_email_without_added_backslashes",
+              "status": "pass",
+              "notes": "Actual rendered strong text contains the exact URLs/email; automatic mailto wrapping retains visible text and no display backslashes remain."
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "notes": "Display escapes occur only in Changes quotations; the fenced result retains source syntax without added escape characters, and explanations do not claim escaping as edits."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "notes": "The complete before/after pair exposes every edit; the explanation accurately identifies the polite opening and any warm closing, with no fictional corrections."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "tests/trials/resource-execution-v4-fragments-sol-1-2026-11-25.json",
+      "before_sha256": "f491078ccb1b0cb4b6dadc98ef00f097b574fb24d4eb2209c6f4118e71dcd46f",
+      "snapshot_sha256": "e6dfe4b95bb726071d4e6294cd67c78bd87cd893ba7041c0a431e2ac7e7a38a8",
+      "source_binding": {
+        "skill_sha256": "47ecee80432daf25759bb894664f944cecef1cabd2cbc3cb9573795e3653ede6",
+        "manifest_version": "1.0.9",
+        "manifest_sha256": "672419e08661ea920568613a7607c13ae658b5f5a936638c3bd0c8110dbf9369",
+        "runner_context_sha256": "2f0a7e893b7e8b17d64c46dde764359bdc83d2d62393706f70f88850af9a5441",
+        "resources": {
+          "skills/proofreader-pro/scripts/text_metrics.py": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51"
+        }
+      },
+      "cases": [
+        {
+          "id": "fragment-labels-no-op",
+          "response_sha256": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles proofread_intentional_noun_phrase_labels directly on the submitted text."
+            },
+            {
+              "name": "response_exactly",
+              "status": "pass",
+              "notes": "The response is exactly The text does not require any adjustments."
+            },
+            {
+              "name": "retains_intentional_noun_phrases_without_invented_agreement_edit",
+              "status": "pass",
+              "notes": "The exact no-op response respects the expressly intentional noun-phrase labels and invents no finite-clause edit."
+            },
+            {
+              "name": "no_revised_text_fence_or_changes_list",
+              "status": "pass",
+              "notes": "The exact no-op response has no revised-text fence or Changes list."
+            }
+          ]
+        },
+        {
+          "id": "finite-clause-agreement",
+          "response_sha256": "1b3c16a147a833f100834ee02bfa5f1d3ade45033c1b49a810b8a8261f898685",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles proofread_explicit_finite_clause directly on the submitted text."
+            },
+            {
+              "name": "corrects_link_to_links_for_singular_subject_and_direct_object",
+              "status": "pass",
+              "notes": "Only the finite verb changes from link to links with singular phrase and direct object readers."
+            },
+            {
+              "name": "changes_no_other_source_characters",
+              "status": "pass",
+              "notes": "Direct comparison of the fenced text shows only the specified link→links or A unusual→An unusual correction."
+            },
+            {
+              "name": "preserves_list_emphasis_url_and_line_breaks",
+              "status": "pass",
+              "notes": "The two list markers/lines, literal emphasis markers, and exact URL remain unchanged."
+            },
+            {
+              "name": "complete_revised_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete two-line corrected text appears first inside a three-backtick text fence; source has no competing backtick run."
+            },
+            {
+              "name": "truthful_changes_list_accounts_only_for_link_to_links",
+              "status": "pass",
+              "notes": "The Changes entry accurately quotes and explains only the singular-subject agreement correction."
+            }
+          ]
+        },
+        {
+          "id": "fragment-labels-article-only",
+          "response_sha256": "8526c3d1a59852ae6c0ad7c78743da2d8fe226e45a81d57b73d504e8c022cdd1",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles proofread_noun_phrases_with_clear_article_error directly on the submitted text."
+            },
+            {
+              "name": "corrects_a_unusual_to_an_unusual",
+              "status": "pass",
+              "notes": "The second label correctly begins An unusual report summary."
+            },
+            {
+              "name": "retains_phrase_link_as_an_intentional_noun_phrase",
+              "status": "pass",
+              "notes": "The first label retains phrase link; it is not converted into a finite clause."
+            },
+            {
+              "name": "changes_no_other_source_characters",
+              "status": "pass",
+              "notes": "Direct comparison of the fenced text shows only the specified link→links or A unusual→An unusual correction."
+            },
+            {
+              "name": "preserves_list_emphasis_url_and_line_breaks",
+              "status": "pass",
+              "notes": "The two list markers/lines, literal emphasis markers, and exact URL remain unchanged."
+            },
+            {
+              "name": "complete_revised_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete two-line corrected text appears first inside a three-backtick text fence; source has no competing backtick run."
+            },
+            {
+              "name": "truthful_changes_list_accounts_only_for_article_correction",
+              "status": "pass",
+              "notes": "The Changes entry accurately quotes and explains only the A→An correction before unusual."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "tests/trials/resource-execution-v4-markdown-sol-2-2026-11-25.json",
+      "before_sha256": "376ec5e081c2a02e21dc3b5e0891a1706ca3292bcaa689d7cdbba30f4f0f3d16",
+      "snapshot_sha256": "57332dc6591894bbd310421623ebd7673eb841d287fb03c068f72d1463efa9b4",
+      "source_binding": {
+        "skill_sha256": "47ecee80432daf25759bb894664f944cecef1cabd2cbc3cb9573795e3653ede6",
+        "manifest_version": "1.0.9",
+        "manifest_sha256": "672419e08661ea920568613a7607c13ae658b5f5a936638c3bd0c8110dbf9369",
+        "runner_context_sha256": "2f0a7e893b7e8b17d64c46dde764359bdc83d2d62393706f70f88850af9a5441",
+        "resources": {
+          "skills/proofreader-pro/scripts/text_metrics.py": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51"
+        }
+      },
+      "cases": [
+        {
+          "id": "rewrite-markdown-changes-quotes",
+          "response_sha256": "41a6b613792c2893c3ffa5feb5415e80ecae1e7d1411c7360081bd1fd078eeb9",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles rewrite_supplied_text directly on the submitted text."
+            },
+            {
+              "name": "honors_tone_and_keeps_today_deadline",
+              "status": "pass",
+              "notes": "Please and Thank you add warmth while the today deadline remains explicit."
+            },
+            {
+              "name": "preserves_literal_emphasis_link_url_and_inline_code_in_result",
+              "status": "pass",
+              "notes": "The fenced result retains the exact **draft**, *notes*, link destination/query string, and `review_queue` characters."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete revised text is first in a text fence longer than any internal backtick run."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "notes": "The Changes entry quotes the full source and full revised text, including the added thanks where present."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "notes": "Actual GitHub GFM HTML has two uninterrupted strong spans containing the full original and revised quotations."
+            },
+            {
+              "name": "rendered_quotes_show_literal_markdown_including_backticks_brackets_and_ampersand",
+              "status": "pass",
+              "notes": "Actual rendered strong text preserves emphasis markers, link brackets, parentheses, inline backticks, and ampersand characters literally."
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "notes": "Display escapes occur only in Changes quotations; the fenced result retains source syntax without added escape characters, and explanations do not claim escaping as edits."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "notes": "The complete before/after pair exposes every edit; the explanation accurately identifies the polite opening and any warm closing, with no fictional corrections."
+            }
+          ]
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "response_sha256": "3482d7697352fcbd04accd1848999f533d2f7bc66d0f574711680a81e39ae56d",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles proofread_and_shorten_supplied_text directly on the submitted text."
+            },
+            {
+              "name": "requested_reduction_target",
+              "status": "pass",
+              "notes": "Direct shipped-helper review measurement returned source_words 32, candidate_words 22, rounded point budget 22, within_budget true (31.25% reduction). This later recount is separate from generator execution evidence."
+            },
+            {
+              "name": "preserves_review_and_future_decision_whether_to_send",
+              "status": "pass",
+              "notes": "The ongoing review and future decision about whether to send the materials later remain explicit; no decision or sending is asserted to have occurred."
+            },
+            {
+              "name": "preserves_literal_emphasis_link_and_code_path_in_result",
+              "status": "pass",
+              "notes": "The result retains **draft**, the exact C:\\reports code path, and the notes link unchanged."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete revised text is first in a text fence longer than any internal backtick run."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "notes": "The Changes entry quotes the full source and full revised text, including the added thanks where present."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "notes": "Actual GitHub GFM HTML has two uninterrupted strong spans containing the full original and revised quotations."
+            },
+            {
+              "name": "rendered_quotes_preserve_source_backslash_and_literal_markdown",
+              "status": "pass",
+              "notes": "Actual rendered strong text preserves the literal path backslash, emphasis/backticks, and full link syntax."
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "notes": "Display escapes occur only in Changes quotations; the fenced result retains source syntax without added escape characters, and explanations do not claim escaping as edits."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "notes": "The full before/after quotations show all deletions and capitalization changes; the explanation truthfully describes removed timing/process redundancy and shared-subject combination where used, without claiming invented edits."
+            }
+          ]
+        },
+        {
+          "id": "rewrite-markup-characters-in-changes",
+          "response_sha256": "c2f4fc1a27f12a9cd862e9a92798fa970404a0285a04e86d85d027c5d9df1a4e",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles rewrite_supplied_text directly on the submitted text."
+            },
+            {
+              "name": "makes_request_polite_and_keeps_today_deadline",
+              "status": "pass",
+              "notes": "Please check makes the request polite and retains today."
+            },
+            {
+              "name": "preserves_literal_emphasis_tag_entity_and_strikethrough_in_result",
+              "status": "pass",
+              "notes": "The fenced result retains **draft**, <ready>, &copy;, and ~~pending~~ literally."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete revised text is first in a text fence longer than any internal backtick run."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "notes": "The Changes entry quotes the full source and full revised text, including the added thanks where present."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "notes": "Actual GitHub GFM HTML has two uninterrupted strong spans containing the full original and revised quotations."
+            },
+            {
+              "name": "rendered_quotes_show_angle_brackets_entity_spelling_and_tildes_literally",
+              "status": "pass",
+              "notes": "Actual rendered strong text reads <ready>, &copy;, and ~~pending~~ literally, without interpreting them as tags/entities/strikethrough."
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "notes": "Display escapes occur only in Changes quotations; the fenced result retains source syntax without added escape characters, and explanations do not claim escaping as edits."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "notes": "The complete before/after pair exposes every edit; the explanation accurately identifies the polite opening and any warm closing, with no fictional corrections."
+            }
+          ]
+        },
+        {
+          "id": "rewrite-autolink-punctuation-in-changes",
+          "response_sha256": "16c6a9252c3118ca8ce85f39f5a59d43e6cacbffa345b2d23c09c67ca28348fa",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles rewrite_supplied_text directly on the submitted text."
+            },
+            {
+              "name": "makes_request_polite_and_keeps_today_deadline",
+              "status": "pass",
+              "notes": "Please check makes the request polite and retains today."
+            },
+            {
+              "name": "preserves_exact_urls_and_email_in_result",
+              "status": "pass",
+              "notes": "Both complete URLs, their punctuation/query parameters, and user@example.com are unchanged in the result."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete revised text is first in a text fence longer than any internal backtick run."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "notes": "The Changes entry quotes the full source and full revised text, including the added thanks where present."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "notes": "Actual GitHub GFM HTML has two uninterrupted strong spans containing the full original and revised quotations."
+            },
+            {
+              "name": "rendered_quotes_preserve_urls_and_email_without_added_backslashes",
+              "status": "pass",
+              "notes": "Actual rendered strong text contains the exact URLs/email; automatic mailto wrapping retains visible text and no display backslashes remain."
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "notes": "Display escapes occur only in Changes quotations; the fenced result retains source syntax without added escape characters, and explanations do not claim escaping as edits."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "notes": "The complete before/after pair exposes every edit; the explanation accurately identifies the polite opening and any warm closing, with no fictional corrections."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "tests/trials/resource-execution-v4-fragments-sol-2-2026-11-25.json",
+      "before_sha256": "57e7c79d900f1248acbeba65b23143c210497bf5100c062339a137eb687cf1ad",
+      "snapshot_sha256": "e6dfe4b95bb726071d4e6294cd67c78bd87cd893ba7041c0a431e2ac7e7a38a8",
+      "source_binding": {
+        "skill_sha256": "47ecee80432daf25759bb894664f944cecef1cabd2cbc3cb9573795e3653ede6",
+        "manifest_version": "1.0.9",
+        "manifest_sha256": "672419e08661ea920568613a7607c13ae658b5f5a936638c3bd0c8110dbf9369",
+        "runner_context_sha256": "2f0a7e893b7e8b17d64c46dde764359bdc83d2d62393706f70f88850af9a5441",
+        "resources": {
+          "skills/proofreader-pro/scripts/text_metrics.py": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51"
+        }
+      },
+      "cases": [
+        {
+          "id": "fragment-labels-no-op",
+          "response_sha256": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles proofread_intentional_noun_phrase_labels directly on the submitted text."
+            },
+            {
+              "name": "response_exactly",
+              "status": "pass",
+              "notes": "The response is exactly The text does not require any adjustments."
+            },
+            {
+              "name": "retains_intentional_noun_phrases_without_invented_agreement_edit",
+              "status": "pass",
+              "notes": "The exact no-op response respects the expressly intentional noun-phrase labels and invents no finite-clause edit."
+            },
+            {
+              "name": "no_revised_text_fence_or_changes_list",
+              "status": "pass",
+              "notes": "The exact no-op response has no revised-text fence or Changes list."
+            }
+          ]
+        },
+        {
+          "id": "finite-clause-agreement",
+          "response_sha256": "09d51c32dc6825b9d0238986d6755768bdaf6cbb75abf1d4725144ff5ccfaa04",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles proofread_explicit_finite_clause directly on the submitted text."
+            },
+            {
+              "name": "corrects_link_to_links_for_singular_subject_and_direct_object",
+              "status": "pass",
+              "notes": "Only the finite verb changes from link to links with singular phrase and direct object readers."
+            },
+            {
+              "name": "changes_no_other_source_characters",
+              "status": "pass",
+              "notes": "Direct comparison of the fenced text shows only the specified link→links or A unusual→An unusual correction."
+            },
+            {
+              "name": "preserves_list_emphasis_url_and_line_breaks",
+              "status": "pass",
+              "notes": "The two list markers/lines, literal emphasis markers, and exact URL remain unchanged."
+            },
+            {
+              "name": "complete_revised_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete two-line corrected text appears first inside a three-backtick text fence; source has no competing backtick run."
+            },
+            {
+              "name": "truthful_changes_list_accounts_only_for_link_to_links",
+              "status": "pass",
+              "notes": "The Changes entry accurately quotes and explains only the singular-subject agreement correction."
+            }
+          ]
+        },
+        {
+          "id": "fragment-labels-article-only",
+          "response_sha256": "afd2955614f4c4e198295a0d36991618a16664d859da5422472a2990b054c5a6",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles proofread_noun_phrases_with_clear_article_error directly on the submitted text."
+            },
+            {
+              "name": "corrects_a_unusual_to_an_unusual",
+              "status": "pass",
+              "notes": "The second label correctly begins An unusual report summary."
+            },
+            {
+              "name": "retains_phrase_link_as_an_intentional_noun_phrase",
+              "status": "pass",
+              "notes": "The first label retains phrase link; it is not converted into a finite clause."
+            },
+            {
+              "name": "changes_no_other_source_characters",
+              "status": "pass",
+              "notes": "Direct comparison of the fenced text shows only the specified link→links or A unusual→An unusual correction."
+            },
+            {
+              "name": "preserves_list_emphasis_url_and_line_breaks",
+              "status": "pass",
+              "notes": "The two list markers/lines, literal emphasis markers, and exact URL remain unchanged."
+            },
+            {
+              "name": "complete_revised_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete two-line corrected text appears first inside a three-backtick text fence; source has no competing backtick run."
+            },
+            {
+              "name": "truthful_changes_list_accounts_only_for_article_correction",
+              "status": "pass",
+              "notes": "The Changes entry accurately quotes and explains only the A→An correction before unusual."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "tests/trials/resource-execution-v4-markdown-sol-3-2026-11-25.json",
+      "before_sha256": "b89516426b0f2557984b9917545b3c4601c73e54b142ca67966fc6761f847dbe",
+      "snapshot_sha256": "57332dc6591894bbd310421623ebd7673eb841d287fb03c068f72d1463efa9b4",
+      "source_binding": {
+        "skill_sha256": "47ecee80432daf25759bb894664f944cecef1cabd2cbc3cb9573795e3653ede6",
+        "manifest_version": "1.0.9",
+        "manifest_sha256": "672419e08661ea920568613a7607c13ae658b5f5a936638c3bd0c8110dbf9369",
+        "runner_context_sha256": "2f0a7e893b7e8b17d64c46dde764359bdc83d2d62393706f70f88850af9a5441",
+        "resources": {
+          "skills/proofreader-pro/scripts/text_metrics.py": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51"
+        }
+      },
+      "cases": [
+        {
+          "id": "rewrite-markdown-changes-quotes",
+          "response_sha256": "03ef4544a1c468eb0202217e8fda453c8a8d323db72083fd6e00b58be47c6f92",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles rewrite_supplied_text directly on the submitted text."
+            },
+            {
+              "name": "honors_tone_and_keeps_today_deadline",
+              "status": "pass",
+              "notes": "Please and Thank you add warmth while the today deadline remains explicit."
+            },
+            {
+              "name": "preserves_literal_emphasis_link_url_and_inline_code_in_result",
+              "status": "pass",
+              "notes": "The fenced result retains the exact **draft**, *notes*, link destination/query string, and `review_queue` characters."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete revised text is first in a text fence longer than any internal backtick run."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "notes": "The Changes entry quotes the full source and full revised text, including the added thanks where present."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "notes": "Actual GitHub GFM HTML has two uninterrupted strong spans containing the full original and revised quotations."
+            },
+            {
+              "name": "rendered_quotes_show_literal_markdown_including_backticks_brackets_and_ampersand",
+              "status": "pass",
+              "notes": "Actual rendered strong text preserves emphasis markers, link brackets, parentheses, inline backticks, and ampersand characters literally."
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "notes": "Display escapes occur only in Changes quotations; the fenced result retains source syntax without added escape characters, and explanations do not claim escaping as edits."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "notes": "The complete before/after pair exposes every edit; the explanation accurately identifies the polite opening and any warm closing, with no fictional corrections."
+            }
+          ]
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "response_sha256": "60729df6a2185d6023d6126a89fd5d412c4eb2e8f1cc802613e0363b2fd5a6cb",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles proofread_and_shorten_supplied_text directly on the submitted text."
+            },
+            {
+              "name": "requested_reduction_target",
+              "status": "pass",
+              "notes": "Direct shipped-helper review measurement returned source_words 32, candidate_words 22, rounded point budget 22, within_budget true (31.25% reduction). This later recount is separate from generator execution evidence."
+            },
+            {
+              "name": "preserves_review_and_future_decision_whether_to_send",
+              "status": "pass",
+              "notes": "The ongoing review and future decision about whether to send the materials later remain explicit; no decision or sending is asserted to have occurred."
+            },
+            {
+              "name": "preserves_literal_emphasis_link_and_code_path_in_result",
+              "status": "pass",
+              "notes": "The result retains **draft**, the exact C:\\reports code path, and the notes link unchanged."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete revised text is first in a text fence longer than any internal backtick run."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "notes": "The Changes entry quotes the full source and full revised text, including the added thanks where present."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "notes": "Actual GitHub GFM HTML has two uninterrupted strong spans containing the full original and revised quotations."
+            },
+            {
+              "name": "rendered_quotes_preserve_source_backslash_and_literal_markdown",
+              "status": "pass",
+              "notes": "Actual rendered strong text preserves the literal path backslash, emphasis/backticks, and full link syntax."
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "notes": "Display escapes occur only in Changes quotations; the fenced result retains source syntax without added escape characters, and explanations do not claim escaping as edits."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "notes": "The full before/after quotations show all deletions and capitalization changes; the explanation truthfully describes removed timing/process redundancy and shared-subject combination where used, without claiming invented edits."
+            }
+          ]
+        },
+        {
+          "id": "rewrite-markup-characters-in-changes",
+          "response_sha256": "3e74a5e399b575751209eba38477a5b7c43386682e1858b4f4e553ea7e25cbee",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles rewrite_supplied_text directly on the submitted text."
+            },
+            {
+              "name": "makes_request_polite_and_keeps_today_deadline",
+              "status": "pass",
+              "notes": "Please check makes the request polite and retains today."
+            },
+            {
+              "name": "preserves_literal_emphasis_tag_entity_and_strikethrough_in_result",
+              "status": "pass",
+              "notes": "The fenced result retains **draft**, <ready>, &copy;, and ~~pending~~ literally."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete revised text is first in a text fence longer than any internal backtick run."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "notes": "The Changes entry quotes the full source and full revised text, including the added thanks where present."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "notes": "Actual GitHub GFM HTML has two uninterrupted strong spans containing the full original and revised quotations."
+            },
+            {
+              "name": "rendered_quotes_show_angle_brackets_entity_spelling_and_tildes_literally",
+              "status": "pass",
+              "notes": "Actual rendered strong text reads <ready>, &copy;, and ~~pending~~ literally, without interpreting them as tags/entities/strikethrough."
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "notes": "Display escapes occur only in Changes quotations; the fenced result retains source syntax without added escape characters, and explanations do not claim escaping as edits."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "notes": "The complete before/after pair exposes every edit; the explanation accurately identifies the polite opening and any warm closing, with no fictional corrections."
+            }
+          ]
+        },
+        {
+          "id": "rewrite-autolink-punctuation-in-changes",
+          "response_sha256": "f7ebcaec7296ccd8f0d4f91a66dd55d74bb7abf619e1963af1144d86d5b8d77e",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles rewrite_supplied_text directly on the submitted text."
+            },
+            {
+              "name": "makes_request_polite_and_keeps_today_deadline",
+              "status": "pass",
+              "notes": "Please check makes the request polite and retains today."
+            },
+            {
+              "name": "preserves_exact_urls_and_email_in_result",
+              "status": "pass",
+              "notes": "Both complete URLs, their punctuation/query parameters, and user@example.com are unchanged in the result."
+            },
+            {
+              "name": "returns_complete_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete revised text is first in a text fence longer than any internal backtick run."
+            },
+            {
+              "name": "changes_quote_complete_original_and_revised_sentences",
+              "status": "pass",
+              "notes": "The Changes entry quotes the full source and full revised text, including the added thanks where present."
+            },
+            {
+              "name": "all_quoted_spans_render_entirely_bold",
+              "status": "pass",
+              "notes": "Actual GitHub GFM HTML has two uninterrupted strong spans containing the full original and revised quotations."
+            },
+            {
+              "name": "rendered_quotes_preserve_urls_and_email_without_added_backslashes",
+              "status": "pass",
+              "notes": "Actual rendered strong text contains the exact URLs/email; automatic mailto wrapping retains visible text and no display backslashes remain."
+            },
+            {
+              "name": "display_escapes_do_not_leak_into_result_or_count_as_edits",
+              "status": "pass",
+              "notes": "Display escapes occur only in Changes quotations; the fenced result retains source syntax without added escape characters, and explanations do not claim escaping as edits."
+            },
+            {
+              "name": "changes_account_for_every_actual_edit_without_inventing_edits",
+              "status": "pass",
+              "notes": "The complete before/after pair exposes every edit; the explanation accurately identifies the polite opening and any warm closing, with no fictional corrections."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "path": "tests/trials/resource-execution-v4-fragments-sol-3-2026-11-25.json",
+      "before_sha256": "8b318f549cd8b1a1695235be02a3009b91ce6555f2805aa926545a82484ae89a",
+      "snapshot_sha256": "e6dfe4b95bb726071d4e6294cd67c78bd87cd893ba7041c0a431e2ac7e7a38a8",
+      "source_binding": {
+        "skill_sha256": "47ecee80432daf25759bb894664f944cecef1cabd2cbc3cb9573795e3653ede6",
+        "manifest_version": "1.0.9",
+        "manifest_sha256": "672419e08661ea920568613a7607c13ae658b5f5a936638c3bd0c8110dbf9369",
+        "runner_context_sha256": "2f0a7e893b7e8b17d64c46dde764359bdc83d2d62393706f70f88850af9a5441",
+        "resources": {
+          "skills/proofreader-pro/scripts/text_metrics.py": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51"
+        }
+      },
+      "cases": [
+        {
+          "id": "fragment-labels-no-op",
+          "response_sha256": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles proofread_intentional_noun_phrase_labels directly on the submitted text."
+            },
+            {
+              "name": "response_exactly",
+              "status": "pass",
+              "notes": "The response is exactly The text does not require any adjustments."
+            },
+            {
+              "name": "retains_intentional_noun_phrases_without_invented_agreement_edit",
+              "status": "pass",
+              "notes": "The exact no-op response respects the expressly intentional noun-phrase labels and invents no finite-clause edit."
+            },
+            {
+              "name": "no_revised_text_fence_or_changes_list",
+              "status": "pass",
+              "notes": "The exact no-op response has no revised-text fence or Changes list."
+            }
+          ]
+        },
+        {
+          "id": "finite-clause-agreement",
+          "response_sha256": "81bb5fc6d79811e7fecce4525d4fd79ac9c47a1529e1c324cbc5412e9226096f",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles proofread_explicit_finite_clause directly on the submitted text."
+            },
+            {
+              "name": "corrects_link_to_links_for_singular_subject_and_direct_object",
+              "status": "pass",
+              "notes": "Only the finite verb changes from link to links with singular phrase and direct object readers."
+            },
+            {
+              "name": "changes_no_other_source_characters",
+              "status": "pass",
+              "notes": "Direct comparison of the fenced text shows only the specified link→links or A unusual→An unusual correction."
+            },
+            {
+              "name": "preserves_list_emphasis_url_and_line_breaks",
+              "status": "pass",
+              "notes": "The two list markers/lines, literal emphasis markers, and exact URL remain unchanged."
+            },
+            {
+              "name": "complete_revised_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete two-line corrected text appears first inside a three-backtick text fence; source has no competing backtick run."
+            },
+            {
+              "name": "truthful_changes_list_accounts_only_for_link_to_links",
+              "status": "pass",
+              "notes": "The Changes entry accurately quotes and explains only the singular-subject agreement correction."
+            }
+          ]
+        },
+        {
+          "id": "fragment-labels-article-only",
+          "response_sha256": "cd25e54bef3b084a4fb67b1116d81a6bdf58e2ea0b28daf74b9abd188cf3ee2c",
+          "assertions": [
+            {
+              "name": "task",
+              "status": "pass",
+              "notes": "Handles proofread_noun_phrases_with_clear_article_error directly on the submitted text."
+            },
+            {
+              "name": "corrects_a_unusual_to_an_unusual",
+              "status": "pass",
+              "notes": "The second label correctly begins An unusual report summary."
+            },
+            {
+              "name": "retains_phrase_link_as_an_intentional_noun_phrase",
+              "status": "pass",
+              "notes": "The first label retains phrase link; it is not converted into a finite clause."
+            },
+            {
+              "name": "changes_no_other_source_characters",
+              "status": "pass",
+              "notes": "Direct comparison of the fenced text shows only the specified link→links or A unusual→An unusual correction."
+            },
+            {
+              "name": "preserves_list_emphasis_url_and_line_breaks",
+              "status": "pass",
+              "notes": "The two list markers/lines, literal emphasis markers, and exact URL remain unchanged."
+            },
+            {
+              "name": "complete_revised_text_first_in_safe_fence",
+              "status": "pass",
+              "notes": "The complete two-line corrected text appears first inside a three-backtick text fence; source has no competing backtick run."
+            },
+            {
+              "name": "truthful_changes_list_accounts_only_for_article_correction",
+              "status": "pass",
+              "notes": "The Changes entry accurately quotes and explains only the A→An correction before unusual."
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "aggregate": {
+    "cases": 21,
+    "named_assertions": 162,
+    "pass": 162,
+    "fail": 0,
+    "not_run": 0
+  },
+  "limitations": [
+    "Known synthetic regressions, not a holdout or general reliability estimate.",
+    "Actual GFM HTML review does not establish intended-host rendering/clipboard acceptance.",
+    "Later independent count checks do not substitute for actual generator measurement execution; that remains a separate protocol gate.",
+    "Fragment calibration is reused with prior-gold exposure disclosed; no fresh blinded reviewer claim."
+  ]
+}

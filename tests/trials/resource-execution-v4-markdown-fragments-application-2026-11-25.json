@@ -1,0 +1,45 @@
+{
+  "kind": "independent-judgment-application",
+  "date": "2026-11-25",
+  "review_path": "tests/trials/resource-execution-v4-markdown-fragments-judgments-2026-11-25.json",
+  "review_sha256": "00c4db8bb39b396bd5e901d173b25dba861a465c2d5ce67bd7b1f1697f5504ec",
+  "records": [
+    {
+      "path": "tests/trials/resource-execution-v4-markdown-sol-1-2026-11-25.json",
+      "before_sha256": "2c7a75a57e4fe279a70667af2c2ea495ee0fdb8d06f370c6bb865d9b42230002",
+      "after_sha256": "a9f3cbdf2a546c6193f71632f9e4e4e02b7907ec6c16873a70e565d1b7af9bd9",
+      "assertions": 37
+    },
+    {
+      "path": "tests/trials/resource-execution-v4-fragments-sol-1-2026-11-25.json",
+      "before_sha256": "f491078ccb1b0cb4b6dadc98ef00f097b574fb24d4eb2209c6f4118e71dcd46f",
+      "after_sha256": "95feb62286477fb77015e67ea4bacf2b91f63e29fe429cb2b55aa47835745b86",
+      "assertions": 17
+    },
+    {
+      "path": "tests/trials/resource-execution-v4-markdown-sol-2-2026-11-25.json",
+      "before_sha256": "376ec5e081c2a02e21dc3b5e0891a1706ca3292bcaa689d7cdbba30f4f0f3d16",
+      "after_sha256": "44f9c1a0e61ccca3f0bfe243ce80be47f561884bab7320b32cf891443ba6ff16",
+      "assertions": 37
+    },
+    {
+      "path": "tests/trials/resource-execution-v4-fragments-sol-2-2026-11-25.json",
+      "before_sha256": "57e7c79d900f1248acbeba65b23143c210497bf5100c062339a137eb687cf1ad",
+      "after_sha256": "b7ca0eca2fe298684b0855a8d502fcacab6374e77ed4ffea014e2dacc468f7c8",
+      "assertions": 17
+    },
+    {
+      "path": "tests/trials/resource-execution-v4-markdown-sol-3-2026-11-25.json",
+      "before_sha256": "b89516426b0f2557984b9917545b3c4601c73e54b142ca67966fc6761f847dbe",
+      "after_sha256": "37702ac421cc4469a75cb350382319158f6232946887da2b9924b945dcad0091",
+      "assertions": 37
+    },
+    {
+      "path": "tests/trials/resource-execution-v4-fragments-sol-3-2026-11-25.json",
+      "before_sha256": "8b318f549cd8b1a1695235be02a3009b91ce6555f2805aa926545a82484ae89a",
+      "after_sha256": "02f4ef66fffb37d7b6ce5ed5bda48350849b9481b5e4386288f8594fc1fdc2bd",
+      "assertions": 17
+    }
+  ],
+  "scope": "Only assertion status/note and aggregate fields changed. Exact responses, prompts, expected values, metadata, and source bindings preserved."
+}

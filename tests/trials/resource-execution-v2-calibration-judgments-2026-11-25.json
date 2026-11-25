@@ -1,0 +1,37 @@
+{
+  "rubric_id": "fragment-agreement-calibration",
+  "rubric_version": "1.0",
+  "inputsha256": "22246f6bc4704eebc98224581b7f912029dffe074cf2434cac09ed0c53f00b61",
+  "judgments": [
+    {
+      "id": "example-1",
+      "predicted_verdict": "pass",
+      "rationale": "Both supplied items are explicitly intentional noun-phrase labels. The first uses phrase link as a noun phrase and the second has no clear error. The response returns exactly the required no-adjustments sentence."
+    },
+    {
+      "id": "example-2",
+      "predicted_verdict": "fail",
+      "rationale": "The prompt explicitly preserves noun-phrase labels. Changing link to links invents a subject-verb agreement error and turns the first label into a sentence. Although the fence, literal formatting, and change disclosure are present, the unnecessary edit violates minimal editing and the required no-edit response."
+    },
+    {
+      "id": "example-3",
+      "predicted_verdict": "pass",
+      "rationale": "The first item is explicitly a complete sentence with singular subject phrase, so its verb requires links. The response makes that one necessary correction, preserves the complete source and literal formatting in a text fence, and truthfully lists the edit using bold before-and-after quotations."
+    },
+    {
+      "id": "example-4",
+      "predicted_verdict": "fail",
+      "rationale": "The explicitly complete first sentence has the singular subject phrase and plural-form verb link. Returning the no-adjustments sentence leaves the clear subject-verb agreement error uncorrected."
+    },
+    {
+      "id": "example-5",
+      "predicted_verdict": "pass",
+      "rationale": "The response preserves the intentional phrase-link noun label and changes only A unusual to An unusual, correcting a clear article error. It returns the entire minimally corrected source in a text fence with markers, emphasis, URL characters, and line breaks intact, then accurately discloses the sole edit in bold quoted before-and-after form."
+    },
+    {
+      "id": "example-6",
+      "predicted_verdict": "fail",
+      "rationale": "Preserving intentional noun phrases does not excuse the clear article error A unusual. The no-adjustments sentence fails to correct it or provide the required complete corrected source and Changes list."
+    }
+  ]
+}

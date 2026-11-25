@@ -1,0 +1,1 @@
+Stopped: the tool returned `code-mode host is disabled`, so I couldn’t read `envelope.json`. No commands ran and no files were changed.

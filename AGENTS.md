@@ -26,4 +26,4 @@ python3 scripts/release.py build
 git diff --check
 ```
 
-The build uses the standard library and an explicit six-file runtime allowlist. Behavioral acceptance checks require the intended host; deterministic package tests are not a guarantee of model behavior. See [testing](tests/README.md) and [release instructions](docs/releasing.md).
+The build uses the standard library and an explicit seven-file runtime allowlist, including the offline counting helper. Behavioral acceptance checks require the intended host; deterministic package tests are not a guarantee of model behavior. See [testing](tests/README.md) and [release instructions](docs/releasing.md).

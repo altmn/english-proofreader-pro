@@ -1,0 +1,1 @@
+Stopped after the supply-chain guard denied the presentation-measurement command because executable indirection could not be resolved safely. Source measurement succeeded; no candidate was saved, no final command ran, and no retry was attempted.

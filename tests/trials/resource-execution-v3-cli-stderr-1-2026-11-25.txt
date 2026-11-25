@@ -1,0 +1,29 @@
+Reading additional input from stdin...
+2026-11-25T20:24:57.513093Z ERROR codex_core::tools::router: error=Command blocked by PreToolUse hook: Supply-chain guard denied a mutable package launch: executable indirection cannot be resolved safely. Use an exact version or a reviewed direct local binary.. Command: /opt/homebrew/Cellar/python@3.15/3.15.2/Frameworks/Python.framework/Versions/3.15/bin/python3.15 -I -B - <<'PY'
+import json, runpy
+from pathlib import Path
+measure = runpy.run_path('/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/skills/proofreader-pro/scripts/text_metrics.py')['measure']
+entries = json.loads(Path('composition-data.json').read_text())['entries']
+results = []
+for row in entries:
+    out = {'id': row['id']}
+    if 'text' in row:
+        request = {'text': row['text'], 'include_presentation': True}
+        if 'level' in row:
+            request.update(text=row['changes'][0][0], candidate=row['text'], level=row['level'])
+        measured = measure(request)
+        out.update(block=measured['presentation']['literal_block'], comparison=measured['comparison'], metrics=measured['candidate_metrics'] or measured['metrics'])
+        out['changes'] = []
+        for before, after, explanation in row.get('changes', []):
+            quoted = measure({'text': before, 'candidate': after, 'include_presentation': True})['presentation']
+            out['changes'].append({'before':quoted['before_quote'], 'after':quoted['after_quote'], 'explanation':explanation})
+    else:
+        response = row['response']
+        if row['id'] == 'direct-meta-question':
+            payload = response.split('```text\n',1)[1].split('\n```',1)[0]
+            literal = measure({'text':payload,'include_presentation':True})['presentation']['literal_block']
+            response = response.replace('```text\n'+payload+'\n```',literal)
+        out['response'] = response
+    results.append(out)
+print(json.dumps({'results':results},ensure_ascii=False))
+PY

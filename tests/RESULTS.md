@@ -1,5 +1,17 @@
 # Validation evidence
 
+## Release-candidate verification — November 25, 2026
+
+Current runtime candidate: **1.0.9**. Three retained V4 CLI captures now pass **411/411 independently reviewed assertions** (249 original, 111 Markdown, 51 fragments). All three real source/final execution receipts pass the [portable panel](trials/resource-execution-v4-panel-2026-11-25.json). All twelve exact supplemental responses have [actual GFM render evidence](trials/resource-execution-v4-markdown-render-2026-11-25.json). Supplemental review reuses the retained calibrated rubric and discloses prior gold exposure; no fresh blind calibration is claimed. Original captured responses and failed earlier attempts remain unchanged.
+
+**Native release acceptance remains open.** The [1.0.9 Chat/Instant observations](trials/resource-counting-safari-1.0.9-2026-11-25.json) still fail the counting fallback and full output/Changes contract. [Work-mode smoke checks](trials/resource-counting-safari-work-1.0.9-2026-11-25.json) show bounded successful output and copy behavior, with command activity but no exposed exact measurement JSON. They do not replace full intended-host acceptance. See [known issues](../KNOWN_ISSUES.md). Local and hosted CI status must be verified on the final commit; the results below are historical checkpoints.
+
+## Resource-assisted follow-up — November 25, 2026
+
+The new helper, resource-bound evaluation formats, protected execution controller, portable CI gate, and retained native/CLI failures are described in the [follow-up evidence](../docs/audit-fixes.md#resource-assisted-follow-up). The 1.0.8 checkpoint passed **156 local unit tests** and all **55 historical record-integrity checks**; these deterministic results do not accept a changed skill or establish model behavior.
+
+The native 1.0.8 ordinary count and shortening checks remain failed; the separately explicit helper diagnostic correctly returned the unavailable-tool limitation. Three fresh CLI attempts failed because their launch profile disabled the model's required local Code Mode host. No new model output was accepted or semantically graded. Earlier prepared panels remain preserved as preparations, and every failed launch remains evidence. The compact successor and corrected launch profile require new source-bound results. **Intended-host acceptance remains pending.** Dated sections below retain their original snapshot-specific claims.
+
 ## Safari candidate follow-up — November 25, 2026
 
 The user authorized a private plugin update and testing in ChatGPT through Safari. The saved releases **1.0.3** and **1.0.4** were read back; their canonical manifests and skills match their uploaded payloads. The host regenerated equivalent compatibility metadata. Ownership, private audience, prompts, retained text, and file inventory were preserved; no directory listing was published. Repository manifests remain **1.0.1**, so these private packaging variants have different manifest bytes from the simulation inputs.

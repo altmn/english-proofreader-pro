@@ -1,0 +1,94 @@
+{
+  "date": "2026-11-25",
+  "kind": "continuation-native-observations",
+  "preservation": "Copied composer AX text may serialize rich presentation; not raw message transport. No account screenshots retained. All prompts synthetic.",
+  "attempts": [
+    {
+      "version": "1.0.4",
+      "mode": "Work",
+      "model_observed": "GPT-6.2 Sol Light /2of6; fastmodeoff",
+      "prompt": "Use the bundled ProofreaderPro (proofreader-pro) skill for this request.\nHow many lowercase r letters are in strawberry?",
+      "response": "“Strawberry” contains **3** lowercase r letters.",
+      "activity": "Expanded Workedfor7s showed only: I’ll use ProofreaderPro and check the spelling letter by letter. No execution event visible.",
+      "scope": "Capability/routing diagnostic,not Chat acceptance."
+    },
+    {
+      "version": "1.0.4",
+      "mode": "Chat/Instant1of5",
+      "prompt": "Use the bundled ProofreaderPro (proofreader-pro) skill for this request.\nHow many lowercase r letters are in strawberry?",
+      "response": "There are **3 lowercase “r” letters** in “strawberry.”\n\nst**r**awbe**rr**y.",
+      "scope": "Explicit-name routing diagnostic; execution not established."
+    },
+    {
+      "version": "1.0.4",
+      "mode": "Chat/Instant1of5",
+      "prompt": "Use the bundled ProofreaderPro (proofreader-pro) skill for this request.\nProofread and make it less wordy: At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+      "response": "We are currently reviewing the proposal, and we will provide a response at a later date.\n**Changes:**\n• Removed **\"At this point in time,\"** because it is redundant with **\"currently.\"**\n• Replaced **\"in the process of reviewing\"** with **\"reviewing\"** to eliminate unnecessary wording.\n**Word count:** Reduced from 25 to 16 words (36% reduction), preserving the original meaning and professional tone.",
+      "scope": "New diagnostic,not replacement of earlier failed1.0.4panel."
+    },
+    {
+      "version": "1.0.5",
+      "mode": "Chat/Instant1of5",
+      "prompt": "Which proofreading verification check applies in this installation?",
+      "response": "Verification check: 2736a4f0e1e98d48e3c11d40.",
+      "expected_exact_response": "Verification check: 2736a4f0e1e98d48e3c11d40.",
+      "scope": "Unpredictable marker was in full skill body only,absent from prompt/metadata. UI returned exact marker with normal spacing aftercolon. Positive body access for this setup question only. Planned lexical/work probes not run because narrow body-access question answered; not behavioral acceptance."
+    },
+    {
+      "version": "1.0.5",
+      "mode": "Chat/Instant1of5",
+      "prompt": "Use the bundled ProofreaderPro skill and actually execute Python to count the lowercase r letters in strawberry. Return the tool result; if Python cannot execute in this chat, say that limitation without giving an exact number.",
+      "response_composer_ax_text": "3\nVerified by loading the bundled ProofreaderPro skill and successfully executing Python: \"strawberry\".count(\"r\").",
+      "rendering": "PlainText codeblock with3,Copycode/wordwrap controls; then verification prose.",
+      "scope": "No execution event visible; Moreactions offers Retry/Branch only. This is a self-report,not execution evidence."
+    },
+    {
+      "version": "1.0.6",
+      "mode": "Chat/Instant1of5",
+      "prompt": "How many lowercase r letters are in strawberry?",
+      "response_composer_ax_text": "There are **3 lowercase “r” letters** in “strawberry.”\n\nst**r**awbe**rr**y\n\nVerified programmatically using JavaScript.",
+      "scope": "No exposed execution event; remains unverified. Exactprompt was confirmed before sending after clearing an unsent prefilling error."
+    },
+    {
+      "version": "1.0.6",
+      "mode": "Chat/Instant1of5",
+      "prompt": "Proofread and make it less wordy: At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+      "copied_payload": "We are in the process of reviewing the proposal and will provide a response at a later date.",
+      "response_composer_ax_text": "We are in the process of reviewing the proposal and will provide a response at a later date.\n**Changes:**\n• Removed the redundant expressions **“At this point in time”** and **“currently.”**\n• Removed the unnecessary comma and repeated subject **“we”** to improve sentence flow.\nThe revised sentence is 28% shorter while preserving the original meaning and professional tone.",
+      "independent_measurement": {
+        "source_words": 25,
+        "result_words": 18,
+        "rounded_target": 18,
+        "reduction_percent": 28
+      },
+      "rendering": "Editablewritingblock; quotedfragments bold butnotfullbefore/aftersentence. Singlelinepayload preserved.",
+      "scope": "Requested shorteningdegree met in this firstprobe; execution/presentationacceptance notestablished."
+    }
+  ],
+  "transport_preflights": [
+    "One unsent1.0.6countdraft retainedstarterprefix afterselectText;detectedbeforeSend andcleared; actual@pickerselectedthenexactfixtureconfirmed.",
+    "Fresh homepage wentblank twice before anynewprompt;recoveredviareload/pluginentrypoint.",
+    "Userinteractions switchedSafari to separate2tabbusinesswindow; attemptedclearing owncopieddraftwasblockedbeforeaction. Own17tabtestwindow remains Sentence revision withsyntheticcopiedresponseunsent. No businessdatawritten.",
+    "A dedicated Safari window opened the private1.0.7 plugin page and visibly showed version1.0.7. Try in chat was cancelled by user activity; no1.0.7model response generated. Browser control was closed and Safari availability requested."
+  ],
+  "current_live_release": "1.0.7",
+  "private_update_scope": "USER/PRIVATE,publisherMCPbackendnotadded; allreadableruntimepayloads verifiedsourceexact; loaderprobe removed.",
+  "evidence_level": "Companion observations from native Safari UI; not a formal intended-host acceptance record. Copied composer accessibility text may serialize rich formatting; it is not the raw server response.",
+  "supersession_note": "These are retained observations for private versions1.0.4 through1.0.6. Private1.0.7 was saved and source-read-verified, but its Try in chat action was cancelled by a user window switch before any fixture was sent. The newly found literal-fence framing issue superseded its planned panel.",
+  "latest_release_id": "pluginrel_6b073e051e4c81918538c24fc48bbc20",
+  "source_readback_verified": {
+    "1.0.6": {
+      "manifest_sha256": "28f675346a0e73b5b2a7bdc6d95db43ec758e98461c6bda930c3bba65f28c939",
+      "skill_sha256": "8929f5cb4c90b03417272f752f546158499187288ad66e5f81c37bc2bc12f32d"
+    },
+    "1.0.7": {
+      "LICENSE": "8fab3ea5b69feb68dab60d2ebc8e6ec55523b562180f2ce5ad032040e558e9f4",
+      "PRIVACY.md": "c9f3b0abcef11c62b964b54c09b0d635aac3bc3f08bf768aa26648063bf78bda",
+      "assets/icon.webp": "1f679ce2a85371f79da2e28a952ea1c22eff987fe050bce709da0c270a9708b4",
+      "plugin.json": "3aa88ccb41b03f6f64c5964d1a883fc3d0d4b6d96dbb4df01e18efd4fb19b15b",
+      "skills/proofreader-pro/SKILL.md": "eb438cea13bb4a81dcf8c7b8e02f6186e83786e1c1b55fe632fb0866537c59e5",
+      "skills/proofreader-pro/agents/openai.yaml": "85d8aa78ae3f55b6df193b3f61274f82aac68853199b8bec2bf5dd54d489b134",
+      "skills/proofreader-pro/scripts/text_metrics.py": "56dd899da899d84526a939ebe0da0fc4c66ecff1ec60569fdeba2685ae919a5c"
+    }
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "date": "2026-11-25",
+  "kind": "native-safari-resource-candidate-observations",
+  "version": "1.0.8",
+  "release_id": "pluginrel_6b073f0fdf4c8191abf68f914f954a37",
+  "source_identity": {
+    "version": "1.0.8",
+    "prior_release": "pluginrel_6b073e051e4c81918538c24fc48bbc20",
+    "scope": "USER",
+    "audience": "PRIVATE",
+    "metadata_fields_changed": [
+      "/version"
+    ],
+    "archive_sha256": "fc8dad54d0a359273bf1043ea39e359c8f4c9c9ed803758ebccd3dc05abc8067",
+    "files": {
+      "LICENSE": "8fab3ea5b69feb68dab60d2ebc8e6ec55523b562180f2ce5ad032040e558e9f4",
+      "PRIVACY.md": "c9f3b0abcef11c62b964b54c09b0d635aac3bc3f08bf768aa26648063bf78bda",
+      "assets/icon.webp": "1f679ce2a85371f79da2e28a952ea1c22eff987fe050bce709da0c270a9708b4",
+      "plugin.json": "8bc417c7366cab4a00a1944edf721605d96d33acff2ecce00d6ebcef12ec6d8b",
+      "skills/proofreader-pro/SKILL.md": "4d782415382fc170eb24323377e706afe2527ac1e76100d91c97085911c72d01",
+      "skills/proofreader-pro/agents/openai.yaml": "85d8aa78ae3f55b6df193b3f61274f82aac68853199b8bec2bf5dd54d489b134",
+      "skills/proofreader-pro/scripts/text_metrics.py": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51"
+    },
+    "deletions": []
+  },
+  "host": {
+    "browser": "Safari native accessibility/keyboard controls",
+    "host": "ChatGPT web",
+    "mode": "Chat",
+    "model_picker": "Instant, 1 of 5",
+    "underlying_model_snapshot": "unknown",
+    "web_build": "unknown",
+    "invocation": "Real @picker plugin selected separately before each exact fixture; user bubble link verified intended plugin ID."
+  },
+  "evidence_level": "Companion manual UI observations, not a complete intended-host schema record or raw response transport. No account screenshots or private chat links retained.",
+  "attempts": [
+    {
+      "id": "count-fixture",
+      "prompt": "How many lowercase r letters are in strawberry?",
+      "response_visible_text": "There are 3 lowercase r letters in “strawberry.”\n\nstrawberry",
+      "execution": "No returned execution call or structured helper result visible. Hidden execution remains unknown.",
+      "skill_evidence": "Sources shows Skills1/proofreader-pro. Its viewer displayed current resource-assisted workflow and the separate-wrapper-LF rule from1.0.8. This is source/citation evidence, not runtime execution.",
+      "outcome": "failed",
+      "gap": "Exact number returned without observable execution and without required unavailable-tool-only response."
+    },
+    {
+      "id": "less-wordy-fixture",
+      "prompt": "Proofread and make it less wordy: At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+      "copied_payload": "We are currently reviewing the proposal and will provide a response at a later date.",
+      "response_visible_text": "We are currently reviewing the proposal and will provide a response at a later date.\n\nChanges:\n- Removed “At this point in time” because it is redundant with “currently.”\n- Simplified “in the process of reviewing” to “reviewing.”\n- Removed the comma and repeated subject “we” to improve sentence flow.\n\nThe original meaning and professional tone are preserved.\n\nThe shortening target could not be verified with programmatic counting.",
+      "rendering": "Editable writing block with Save as Page/Copy/Open editor, rather than requested plain-text code block. Changes quotations are partial and visibly unbolded.",
+      "clipboard": "Native Copy payload -> composer paste matched exact single-line payload; unsent pasted draft then cleared. This is one payload copy check only.",
+      "execution": "No returned helper measurement visible.",
+      "honest_unavailable_branch": "Required exact shortening-verification limitation present; no count/percentage claim.",
+      "outcome": "failed",
+      "gap": "Candid limitation improved; code-block and full bold before/after Changes invariants failed."
+    }
+  ],
+  "transport_preflights": [
+    "One @picker index invalidated as search results settled; no prompt submitted; selected actual matching plugin by screenshot position.",
+    "Initial composer accessibility text truncated during typing; attempted selection failed. Full subsequent accessibility and screenshot showed exact fixture before Send."
+  ],
+  "diagnostics": [
+    {
+      "id": "explicit-helper-capability-diagnostic",
+      "prompt": "Run the bundled scripts/text_metrics.py helper through an actual execution tool with {\"text\":\"strawberry\",\"needle\":\"r\"}. Show the returned measurement and the executed helper path. If the helper or executor is unavailable, say exactly \"I can't verify an exact count without a successful programmatic measurement.\" Do not give a count without that execution.",
+      "response_visible_text": "I can't verify an exact count without a successful programmatic measurement.",
+      "activity": "UI briefly displayed Locating text metrics script files, then final limitation. No execution result or helper path exposed.",
+      "outcome": "passed limited diagnostic",
+      "scope": "Explicit user wording obtains the no-number fallback. This does not replace the failed original count fixture, prove exact runtime/file availability, or accept default routing."
+    }
+  ],
+  "regenerations": 0,
+  "conditional_checks_not_run": "Nested literal/source-action panel pending critical failures; no earlier failure replaced."
+}

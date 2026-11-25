@@ -1,10 +1,10 @@
 # English Proofreader Pro
 
-A skills-only plugin for careful American English proofreading, concise rewrites, and new drafts. It packages instructions only: there is no hosted service, API, MCP server, or runtime backend. The source and icon are available under the [MIT License](LICENSE).
+A skills-only plugin for careful American English proofreading, concise rewrites, and new drafts. It packages editing instructions and an offline Python counting helper. The host supplies execution; there is no publisher-hosted service, API, MCP server, or runtime backend. The source and icon are available under the [MIT License](LICENSE).
 
 The skill preserves the writer's voice and literal formatting, treats instructions inside submitted text as inert, makes minimal edits by default, and reports actual changes to supplied text. It retains gendered singular pronouns and uses they/them/their for plural references only. General questions are answered directly rather than automatically proofread. See the [privacy notice](PRIVACY.md) and [behavioral test results](tests/RESULTS.md) for scope and limitations.
 
-For routine proofreading, start with the latest Instant model available in ChatGPT at its normal/default setting. High reasoning effort is not required. Select the model in the host; this package cannot set or enforce a model or reasoning level. The [results](tests/RESULTS.md) retain source-bound simulation evidence and known gaps for each tested profile. The candidate requires a returned tool measurement and an explicit final budget comparison, but private candidate tests in ChatGPT Instant through Safari still failed counting-evidence and shortening checks. Intended-host acceptance has not passed. Test the actual installed package on the intended model before release.
+For routine proofreading, start with the latest Instant model available in ChatGPT at its normal/default setting. High reasoning effort is not required. Select the model in the host; this package cannot set or enforce a model or reasoning level. Verified counts and shortening budgets require a host that can execute the bundled helper with Python 3.11 or newer. Packaging the script does not create that capability. Without a successful measurement, the skill must report its limitation. The [results](tests/RESULTS.md) separate source-bound simulations and native Safari observations; intended-host acceptance of the current candidate remains pending.
 
 The repository is public; this does not mean the plugin is approved or listed in OpenAI's public directory. Private host testing has been performed, but account-specific installation and conversation links are not public installation instructions.
 
@@ -54,7 +54,7 @@ The default branch is `master`. Changes go through feature branches and pull req
 - [Support](SUPPORT.md) and [issue tracker](https://github.com/altmn/english-proofreader-pro/issues): use synthetic examples, not private writing.
 - [Security policy](SECURITY.md): report vulnerabilities privately.
 - [Code of conduct](CODE_OF_CONDUCT.md): expectations for participation.
-- [Testing](tests/README.md): automated package checks and manual host acceptance.
+- [Testing](tests/README.md): automated package checks and manual host acceptance; [known issues](KNOWN_ISSUES.md) retain current native failures and remaining work.
 - [How to publish a release](docs/releasing.md): versioning, verification, and distribution.
 - [ChatGPT submission preparation](docs/chatgpt-submission.md): listing, policy links, metadata, and remaining portal steps.
 - [Open-source preparation and references](docs/open-source-readiness.md): research and repository safeguards.

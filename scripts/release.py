@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import json
 import os
 import re
@@ -23,7 +24,8 @@ PLUGIN_NAME = "english-proofreader-pro"
 SKILL_NAME = "proofreader-pro"
 EXPECTED_SKILL = f"skills/{SKILL_NAME}/SKILL.md"
 EXPECTED_AGENT = f"skills/{SKILL_NAME}/agents/openai.yaml"
-EXPECTED_SKILL_FILES = (EXPECTED_SKILL, EXPECTED_AGENT)
+EXPECTED_COUNTER = f"skills/{SKILL_NAME}/scripts/text_metrics.py"
+EXPECTED_SKILL_FILES = (EXPECTED_SKILL, EXPECTED_AGENT, EXPECTED_COUNTER)
 # Only preflight may recognize the previous generated layout for replacement.
 # These files are never included in new archives or staging trees.
 RETIRED_SKILL_FILES = (
@@ -35,6 +37,7 @@ RETIRED_SKILL_FILES = (
 EXPECTED_ICON = "assets/icon.webp"
 RUNTIME_FILES = ("LICENSE", "PRIVACY.md", EXPECTED_ICON, "plugin.json", *EXPECTED_SKILL_FILES)
 MAX_SKILL_BYTES = 1024 * 1024
+MAX_RESOURCE_BYTES = 1024 * 1024
 MAX_METADATA_URL_CHARS = 2048
 MAX_INTERFACE_URL_CHARS = 1024
 SEMVER = re.compile(r"^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$")
@@ -417,6 +420,18 @@ def validate_skill(snapshot: Mapping[str, bytes] | None = None) -> list[Path]:
     check_placeholders(text, EXPECTED_SKILL)
     if re.search(r"(?:^|\s)(?:\.\./|/|[A-Za-z]:\\)", text):
         fail(f"{EXPECTED_SKILL} contains a potentially unsafe absolute or parent-relative path")
+
+    counter_path = require_regular_file(EXPECTED_COUNTER)
+    counter_bytes = read_runtime_bytes(counter_path, snapshot)
+    if len(counter_bytes) > MAX_RESOURCE_BYTES:
+        fail(f"{EXPECTED_COUNTER} must be at most {MAX_RESOURCE_BYTES} UTF-8 bytes")
+    counter_text = read_text(counter_path, EXPECTED_COUNTER, snapshot)
+    if not counter_text.strip():
+        fail(f"{EXPECTED_COUNTER} must contain a non-empty Python resource")
+    try:
+        ast.parse(counter_text, filename=EXPECTED_COUNTER)
+    except (SyntaxError, ValueError) as exc:
+        fail(f"{EXPECTED_COUNTER} must contain valid Python source: {exc}")
 
     skills_root = ROOT / "skills"
     if skills_root.is_symlink() or not skills_root.is_dir():

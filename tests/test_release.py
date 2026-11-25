@@ -51,6 +51,7 @@ class ReleaseBuilderTests(unittest.TestCase):
                 "plugin.json",
                 "skills/proofreader-pro/SKILL.md",
                 "skills/proofreader-pro/agents/openai.yaml",
+                "skills/proofreader-pro/scripts/text_metrics.py",
             ],
         )
         self.assertFalse(any(name.startswith(("tests/", "docs/", ".codex-plugin/")) for name in names))
@@ -61,6 +62,27 @@ class ReleaseBuilderTests(unittest.TestCase):
 
         with self.assertRaisesRegex(release.ReleaseError, "not in the release allowlist"):
             release.validate()
+
+    def test_counter_resource_validation_does_not_execute_python(self) -> None:
+        sentinel = self.root / "resource-must-not-run"
+        (self.root / release.EXPECTED_COUNTER).write_text(
+            f"from pathlib import Path\nPath({str(sentinel)!r}).write_text('executed')\n",
+            encoding="utf-8",
+        )
+        release.validate()
+        self.assertFalse(sentinel.exists())
+
+    def test_invalid_empty_or_oversized_counter_resource_is_rejected(self) -> None:
+        resource = self.root / release.EXPECTED_COUNTER
+        for source, message in (
+            ("def broken(:\n", "valid Python source"),
+            ("\n", "non-empty Python resource"),
+            ("#" + "é" * release.MAX_RESOURCE_BYTES, "UTF-8 bytes"),
+        ):
+            with self.subTest(message=message):
+                resource.write_text(source, encoding="utf-8")
+                with self.assertRaisesRegex(release.ReleaseError, message):
+                    release.validate()
 
     def test_metadata_https_urls_are_accepted(self) -> None:
         manifest = self.read_manifest()
@@ -344,6 +366,9 @@ class ReleaseBuilderTests(unittest.TestCase):
                 stage = self.root / "dist/local-plugin"
                 current_skill = stage / "skills/proofreader-pro"
                 previous_skill = stage / "skills" / previous_name
+                # Historical layouts predate the bundled measurement resource.
+                (current_skill / "scripts/text_metrics.py").unlink()
+                (current_skill / "scripts").rmdir()
                 current_skill.rename(previous_skill)
 
                 release.build()
@@ -359,7 +384,10 @@ class ReleaseBuilderTests(unittest.TestCase):
         original_archive = output.read_bytes()
         stage = self.root / "dist/local-plugin"
         previous_skill = stage / "skills/proofread"
-        (stage / "skills/proofreader-pro").rename(previous_skill)
+        current_skill = stage / "skills/proofreader-pro"
+        (current_skill / "scripts/text_metrics.py").unlink()
+        (current_skill / "scripts").rmdir()
+        current_skill.rename(previous_skill)
         user_file = previous_skill / "private-notes.txt"
         user_file.write_text("Synthetic private notes.", encoding="utf-8")
 
@@ -470,6 +498,7 @@ class ReleaseBuilderTests(unittest.TestCase):
                     "plugin.json",
                     "skills/proofreader-pro/SKILL.md",
                     "skills/proofreader-pro/agents/openai.yaml",
+                    "skills/proofreader-pro/scripts/text_metrics.py",
                 ],
             )
             self.assertTrue(all(info.date_time == (1980, 1, 1, 0, 0, 0) for info in archive.infolist()))
@@ -481,6 +510,7 @@ class ReleaseBuilderTests(unittest.TestCase):
         def edit_source_then_write(path, snapshot) -> None:
             skill = self.root / release.EXPECTED_SKILL
             skill.write_bytes(original[release.EXPECTED_SKILL] + b"\nTODO: synthetic concurrent edit.\n")
+            (self.root / release.EXPECTED_COUNTER).write_text("def changed(:\n", encoding="utf-8")
             manifest = self.read_manifest()
             manifest["version"] = "99.0.0"
             self.write_manifest(manifest)
@@ -505,6 +535,7 @@ class ReleaseBuilderTests(unittest.TestCase):
             original_verify(path, snapshot)
             skill = self.root / release.EXPECTED_SKILL
             skill.write_bytes(original[release.EXPECTED_SKILL] + b"\nTODO: synthetic concurrent edit.\n")
+            (self.root / release.EXPECTED_COUNTER).write_text("def changed(:\n", encoding="utf-8")
 
         with patch.object(release, "_verify_archive", side_effect=verify_then_edit_source):
             output = release.build()

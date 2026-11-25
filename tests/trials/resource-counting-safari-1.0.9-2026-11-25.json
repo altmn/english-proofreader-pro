@@ -1,0 +1,58 @@
+{
+  "date": "2026-11-25",
+  "kind": "native-safari-resource-candidate-observations",
+  "version": "1.0.9",
+  "release_id": "pluginrel_6b07425d14dc81919b98caab134a641f",
+  "host": {
+    "browser": "Safari",
+    "host": "ChatGPT web",
+    "mode": "Chat",
+    "model_picker": "Instant, 1 of 5",
+    "underlying_model_snapshot": "unknown",
+    "web_build": "unknown",
+    "invocation": "Fresh real @picker selection on each exact fixture; plugin bubble URL verified. Native page visibly showed1.0.9."
+  },
+  "evidence_level": "Companion UI observations; no private chat URLs or screenshots committed; not a complete intended-host acceptance record or raw response transport.",
+  "attempts": [
+    {
+      "id": "count-fixture",
+      "prompt": "How many lowercase r letters are in strawberry?",
+      "response_visible_text": "There are 3 lowercase “r” letters in “strawberry.”\n\nstrawberry.\n\nThe count is correct, but the plugin’s verification script was unavailable for execution.",
+      "outcome": "failed",
+      "gap": "Claims script unavailable while still giving an exact number, instead of required no-number fixed limitation. No actual helper execution result exposed; hidden execution unknown."
+    },
+    {
+      "id": "less-wordy-fixture",
+      "prompt": "Proofread and make it less wordy: At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+      "copied_payload": "We are currently reviewing the proposal and will provide a response at a later date.",
+      "response_visible_text": "We are currently reviewing the proposal and will provide a response at a later date.\n\nChanges:\n- Removed “At this point in time,” because it is redundant with “currently.”\n- Removed “in the process of” to simplify the sentence.\n- Removed the comma and the second “we” to improve readability.\n\nThe shortening target could not be verified with programmatic counting.",
+      "rendering": "Editable writing block with Save as Page/Copy/Open editor. Quoted fragments now visibly bold, including explanations; complete original/revised sentence quotations remain missing.",
+      "clipboard": "Native Copy payload -> paste in empty composer matched exact single-line result; unsent pasted draft cleared.",
+      "execution": "No returned helper measurements exposed. Exact candid shortening limitation present, no numeric shortening claim.",
+      "outcome": "failed",
+      "gap": "Fenced output and complete full before/after Changes invariants fail. Measurement unavailable branch is candid; no verified target achieved."
+    }
+  ],
+  "regenerations": 0,
+  "conditional_checks_not_run": "Full native nested-literal/source-isolation acceptance panel remains pending critical failures. A different-mode capability probe, if run, must be recorded separately.",
+  "source_identity": {
+    "version": "1.0.9",
+    "prior_release": "pluginrel_6b073f0fdf4c8191abf68f914f954a37",
+    "scope": "USER",
+    "audience": "PRIVATE",
+    "metadata_fields_changed": [
+      "version"
+    ],
+    "archive_sha256": "2d4c2accbe42dcf27dda066690a48df629e6a3519c1f664c5f3a775d0e55b6b1",
+    "files": {
+      "LICENSE": "8fab3ea5b69feb68dab60d2ebc8e6ec55523b562180f2ce5ad032040e558e9f4",
+      "PRIVACY.md": "c9f3b0abcef11c62b964b54c09b0d635aac3bc3f08bf768aa26648063bf78bda",
+      "assets/icon.webp": "1f679ce2a85371f79da2e28a952ea1c22eff987fe050bce709da0c270a9708b4",
+      "plugin.json": "672419e08661ea920568613a7607c13ae658b5f5a936638c3bd0c8110dbf9369",
+      "skills/proofreader-pro/SKILL.md": "47ecee80432daf25759bb894664f944cecef1cabd2cbc3cb9573795e3653ede6",
+      "skills/proofreader-pro/agents/openai.yaml": "85d8aa78ae3f55b6df193b3f61274f82aac68853199b8bec2bf5dd54d489b134",
+      "skills/proofreader-pro/scripts/text_metrics.py": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51"
+    },
+    "deletions": []
+  }
+}
