@@ -1,0 +1,94 @@
+{
+  "kind": "count-routing-evaluation-summary",
+  "candidate_skill_sha256": "f89c24e42f7c54ed74aa8761c7894a39843fbe1bc61d74e36f5427dfe34aea8a",
+  "canonical_manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+  "canonical_manifest_version": "1.0.1",
+  "configured_profile": "Codex CLI 0.170.0; gpt-6.1-sol; high; independent-agent-simulation",
+  "inference_snapshot": "not exposed",
+  "attempt_count": 3,
+  "semantic_retry_count": 0,
+  "complete_response_cases": 75,
+  "named_assertions": {
+    "core": 249,
+    "markdown": 111,
+    "fragments": 51,
+    "passed": 411,
+    "failed": 0,
+    "not_run": 0
+  },
+  "integrity_and_semantic_suite_gates": "passed",
+  "generation_protocol_outcome": "failed",
+  "generation_protocol_reason": "Capture3 final count/backtick measurements lack executed tool events; retained authored trace cannot establish tool execution. Captures1/2 have observed final-check commands. Capture2 self-reports two pre-execution orchestration errors not independently exposed as CLI error events.",
+  "native_acceptance": "not established; private native1.0.4 is separate from canonical1.0.1 manifest",
+  "proof_artifacts": [
+    {
+      "path": "tests/trials/count-routing-cli-counting-provenance-2026-11-25.json",
+      "sha256": "0442be58f4b4b51cd2c102f336113ff7d16f3e28bd1a5ea30dacebef8d5247a2"
+    },
+    {
+      "path": "tests/trials/count-routing-cli-protocol-review-2026-11-25.json",
+      "sha256": "afc9d62b7ebf6f0132ac44e8dacc61c740a638d5ca01cb71cea0e85626499e99"
+    },
+    {
+      "path": "tests/trials/count-routing-markdown-render-2026-11-25.json",
+      "sha256": "ed2434f38aa25b2c0e37760283c11719e23f9a8ea870b3c8e24f90590c7fa834"
+    },
+    {
+      "path": "tests/trials/count-routing-fragment-calibration-result-2026-11-25.json",
+      "sha256": "ba4b1bcf0486b4febaa9de1a62b160f8966e0534ff7443b41e2ff2d7957d6b12"
+    },
+    {
+      "path": "tests/trials/count-routing-cli-attempts-2026-11-25.json",
+      "sha256": "6ccfbf361cfbd49073a5ddbe76eec4845aea78dbc7274aeab339756399a0b99f"
+    },
+    {
+      "path": "tests/trials/count-routing-judgment-application-2026-11-25.json",
+      "sha256": "824a2472c91be3e4bc7538719bd0bb3e0dd6e4c66bb0f4d3dead799a6d187bbc"
+    },
+    {
+      "path": "tests/trials/count-routing-validation-2026-11-25.json",
+      "sha256": "d824bc2cfd4d7bbaa6e3f046ca573d1e6468266d76b2de6bbd9ee1a6112f61cb"
+    }
+  ],
+  "attempt_usage": [
+    {
+      "capture": 1,
+      "elapsed_seconds": 183.14256654202472,
+      "usage": {
+        "input_tokens": 394906,
+        "cached_input_tokens": 343936,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8259,
+        "reasoning_output_tokens": 3059
+      },
+      "source": "CLI turn.completed event; reported usage, no currency charge exposed",
+      "cost": null
+    },
+    {
+      "capture": 2,
+      "elapsed_seconds": 249.88701520790346,
+      "usage": {
+        "input_tokens": 453538,
+        "cached_input_tokens": 406656,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 11528,
+        "reasoning_output_tokens": 2688
+      },
+      "source": "CLI turn.completed event; reported usage, no currency charge exposed",
+      "cost": null
+    },
+    {
+      "capture": 3,
+      "elapsed_seconds": 192.10532654204872,
+      "usage": {
+        "input_tokens": 436760,
+        "cached_input_tokens": 388096,
+        "cache_write_input_tokens": 0,
+        "output_tokens": 8750,
+        "reasoning_output_tokens": 3623
+      },
+      "source": "CLI turn.completed event; reported usage, no currency charge exposed",
+      "cost": null
+    }
+  ]
+}

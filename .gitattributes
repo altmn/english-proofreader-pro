@@ -1,0 +1,3 @@
+# Preserve exact generator capture/trace bytes, including their trailing blank lines.
+tests/trials/count-routing-cli-counting-3-2026-11-25.json whitespace=-blank-at-eof
+tests/trials/count-routing-cli-raw-3-2026-11-25.json whitespace=-blank-at-eof

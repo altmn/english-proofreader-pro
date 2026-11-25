@@ -14,8 +14,13 @@ ROOT = Path(__file__).resolve().parent.parent
 
 
 class CountingEvidenceTests(unittest.TestCase):
-    def test_audit_fix_captures_bind_actual_tool_events_and_all_three_suites(self) -> None:
-        evidence = evaluate.load_json(ROOT / "tests/trials/audit-fixes-cli-counting-provenance-2026-11-25.json", "audit-fix counting provenance")
+    def test_cli_captures_bind_actual_tool_events_and_all_three_suites(self) -> None:
+        for prefix in ("audit-fixes", "count-routing"):
+            with self.subTest(panel=prefix):
+                evidence = evaluate.load_json(ROOT / f"tests/trials/{prefix}-cli-counting-provenance-2026-11-25.json", "CLI counting provenance")
+                self.check_cli_capture_evidence(evidence)
+
+    def check_cli_capture_evidence(self, evidence: dict) -> None:
         self.assertEqual(len(evidence["captures"]), 3)
         run_ids: set[str] = set()
         for capture in evidence["captures"]:
@@ -48,7 +53,12 @@ class CountingEvidenceTests(unittest.TestCase):
                 self.assertEqual(fixtures, {"tests/cases.json", "tests/changes-markdown-cases.json", "tests/fragment-calibration-cases.json"})
 
     def test_fragment_calibration_binds_committed_judgments_to_the_frozen_rubric(self) -> None:
-        result = evaluate.load_json(ROOT / "tests/trials/audit-fixes-fragment-calibration-result-2026-11-25.json", "calibration result")
+        for prefix in ("audit-fixes", "count-routing"):
+            with self.subTest(panel=prefix):
+                result = evaluate.load_json(ROOT / f"tests/trials/{prefix}-fragment-calibration-result-2026-11-25.json", "calibration result")
+                self.check_calibration_evidence(result)
+
+    def check_calibration_evidence(self, result: dict) -> None:
         fixture_path = ROOT / "tests/fragment-calibration-cases.json"
         self.assertEqual(evaluate.sha256_bytes(fixture_path.read_bytes()), result["fixture_sha256"])
         fixture = evaluate.load_json(fixture_path, "calibration fixture")

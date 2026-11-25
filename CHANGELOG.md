@@ -4,7 +4,7 @@ This file records notable changes to the repository's distributable package. An 
 
 ## Unreleased
 
-- Build ZIP and local staging from one validated immutable runtime snapshot, and compare payload bytes before promotion. Add regressions for source edits during preparation and corrupted prepared outputs. Add explicit fragment/finite-clause fixtures with reviewer calibration, document host-managed removal, and tighten the counting-execution and shortening-budget acceptance gates. Native acceptance remains a separate requirement.
+- Build ZIP and local staging from one validated immutable runtime snapshot, and compare payload bytes before promotion. Add regressions for source edits during preparation and corrupted prepared outputs. Add explicit fragment/finite-clause fixtures with reviewer calibration, document host-managed removal, and tighten the counting-execution and shortening-budget acceptance gates. Advertise standalone counting in skill discovery. Retain authorized private Safari candidate tests, including unresolved counting-evidence and shortening failures; native acceptance has not passed.
 
 - Require programmatic counts and candid limitations when counting tools are unavailable; strengthen isolation of source URLs and tool/app commands. Forbid adding recipients or circumstances to meet a word budget, following a recorded simulation failure. Prefer plain-text code blocks with copy and soft-wrap controls where the host supports them. Replace "prose" with "text" in current instructions and listing metadata. Recommend the latest ChatGPT Instant model at its normal setting without claiming package-level model control.
 

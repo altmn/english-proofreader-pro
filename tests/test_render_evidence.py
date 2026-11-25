@@ -54,6 +54,7 @@ class RenderEvidenceTests(unittest.TestCase):
             ("host-behavior-markdown-render-2026-11-16.json", "host-behavior-markdown-sol", "2026-11-16"),
             ("host-facts-markdown-render-2026-11-16.json", "host-facts-markdown-sol", "2026-11-16"),
             ("audit-fixes-markdown-render-2026-11-25.json", "audit-fixes-markdown-sol", "2026-11-25"),
+            ("count-routing-markdown-render-2026-11-25.json", "count-routing-markdown-sol", "2026-11-25"),
         ):
             with self.subTest(proof=proof_name):
                 self.check_render_evidence(proof_name, record_prefix, capture_date)

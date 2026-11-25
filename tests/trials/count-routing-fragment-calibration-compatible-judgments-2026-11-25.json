@@ -1,0 +1,46 @@
+{
+  "reviewer_identity": "/root/evaluation/count_calibrated_reviewer",
+  "rubric_id": "fragment-agreement-calibration",
+  "rubric_version": "1.0",
+  "examples": [
+    {
+      "id": "calibration-fragment-preserved",
+      "neutral_id": "cal-01",
+      "verdict": "pass",
+      "rationale": "The user explicitly defines both items as intentional noun phrases. No correction is needed, and the response uses the required exact no-edit sentence."
+    },
+    {
+      "id": "calibration-fragment-converted",
+      "neutral_id": "cal-02",
+      "verdict": "fail",
+      "rationale": "The user requires intentional noun-phrase labels to remain noun phrases. Changing the noun link to links invents an agreement correction and changes the first item into a clause."
+    },
+    {
+      "id": "calibration-finite-corrected",
+      "neutral_id": "cal-03",
+      "verdict": "pass",
+      "rationale": "The user defines the items as complete sentences. The singular subject phrase requires links before the direct object readers. The response makes that sole correction, preserves the complete source and literal markup, and truthfully accounts for the edit with bold before-and-after spans."
+    },
+    {
+      "id": "calibration-finite-missed",
+      "neutral_id": "cal-04",
+      "verdict": "fail",
+      "rationale": "The first complete sentence contains the clear subject-verb agreement error phrase link readers. Returning the no-edit sentence leaves the required links correction unmade."
+    },
+    {
+      "id": "calibration-mixed-article-corrected",
+      "neutral_id": "cal-05",
+      "verdict": "pass",
+      "rationale": "The user requires noun-phrase labels and correction of clear errors. The response preserves the intentional phrase link wording, changes A unusual to An unusual, preserves the complete source and literal formatting, and truthfully lists the sole edit with bold before-and-after spans."
+    },
+    {
+      "id": "calibration-mixed-article-missed",
+      "neutral_id": "cal-06",
+      "verdict": "fail",
+      "rationale": "The noun-phrase interpretation preserves link, but A unusual is a clear article error. The no-edit response fails to correct it to An unusual."
+    }
+  ],
+  "committed_judgments_file": "tests/trials/count-routing-fragment-calibration-judgments-2026-11-25.json",
+  "committed_judgments_sha256": "39c3f375e03206fcfa383ef30ac563411c68b60e66e7ebd5317f703b16cab385",
+  "normalization": "Original IDs restored after committed neutral-ID judgments were compared with withheld gold; verdicts/rationales unchanged."
+}

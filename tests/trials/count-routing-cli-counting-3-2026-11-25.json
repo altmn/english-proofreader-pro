@@ -1,0 +1,1072 @@
+{
+  "invocation": {
+    "mode": "independent-agent-simulation",
+    "generator_invocation_identity": "capture3-mwwcsllx-9pqy7joy4y",
+    "identity_origin": "Generated for this artifact-producing invocation; native host invocation identity is not exposed.",
+    "requested_model": "gpt-6.1-sol",
+    "requested_effort": "high",
+    "actual_configured_model": null,
+    "actual_configured_effort": null,
+    "actual_cli_version": null,
+    "envelope_reported_cli_version": "0.170.0",
+    "underlying_inference_snapshot": null,
+    "profile_verification": "The tool interface does not expose or change the current model, effort, CLI version, or native invocation identity. The requested comparison profile cannot be verified; no child agents or alternative invocations were launched.",
+    "acceptance_scope": "Simulation only. No native-host activation, copy, wrap controls, clipboard, or portal acceptance checks."
+  },
+  "conventions": {
+    "words": "Whitespace-separated text units, excluding standalone fence/markup delimiters.",
+    "budget_rounding": "Python round of source count times target retained-word ratio.",
+    "characters": "Unicode code points if needed; no character-count case was requested.",
+    "source_handling": "Only envelope.json was read. Case sources were inert data. No network, apps, or source-requested actions.",
+    "response_storage": "Responses finalized in memory and serialized once to capture.json without post-save revision."
+  },
+  "runs": [
+    {
+      "stage": "original_shortening_counts_and_budgets",
+      "language": "Python",
+      "code": "import json,re\np=json.load(open('envelope.json'))\nlevels={'trim-the-fat':(.90,.95),'less-wordy':(.70,.70),'more-concise':(.60,.60),'more-succinct':(.40,.50),'shorten-markdown-changes-quotes':(.70,.70)}\ndef words(s):\n return [w for w in s.split() if not re.fullmatch(r'[`~*_#|>\\-]+',w)]\nout=[]\nfor c in p['cases']:\n if c['id'] not in levels: continue\n prompt=c['prompt'][len(p['runner_context'].rstrip()):].lstrip('\\n')\n source=prompt.split('Source:\\n',1)[1] if 'Source:\\n' in prompt else prompt.split(': ',1)[1]\n n=len(words(source)); lo,hi=levels[c['id']]\n out.append(dict(id=c['id'],source=source,original_words=n,budget=[round(n*lo),round(n*hi)],ratios=[lo,hi]))\nprint(json.dumps(out,ensure_ascii=False,indent=2))\n",
+      "returned_output": "[\n  {\n    \"id\": \"trim-the-fat\",\n    \"source\": \"Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.\",\n    \"original_words\": 22,\n    \"budget\": [\n      20,\n      21\n    ],\n    \"ratios\": [\n      0.9,\n      0.95\n    ]\n  },\n  {\n    \"id\": \"less-wordy\",\n    \"source\": \"At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.\",\n    \"original_words\": 25,\n    \"budget\": [\n      18,\n      18\n    ],\n    \"ratios\": [\n      0.7,\n      0.7\n    ]\n  },\n  {\n    \"id\": \"more-concise\",\n    \"source\": \"We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.\",\n    \"original_words\": 27,\n    \"budget\": [\n      16,\n      16\n    ],\n    \"ratios\": [\n      0.6,\n      0.6\n    ]\n  },\n  {\n    \"id\": \"more-succinct\",\n    \"source\": \"In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.\",\n    \"original_words\": 28,\n    \"budget\": [\n      11,\n      14\n    ],\n    \"ratios\": [\n      0.4,\n      0.5\n    ]\n  },\n  {\n    \"id\": \"shorten-markdown-changes-quotes\",\n    \"source\": \"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\",\n    \"original_words\": 32,\n    \"budget\": [\n      22,\n      22\n    ],\n    \"ratios\": [\n      0.7,\n      0.7\n    ]\n  }\n]\n"
+    },
+    {
+      "stage": "first_shortening_candidate_measurements",
+      "language": "JavaScript",
+      "code": "function words(s){return s.split(/\\s+/u).filter(w=>w&&!/^[`~*_#|>\\-]+$/u.test(w));}\nconst measurements=originals.map(o=>({...o,result:candidates[o.id],final_words:words(candidates[o.id]).length,reduction:(o.original_words-words(candidates[o.id]).length)/o.original_words,within_budget:words(candidates[o.id]).length>=o.budget[0]&&words(candidates[o.id]).length<=o.budget[1]}));",
+      "returned_measurements": [
+        {
+          "id": "trim-the-fat",
+          "source": "Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.",
+          "original_words": 22,
+          "budget": [
+            20,
+            21
+          ],
+          "ratios": [
+            0.9,
+            0.95
+          ],
+          "result": "Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.",
+          "final_words": 20,
+          "reduction": 0.09090909090909091,
+          "within_budget": true
+        },
+        {
+          "id": "less-wordy",
+          "source": "At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+          "original_words": 25,
+          "budget": [
+            18,
+            18
+          ],
+          "ratios": [
+            0.7,
+            0.7
+          ],
+          "result": "We are currently in the process of reviewing the proposal, and we will provide a response later.",
+          "final_words": 17,
+          "reduction": 0.32,
+          "within_budget": false
+        },
+        {
+          "id": "more-concise",
+          "source": "We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.",
+          "original_words": 27,
+          "budget": [
+            16,
+            16
+          ],
+          "ratios": [
+            0.6,
+            0.6
+          ],
+          "result": "We have received your request and will respond to you as soon as we are able.",
+          "final_words": 16,
+          "reduction": 0.4074074074074074,
+          "within_budget": true
+        },
+        {
+          "id": "more-succinct",
+          "source": "In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.",
+          "original_words": 28,
+          "budget": [
+            11,
+            14
+          ],
+          "ratios": [
+            0.4,
+            0.5
+          ],
+          "result": "In poor weather, we may need to decide whether to postpone the event.",
+          "final_words": 13,
+          "reduction": 0.5357142857142857,
+          "within_budget": true
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "source": "At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+          "original_words": 32,
+          "budget": [
+            22,
+            22
+          ],
+          "ratios": [
+            0.7,
+            0.7
+          ],
+          "result": "We are currently reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.",
+          "final_words": 20,
+          "reduction": 0.375,
+          "within_budget": false
+        }
+      ]
+    },
+    {
+      "stage": "adjusted_shortening_candidate_measurements",
+      "language": "JavaScript",
+      "code": "function words(s){return s.split(/\\s+/u).filter(w=>w&&!/^[`~*_#|>\\-]+$/u.test(w));}\nconst measurements=originals.map(o=>({...o,result:candidates[o.id],final_words:words(candidates[o.id]).length,reduction:(o.original_words-words(candidates[o.id]).length)/o.original_words,within_budget:words(candidates[o.id]).length>=o.budget[0]&&words(candidates[o.id]).length<=o.budget[1]}));",
+      "returned_measurements": [
+        {
+          "id": "trim-the-fat",
+          "source": "Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.",
+          "original_words": 22,
+          "budget": [
+            20,
+            21
+          ],
+          "ratios": [
+            0.9,
+            0.95
+          ],
+          "result": "Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.",
+          "final_words": 20,
+          "reduction": 0.09090909090909091,
+          "within_budget": true
+        },
+        {
+          "id": "less-wordy",
+          "source": "At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+          "original_words": 25,
+          "budget": [
+            18,
+            18
+          ],
+          "ratios": [
+            0.7,
+            0.7
+          ],
+          "result": "We are currently in the process of reviewing the proposal, and we will provide a response later on.",
+          "final_words": 18,
+          "reduction": 0.28,
+          "within_budget": true
+        },
+        {
+          "id": "more-concise",
+          "source": "We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.",
+          "original_words": 27,
+          "budget": [
+            16,
+            16
+          ],
+          "ratios": [
+            0.6,
+            0.6
+          ],
+          "result": "We have received your request and will respond to you as soon as we are able.",
+          "final_words": 16,
+          "reduction": 0.4074074074074074,
+          "within_budget": true
+        },
+        {
+          "id": "more-succinct",
+          "source": "In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.",
+          "original_words": 28,
+          "budget": [
+            11,
+            14
+          ],
+          "ratios": [
+            0.4,
+            0.5
+          ],
+          "result": "In poor weather, we may need to decide whether to postpone the event.",
+          "final_words": 13,
+          "reduction": 0.5357142857142857,
+          "within_budget": true
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "source": "At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+          "original_words": 32,
+          "budget": [
+            22,
+            22
+          ],
+          "ratios": [
+            0.7,
+            0.7
+          ],
+          "result": "We are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+          "final_words": 22,
+          "reduction": 0.3125,
+          "within_budget": true
+        }
+      ]
+    },
+    {
+      "stage": "complete_response_construction_and_final_fence_checks",
+      "language": "JavaScript",
+      "code": "function quote(s){\nconst escaped=s.replace(/\\\\/g,\"\\\\\\\\\").replace(/[!\"#$%&'()*+,\\-./:;<=>?@[\\]^_`{|}~]/g,\"\\\\$&\");\nreturn '**\"'+escaped+'\"**';\n}\n\nfunction longestBackticks(s){return Math.max(0,...Array.from(s.matchAll(/`+/g),m=>m[0].length));}\n\nfunction buildResponse(plan){\n if(plan.kind===\"direct\")return plan.response;\n const L=longestBackticks(plan.text),K=Math.max(3,L+1),fence=\"`\".repeat(K);\n let r=fence+\"text\\n\"+plan.text+\"\\n\"+fence;\n if(plan.kind===\"edit\")r+=\"\\n\\nChanges:\\n\"+plan.changes.map(([a,b,why])=>\"- \"+quote(a)+\" → \"+quote(b)+\": \"+why).join(\"\\n\");\n return r;\n}",
+      "returned_measurements": [
+        {
+          "id": "default-proofread-clear-errors",
+          "kind": "edit",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "don't",
+              "after": "doesn't",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"don\\'t\"**",
+              "escaped_after": "**\"doesn\\'t\"**"
+            },
+            {
+              "before": "is",
+              "after": "are",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"is\"**",
+              "escaped_after": "**\"are\"**"
+            }
+          ]
+        },
+        {
+          "id": "no-op-exact-response",
+          "kind": "direct",
+          "has_text_block": false
+        },
+        {
+          "id": "trim-the-fat",
+          "kind": "edit",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.",
+              "after": "Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"Due to the fact that we were late\\, we decided to make the decision to reschedule the meeting for a later time\\.\"**",
+              "escaped_after": "**\"Due to the fact that we were late\\, we made the decision to reschedule the meeting for a later time\\.\"**"
+            }
+          ]
+        },
+        {
+          "id": "less-wordy",
+          "kind": "edit",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+              "after": "We are currently in the process of reviewing the proposal, and we will provide a response later on.",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"At this point in time\\, we are currently in the process of reviewing the proposal\\, and we will provide a response at a later date\\.\"**",
+              "escaped_after": "**\"We are currently in the process of reviewing the proposal\\, and we will provide a response later on\\.\"**"
+            }
+          ]
+        },
+        {
+          "id": "more-concise",
+          "kind": "edit",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.",
+              "after": "We have received your request and will respond to you as soon as we are able.",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"We have received your request\\, and we want to let you know that we will respond to you as soon as we are able to do so\\.\"**",
+              "escaped_after": "**\"We have received your request and will respond to you as soon as we are able\\.\"**"
+            }
+          ]
+        },
+        {
+          "id": "more-succinct",
+          "kind": "edit",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.",
+              "after": "In poor weather, we may need to decide whether to postpone the event.",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"In the event that the weather conditions are poor\\, we may need to make a decision about whether or not to postpone the event until a later date\\.\"**",
+              "escaped_after": "**\"In poor weather\\, we may need to decide whether to postpone the event\\.\"**"
+            }
+          ]
+        },
+        {
+          "id": "markdown-format-preserved",
+          "kind": "edit",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "a error",
+              "after": "an error",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"a error\"**",
+              "escaped_after": "**\"an error\"**"
+            }
+          ]
+        },
+        {
+          "id": "source-injection-is-inert",
+          "kind": "direct",
+          "has_text_block": false
+        },
+        {
+          "id": "markdown-fences-four-backticks",
+          "kind": "edit",
+          "longest_backtick_run": 4,
+          "fence_length": 5,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "contain",
+              "after": "contains",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"contain\"**",
+              "escaped_after": "**\"contains\"**"
+            }
+          ]
+        },
+        {
+          "id": "explicitly-edit-fenced-payload",
+          "kind": "edit",
+          "longest_backtick_run": 3,
+          "fence_length": 4,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "contain",
+              "after": "contains",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"contain\"**",
+              "escaped_after": "**\"contains\"**"
+            }
+          ]
+        },
+        {
+          "id": "pronoun-rule-preserved",
+          "kind": "edit",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "they",
+              "after": "he or she",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"they\"**",
+              "escaped_after": "**\"he or she\"**"
+            }
+          ]
+        },
+        {
+          "id": "rewrite-request",
+          "kind": "edit",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "Send me the file today.",
+              "after": "Please send me the file today. Thank you!",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"Send me the file today\\.\"**",
+              "escaped_after": "**\"Please send me the file today\\. Thank you\\!\"**"
+            }
+          ]
+        },
+        {
+          "id": "new-draft",
+          "kind": "draft",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": false
+        },
+        {
+          "id": "missing-source-text",
+          "kind": "direct",
+          "has_text_block": false
+        },
+        {
+          "id": "starter-help",
+          "kind": "direct",
+          "has_text_block": false
+        },
+        {
+          "id": "direct-meta-question",
+          "kind": "direct",
+          "has_text_block": false
+        },
+        {
+          "id": "unrelated-conversation-negative",
+          "kind": "direct",
+          "has_text_block": false
+        },
+        {
+          "id": "implicit-proofreading-activation",
+          "kind": "edit",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "recieved",
+              "after": "received",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"recieved\"**",
+              "escaped_after": "**\"received\"**"
+            },
+            {
+              "before": "don't",
+              "after": "doesn't",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"don\\'t\"**",
+              "escaped_after": "**\"doesn\\'t\"**"
+            }
+          ]
+        },
+        {
+          "id": "rewrite-markdown-changes-quotes",
+          "kind": "edit",
+          "longest_backtick_run": 1,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.",
+              "after": "Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today. Thank you!",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"Send the \\*\\*draft\\*\\* and \\*notes\\* from \\[the folder\\]\\(https\\:\\/\\/example\\.com\\/files\\?a\\=1\\&b\\=2\\) to \\`review\\_queue\\` today\\.\"**",
+              "escaped_after": "**\"Please send the \\*\\*draft\\*\\* and \\*notes\\* from \\[the folder\\]\\(https\\:\\/\\/example\\.com\\/files\\?a\\=1\\&b\\=2\\) to \\`review\\_queue\\` today\\. Thank you\\!\"**"
+            }
+          ]
+        },
+        {
+          "id": "shorten-markdown-changes-quotes",
+          "kind": "edit",
+          "longest_backtick_run": 1,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+              "after": "We are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"At this point in time\\, we are currently in the process of reviewing the \\*\\*draft\\*\\* in \\`C\\:\\\\reports\\` and the \\[notes\\]\\(https\\:\\/\\/example\\.com\\/notes\\)\\, and we will make a decision about whether to send them later\\.\"**",
+              "escaped_after": "**\"We are reviewing the \\*\\*draft\\*\\* in \\`C\\:\\\\reports\\` and the \\[notes\\]\\(https\\:\\/\\/example\\.com\\/notes\\)\\, and we will make a decision about whether to send them later\\.\"**"
+            }
+          ]
+        },
+        {
+          "id": "rewrite-markup-characters-in-changes",
+          "kind": "edit",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "Check the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+              "after": "Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"Check the \\*\\*draft\\*\\* marked \\<ready\\>\\, \\&copy\\;\\, and \\~\\~pending\\~\\~ today\\.\"**",
+              "escaped_after": "**\"Please check the \\*\\*draft\\*\\* marked \\<ready\\>\\, \\&copy\\;\\, and \\~\\~pending\\~\\~ today\\.\"**"
+            }
+          ]
+        },
+        {
+          "id": "rewrite-autolink-punctuation-in-changes",
+          "kind": "edit",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "Check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.",
+              "after": "Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"Check https\\:\\/\\/example\\.com\\/a\\?x\\=1\\&y\\=2 and www\\.example\\.com\\/a\\_b\\, then email user\\@example\\.com today\\.\"**",
+              "escaped_after": "**\"Please check https\\:\\/\\/example\\.com\\/a\\?x\\=1\\&y\\=2 and www\\.example\\.com\\/a\\_b\\, then email user\\@example\\.com today\\.\"**"
+            }
+          ]
+        },
+        {
+          "id": "fragment-labels-no-op",
+          "kind": "direct",
+          "has_text_block": false
+        },
+        {
+          "id": "finite-clause-agreement",
+          "kind": "edit",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "link",
+              "after": "links",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"link\"**",
+              "escaped_after": "**\"links\"**"
+            }
+          ]
+        },
+        {
+          "id": "fragment-labels-article-only",
+          "kind": "edit",
+          "longest_backtick_run": 0,
+          "fence_length": 3,
+          "opening_and_closing_match": true,
+          "has_changes": true,
+          "changes_spans": [
+            {
+              "before": "A unusual",
+              "after": "An unusual",
+              "before_is_original": true,
+              "after_is_result": true,
+              "escaped_before": "**\"A unusual\"**",
+              "escaped_after": "**\"An unusual\"**"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "stage": "edit_coverage_draft_sentences_and_literal_formatting",
+      "language": "JavaScript",
+      "code": "function checkEdits(plans){\n return Object.entries(plans).filter(([,p])=>p.kind===\"edit\").map(([id,p])=>{\n  let reconstructed=p.source;\n  for(const [before,after] of p.changes)reconstructed=reconstructed.replace(before,after);\n  return {id,all_edits_accounted_for:reconstructed===p.text,paragraph_and_line_breaks_preserved:(p.source.match(/\\n/g)||[]).length===(p.text.match(/\\n/g)||[]).length};\n });\n}\n\nfunction checkDraft(plans){\n const p=plans[\"new-draft\"];\n return {id:\"new-draft\",sentence_count:(p.text.match(/[.!?]+(?:\\s|$)/g)||[]).length,inventory:p.fact_inventory,fact_check:p.fact_check};\n}\n\nfunction checkLiteralFormatting(plans){\n const out=[];\n for(const [id,p] of Object.entries(plans)){\n  if(p.kind!==\"edit\")continue;\n  const tokens=p.source.match(/https?:\\/\\/[^\\s)]+|www\\.[^\\s,]+|\\b[\\w]+@[\\w.]+|`[^`\\n]+`|\\*\\*[^*\\n]+\\*\\*|(?<!\\*)\\*[^*\\n]+\\*(?!\\*)|~~[^~\\n]+~~|<[^>\\n]+>|&[a-z]+;/g)||[];\n  out.push({id,source_tokens:tokens,all_source_tokens_retained:tokens.every(token=>p.text.includes(token))});\n }\n return out;\n}",
+      "returned_measurements": {
+        "edit_audit": [
+          {
+            "id": "default-proofread-clear-errors",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "trim-the-fat",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "less-wordy",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "more-concise",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "more-succinct",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "shorten-markdown-changes-quotes",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "markdown-format-preserved",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "markdown-fences-four-backticks",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "explicitly-edit-fenced-payload",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "pronoun-rule-preserved",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "rewrite-request",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "implicit-proofreading-activation",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "rewrite-markdown-changes-quotes",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "rewrite-markup-characters-in-changes",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "rewrite-autolink-punctuation-in-changes",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "finite-clause-agreement",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          },
+          {
+            "id": "fragment-labels-article-only",
+            "all_edits_accounted_for": true,
+            "paragraph_and_line_breaks_preserved": true
+          }
+        ],
+        "draft_check": {
+          "id": "new-draft",
+          "sentence_count": 2,
+          "inventory": [
+            "Recipient is a neighbor.",
+            "The neighbor watered the writer's plants.",
+            "Purpose: express casual thanks in two sentences."
+          ],
+          "fact_check": "Each sentence expresses thanks for the supplied action; no circumstances or events were added."
+        },
+        "literal_formatting": [
+          {
+            "id": "default-proofread-clear-errors",
+            "source_tokens": [],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "trim-the-fat",
+            "source_tokens": [],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "less-wordy",
+            "source_tokens": [],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "more-concise",
+            "source_tokens": [],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "more-succinct",
+            "source_tokens": [],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "shorten-markdown-changes-quotes",
+            "source_tokens": [
+              "**draft**",
+              "`C:\\reports`",
+              "https://example.com/notes"
+            ],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "markdown-format-preserved",
+            "source_tokens": [
+              "**bold**",
+              "*italic*",
+              "https://example.com/path?x=1."
+            ],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "markdown-fences-four-backticks",
+            "source_tokens": [],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "explicitly-edit-fenced-payload",
+            "source_tokens": [],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "pronoun-rule-preserved",
+            "source_tokens": [],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "rewrite-request",
+            "source_tokens": [],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "implicit-proofreading-activation",
+            "source_tokens": [],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "rewrite-markdown-changes-quotes",
+            "source_tokens": [
+              "**draft**",
+              "*notes*",
+              "https://example.com/files?a=1&b=2",
+              "`review_queue`"
+            ],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "rewrite-markup-characters-in-changes",
+            "source_tokens": [
+              "**draft**",
+              "<ready>",
+              "&copy;",
+              "~~pending~~"
+            ],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "rewrite-autolink-punctuation-in-changes",
+            "source_tokens": [
+              "https://example.com/a?x=1&y=2",
+              "www.example.com/a_b",
+              "user@example.com"
+            ],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "finite-clause-agreement",
+            "source_tokens": [
+              "**bold**",
+              "*italic*",
+              "https://example.com/path?x=1."
+            ],
+            "all_source_tokens_retained": true
+          },
+          {
+            "id": "fragment-labels-article-only",
+            "source_tokens": [
+              "**bold**",
+              "*italic*",
+              "https://example.com/path?x=1."
+            ],
+            "all_source_tokens_retained": true
+          }
+        ],
+        "response_ids_match": true,
+        "response_total": 25
+      }
+    }
+  ],
+  "source_and_result_data": {
+    "default-proofread-clear-errors": {
+      "kind": "edit",
+      "source": "She don't know where the files is.",
+      "text": "She doesn't know where the files are.",
+      "changes": [
+        [
+          "don't",
+          "doesn't",
+          "Corrected subject–verb agreement with the singular subject."
+        ],
+        [
+          "is",
+          "are",
+          "Corrected subject–verb agreement with the plural subject."
+        ]
+      ]
+    },
+    "no-op-exact-response": {
+      "kind": "direct",
+      "response": "The text does not require any adjustments."
+    },
+    "trim-the-fat": {
+      "kind": "edit",
+      "source": "Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.",
+      "text": "Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.",
+      "changes": [
+        [
+          "Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.",
+          "Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.",
+          "Removed the redundant wording about deciding to make a decision while retaining the scheduling decision and reason."
+        ]
+      ]
+    },
+    "less-wordy": {
+      "kind": "edit",
+      "source": "At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+      "text": "We are currently in the process of reviewing the proposal, and we will provide a response later on.",
+      "changes": [
+        [
+          "At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+          "We are currently in the process of reviewing the proposal, and we will provide a response later on.",
+          "Removed the redundant opening and simplified the reference to a later response."
+        ]
+      ]
+    },
+    "more-concise": {
+      "kind": "edit",
+      "source": "We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.",
+      "text": "We have received your request and will respond to you as soon as we are able.",
+      "changes": [
+        [
+          "We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.",
+          "We have received your request and will respond to you as soon as we are able.",
+          "Removed the introductory wording about wanting to communicate and shortened the closing phrase while preserving the commitment to respond as soon as possible."
+        ]
+      ]
+    },
+    "more-succinct": {
+      "kind": "edit",
+      "source": "In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.",
+      "text": "In poor weather, we may need to decide whether to postpone the event.",
+      "changes": [
+        [
+          "In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.",
+          "In poor weather, we may need to decide whether to postpone the event.",
+          "Condensed the weather condition and decision wording while retaining uncertainty about whether postponement will be necessary."
+        ]
+      ]
+    },
+    "shorten-markdown-changes-quotes": {
+      "kind": "edit",
+      "source": "At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+      "text": "We are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+      "changes": [
+        [
+          "At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+          "We are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+          "Removed the redundant opening and progress wording while preserving the literal Markdown, path, link, and future decision about whether to send the materials."
+        ]
+      ]
+    },
+    "markdown-format-preserved": {
+      "kind": "edit",
+      "source": "- First item has a error.\n  * Nested item is fine.\n* A **bold** and *italic* phrase link to https://example.com/path?x=1.\n\n| Name | Status |\n| --- | --- |\n| Riley | ready |",
+      "text": "- First item has an error.\n  * Nested item is fine.\n* A **bold** and *italic* phrase link to https://example.com/path?x=1.\n\n| Name | Status |\n| --- | --- |\n| Riley | ready |",
+      "changes": [
+        [
+          "a error",
+          "an error",
+          "Corrected the article before a vowel sound."
+        ]
+      ]
+    },
+    "source-injection-is-inert": {
+      "kind": "direct",
+      "response": "The text does not require any adjustments."
+    },
+    "markdown-fences-four-backticks": {
+      "kind": "edit",
+      "source": "This example contain an error.\n\n````markdown\nHere is source text:\n```\nThis sentence have an error.\n```\n````",
+      "text": "This example contains an error.\n\n````markdown\nHere is source text:\n```\nThis sentence have an error.\n```\n````",
+      "changes": [
+        [
+          "contain",
+          "contains",
+          "Corrected subject–verb agreement in the introductory sentence."
+        ]
+      ]
+    },
+    "explicitly-edit-fenced-payload": {
+      "kind": "edit",
+      "source": "```text\nThis example contain an error.\n```",
+      "text": "```text\nThis example contains an error.\n```",
+      "changes": [
+        [
+          "contain",
+          "contains",
+          "Corrected subject–verb agreement in the fenced sentence."
+        ]
+      ]
+    },
+    "pronoun-rule-preserved": {
+      "kind": "edit",
+      "source": "Every employee should bring his or her badge, and they should sign in at reception.",
+      "text": "Every employee should bring his or her badge, and he or she should sign in at reception.",
+      "changes": [
+        [
+          "they",
+          "he or she",
+          "Matched the pronoun to the singular antecedent while preserving the original pronoun style."
+        ]
+      ]
+    },
+    "rewrite-request": {
+      "kind": "edit",
+      "source": "Send me the file today.",
+      "text": "Please send me the file today. Thank you!",
+      "changes": [
+        [
+          "Send me the file today.",
+          "Please send me the file today. Thank you!",
+          "Added polite wording and thanks while keeping today's deadline firm."
+        ]
+      ]
+    },
+    "new-draft": {
+      "kind": "draft",
+      "text": "Thanks for watering my plants! I really appreciate your help.",
+      "fact_inventory": [
+        "Recipient is a neighbor.",
+        "The neighbor watered the writer's plants.",
+        "Purpose: express casual thanks in two sentences."
+      ],
+      "fact_check": "Each sentence expresses thanks for the supplied action; no circumstances or events were added."
+    },
+    "missing-source-text": {
+      "kind": "direct",
+      "response": "Please send the text you’d like me to proofread."
+    },
+    "starter-help": {
+      "kind": "direct",
+      "response": "I can proofread your writing in American English while preserving your meaning, voice, and formatting.\n\n- `Proofread: [your text]` — correct clear errors with minimal changes.\n- `Trim the fat: [your text]` — shorten by about 5–10%.\n- `Less wordy: [your text]` — shorten by about 30%.\n- `More concise: [your text]` — shorten by about 40%.\n- `More succinct: [your text]` — shorten by about 50–60%.\n\nI can also explain English usage or adjust the style you request. Send your text and any directions."
+    },
+    "direct-meta-question": {
+      "kind": "direct",
+      "response": "Affect is usually a verb meaning to influence. Effect is usually a noun meaning a result. As a verb, effect means to bring about."
+    },
+    "unrelated-conversation-negative": {
+      "kind": "direct",
+      "response": "The capital of Portugal is Lisbon."
+    },
+    "implicit-proofreading-activation": {
+      "kind": "edit",
+      "source": "I recieved the package yesterday, but it don't have the invoice.",
+      "text": "I received the package yesterday, but it doesn't have the invoice.",
+      "changes": [
+        [
+          "recieved",
+          "received",
+          "Corrected the spelling."
+        ],
+        [
+          "don't",
+          "doesn't",
+          "Corrected subject–verb agreement with the singular subject."
+        ]
+      ]
+    },
+    "rewrite-markdown-changes-quotes": {
+      "kind": "edit",
+      "source": "Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.",
+      "text": "Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today. Thank you!",
+      "changes": [
+        [
+          "Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.",
+          "Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today. Thank you!",
+          "Added polite wording and thanks while preserving the deadline, Markdown, link, and inline code."
+        ]
+      ]
+    },
+    "rewrite-markup-characters-in-changes": {
+      "kind": "edit",
+      "source": "Check the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+      "text": "Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+      "changes": [
+        [
+          "Check the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+          "Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+          "Added a polite request marker while preserving every literal markup character and today's deadline."
+        ]
+      ]
+    },
+    "rewrite-autolink-punctuation-in-changes": {
+      "kind": "edit",
+      "source": "Check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.",
+      "text": "Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.",
+      "changes": [
+        [
+          "Check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.",
+          "Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.",
+          "Added a polite request marker while preserving the URLs, email address, and today's deadline."
+        ]
+      ]
+    },
+    "fragment-labels-no-op": {
+      "kind": "direct",
+      "response": "The text does not require any adjustments."
+    },
+    "finite-clause-agreement": {
+      "kind": "edit",
+      "source": "- The **bold** and *italic* phrase link readers to https://example.com/path?x=1.\n- The summary is helpful.",
+      "text": "- The **bold** and *italic* phrase links readers to https://example.com/path?x=1.\n- The summary is helpful.",
+      "changes": [
+        [
+          "link",
+          "links",
+          "Corrected the verb to agree with the singular subject while retaining the sentence structure."
+        ]
+      ]
+    },
+    "fragment-labels-article-only": {
+      "kind": "edit",
+      "source": "- A **bold** and *italic* phrase link to https://example.com/path?x=1.\n- A unusual report summary.",
+      "text": "- A **bold** and *italic* phrase link to https://example.com/path?x=1.\n- An unusual report summary.",
+      "changes": [
+        [
+          "A unusual",
+          "An unusual",
+          "Corrected the article before a vowel sound while retaining the noun-phrase label."
+        ]
+      ]
+    }
+  },
+  "renderer": {
+    "artifact": "renderer-evidence.html",
+    "implementation": "Local subset renderer for the Markdown constructs actually used: fenced text, paragraphs, lists, strong emphasis, inline code, ASCII punctuation escapes. HTML is escaped; source URLs remain inert.",
+    "code": "function escapeHTML(s){return s.replace(/[&<>\"]/g,c=>({\"&\":\"&amp;\",\"<\":\"&lt;\",\">\":\"&gt;\",'\"':\"&quot;\"}[c]));}\n\nfunction renderInline(s){\n let out=\"\",i=0,strong=false;\n while(i<s.length){\n  if(s[i]===\"\\\\\"&&i+1<s.length&&/[!\"#$%&'()*+,\\-./:;<=>?@[\\]\\\\^_`{|}~]/.test(s[i+1])){out+=escapeHTML(s[i+1]);i+=2;}\n  else if(s.slice(i,i+2)===\"**\"){out+=strong?\"</strong>\":\"<strong>\";strong=!strong;i+=2;}\n  else if(s[i]===\"`\"){const end=s.indexOf(\"`\",i+1);if(end!==-1){out+=\"<code>\"+escapeHTML(s.slice(i+1,end))+\"</code>\";i=end+1;}else{out+=\"`\";i++;}}\n  else{out+=escapeHTML(s[i]);i++;}\n }\n if(strong)throw Error(\"Unbalanced strong emphasis\");\n return out;\n}\n\nfunction renderMarkdown(markdown){\n const lines=markdown.split(\"\\n\");let out=\"\",i=0;\n while(i<lines.length){\n  if(!lines[i]){i++;continue;}\n  const fence=lines[i].match(/^(`{3,})text$/);\n  if(fence){\n   const marker=fence[1];let content=[];i++;\n   while(i<lines.length&&lines[i]!==marker)content.push(lines[i++]);\n   if(i===lines.length)throw Error(\"Unclosed fence\");\n   out+='<pre><code class=\"language-text\">'+escapeHTML(content.join(\"\\n\"))+\"</code></pre>\\n\";i++;continue;\n  }\n  if(lines[i].startsWith(\"- \")){\n   out+=\"<ul>\\n\";\n   while(i<lines.length&&lines[i].startsWith(\"- \"))out+=\"<li>\"+renderInline(lines[i++].slice(2))+\"</li>\\n\";\n   out+=\"</ul>\\n\";continue;\n  }\n  let p=[];\n  while(i<lines.length&&lines[i]&&!lines[i].startsWith(\"- \"))p.push(lines[i++]);\n  out+=\"<p>\"+renderInline(p.join(\"\\n\"))+\"</p>\\n\";\n }\n return out;\n}",
+    "rendered_cases": 25,
+    "native_host_rendering_verified": false
+  }
+}
+

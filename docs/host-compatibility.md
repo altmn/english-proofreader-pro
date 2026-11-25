@@ -10,13 +10,15 @@ For routine proofreading, start with the latest Instant model available in ChatG
 
 The documented plugin and [skill metadata](https://learn.chatgpt.com/docs/build-skills#optional-metadata) provide no model or reasoning-effort selector. A recommendation in the listing or skill instructions cannot change host settings. OpenAI's API alias [`chat-latest`](https://developers.openai.com/api/docs/models/chat-latest) tracks the latest ChatGPT Instant model, but its API Skills support is unavailable; it is not a documented Codex model-selection shortcut.
 
-Earlier Sol/high simulations are evidence for their exact source/profile, not a default setting or proof of Instant behavior. This revision still needs acceptance in the intended host on the recommended Instant setting. See [validation evidence](../tests/RESULTS.md).
+Earlier Sol/high simulations are evidence for their exact source/profile, not a default setting or proof of Instant behavior. The November 25 private candidate checks in Safari showed **Instant / 1 of 5** in the picker, but still did not pass counting-evidence and shortening checks. The underlying model snapshot and web build were not exposed. This revision has not passed intended-host acceptance on the recommended setting. See [validation evidence](../tests/RESULTS.md).
 
 ## Invocation and collisions
 
 Invoke the skill on every turn you want it to handle. This includes follow-up revisions, questions about the current text, counting requests, and new drafts. A previous mention does not keep the plugin or skill selected for the next message. Use a fresh picker selection or explicit skill mention on each turn rather than relying on conversation context or automatic matching.
 
 The stable plugin ID remains `english-proofreader-pro`. Its plugin picker label is `EnglishProofreaderPro`; the bundled skill's picker label is `ProofreaderPro`. ChatGPT's `@` menu can select [plugins](https://learn.chatgpt.com/docs/build-plugins) and [skills](https://learn.chatgpt.com/docs/build-skills). These labels provide the two requested no-space names through those supported metadata fields. They do not register arbitrary aliases or guarantee that an unselected typed `@` string activates the plugin. Verify both entries after installation.
+
+In the November 25 Safari observation, searching `@ProofreaderPro` returned the plugin entry but no separate skill entry. The plugin's Skills detail opened the current instructions for inspection; it offered no direct invocation action. A distinct older custom GPT in the picker was not used. Plugin selection and an instruction viewer do not establish which skill bytes the model activated on a turn.
 
 In Codex, include `$proofreader-pro` in each request or choose **ProofreaderPro** through `/skills` for that turn. The skill folder, frontmatter name, and starter prompt use the distinctive `proofreader-pro` name. The former `$proofread` and `$english-proofreader-pro` names are not retained as aliases. OpenAI documents that duplicate skill names are not merged and can both appear in selectors. Select the entry from this plugin if another installation uses the same distinctive name; do not rely on name precedence. Cached older installs may still expose an older name until updated through the host's normal workflow.
 

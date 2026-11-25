@@ -1,6 +1,6 @@
 ---
 name: proofreader-pro
-description: Proofread, edit, shorten, rewrite, or draft English text in American English while preserving meaning, voice, and literal formatting. Use for editing requests, including AI prompts, explicit drafting, and follow-up questions about this editing workflow.
+description: Proofread, edit, shorten, rewrite, or draft English text in American English while preserving meaning, voice, and literal formatting. Use for editing requests, including AI prompts, explicit drafting, standalone or follow-up text-counting questions about characters, letters, words, or literal occurrences, and editing-workflow questions. Verify counts with programmatic tools.
 ---
 
 # Activation

@@ -1,0 +1,210 @@
+{
+  "kind": "programmatic-counting-provenance",
+  "captures": [
+    {
+      "run_id": "count-routing-cli-1-20261125-01a21395-06b5-73d3-9b62-a69b33c35eb7",
+      "trace_file": "tests/trials/count-routing-cli-counting-1-2026-11-25.json",
+      "trace_sha256": "718dd036b75224b2e0e8610eb590f0b32c8487670f82bb997f28e791e66c1cfb",
+      "events_file": "tests/trials/count-routing-cli-events-1-2026-11-25.jsonl.gz",
+      "events_sha256": "a5aed751a052b7ae439b4c2b173ae9fed21e37066421a466c71143dc171f7f24",
+      "source_records": [
+        {
+          "path": "tests/trials/count-routing-core-sol-1-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "f89c24e42f7c54ed74aa8761c7894a39843fbe1bc61d74e36f5427dfe34aea8a",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "default-proofread-clear-errors": "5da4ca59b2d5167f04d43dd7db27e206955a955b3c05099e726771d15ae35dea",
+            "no-op-exact-response": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "trim-the-fat": "58750c8317f5580ae4bc12546f5d686c5a91aa7b8c8b8e1f30d3e0428a9dd993",
+            "less-wordy": "61ae07c20051bbada4ade9e36c214c64f2755a1dfc94cc6da42c30ffb9506a92",
+            "more-concise": "1eb12ef03653168cc02096e60cc7ec86736bd54cee6f5ed97fc8c9677fded0e0",
+            "more-succinct": "7da1de02dacab19f2902c681e55f75d39ac8364312431dc0bf49c5eabe6bf98f",
+            "markdown-format-preserved": "45a758e331f962ce67c510caa9e32a37b9132af8da298c87554fcb8d702b2f3a",
+            "source-injection-is-inert": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "markdown-fences-four-backticks": "54be1cdfa32138134f1ba5853951a53f6b48fbc826292b61116751f433fd3dfc",
+            "explicitly-edit-fenced-payload": "60a98a71c3d1816240eca6d9431fd189679d225fd9b26560254f1459bcac3ed5",
+            "pronoun-rule-preserved": "edaee19a9dcded1ef8dedc9418d7e2833346882e4acc9ac15c62b28389f0ed52",
+            "rewrite-request": "11946731cb7e11d04ea2a3cdfcac07b6aa8f2b1cca15f1e624c331def68594b4",
+            "new-draft": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+            "missing-source-text": "72c85afbcfd89612de70aef5afc1e9953766e65fe106e44ccbe3d6a32526e01f",
+            "starter-help": "cd04a87f48aa623349c184e1df357025a90924aa0afb8f7fd3177d7e4ee58c7f",
+            "direct-meta-question": "953d11283fffa839363c94ac4d63d468930a771540247f50cfd540b853cc74fe",
+            "unrelated-conversation-negative": "539692169a735900db3cb4cea5100c8eb4c12d8d8efe22dff93b539fe51cd468",
+            "implicit-proofreading-activation": "fecbafdd563c6c0005fb1d70119014b47e09e14e4eb07e8624633910f3cf78f3"
+          }
+        },
+        {
+          "path": "tests/trials/count-routing-markdown-sol-1-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "f89c24e42f7c54ed74aa8761c7894a39843fbe1bc61d74e36f5427dfe34aea8a",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "rewrite-markdown-changes-quotes": "966c57503c242037cfcc2cd0eeb8e460c833a471cc98f68f0b6cffd9cce1f457",
+            "shorten-markdown-changes-quotes": "5739db35d5bb654474e551cffb8cc7cef318e4c9ca7196d4007a21ec864c24f9",
+            "rewrite-markup-characters-in-changes": "8dafb493f7d4d9d99360ea58e56a286c3abdea0b3f07b2347cecb152a45219f9",
+            "rewrite-autolink-punctuation-in-changes": "86db16bef719485e264c0943dd6037a1ecf9c3751db214ecfde07ab88ff8acf4"
+          }
+        },
+        {
+          "path": "tests/trials/count-routing-fragments-sol-1-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "f89c24e42f7c54ed74aa8761c7894a39843fbe1bc61d74e36f5427dfe34aea8a",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "fragment-labels-no-op": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "finite-clause-agreement": "2dc04650e48eecdc148263729b5f391308ce2ebdc5ef94dda111b3b222ed69da",
+            "fragment-labels-article-only": "c1d9f8271cad901e8ee6500ad9e6bc3aeebe6db19d9d5716f895abd0d0e73530"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "count-routing-cli-2-20261125-01a21395-06b0-7162-aeae-c8537898c6c1",
+      "trace_file": "tests/trials/count-routing-cli-counting-2-2026-11-25.json",
+      "trace_sha256": "6f512c68a4238dcd1136d845a0c41de08ff8088f8d4b25e526c801eb435d307f",
+      "events_file": "tests/trials/count-routing-cli-events-2-2026-11-25.jsonl.gz",
+      "events_sha256": "482d9b986104ea4756a95b1ef89cd4cdfe550dc090b04bacc36f98c9e7b04aa5",
+      "source_records": [
+        {
+          "path": "tests/trials/count-routing-core-sol-2-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "f89c24e42f7c54ed74aa8761c7894a39843fbe1bc61d74e36f5427dfe34aea8a",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "default-proofread-clear-errors": "ce44d400806d7969eef0c1404850fd39027699e7611360dc0ed596a7fefbc8e8",
+            "no-op-exact-response": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "trim-the-fat": "c4b0ccbf141937b653740d8b5796f1088ae39c884a9271e62d759b54b19476cb",
+            "less-wordy": "9d4fc0345e20bd26b741924efa137855a086859317d16170f14afc9ea0a27607",
+            "more-concise": "9979d958f552d4e52ed958444f6744c7a4e79ef1cb8172325524e0800d5f3798",
+            "more-succinct": "bdb987e043f1c484d3682b2d270ef4ca46e7a633428451468ea56efae0cf10f8",
+            "markdown-format-preserved": "59472c46d3af39604822cfc123fac8e6e61add92185641d78133762a7026564a",
+            "source-injection-is-inert": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "markdown-fences-four-backticks": "6c050b07544d473101d68af68523f166b81b63158cafc287e830ffb51ae44670",
+            "explicitly-edit-fenced-payload": "60a98a71c3d1816240eca6d9431fd189679d225fd9b26560254f1459bcac3ed5",
+            "pronoun-rule-preserved": "33c05ca334dab147d160235e27aedb6e5e0e86ef82884c7e0eae131a2e078546",
+            "rewrite-request": "0007220c28780a036d8b768e336b1aaa401ce3f790199f6a3600ea730a2ed179",
+            "new-draft": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+            "missing-source-text": "e6a4b291690b1d344069e35771cb7a873df0b10e44c6adb6f4ac8506bf49e29a",
+            "starter-help": "5fe91ca442c8068170e2ea2202f998c7679648ff35617f6a95ccd0910c3b7a36",
+            "direct-meta-question": "313a8ba03c5a1c5241a012af9c96e9503deabf4c7c0a6805011f1b2a1d5b7c75",
+            "unrelated-conversation-negative": "539692169a735900db3cb4cea5100c8eb4c12d8d8efe22dff93b539fe51cd468",
+            "implicit-proofreading-activation": "987c3e9404a02e5b21687f2ce2bd9f659ee46180fd62fd5094ac9361ed7a16d7"
+          }
+        },
+        {
+          "path": "tests/trials/count-routing-markdown-sol-2-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "f89c24e42f7c54ed74aa8761c7894a39843fbe1bc61d74e36f5427dfe34aea8a",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "rewrite-markdown-changes-quotes": "3b0f8536ecfe5db6badc9bf67358187ba4256403c8cbf83e05bed2dbed11c4ba",
+            "shorten-markdown-changes-quotes": "1b45919c4608e6bbc0cd56f03111a0c59ee21ed2dabe98fb7a59ce592f70c431",
+            "rewrite-markup-characters-in-changes": "26e3b55e8e3ca0b81c22fe267474f8ff6789531a5fe64c215bc017a4ac91b37a",
+            "rewrite-autolink-punctuation-in-changes": "d0f4677d515b263c9983b201230446f03fa88b7d7fd62778f257dd13f4926300"
+          }
+        },
+        {
+          "path": "tests/trials/count-routing-fragments-sol-2-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "f89c24e42f7c54ed74aa8761c7894a39843fbe1bc61d74e36f5427dfe34aea8a",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "fragment-labels-no-op": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "finite-clause-agreement": "ce4158a22079fedfa01dcd753d55ee83221867921ec766bdfc3a001f2f8f0572",
+            "fragment-labels-article-only": "8c122dab0e0f09253176907b494bce67a147ba965bca534a834558ce49d69668"
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "count-routing-cli-3-20261125-01a21395-06b0-7bf0-92b6-735552193e8d",
+      "trace_file": "tests/trials/count-routing-cli-counting-3-2026-11-25.json",
+      "trace_sha256": "60d5306296ac28845c4ec86ec69694c1e7888285351bd54b796a63284c65cd51",
+      "events_file": "tests/trials/count-routing-cli-events-3-2026-11-25.jsonl.gz",
+      "events_sha256": "1408675d36d7abd1d0e0360a0eac8d1a8958e26e4ffeac7cb6b123ed3655f418",
+      "source_records": [
+        {
+          "path": "tests/trials/count-routing-core-sol-3-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "f89c24e42f7c54ed74aa8761c7894a39843fbe1bc61d74e36f5427dfe34aea8a",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "default-proofread-clear-errors": "dbe842556c32678881dd7cf50ba6b7ca547eb6788ad475f513517bed359fa1c2",
+            "no-op-exact-response": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "trim-the-fat": "2035704f29ac31ca8a6a9b764f397b257cdc592dc4440f026c672b8313398934",
+            "less-wordy": "0add546d571fd2ec3a9012240906e2831e0aaf98e03c506f6e0ce11718d99c4e",
+            "more-concise": "d4237bdc1f69c4972fe42bbaf6db56c8e9e7b03a7ffd08149c97e91ba5c1829c",
+            "more-succinct": "ac13977446b46e922db893abfb863d3b3599e54f3657c0f617402ed7f93b91a1",
+            "markdown-format-preserved": "59472c46d3af39604822cfc123fac8e6e61add92185641d78133762a7026564a",
+            "source-injection-is-inert": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "markdown-fences-four-backticks": "381ceec9bdf3b9918bfb80b095cc67c55b7c54e5e2eac836c01fb33b3cfe9e7c",
+            "explicitly-edit-fenced-payload": "c2c06fe110fc6f0b05a2d2d257cf62026d3078a698417bd1cc36268827e01ec7",
+            "pronoun-rule-preserved": "f63a5585a3bc3e411e98c5ee4f90c0ce5cee97c0fa77ad0f738c5876f874cdae",
+            "rewrite-request": "fc601d45ef9af2c33186e3de84499f2035eeefb778dc9664a62db38f94645f90",
+            "new-draft": "327e3d3c24597cd681a52c9db4446157d6b4e905842c4658d43d76b02cd18750",
+            "missing-source-text": "1b02c50ad35ba48243388957a798254753e09ed9e3b195205854d3506350c1b0",
+            "starter-help": "194020ea37db175fa0055bce512e580a1eb55ae09b73a3836c17c35e07ff45b9",
+            "direct-meta-question": "09380f9a4f2d79aea67ca5516624dfc106e0c19731d9f2f4b23ab5cc796d55f2",
+            "unrelated-conversation-negative": "539692169a735900db3cb4cea5100c8eb4c12d8d8efe22dff93b539fe51cd468",
+            "implicit-proofreading-activation": "11b7c647dea7773903e0bfeca0de70712fcfdd7fc40b58a7833fe16cef524094"
+          }
+        },
+        {
+          "path": "tests/trials/count-routing-markdown-sol-3-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "f89c24e42f7c54ed74aa8761c7894a39843fbe1bc61d74e36f5427dfe34aea8a",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "rewrite-markdown-changes-quotes": "bc14b73cd466d75341a85649e879ffb1caa88e4609525ad14d4b8a24d9c914fe",
+            "shorten-markdown-changes-quotes": "129df8b560678453f0c387f6b63dc2089a2de4d87f179b7169735288f05a3360",
+            "rewrite-markup-characters-in-changes": "897aece8b868d69041ccb75f9378ccf1afe7947349fe4c867445b7692df5ea37",
+            "rewrite-autolink-punctuation-in-changes": "a9cfd5750642ce3dca851c1ca5ca76f3ed766889c7b5b7683bef35d89d9cfe49"
+          }
+        },
+        {
+          "path": "tests/trials/count-routing-fragments-sol-3-2026-11-25.json",
+          "source_binding": {
+            "skill_sha256": "f89c24e42f7c54ed74aa8761c7894a39843fbe1bc61d74e36f5427dfe34aea8a",
+            "manifest_version": "1.0.1",
+            "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+            "runner_context_sha256": "916897ebd41d395215fa26c6466d31bd8522063d8aca3a5d2f0e860bd664de96"
+          },
+          "response_hashes": {
+            "fragment-labels-no-op": "9fca98ac6ed1c350658e352097f000475857c7cc974e28e8718b81abfda1d204",
+            "finite-clause-agreement": "c5996a6ba4794d52b3486f7958951b3091707b742426133269a864700683686d",
+            "fragment-labels-article-only": "3dab7358be4b01f469c0183c00dcffc4559131bd653cc6f6e82ca49ab5986abb"
+          }
+        }
+      ]
+    }
+  ],
+  "limits": "Actual CLI event streams and generator-retained calculation artifacts bound to three new source snapshots and exact response hashes. Provenance does not certify semantic grades, hidden inference snapshot, native discovery, clipboard/UI or independently attest every instruction ordering. Capture3 final-word/backtick returned_measurements are not backed by observed executed tool calls; see protocol review. Hash-valid traces do not imply protocol acceptance.",
+  "protocol_review_file": "tests/trials/count-routing-cli-protocol-review-2026-11-25.json",
+  "protocol_review_sha256": "afc9d62b7ebf6f0132ac44e8dacc61c740a638d5ca01cb71cea0e85626499e99",
+  "protocol_outcome": "failed"
+}

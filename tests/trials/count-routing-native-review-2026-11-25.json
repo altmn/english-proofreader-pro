@@ -1,0 +1,186 @@
+{
+  "schema_version": 1,
+  "kind": "independent-native-candidate-companion-review",
+  "date": "2026-11-25",
+  "reviewer": "Independent original-suite reviewer; read-only audit of retained native observations and frozen host expectations. No new host/model execution, installation, or account access performed.",
+  "outcome": "non_acceptance_retained",
+  "source_artifact": {
+    "path": "tests/trials/audit-fixes-safari-candidates-2026-11-25.json",
+    "sha256": "ef25c68fb1060ceca9b122b3ff0dea2875822edbe049a25a6f385d1478704a00",
+    "evidence_kind": "native_private_candidate_observations",
+    "status": "not_accepted"
+  },
+  "frozen_host_expectations": {
+    "snapshot_file": "tests/trials/audit-fixes-host-2026-11-25-snapshot.json",
+    "snapshot_sha256": "6b08b81dea4f382b80329f2543ef38d57242f943f518d41369c36c7bae8afa74",
+    "fixture_source": "tests/host-behavior-cases.json",
+    "fixture_sha256": "7bb2da1b6e64932f223b236e623e4d6d556826c33d58e949f8268316b3408d28",
+    "fixture_bytes_hash_verified": true,
+    "snapshot_skill_sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+    "snapshot_manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+    "scope": "Uses frozen case inputs, expectations, and shared output contract as the review oracle. The snapshot runner is an agent simulation protocol; it is not the native submission context. Native observations must not inherit its available-tool assumption or simulation host metadata."
+  },
+  "current_cli_scope": {
+    "snapshot_file": "tests/trials/count-routing-cli-core-2026-11-25-snapshot.json",
+    "snapshot_sha256": "f98a49dc1e2b7002fbbd3a72a27bac845a1460ea52ff452e452d7ea82097cd25",
+    "skill_sha256": "f89c24e42f7c54ed74aa8761c7894a39843fbe1bc61d74e36f5427dfe34aea8a",
+    "manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+    "manifest_version": "1.0.1",
+    "limit": "Current CLI simulation judgments remain bound to their own manifest bytes and gpt-6.1-sol/high profile. Even a matching skill hash does not transfer those verdicts to a private candidate manifest, ChatGPT Instant, activated bytes, or native acceptance."
+  },
+  "host_observations": {
+    "product": "ChatGPT web",
+    "browser": "Safari on macOS",
+    "mode": "Chat",
+    "model_picker_label": "Instant",
+    "model_picker_position": "1 of 5",
+    "underlying_model": "unknown",
+    "web_build": "unknown",
+    "tool_execution_visibility": "UI response and Sources observations only; no network or hidden execution trace",
+    "activation": "Fresh selected plugin mentions and an instruction viewer are recorded. These observations do not prove that any particular skill bytes activated on the submitted turns.",
+    "artifact_identity": "The native source record reports saved private overlays and source-reader readback for versions 1.0.3 and 1.0.4. This audit binds that report; it does not independently fetch the cloud files or establish activated instruction bytes.",
+    "tool_capability": "Unknown. No exposed returned tool result is retained, no hidden execution trace is available, and no trusted unavailable-tool environment was constructed.",
+    "raw_message_transport": "Unavailable. Composer accessibility text may serialize rich presentation; UI findings below rely on the retained observations as well as copied text."
+  },
+  "calculations": {
+    "performed_by": "This independent reviewer via mcp__node_repl__js during this review, separately from native generation.",
+    "code": "var nativeSource=hostCaseMap['shortening-counts-use-tools-internally'].input.split(': ').slice(1).join(': '); var nativePayload=native.attempts.find(a=>a.case_id==='shortening-counts-use-tools-internally').copied_payload; var nativeMeasurement={lowercase_r:[...'strawberry'].filter(c=>c==='r').length,source:nativeSource,result:nativePayload,source_words:nativeSource.trim().split(/\\s+/).length,result_words:nativePayload.trim().split(/\\s+/).length}; nativeMeasurement.rounded_70_percent_budget=Math.round(nativeMeasurement.source_words*0.70); nativeMeasurement.reduction_percent=(nativeMeasurement.source_words-nativeMeasurement.result_words)/nativeMeasurement.source_words*100; nodeRepl.write({reviewer_calculation:nativeMeasurement,generator_execution_established:false});",
+    "inputs": {
+      "frozenShorteningInput": "Proofread and make it less wordy: At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+      "observedCopiedPayload": "We are reviewing the proposal and will respond later."
+    },
+    "returned_measurements": {
+      "lowercase_r": 3,
+      "source": "At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+      "result": "We are reviewing the proposal and will respond later.",
+      "source_words": 25,
+      "result_words": 9,
+      "rounded_70_percent_budget": 18,
+      "reduction_percent": 64
+    },
+    "limit": "These read-only calculations verify the observed content. They are not evidence that the native generator executed a counting tool."
+  },
+  "attempts": [
+    {
+      "version": "1.0.3",
+      "case_id": "count-letter-occurrences-with-tool",
+      "prompt": "How many lowercase r letters are in strawberry?",
+      "prompt_sha256": "a808592c5e49c37e5d14299f4af9ffb3011b34b386d986fb70a3bcc458a28e62",
+      "matches_frozen_case_input": true,
+      "response_composer_ax_text": "There are **3** lowercase r letters in **strawberry**.\n\nst**r**awbe**rr**y.Verified programmatically: 3 occurrences.",
+      "response_composer_ax_text_sha256": "ffe9bbca8efe3ab318058353be9f9571414aaa2eddf7f671cc84c98147b9978e",
+      "fresh_selected_plugin_mention": true,
+      "retained_observations": [
+        "No counting-tool result or execution control appeared in the response.",
+        "Sources control opened an empty Sources container.",
+        "Response copied through its native Copy control into the unsent composer, then cleared."
+      ],
+      "assessment": {
+        "visible_task_selection": "Answers the counting question directly; it is not treated as proofreading source.",
+        "visible_numeric_result": "The returned value 3 is correct for lowercase r in literal strawberry, as independently computed above.",
+        "execution_requirement": "Not established. The native output claims programmatic verification, but no exposed execution or returned measurement is retained. A correct number or self-report cannot pass uses_programmatic_tool_on_literal_input.",
+        "unknowns": "Hidden execution, actual available counting capabilities, and activated bytes remain unknown; absence of a visible result is not proof that no hidden execution happened."
+      }
+    },
+    {
+      "version": "1.0.4",
+      "case_id": "count-letter-occurrences-with-tool",
+      "prompt": "How many lowercase r letters are in strawberry?",
+      "prompt_sha256": "a808592c5e49c37e5d14299f4af9ffb3011b34b386d986fb70a3bcc458a28e62",
+      "matches_frozen_case_input": true,
+      "response_composer_ax_text": "There are **3 lowercase r letters** in “strawberry.”\n\nst**r**awbe**rr**y\n\nVerified programmatically: **3**.",
+      "response_composer_ax_text_sha256": "cfd892a059336dd39eeb0748f6423733a4a471f443ff25cde52c1c4a2667393b",
+      "fresh_selected_plugin_mention": true,
+      "retained_observations": [
+        "No counting-tool result or execution control appeared in the response.",
+        "The response again claimed programmatic verification.",
+        "Actual Copy control pasted the response into the unsent composer; composer then cleared."
+      ],
+      "assessment": {
+        "visible_task_selection": "Answers the counting question directly; it is not treated as proofreading source.",
+        "visible_numeric_result": "The returned value 3 is correct for lowercase r in literal strawberry, as independently computed above.",
+        "execution_requirement": "Not established. The native output claims programmatic verification, but no exposed execution or returned measurement is retained. A correct number or self-report cannot pass uses_programmatic_tool_on_literal_input.",
+        "unknowns": "Hidden execution, actual available counting capabilities, and activated bytes remain unknown; absence of a visible result is not proof that no hidden execution happened."
+      }
+    },
+    {
+      "version": "1.0.4",
+      "case_id": "shortening-counts-use-tools-internally",
+      "prompt": "Proofread and make it less wordy: At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+      "prompt_sha256": "579355b0d9bf72877d3f24883fb73ee9a17db5ffb66053beb92e56e36069e8fa",
+      "matches_frozen_case_input": true,
+      "response_composer_ax_text": "We are reviewing the proposal and will respond later.\n**Changes:**\n• Removed redundant time expressions: “At this point in time” and “currently.”\n• Simplified “in the process of reviewing” to “reviewing.”\n• Shortened “we will provide a response at a later date” to “will respond later.”\n• Removed the unnecessary comma and repeated subject.\nThe revision preserves the original meaning and professional tone while eliminating unnecessary wording.",
+      "response_composer_ax_text_sha256": "d72097601c58812a9b66cf17dc8750a9702dcb12bead6cbd7a9cf0db8bdc53bf",
+      "copied_payload": "We are reviewing the proposal and will respond later.",
+      "copied_payload_sha256": "7867a4eb094b9b64dfdad78650a429cc520ad68a841a6e5cb1b9ce390260fbcf",
+      "fresh_selected_plugin_mention": true,
+      "retained_observations": [
+        "Editable writing block titled Untitled; Copy and Open editor controls; no fenced code block.",
+        "Actual payload Copy/paste preserved the visible single line.",
+        "Changes quoted only partial spans and the quoted spans were visibly not bold.",
+        "No returned tool measurement, count-verification limitation, or explanation of departing from the requested shortening level appeared."
+      ],
+      "assessment": {
+        "requested_level": "About 30% shorter, with a whole-word budget of 18 from source N=25.",
+        "observed_level": "Copied result M=9 is 64% shorter and nine words below the rounded budget. This materially overcompresses the requested level, with no recorded limitation or explanation of departure.",
+        "meaning": "The result preserves the current proposal review and later-response commitment. The numeric and presentation failures stand independently of that semantic preservation.",
+        "presentation": "The retained UI observation reports an editable writing block titled Untitled with Copy/Open editor, not a plain-text code block; no document or editor was requested. Actual copied payload retained the single visible line, which is a narrow copy success only.",
+        "changes": "The retained Changes text uses partial before/after spans and the observation records unbold quoted spans. It does not provide the required full exact bold source/result sentence quotations for this shortening. An extra explanatory paragraph follows.",
+        "count_execution": "No returned counting measurement or captured tool calls establish source/final counts, calculated budget/reduction, or revision recounts. The final response need not disclose internal counts, so their absence alone is not the failure; the required execution evidence is missing."
+      }
+    }
+  ],
+  "findings": [
+    {
+      "id": "NATIVE-COUNT-VERIFICATION",
+      "status": "not_established",
+      "versions": [
+        "1.0.3",
+        "1.0.4"
+      ],
+      "note": "Both visible answers give the correct count and claim verification, but neither retained attempt exposes actual programmatic execution or a returned measurement. Neither passes the execution requirement; hidden execution is unknown."
+    },
+    {
+      "id": "NATIVE-SHORTENING-DEGREE",
+      "status": "observed_failure",
+      "versions": [
+        "1.0.4"
+      ],
+      "note": "The copied source/result counts are 25 to 9 words, a 64% reduction against about 30% and rounded 18-word budget. No departure explanation is recorded."
+    },
+    {
+      "id": "NATIVE-OUTPUT-PRESENTATION",
+      "status": "observed_failure",
+      "versions": [
+        "1.0.4"
+      ],
+      "note": "The retained UI notes an unrequested editable writing block, and Changes quotes are partial and visibly unbold. Payload Copy preserving one line does not establish code-block presentation, safe nested fences, or wrapping controls."
+    },
+    {
+      "id": "NATIVE-ACTIVATION-AND-CAPABILITY",
+      "status": "unknown",
+      "versions": [
+        "1.0.3",
+        "1.0.4"
+      ],
+      "note": "Selected plugin, saved version, and source readback do not attest the instruction bytes activated for a turn. Underlying model/build, complete tool capability, and hidden execution remain unknown."
+    },
+    {
+      "id": "NATIVE-SCOPE",
+      "status": "limited",
+      "versions": [
+        "1.0.3",
+        "1.0.4"
+      ],
+      "note": "The artifact retains three prompts across two bounded panels. Version 1.0.3 stopped after its first critical non-acceptance. Version 1.0.4 separately tested counting and shortening, then omitted conditional literal/source-isolation probes. No full three-run native acceptance, broader source-isolation result, trusted no-tool fallback result, or public release approval follows."
+    }
+  ],
+  "acceptance_limits": [
+    "This is a companion observation review, not a formal intended-host evaluation record; the actual web build, model snapshot, and activated bytes remain unknown.",
+    "The frozen host case contexts presume an available counting tool. That premise was not established for these native attempts, so capability-dependent execution assertions cannot receive acceptance from this evidence.",
+    "Absence of visible tool evidence prevents an execution pass; it does not establish that hidden execution did not occur or that tools were unavailable.",
+    "The private overlays have distinct versioned manifests and are not complete source-distribution ZIPs. Native version 1.0.4 acceptance cannot be inherited from repository manifest 1.0.1 CLI simulations.",
+    "Copied payload and UI observations are retained exactly from the synthetic native evidence; no account screenshots, private chat links, or native evidence edits are included."
+  ],
+  "disposition": "Retain EPP-001 as open for native Instant behavior. The discovery-description change and saved count/budget guards do not establish execution reliability, source-isolation acceptance, or intended-host acceptance."
+}

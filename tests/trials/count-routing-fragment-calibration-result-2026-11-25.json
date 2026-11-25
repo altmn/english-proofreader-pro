@@ -1,0 +1,15 @@
+{
+  "rubric_id": "fragment-agreement-calibration",
+  "rubric_version": "1.0",
+  "reviewer_identity": "/root/evaluation/count_calibrated_reviewer",
+  "judgments_file": "tests/trials/count-routing-fragment-calibration-compatible-judgments-2026-11-25.json",
+  "judgments_sha256": "ae1e8f17fc93d9413f1ff4b555fa6019d21def394cf7a661abf319337717e6eb",
+  "fixture_sha256": "d80c8d9e2359c7a5633f082f15aed9fdd5dc39d10d4e4d5d510e18019af6e1cd",
+  "blind_input_sha256": "ef9f18f7fea6dcd29c106cc576c22293b382a201fbba30cef9fd72e384a68b46",
+  "matches": true,
+  "count": 6,
+  "expected_count": 6,
+  "method": "New reviewer committed all six neutral-ID judgments before parent compared withheld gold labels. No candidate output was supplied during calibration.",
+  "committed_judgments_file": "tests/trials/count-routing-fragment-calibration-judgments-2026-11-25.json",
+  "committed_judgments_sha256": "39c3f375e03206fcfa383ef30ac563411c68b60e66e7ebd5317f703b16cab385"
+}
