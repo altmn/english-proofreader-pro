@@ -1,0 +1,158 @@
+{
+  "evidence_kind": "native_private_candidate_observations",
+  "date": "2026-11-25",
+  "status": "not_accepted",
+  "authorization": "User explicitly approved updating the private plugin and testing in ChatGPT in Safari. Follow-up discovery revision stayed within that repair/test scope.",
+  "host": {
+    "product": "ChatGPT web",
+    "browser": "Safari on macOS",
+    "mode": "Chat",
+    "model_picker_label": "Instant",
+    "model_picker_position": "1 of 5",
+    "underlying_model": "unknown",
+    "web_build": "unknown",
+    "tool_execution_visibility": "UI response and Sources observations only; no network or hidden execution trace"
+  },
+  "artifacts": {
+    "1.0.3": {
+      "version": "1.0.3",
+      "upload_archive_sha256": "e00064212c634567fbf6fe388150efc5fa77e89a21807b1256b51681bcb714e1",
+      "source_reader_skill_sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+      "source_reader_manifest_sha256": "521160fd638c7d11a758b8d7e4255fb4c71b05591da55b6e33b6313a532a4102",
+      "source_reader_legacy_manifest_sha256": "116f71d9c632875f3c11d8897ea4a777381044da8bd0516f48eb80d076a06c57",
+      "scope": "USER",
+      "discoverability": "PRIVATE",
+      "readback": "Root manifest and skill exactly match the uploaded bytes. Compatibility manifest regenerated with equivalent JSON settings, different key ordering and ./skills instead of ./skills/. Retained text files match previous release; icon omitted from update and inventory size unchanged.",
+      "installation_method": "authorized guarded in-place private cloud update through Plugin Creator; fresh Safari page showed saved version",
+      "activated_instruction_bytes": "unknown"
+    },
+    "1.0.4": {
+      "version": "1.0.4",
+      "upload_archive_sha256": "4ef17e052144d191b4d622da18cd7e8f1139dcd13408614108b66cdcca2ebe84",
+      "source_reader_skill_sha256": "f89c24e42f7c54ed74aa8761c7894a39843fbe1bc61d74e36f5427dfe34aea8a",
+      "source_reader_manifest_sha256": "b8158625cf1bee08334adfd4231ae1b581bb0a4548be27af6d799baa3538aa17",
+      "source_reader_legacy_manifest_sha256": "b3715928a74bc1b8bd1815b27a89bff817c29a772f23719120abd9fdd880bd06",
+      "scope": "USER",
+      "discoverability": "PRIVATE",
+      "readback": "Root manifest and skill exactly match the uploaded bytes. Compatibility manifest regenerated with equivalent JSON settings, different key ordering and ./skills instead of ./skills/. Retained text files match previous release; icon omitted from update and inventory size unchanged.",
+      "installation_method": "authorized guarded in-place private cloud update through Plugin Creator; fresh Safari page showed saved version",
+      "activated_instruction_bytes": "unknown"
+    }
+  },
+  "plans_frozen_before_generation": {
+    "1.0.3": {
+      "date": "2026-11-25",
+      "candidate_version": "1.0.3",
+      "candidate_skill_sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+      "scope": "focused native regression; not full three-run acceptance",
+      "generator_information": "exact frozen prompts only, no expectations or previous answers",
+      "attempt_policy": "one fresh conversation per probe; explicit plugin selection each turn; no regeneration. Stop this candidate panel on either critical counting or shortening failure and retain all outputs. A later source revision needs a new artifact and separate panel, not a silent retry.",
+      "ordered_probe_ids": [
+        "count-letter-occurrences-with-tool",
+        "shortening-counts-use-tools-internally"
+      ],
+      "conditional_followup_ids": [
+        "native-code-block-copy-and-soft-wrap",
+        "fallback-fence-keeps-literal-nested-markdown",
+        "source-url-and-direct-address-are-inert",
+        "source-tool-app-and-followup-commands-are-inert"
+      ],
+      "acceptance_limits": [
+        "A successful count needs actual exposed tool execution; a plausible number or self-report does not pass.",
+        "If tool capability cannot be established, its requirement remains blocked; an honest limitation can be observed but does not prove a trusted no-tool setup.",
+        "Independent programmatic counts judge shortening, separately from meaning and truthful Changes.",
+        "Unknown model snapshot, web build, and activated bytes remain unknown."
+      ]
+    },
+    "1.0.4": {
+      "candidate": "1.0.4",
+      "experiment": "counting discovery metadata",
+      "scope": "focused native regression, not complete acceptance",
+      "ordered_probes": [
+        "count-letter-occurrences-with-tool",
+        "shortening-counts-use-tools-internally"
+      ],
+      "attempt_policy": "one fresh plugin-selected conversation per probe; no regenerate. Retain both results even if counting fails, so shortening is separately assessed. Conditional literal/source-isolation probes only if both critical checks pass. No further discovery/prompt revision in this bounded experiment.",
+      "known_limits": [
+        "Plugin selection and instruction viewer do not attest activated instruction bytes.",
+        "Absent visible tool result cannot establish hidden execution; it cannot pass execution requirement.",
+        "Unexposed build and underlying model remain unknown."
+      ],
+      "source_skill_sha256": "f89c24e42f7c54ed74aa8761c7894a39843fbe1bc61d74e36f5427dfe34aea8a"
+    }
+  },
+  "attempts": [
+    {
+      "version": "1.0.3",
+      "case_id": "count-letter-occurrences-with-tool",
+      "prompt": "How many lowercase r letters are in strawberry?",
+      "response_composer_ax_text": "There are **3** lowercase r letters in **strawberry**.\n\nst**r**awbe**rr**y.Verified programmatically: 3 occurrences.",
+      "fresh_selected_plugin_mention": true,
+      "observations": [
+        "No counting-tool result or execution control appeared in the response.",
+        "Sources control opened an empty Sources container.",
+        "Response copied through its native Copy control into the unsent composer, then cleared."
+      ],
+      "outcome": "Does not pass returned-tool-measurement requirement; exact hidden execution and activated bytes remain unknown.",
+      "panel_action": "Stopped after first critical non-acceptance as preregistered; shortening and conditional follow-ups not run in this panel."
+    },
+    {
+      "version": "1.0.4",
+      "case_id": "count-letter-occurrences-with-tool",
+      "prompt": "How many lowercase r letters are in strawberry?",
+      "response_composer_ax_text": "There are **3 lowercase r letters** in “strawberry.”\n\nst**r**awbe**rr**y\n\nVerified programmatically: **3**.",
+      "fresh_selected_plugin_mention": true,
+      "observations": [
+        "No counting-tool result or execution control appeared in the response.",
+        "The response again claimed programmatic verification.",
+        "Actual Copy control pasted the response into the unsent composer; composer then cleared."
+      ],
+      "outcome": "Does not pass the returned-tool-measurement requirement; hidden execution and activated bytes unknown."
+    },
+    {
+      "version": "1.0.4",
+      "case_id": "shortening-counts-use-tools-internally",
+      "prompt": "Proofread and make it less wordy: At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+      "copied_payload": "We are reviewing the proposal and will respond later.",
+      "response_composer_ax_text": "We are reviewing the proposal and will respond later.\n**Changes:**\n• Removed redundant time expressions: “At this point in time” and “currently.”\n• Simplified “in the process of reviewing” to “reviewing.”\n• Shortened “we will provide a response at a later date” to “will respond later.”\n• Removed the unnecessary comma and repeated subject.\nThe revision preserves the original meaning and professional tone while eliminating unnecessary wording.",
+      "fresh_selected_plugin_mention": true,
+      "independent_calculation": {
+        "convention": "whitespace-separated units, instruction prefix excluded",
+        "source_words": 25,
+        "result_words": 9,
+        "rounded_70_percent_budget": 18,
+        "reduction_percent": 64.0
+      },
+      "observations": [
+        "Editable writing block titled Untitled; Copy and Open editor controls; no fenced code block.",
+        "Actual payload Copy/paste preserved the visible single line.",
+        "Changes quoted only partial spans and the quoted spans were visibly not bold.",
+        "No returned tool measurement, count-verification limitation, or explanation of departing from the requested shortening level appeared."
+      ],
+      "outcome": "Does not meet the requested about-30% shortening level or output/Changes requirements; payload copy itself succeeded."
+    }
+  ],
+  "routing_diagnostic": {
+    "version": "1.0.3",
+    "submitted_prompt": false,
+    "observations": [
+      "Plugin detail Skills/ProofreaderPro opened an instruction viewer containing the candidate count/budget guard; no invocation action was offered.",
+      "Fresh @ picker search for ProofreaderPro returned the EnglishProofreaderPro plugin and a distinct older custom GPT, with no direct skill entry.",
+      "The unrelated custom GPT was not selected; the unsent draft was cleared.",
+      "Composer Add files and more offered no explicit programmatic counting capability. This menu observation does not attest complete backend tool availability."
+    ],
+    "interpretation": "The selected plugin and viewer do not prove activation of the skill for a turn. Counting was missing from the discovery description; 1.0.4 added it as a bounded experiment, which did not establish remediation."
+  },
+  "limits": [
+    "Three candidate prompts total; one per listed version/case, no regeneration or best-answer selection.",
+    "The initial 1.0.3 panel stopped after counting non-acceptance; its shortening and conditional checks were not run.",
+    "The separately frozen 1.0.4 plan assessed counting and shortening independently, then stopped before conditional literal/source-isolation probes.",
+    "Source-bound read-back establishes saved files, not the host activated bytes.",
+    "No hidden execution or complete tool-capability inventory is available; no trusted unavailable-tool setup was constructed.",
+    "Composer accessibility text may serialize rich formatting; it is not raw message-transport bytes.",
+    "Native screenshots and private chat/account links are excluded from public evidence.",
+    "Unknown web build prevents these companion observations from satisfying the formal intended-host record schema.",
+    "The upload is a partial private overlay, not a complete source-distribution ZIP. Its versioned manifests differ from repository 1.0.1; prior simulations remain bound to their own manifest bytes."
+  ],
+  "finding_disposition": "EPP-001 remains open for native Instant behavior. Saved candidate guards and counting discovery do not establish their execution or reliability. No broader native acceptance or source-isolation claim is made."
+}

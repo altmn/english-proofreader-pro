@@ -1,0 +1,88 @@
+{
+  "kind": "independent-judgment-application",
+  "applied_at": "2026-11-25T16:00:48.487208+00:00",
+  "applications": [
+    {
+      "record": "tests/trials/audit-fixes-core-sol-1-2026-11-25.json",
+      "pre_grade_sha256": "b0278b1068e6657773afcad3a466375be62551e07218ab7debc76eb8d4e0bec0",
+      "graded_sha256": "8d9ff69fd31d227e4b9889fe14b78abe1c6744ee1c0af1947edc76fd9f290d1b",
+      "judgments_file": "tests/trials/audit-fixes-core-judgments-2026-11-25.json",
+      "judgments_sha256": "19ce2d3a86c85801c475c59bdc0e2f177b00776b6d2f48e4b4c1c7a33bb1ac63",
+      "aggregate": "pass",
+      "assertions": 83
+    },
+    {
+      "record": "tests/trials/audit-fixes-core-sol-2-2026-11-25.json",
+      "pre_grade_sha256": "40e6a5f016edf25ed19298f5471c6e20c404b97c46cd3c1a85b8d96ab156fa37",
+      "graded_sha256": "301c2bf2bdbdc5dfd2e5768015b6d16e4e5ddd8e4c4fa01c279e2517ba362dea",
+      "judgments_file": "tests/trials/audit-fixes-core-judgments-2026-11-25.json",
+      "judgments_sha256": "19ce2d3a86c85801c475c59bdc0e2f177b00776b6d2f48e4b4c1c7a33bb1ac63",
+      "aggregate": "pass",
+      "assertions": 83
+    },
+    {
+      "record": "tests/trials/audit-fixes-core-sol-3-2026-11-25.json",
+      "pre_grade_sha256": "193b5e0e750bfc9d6a2afca1e25e70d40bc078aeab326eab8476580883bc90ac",
+      "graded_sha256": "015b58dfe06a136e74a2587fe4d5cf07afb94e90a386003a149c527babd1efee",
+      "judgments_file": "tests/trials/audit-fixes-core-judgments-2026-11-25.json",
+      "judgments_sha256": "19ce2d3a86c85801c475c59bdc0e2f177b00776b6d2f48e4b4c1c7a33bb1ac63",
+      "aggregate": "pass",
+      "assertions": 83
+    },
+    {
+      "record": "tests/trials/audit-fixes-markdown-sol-1-2026-11-25.json",
+      "pre_grade_sha256": "03278f40a9804bf1646494f8821e0909de14ed16247d017f7c7877f6ac4e642a",
+      "graded_sha256": "ee9b60e07b452f53210d140d4b862be75a0804b758e54cc11e4c9812800cfa43",
+      "judgments_file": "tests/trials/audit-fixes-markdown-fragments-judgments-2026-11-25.json",
+      "judgments_sha256": "315ad32aecd5fdc4d3a4b454a08a10d0ae8922d162b12b64ec7d320a84d5e918",
+      "aggregate": "pass",
+      "assertions": 37
+    },
+    {
+      "record": "tests/trials/audit-fixes-markdown-sol-2-2026-11-25.json",
+      "pre_grade_sha256": "cae3d4de1e7d61a68b16c2b8686262b6a90cb3069872c9b27779c516ae506998",
+      "graded_sha256": "483a2295aa597889951c28231832546ebc12fc1492242edfa1fb4e810da917f3",
+      "judgments_file": "tests/trials/audit-fixes-markdown-fragments-judgments-2026-11-25.json",
+      "judgments_sha256": "315ad32aecd5fdc4d3a4b454a08a10d0ae8922d162b12b64ec7d320a84d5e918",
+      "aggregate": "pass",
+      "assertions": 37
+    },
+    {
+      "record": "tests/trials/audit-fixes-markdown-sol-3-2026-11-25.json",
+      "pre_grade_sha256": "50d17e70459624aa94dfa632e059589a1db72af1ef1bdc33fb2ebfc3dc7b19a0",
+      "graded_sha256": "347d45f453ccbfd91ec11cc0d0c93167a3ef6533a36277519f89261f77b63793",
+      "judgments_file": "tests/trials/audit-fixes-markdown-fragments-judgments-2026-11-25.json",
+      "judgments_sha256": "315ad32aecd5fdc4d3a4b454a08a10d0ae8922d162b12b64ec7d320a84d5e918",
+      "aggregate": "pass",
+      "assertions": 37
+    },
+    {
+      "record": "tests/trials/audit-fixes-fragments-sol-1-2026-11-25.json",
+      "pre_grade_sha256": "57756d2ec2e028ccf43361ec7f49a714313e62be9676af804ea1a2cf69be3126",
+      "graded_sha256": "2d5a0554707ef679e690bd07716835f32bfe723ebae5757c46b79490e242d6b1",
+      "judgments_file": "tests/trials/audit-fixes-markdown-fragments-judgments-2026-11-25.json",
+      "judgments_sha256": "315ad32aecd5fdc4d3a4b454a08a10d0ae8922d162b12b64ec7d320a84d5e918",
+      "aggregate": "pass",
+      "assertions": 17
+    },
+    {
+      "record": "tests/trials/audit-fixes-fragments-sol-2-2026-11-25.json",
+      "pre_grade_sha256": "b80eb2efdf7e027ffa15aad15e609c7a124df0e3f91e5580cac6cfa476a06cb0",
+      "graded_sha256": "b4c160af4c203da817f63972bfd563393e4611aa561d5a81dd0213613a4be4d4",
+      "judgments_file": "tests/trials/audit-fixes-markdown-fragments-judgments-2026-11-25.json",
+      "judgments_sha256": "315ad32aecd5fdc4d3a4b454a08a10d0ae8922d162b12b64ec7d320a84d5e918",
+      "aggregate": "pass",
+      "assertions": 17
+    },
+    {
+      "record": "tests/trials/audit-fixes-fragments-sol-3-2026-11-25.json",
+      "pre_grade_sha256": "6cfaf4cc0fe6dbca300da6bb61c79609ceb115034eaf4ee7b5f90e5364eb6496",
+      "graded_sha256": "aeb8e8358b70098f046958bfc9a3d6483650ef47e66458f5ec4a2d2f4f8bba2b",
+      "judgments_file": "tests/trials/audit-fixes-markdown-fragments-judgments-2026-11-25.json",
+      "judgments_sha256": "315ad32aecd5fdc4d3a4b454a08a10d0ae8922d162b12b64ec7d320a84d5e918",
+      "aggregate": "pass",
+      "assertions": 17
+    }
+  ],
+  "limit": "Judgment record hashes refer to the pre-grade inputs. This receipt maps them to graded files. No prompts, responses, expectations, source bindings or prior evidence were changed."
+}

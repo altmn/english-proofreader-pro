@@ -1,0 +1,50 @@
+{
+  "finding": "EPP-002",
+  "date": "2026-11-25",
+  "scope": [
+    "scripts/release.py",
+    "tests/test_release.py"
+  ],
+  "runs": [
+    {
+      "phase": "before implementation",
+      "command": "python3 -B -m unittest tests.test_release.ReleaseBuilderTests.test_source_edit_before_archive_write_uses_only_validated_snapshot tests.test_release.ReleaseBuilderTests.test_source_edit_after_archive_verification_cannot_change_staging -v",
+      "exit_code": 1,
+      "tests": 2,
+      "failures": 2,
+      "observed": "First test packaged changed skill/manifest; second test copied changed skill into stage after ZIP verification. Both expected original captured payloads."
+    },
+    {
+      "phase": "first implementation",
+      "command": "python3 -B -m unittest tests.test_release -v",
+      "exit_code": 1,
+      "tests": 43,
+      "failures": 1,
+      "observed": "Both source-drift regressions passed; existing stage-copy-failure test no longer injected a failure because staging now writes snapshot bytes instead of shutil.copyfile. Replaced mock with explicit partial staging write failure."
+    },
+    {
+      "phase": "final focused tests",
+      "command": "python3 -B -m unittest tests.test_release -v",
+      "exit_code": 0,
+      "tests": 45,
+      "failures": 0,
+      "observed": "Both source-drift schedule cases, both prepared-payload mismatch rejection cases, and existing release/rollback guards passed."
+    },
+    {
+      "phase": "whitespace",
+      "command": "git diff --check",
+      "exit_code": 0
+    }
+  ],
+  "identities": {
+    "scripts/release.py": "d185e1141c567176e3031f59ed253f0016db8669c542f02eacf60f29ef585ea2",
+    "tests/test_release.py": "8df6bc239f2549a80886e82ecd2aa4125cfd7219386539144539f4f483049130"
+  },
+  "limits": [
+    "Sequential six-file snapshot is not atomic repository revision capture.",
+    "No full suite or live install executed by this repair worker; integration owner will run full checks.",
+    "One build at a time and interrupted two-output promotion constraints remain."
+  ],
+  "committed": false,
+  "pushed": false
+}
