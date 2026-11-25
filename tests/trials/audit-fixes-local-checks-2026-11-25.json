@@ -1,0 +1,224 @@
+{
+  "verified_at": "2026-11-25T16:03:18.549180+00:00",
+  "checks": [
+    {
+      "id": "unit-tests-final",
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "tests",
+        "-p",
+        "test_*.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.9270662920316681,
+      "log_sha256": "366757220a98037a092752e6b67655172c89113e5f1419af697486867869bc0c",
+      "log": "/private/tmp/proofreader-audit-fixes-20261125-mgyo1078/unit-tests-final.log"
+    },
+    {
+      "id": "release-validate-final",
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-B",
+        "scripts/release.py",
+        "validate"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.05287091701757163,
+      "log_sha256": "34141a0afbcae66503b7e4ab8f1cbd9ea8bc30838b78549ed63591e579252038",
+      "log": "/private/tmp/proofreader-audit-fixes-20261125-mgyo1078/release-validate-final.log"
+    },
+    {
+      "id": "release-build-final",
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-B",
+        "scripts/release.py",
+        "build"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.07590833306312561,
+      "log_sha256": "dbdfbc6533ede7e4bd1974ddd8d0f0915e7ccd2781d1b5e0660bf9edc4e6f04f",
+      "log": "/private/tmp/proofreader-audit-fixes-20261125-mgyo1078/release-build-final.log"
+    },
+    {
+      "id": "suite-final-core",
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-B",
+        "scripts/evaluate.py",
+        "validate-suite",
+        "tests/trials/audit-fixes-core-sol-1-2026-11-25.json",
+        "tests/trials/audit-fixes-core-sol-2-2026-11-25.json",
+        "tests/trials/audit-fixes-core-sol-3-2026-11-25.json",
+        "--fixtures",
+        "tests/cases.json",
+        "--model",
+        "gpt-6.1-sol",
+        "--reasoning-effort",
+        "high",
+        "--invocation-mode",
+        "independent-agent-simulation",
+        "--min-runs",
+        "3",
+        "--require-current",
+        "--require-complete",
+        "--require-pass"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.09772145899478346,
+      "log_sha256": "23c7dbb071b21cdd5337271a47843b6ef790ca702a4faf4ac5cb61c936398ec2",
+      "log": "/private/tmp/proofreader-audit-fixes-20261125-mgyo1078/suite-final-core.log"
+    },
+    {
+      "id": "suite-final-markdown",
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-B",
+        "scripts/evaluate.py",
+        "validate-suite",
+        "tests/trials/audit-fixes-markdown-sol-1-2026-11-25.json",
+        "tests/trials/audit-fixes-markdown-sol-2-2026-11-25.json",
+        "tests/trials/audit-fixes-markdown-sol-3-2026-11-25.json",
+        "--fixtures",
+        "tests/changes-markdown-cases.json",
+        "--model",
+        "gpt-6.1-sol",
+        "--reasoning-effort",
+        "high",
+        "--invocation-mode",
+        "independent-agent-simulation",
+        "--min-runs",
+        "3",
+        "--require-current",
+        "--require-complete",
+        "--require-pass"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.17316295800264925,
+      "log_sha256": "23c7dbb071b21cdd5337271a47843b6ef790ca702a4faf4ac5cb61c936398ec2",
+      "log": "/private/tmp/proofreader-audit-fixes-20261125-mgyo1078/suite-final-markdown.log"
+    },
+    {
+      "id": "suite-final-fragments",
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-B",
+        "scripts/evaluate.py",
+        "validate-suite",
+        "tests/trials/audit-fixes-fragments-sol-1-2026-11-25.json",
+        "tests/trials/audit-fixes-fragments-sol-2-2026-11-25.json",
+        "tests/trials/audit-fixes-fragments-sol-3-2026-11-25.json",
+        "--fixtures",
+        "tests/fragment-calibration-cases.json",
+        "--model",
+        "gpt-6.1-sol",
+        "--reasoning-effort",
+        "high",
+        "--invocation-mode",
+        "independent-agent-simulation",
+        "--min-runs",
+        "3",
+        "--require-current",
+        "--require-complete",
+        "--require-pass"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.08937808300834149,
+      "log_sha256": "23c7dbb071b21cdd5337271a47843b6ef790ca702a4faf4ac5cb61c936398ec2",
+      "log": "/private/tmp/proofreader-audit-fixes-20261125-mgyo1078/suite-final-fragments.log"
+    },
+    {
+      "id": "all-record-integrity",
+      "records": 46,
+      "outcome": "passed",
+      "scope": "All complete current and historical evaluation-record objects; no semantic regrading of historical records."
+    },
+    {
+      "id": "repeat-build-final",
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-B",
+        "scripts/release.py",
+        "build"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.06554354191757739,
+      "log_sha256": "dbdfbc6533ede7e4bd1974ddd8d0f0915e7ccd2781d1b5e0660bf9edc4e6f04f",
+      "log": "/private/tmp/proofreader-audit-fixes-20261125-mgyo1078/repeat-build-final.log"
+    },
+    {
+      "id": "diff-check-final",
+      "argv": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit_code": 0,
+      "elapsed_seconds": 0.014348083990626037,
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "log": "/private/tmp/proofreader-audit-fixes-20261125-mgyo1078/diff-check-final.log"
+    }
+  ],
+  "archive_sha256": "e803ad70cfaa447b98be0ad5f4a3ecad491b89fb5250c1c767ed21cbb7d95729",
+  "members": [
+    {
+      "path": "LICENSE",
+      "sha256": "8fab3ea5b69feb68dab60d2ebc8e6ec55523b562180f2ce5ad032040e558e9f4",
+      "bytes": 1067
+    },
+    {
+      "path": "PRIVACY.md",
+      "sha256": "d111d07c54c2d6a08b33b6ba710ad6ac98b2e56e2daf6da0a5c7cdbbbe5ddec5",
+      "bytes": 2944
+    },
+    {
+      "path": "assets/icon.webp",
+      "sha256": "1f679ce2a85371f79da2e28a952ea1c22eff987fe050bce709da0c270a9708b4",
+      "bytes": 113154
+    },
+    {
+      "path": "plugin.json",
+      "sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+      "bytes": 3058
+    },
+    {
+      "path": "skills/proofreader-pro/SKILL.md",
+      "sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+      "bytes": 11390
+    },
+    {
+      "path": "skills/proofreader-pro/agents/openai.yaml",
+      "sha256": "85d8aa78ae3f55b6df193b3f61274f82aac68853199b8bec2bf5dd54d489b134",
+      "bytes": 175
+    }
+  ],
+  "native_acceptance": "blocked: browser logged out; no native install/update or trial performed",
+  "branch": "codex/fix-skill-audit-findings",
+  "base_commit": "ca6b3bd5ba6e4a06b7802364c5fadd94c45ce155",
+  "environment": {
+    "python": "3.15.2 (main, Oct 25 2026, 16:57:51) [Clang 21.0.0 (clang-2100.3.34.2)]",
+    "platform": "macOS-27.0-arm64-arm-64bit-Mach-O"
+  },
+  "unit_tests": {
+    "count": 82,
+    "failures": 0,
+    "skips": 0,
+    "raw_log": "tests/trials/audit-fixes-local-test-output-2026-11-25.txt.gz",
+    "raw_log_sha256": "cc4cbf27e28505f391634f3153639f3e5b736565c43d7177c51508522b9442ec"
+  },
+  "source_hashes": {
+    "scripts/release.py": "d185e1141c567176e3031f59ed253f0016db8669c542f02eacf60f29ef585ea2",
+    "skills/proofreader-pro/SKILL.md": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+    "plugin.json": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+    "tests/test_release.py": "8df6bc239f2549a80886e82ecd2aa4125cfd7219386539144539f4f483049130",
+    "tests/test_counting_evidence.py": "53a2426005892b70456d2b73718554d7b32d503feb739be94a40e9dd5d4f250b",
+    "tests/test_render_evidence.py": "a824a78a2572f4fdd0423e5d3b5779bb8d4b3de043538d31ff80b439832e22b8",
+    "tests/fragment-calibration-cases.json": "d80c8d9e2359c7a5633f082f15aed9fdd5dc39d10d4e4d5d510e18019af6e1cd"
+  }
+}

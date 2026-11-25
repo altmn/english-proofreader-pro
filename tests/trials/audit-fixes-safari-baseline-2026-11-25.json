@@ -1,0 +1,81 @@
+{
+  "evidence_kind": "native_installed_baseline_observations",
+  "date": "2026-11-25",
+  "status": "baseline_only_not_candidate_acceptance",
+  "host": {
+    "product": "ChatGPT web",
+    "browser": "Safari on macOS",
+    "mode": "Chat",
+    "model_picker_label": "Instant",
+    "model_picker_position": "1 of 5",
+    "underlying_model": "unknown",
+    "web_build": "unknown",
+    "activated_instruction_bytes": "unknown"
+  },
+  "artifact": {
+    "installed_version": "1.0.2",
+    "source_reader_skill_sha256": "696145bdd39ffb184a8ec1581c01aca4026def39a249fa047ee2745af5db7f1a",
+    "source_reader_manifest_sha256": "9e20542faa112858b6da8d30ea1e95b1e62bccb3eb632d3a50e486cf5ca66234",
+    "installation_method": "pre-existing private cloud plugin; no installation/update during these probes",
+    "installation_archive_sha256": "unknown",
+    "candidate_skill_sha256": "4988f2bdbf4b336604906b6ad08562a94ec4a17b94732c9e3ce463ffbc863207",
+    "installed_skill_matches_candidate": false
+  },
+  "protocol": {
+    "invocation": "Try in chat from the owned plugin detail; selected plugin mention visibly retained on each submitted turn",
+    "session_design": "one fresh conversation per probe; no prior answers or fixture expectations shown",
+    "attempts": "two submitted prompts, no generation retries",
+    "observation_method": "native accessibility text, screenshots inspected in session only, and actual Copy controls pasted into the unsent composer and then cleared",
+    "retention": "synthetic response text and observations only; no account screenshots, private links, or chat IDs retained here"
+  },
+  "probes": [
+    {
+      "id": "strawberry-count-baseline",
+      "prompt": "How many times does the letter r appear in strawberry?",
+      "copied_response_composer_ax_text": "The letter **r** appears **3 times** in “strawberry.”\n\nst**r**awbe**rr**y\n\nVerified programmatically.",
+      "observations": {
+        "reported_number": 3,
+        "independent_literal_count": 3,
+        "claims_programmatic_verification": true,
+        "successful_counting_tool_result_visible": false,
+        "actual_hidden_execution": "unknown"
+      },
+      "assessment": "Numerically correct. The verification claim lacks an observed tool result; this does not pass the tool-execution requirement. No follow-up self-report was used as execution evidence."
+    },
+    {
+      "id": "less-wordy-baseline",
+      "fixture_path": "tests/cases.json",
+      "fixture_sha256": "5a051733cc94a0bbe3e20d85d5c3411486e94faa67f8d305d978dde75e0b41fb",
+      "fixture_case_id": "less-wordy",
+      "prompt": "Proofread and make it less wordy: At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+      "copied_payload": "We are currently reviewing the proposal, and we will provide a response at a later date.",
+      "copied_response_composer_ax_text": "We are currently reviewing the proposal, and we will provide a response at a later date.\n**Changes:**\n\n- **\"At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.\"** → **\"We are currently reviewing the proposal, and we will provide a response at a later date.\"**\n• Removed the redundant introductory phrase.\n• Simplified the unnecessarily wordy description of the ongoing review.\n• Preserved the original meaning and professional tone.\n**Word count:** 25 → 16 words (36% reduction).",
+      "independent_calculation": {
+        "convention": "whitespace-separated units; source excludes instruction prefix",
+        "source_words": 25,
+        "result_words": 16,
+        "rounded_70_percent_budget": 18,
+        "reduction_percent": 36.0
+      },
+      "observations": {
+        "successful_counting_tool_result_visible": false,
+        "actual_hidden_execution": "unknown",
+        "native_output": "editable writing block titled Untitled, with Copy and Open editor; no fenced code block",
+        "payload_copy_matches_visible_single_line": true,
+        "changes_full_quotations_visibly_bold": true,
+        "reported_count_and_percentage_match_independent_calculation": true
+      },
+      "assessment": "Sixteen words is below the rounded 18-word about-30% target, with no departure explanation. Editable writing-block presentation also differs from the skill default. Single-line payload copy succeeded; nested-fence, URL, and wrapping checks were not run."
+    }
+  ],
+  "limitations": [
+    "This is the earlier installed 1.0.2 skill, not the repaired candidate.",
+    "UI and source-read identity do not prove the exact activated instruction bytes.",
+    "No network or hidden tool-execution trace is available from these native observations.",
+    "Composer accessibility text can serialize rich formatting; it is not a raw message transport capture.",
+    "No unavailable-tool capability was forcibly removed or simulated.",
+    "No source-isolation, drafting, no-op, nested-fence, or complete three-run acceptance suite was executed.",
+    "This companion observation record intentionally does not satisfy the formal intended-host schema: host build and original installation archive are unavailable."
+  ],
+  "remaining_gate": "Separately authorize the prepared private 1.0.3 overlay, verify saved source, and exercise the candidate in the native host. Preserve unexposed identity/capability limits; do not convert these baseline results or old simulation passes into acceptance of new bytes."
+}

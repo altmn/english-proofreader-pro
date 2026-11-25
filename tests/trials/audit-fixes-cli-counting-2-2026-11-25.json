@@ -1,0 +1,875 @@
+{
+  "format": "proofreader-independent-simulation-counting-trace",
+  "conventions": {
+    "words": "Whitespace-separated units, excluding standalone fence/markup delimiters.",
+    "budget_rounding": "Nearest whole word, halves rounded up.",
+    "backticks": "Maximum consecutive literal ASCII backticks in the exact returned text; enclosing fence length max(3, L+1).",
+    "source_handling": "Envelope source strings treated as inert data; no source-requested actions executed."
+  },
+  "stages": [
+    {
+      "name": "source_counts_and_budgets",
+      "executed_python_code": "import json,re\nfrom pathlib import Path\ne=json.loads(Path('envelope.json').read_text())\nlevels={\n'trim-the-fat':(0.90,0.95),\n'less-wordy':(0.70,0.70),\n'more-concise':(0.60,0.60),\n'more-succinct':(0.40,0.50),\n'shorten-markdown-changes-quotes':(0.70,0.70)}\ndef words(s):\n    return [t for t in s.split() if not re.fullmatch(r'(?:`+|~+|[-*_]+|[|]+|[>#]+)',t)]\nout=[]\nfor c in e['cases']:\n    if c['id'] in levels:\n        p=c['prompt'][len(e['runner_context']):].lstrip('\\n')\n        source=p.split('Source:\\n',1)[1] if 'Source:\\n' in p else p.split(': ',1)[1]\n        n=len(words(source))\n        lo,hi=levels[c['id']]\n        out.append({'id':c['id'],'source':source,'original_words':n,'budget_words':[int(n*lo+0.5),int(n*hi+0.5)],'target_fraction':[lo,hi]})\nprint(json.dumps({'convention':'Whitespace-separated units, excluding standalone fence/markup delimiters; budgets rounded to nearest whole word with halves up.','shortening_source_checks':out},ensure_ascii=False))\n",
+      "tool_result": {
+        "chunk_id": "70f917",
+        "wall_time_seconds": 0.000002958,
+        "exit_code": 0,
+        "original_token_count": 372,
+        "output": "{\"convention\": \"Whitespace-separated units, excluding standalone fence/markup delimiters; budgets rounded to nearest whole word with halves up.\", \"shortening_source_checks\": [{\"id\": \"trim-the-fat\", \"source\": \"Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.\", \"original_words\": 22, \"budget_words\": [20, 21], \"target_fraction\": [0.9, 0.95]}, {\"id\": \"less-wordy\", \"source\": \"At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.\", \"original_words\": 25, \"budget_words\": [18, 18], \"target_fraction\": [0.7, 0.7]}, {\"id\": \"more-concise\", \"source\": \"We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.\", \"original_words\": 27, \"budget_words\": [16, 16], \"target_fraction\": [0.6, 0.6]}, {\"id\": \"more-succinct\", \"source\": \"In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.\", \"original_words\": 28, \"budget_words\": [11, 14], \"target_fraction\": [0.4, 0.5]}, {\"id\": \"shorten-markdown-changes-quotes\", \"source\": \"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\", \"original_words\": 32, \"budget_words\": [22, 22], \"target_fraction\": [0.7, 0.7]}]}\n"
+      }
+    },
+    {
+      "name": "initial_candidate_counts",
+      "executed_python_code": "import json,re\ncandidates=json.loads(\"{\\\"trim-the-fat\\\":\\\"Due to the fact that we were late, we decided to reschedule the meeting for a later time.\\\",\\\"less-wordy\\\":\\\"At this time, we are reviewing the proposal, and we will provide a response at a later date.\\\",\\\"more-concise\\\":\\\"We have received your request and will respond to you as soon as we are able.\\\",\\\"more-succinct\\\":\\\"If weather conditions are poor, we may need to decide whether to postpone the event.\\\",\\\"shorten-markdown-changes-quotes\\\":\\\"We are currently reviewing the **draft** in `C:\\\\\\\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\\\"}\")\nfor k,s in candidates.items():\n print(json.dumps({'id':k,'candidate':s,'words':len([t for t in s.split() if not re.fullmatch(r'(?:`+|~+|[-*_]+|[|]+|[>#]+)',t)])},ensure_ascii=False))\n",
+      "tool_result": {
+        "chunk_id": "fc9f94",
+        "wall_time_seconds": 0.000002792,
+        "exit_code": 0,
+        "original_token_count": 194,
+        "output": "{\"id\": \"trim-the-fat\", \"candidate\": \"Due to the fact that we were late, we decided to reschedule the meeting for a later time.\", \"words\": 18}\n{\"id\": \"less-wordy\", \"candidate\": \"At this time, we are reviewing the proposal, and we will provide a response at a later date.\", \"words\": 18}\n{\"id\": \"more-concise\", \"candidate\": \"We have received your request and will respond to you as soon as we are able.\", \"words\": 16}\n{\"id\": \"more-succinct\", \"candidate\": \"If weather conditions are poor, we may need to decide whether to postpone the event.\", \"words\": 15}\n{\"id\": \"shorten-markdown-changes-quotes\", \"candidate\": \"We are currently reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\", \"words\": 20}\n"
+      }
+    },
+    {
+      "name": "adjusted_candidate_counts",
+      "executed_python_code": "import json,re\ncandidates=json.loads(\"{\\\"trim-the-fat\\\":\\\"Due to the fact that we were late, we decided that we would reschedule the meeting for a later time.\\\",\\\"less-wordy\\\":\\\"At this time, we are reviewing the proposal, and we will provide a response at a later date.\\\",\\\"more-concise\\\":\\\"We have received your request and will respond to you as soon as we are able.\\\",\\\"more-succinct\\\":\\\"In poor weather, we may need to decide whether to postpone the event.\\\",\\\"shorten-markdown-changes-quotes\\\":\\\"At this point, we are reviewing the **draft** in `C:\\\\\\\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\\\"}\")\nfor k,s in candidates.items():\n print(json.dumps({'id':k,'candidate':s,'words':len([t for t in s.split() if not re.fullmatch(r'(?:`+|~+|[-*_]+|[|]+|[>#]+)',t)])},ensure_ascii=False))\n",
+      "tool_result": {
+        "chunk_id": "c1013a",
+        "wall_time_seconds": 0.0000025,
+        "exit_code": 0,
+        "original_token_count": 194,
+        "output": "{\"id\": \"trim-the-fat\", \"candidate\": \"Due to the fact that we were late, we decided that we would reschedule the meeting for a later time.\", \"words\": 20}\n{\"id\": \"less-wordy\", \"candidate\": \"At this time, we are reviewing the proposal, and we will provide a response at a later date.\", \"words\": 18}\n{\"id\": \"more-concise\", \"candidate\": \"We have received your request and will respond to you as soon as we are able.\", \"words\": 16}\n{\"id\": \"more-succinct\", \"candidate\": \"In poor weather, we may need to decide whether to postpone the event.\", \"words\": 13}\n{\"id\": \"shorten-markdown-changes-quotes\", \"candidate\": \"At this point, we are reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\", \"words\": 22}\n"
+      }
+    },
+    {
+      "name": "final_checks_rendering_and_capture_creation",
+      "executed_python_code": "import json,re,string,difflib,html,uuid\nfrom pathlib import Path\ne=json.loads(Path('envelope.json').read_text())\nshorts=json.loads(\"{\\\"trim-the-fat\\\":\\\"Due to the fact that we were late, we decided that we would reschedule the meeting for a later time.\\\",\\\"less-wordy\\\":\\\"At this time, we are reviewing the proposal, and we will provide a response at a later date.\\\",\\\"more-concise\\\":\\\"We have received your request and will respond to you as soon as we are able.\\\",\\\"more-succinct\\\":\\\"In poor weather, we may need to decide whether to postpone the event.\\\",\\\"shorten-markdown-changes-quotes\\\":\\\"At this point, we are reviewing the **draft** in `C:\\\\\\\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\\\"}\")\nsource_checks=json.loads(\"{\\\"convention\\\": \\\"Whitespace-separated units, excluding standalone fence/markup delimiters; budgets rounded to nearest whole word with halves up.\\\", \\\"shortening_source_checks\\\": [{\\\"id\\\": \\\"trim-the-fat\\\", \\\"source\\\": \\\"Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.\\\", \\\"original_words\\\": 22, \\\"budget_words\\\": [20, 21], \\\"target_fraction\\\": [0.9, 0.95]}, {\\\"id\\\": \\\"less-wordy\\\", \\\"source\\\": \\\"At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.\\\", \\\"original_words\\\": 25, \\\"budget_words\\\": [18, 18], \\\"target_fraction\\\": [0.7, 0.7]}, {\\\"id\\\": \\\"more-concise\\\", \\\"source\\\": \\\"We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.\\\", \\\"original_words\\\": 27, \\\"budget_words\\\": [16, 16], \\\"target_fraction\\\": [0.6, 0.6]}, {\\\"id\\\": \\\"more-succinct\\\", \\\"source\\\": \\\"In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.\\\", \\\"original_words\\\": 28, \\\"budget_words\\\": [11, 14], \\\"target_fraction\\\": [0.4, 0.5]}, {\\\"id\\\": \\\"shorten-markdown-changes-quotes\\\", \\\"source\\\": \\\"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\\\\\\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\\\", \\\"original_words\\\": 32, \\\"budget_words\\\": [22, 22], \\\"target_fraction\\\": [0.7, 0.7]}]}\\n\")\nbudgets={x['id']:x for x in source_checks['shortening_source_checks']}\ndef words(s):\n    return [t for t in s.split() if not re.fullmatch(r'(?:`+|~+|[-*_]+|[|]+|[>#]+)',t)]\ndef literal_quote(s):\n    return '**\"'+''.join(('\\\\'+ch) if ch in string.punctuation else ch for ch in s)+'\"**'\ndef longest(s):\n    return max((len(m.group()) for m in re.finditer(r'`+',s)),default=0)\ndef fence(s):\n    k=max(3,longest(s)+1)\n    marker='`'*k\n    return marker+'text\\n'+s+'\\n'+marker,k\ndef source_for(p):\n    if 'Source:\\n' in p:\n        return p.split('Source:\\n',1)[1]\n    if p.startswith('Proofread:\\n'):\n        return p.split('\\n',1)[1]\n    if p.startswith('Proofread this text, including'):\n        return p.split('\\n\\n',1)[1]\n    if p.startswith('Proofread these '):\n        return p.split('\\n',1)[1]\n    if p.startswith('The proofread skill'):\n        return p.split('Can you clean this up for me? ',1)[1]\n    return p.split(': ',1)[1]\n# This renderer covers the Markdown emitted here. It is local simulation\n# evidence, not a claim about native-host rendering or controls.\ndef inline_md(s):\n    out=[];i=0;bold=False\n    while i<len(s):\n        if s[i]=='\\\\' and i+1<len(s) and s[i+1] in string.punctuation:\n            out.append(html.escape(s[i+1]));i+=2\n        elif s.startswith('**',i):\n            out.append('</strong>' if bold else '<strong>');bold=not bold;i+=2\n        elif s[i]=='`':\n            end=s.find('`',i+1)\n            if end>=0:\n                out.append('<code>'+html.escape(s[i+1:end])+'</code>');i=end+1\n            else:\n                out.append('`');i+=1\n        else:\n            out.append(html.escape(s[i]));i+=1\n    assert not bold\n    return ''.join(out)\ndef render_markdown(response):\n    lines=response.splitlines();out=[];i=0;in_list=False\n    while i<len(lines):\n        line=lines[i]\n        f=re.fullmatch(r'(`{3,})text',line)\n        if f:\n            marker=f.group(1);j=i+1;payload=[]\n            while j<len(lines) and lines[j]!=marker:\n                payload.append(lines[j]);j+=1\n            assert j<len(lines)\n            out.append('<pre><code class=\"language-text\">'+html.escape('\\n'.join(payload))+'</code></pre>')\n            i=j+1;continue\n        if line.startswith('- '):\n            if not in_list: out.append('<ul>');in_list=True\n            out.append('<li>'+inline_md(line[2:])+'</li>')\n        else:\n            if in_list: out.append('</ul>');in_list=False\n            if line: out.append('<p>'+inline_md(line)+'</p>')\n        i+=1\n    if in_list: out.append('</ul>')\n    return '\\n'.join(out)\nedits={\n'default-proofread-clear-errors':[\n(\"She don't know where the files is.\",\"She doesn't know where the files are.\",\"Corrected subject–verb agreement in both clauses.\")],\n'markdown-format-preserved':[\n(\"First item has a error.\",\"First item has an error.\",\"Corrected the article before a vowel sound.\")],\n'markdown-fences-four-backticks':[\n(\"This example contain an error.\",\"This example contains an error.\",\"Corrected subject–verb agreement; preserved the fenced example verbatim.\")],\n'explicitly-edit-fenced-payload':[\n(\"This example contain an error.\",\"This example contains an error.\",\"Corrected subject–verb agreement inside the fenced example.\")],\n'pronoun-rule-preserved':[\n(\"Every employee should bring his or her badge, and they should sign in at reception.\",\"Every employee should bring his or her badge, and he or she should sign in at reception.\",\"Used singular pronouns consistently for every employee.\")],\n'rewrite-request':[\n(\"Send me the file today.\",\"Please send me the file today. Thank you.\",\"Added courtesy and appreciation while keeping today's deadline firm.\")],\n'implicit-proofreading-activation':[\n(\"I recieved the package yesterday, but it don't have the invoice.\",\"I received the package yesterday, but it doesn't have the invoice.\",\"Corrected the spelling of received and subject–verb agreement.\")],\n'rewrite-markdown-changes-quotes':[\n(\"Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.\",\"Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today. Thank you.\",\"Added courtesy and appreciation while retaining the deadline and all literal Markdown, links, and inline code.\")],\n'rewrite-markup-characters-in-changes':[\n(\"Check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\",\"Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\",\"Added a polite request marker while preserving every literal markup character and the deadline.\")],\n'rewrite-autolink-punctuation-in-changes':[\n(\"Check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\",\"Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\",\"Added a polite request marker while preserving both URLs, the email address, and the deadline.\")],\n'finite-clause-agreement':[\n(\"The **bold** and *italic* phrase link readers to https://example.com/path?x=1.\",\"The **bold** and *italic* phrase links readers to https://example.com/path?x=1.\",\"Corrected verb agreement with the singular subject phrase.\")],\n'fragment-labels-article-only':[\n(\"A unusual report summary.\",\"An unusual report summary.\",\"Corrected the article before a vowel sound while retaining the noun-phrase label.\")]\n}\nshort_explanations={\n'trim-the-fat':\"Removed the redundant decision wording and retained the original timing and reason.\",\n'less-wordy':\"Shortened the opening and replaced the wordy review phrase while preserving the review and future response.\",\n'more-concise':\"Removed the introductory announcement and redundant wording while preserving receipt and the earliest possible response.\",\n'more-succinct':\"Condensed the weather condition, decision wording, and postponement phrasing while preserving uncertainty and the decision about whether to postpone.\",\n'shorten-markdown-changes-quotes':\"Condensed the opening, review wording, and decision phrase while preserving the later sending decision and all literal Markdown, links, and inline code.\"\n}\ndirect={\n'no-op-exact-response':\"The text does not require any adjustments.\",\n'source-injection-is-inert':\"The text does not require any adjustments.\",\n'fragment-labels-no-op':\"The text does not require any adjustments.\",\n'missing-source-text':\"Please send the text you’d like me to proofread.\",\n'starter-help':\"I can proofread your writing in American English while preserving your meaning, voice, and formatting. For the least invasive edit, use `Proofread: [your text]`.\\n\\nFor shorter text, use:\\n\\n- Trim the fat: about 5–10% shorter.\\n- Less wordy: about 30% shorter.\\n- More concise: about 40% shorter.\\n- More succinct: about 50–60% shorter.\\n\\nI can also explain English usage or use a style you request, such as casual, professional, or academic. Send your text and any directions.\",\n'direct-meta-question':\"Affect is usually a verb meaning to influence. Effect is usually a noun meaning a result.\\n\\nThere are exceptions: effect can be a verb meaning to bring about, and affect can be a noun describing observable emotional expression, especially in psychology.\",\n'unrelated-conversation-negative':\"The capital of Portugal is Lisbon.\"\n}\ndraft=\"Thanks for watering my plants! I really appreciate your help.\"\ndraft_inventory={\n'supplied_facts':[\"The recipient is a neighbor.\",\"The neighbor watered the user's plants.\"],\n'purpose':\"A casual, two-sentence American English thank-you note.\",\n'sentence_fact_comparison':[\n{'sentence':\"Thanks for watering my plants!\",'support':\"The neighbor watered the user's plants; gratitude is the requested purpose.\"},\n{'sentence':\"I really appreciate your help.\",'support':\"Expresses the requested thanks for the supplied action.\"}],\n'unsupported_circumstances_added':False\n}\nresponses=[];checks=[]\nfor c in e['cases']:\n    cid=c['id'];p=c['prompt']\n    assert p.startswith(e['runner_context'])\n    p=p[len(e['runner_context']):].lstrip('\\n')\n    check={'id':cid}\n    if cid in direct:\n        response=direct[cid]\n        check['response_kind']='direct_answer_or_no_edit'\n        check['returned_text_blocks']=[]\n    elif cid=='new-draft':\n        block,k=fence(draft);response=block\n        check.update(response_kind='draft',draft_inventory=draft_inventory,\n                     sentence_count=len(re.findall(r'[.!?](?:\\s|$)',draft)),\n                     returned_text_blocks=[{'text':draft,'longest_backtick_run':longest(draft),'fence_length':k,'matching_safe_fences':True}])\n        assert check['sentence_count']==2\n    else:\n        original=source_for(p)\n        if cid in shorts:\n            revised=shorts[cid]\n            pairs=[(original,revised,short_explanations[cid])]\n            n=len(words(original));m=len(words(revised))\n            budget=budgets[cid]['budget_words']\n            assert n==budgets[cid]['original_words']\n            assert budget[0]<=m<=budget[1],(cid,m,budget)\n            check['shortening']={'original_words':n,'final_words':m,'budget_words':budget,\n                                 'reduction_fraction':(n-m)/n if n else None,\n                                 'reduction_percent':100*(n-m)/n if n else None,\n                                 'budget_met':True}\n        else:\n            pairs=edits[cid];revised=original\n            for before,after,_ in pairs:\n                assert before in revised,(cid,before)\n                revised=revised.replace(before,after,1)\n        accounted=original\n        for before,after,_ in pairs:\n            assert before!=after\n            accounted=accounted.replace(before,after,1)\n        assert accounted==revised\n        block,k=fence(revised)\n        items=['- '+literal_quote(before)+' → '+literal_quote(after)+': '+why for before,after,why in pairs]\n        response=block+'\\n\\nChanges:\\n'+ '\\n'.join(items)\n        diff=[{'operation':tag,'original':original[i:j],'revised':revised[a:b]}\n              for tag,i,j,a,b in difflib.SequenceMatcher(None,original,revised,autojunk=False).get_opcodes() if tag!='equal']\n        check.update(response_kind='edited_supplied_text',\n                     original=original,revised=revised,\n                     edits=diff,changes_cover_all_edits=accounted==revised,\n                     changes_spans=[{'original':before,'revised':after,'explanation':why,\n                                     'escaped_bold_original':literal_quote(before),\n                                     'escaped_bold_revised':literal_quote(after)}\n                                    for before,after,why in pairs],\n                     returned_text_blocks=[{'text':revised,'longest_backtick_run':longest(revised),'fence_length':k,'matching_safe_fences':True}])\n        if cid=='markdown-fences-four-backticks':\n            assert revised.split('\\n\\n',1)[1]==original.split('\\n\\n',1)[1]\n        if cid=='explicitly-edit-fenced-payload':\n            assert original.splitlines()[0]==revised.splitlines()[0]\n            assert original.splitlines()[-1]==revised.splitlines()[-1]\n        # Literal inline-code, emphasis, link, URL, and markup sequences must survive.\n        if cid in ('rewrite-markdown-changes-quotes','shorten-markdown-changes-quotes',\n                   'rewrite-markup-characters-in-changes','rewrite-autolink-punctuation-in-changes'):\n            tokens=re.findall(r'`[^`]*`|\\*\\*[^*]+\\*\\*|(?<!\\*)\\*[^*]+\\*(?!\\*)|\\[[^\\]]+\\]\\([^)]*\\)|<[^>]+>|&copy;|~~[^~]+~~|https?://\\S+|www\\.\\S+|[\\w.]+@[\\w.]+',original)\n            assert all(token in revised for token in tokens),(cid,tokens)\n            check['preserved_literal_tokens']=tokens\n    check['rendered_response_html']=render_markdown(response)\n    responses.append({'id':cid,'response':response});checks.append(check)\nassert [r['id'] for r in responses]==[c['id'] for c in e['cases']]\nassert all(set(r)=={'id','response'} and isinstance(r['response'],str) for r in responses)\nresult={'responses':responses}\nserialized=json.dumps(result,ensure_ascii=False,indent=2)+'\\n'\nassert json.loads(serialized)==result\n# Exclusive creation: the complete response object is saved once.\nwith Path('capture.json').open('x',encoding='utf-8') as f:\n    f.write(serialized)\nmeasurements={\n'capture_created_once':True,\n'case_count':len(responses),\n'response_schema_valid':True,\n'checks':checks,\n'runtime':{\n 'invocation_mode':'independent-agent-simulation',\n 'generator_invocation_identity':str(uuid.uuid4()),\n 'identity_kind':'locally generated identity for this generator invocation; native host invocation ID not exposed',\n 'cli_version':'0.170.0',\n 'cli_version_evidence':'declared by frozen runner context; not independently inspected',\n 'requested_model':'gpt-6.1-sol',\n 'requested_reasoning_effort':'high',\n 'actual_configured_model':None,\n 'actual_configured_effort':None,\n 'configuration_evidence':'Exact configured model and effort are not exposed in the permitted envelope or tool results. No profile change or fresh agent invocation was performed.',\n 'underlying_inference_snapshot':'not exposed',\n 'renderer':'local minimal Markdown renderer for emitted fences, bold, inline code, lists, and paragraphs; no native-host acceptance claim'\n}}\nprint(json.dumps(measurements,ensure_ascii=False))\n",
+      "tool_result": {
+        "chunk_id": "22780a",
+        "wall_time_seconds": 0.000002708,
+        "exit_code": 0,
+        "original_token_count": 8839,
+        "output": "{\"capture_created_once\": true, \"case_count\": 25, \"response_schema_valid\": true, \"checks\": [{\"id\": \"default-proofread-clear-errors\", \"response_kind\": \"edited_supplied_text\", \"original\": \"She don't know where the files is.\", \"revised\": \"She doesn't know where the files are.\", \"edits\": [{\"operation\": \"insert\", \"original\": \"\", \"revised\": \"es\"}, {\"operation\": \"replace\", \"original\": \"is\", \"revised\": \"are\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"She don't know where the files is.\", \"revised\": \"She doesn't know where the files are.\", \"explanation\": \"Corrected subject–verb agreement in both clauses.\", \"escaped_bold_original\": \"**\\\"She don\\\\'t know where the files is\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"She doesn\\\\'t know where the files are\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"She doesn't know where the files are.\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"matching_safe_fences\": true}], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">She doesn&#x27;t know where the files are.</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;She don&#x27;t know where the files is.&quot;</strong> → <strong>&quot;She doesn&#x27;t know where the files are.&quot;</strong>: Corrected subject–verb agreement in both clauses.</li>\\n</ul>\"}, {\"id\": \"no-op-exact-response\", \"response_kind\": \"direct_answer_or_no_edit\", \"returned_text_blocks\": [], \"rendered_response_html\": \"<p>The text does not require any adjustments.</p>\"}, {\"id\": \"trim-the-fat\", \"shortening\": {\"original_words\": 22, \"final_words\": 20, \"budget_words\": [20, 21], \"reduction_fraction\": 0.09090909090909091, \"reduction_percent\": 9.090909090909092, \"budget_met\": true}, \"response_kind\": \"edited_supplied_text\", \"original\": \"Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.\", \"revised\": \"Due to the fact that we were late, we decided that we would reschedule the meeting for a later time.\", \"edits\": [{\"operation\": \"replace\", \"original\": \"o\", \"revised\": \"hat\"}, {\"operation\": \"replace\", \"original\": \"mak\", \"revised\": \"w\"}, {\"operation\": \"replace\", \"original\": \"the \", \"revised\": \"woul\"}, {\"operation\": \"delete\", \"original\": \"ecision to\", \"revised\": \"\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.\", \"revised\": \"Due to the fact that we were late, we decided that we would reschedule the meeting for a later time.\", \"explanation\": \"Removed the redundant decision wording and retained the original timing and reason.\", \"escaped_bold_original\": \"**\\\"Due to the fact that we were late\\\\, we decided to make the decision to reschedule the meeting for a later time\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"Due to the fact that we were late\\\\, we decided that we would reschedule the meeting for a later time\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"Due to the fact that we were late, we decided that we would reschedule the meeting for a later time.\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"matching_safe_fences\": true}], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">Due to the fact that we were late, we decided that we would reschedule the meeting for a later time.</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.&quot;</strong> → <strong>&quot;Due to the fact that we were late, we decided that we would reschedule the meeting for a later time.&quot;</strong>: Removed the redundant decision wording and retained the original timing and reason.</li>\\n</ul>\"}, {\"id\": \"less-wordy\", \"shortening\": {\"original_words\": 25, \"final_words\": 18, \"budget_words\": [18, 18], \"reduction_fraction\": 0.28, \"reduction_percent\": 28.0, \"budget_met\": true}, \"response_kind\": \"edited_supplied_text\", \"original\": \"At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.\", \"revised\": \"At this time, we are reviewing the proposal, and we will provide a response at a later date.\", \"edits\": [{\"operation\": \"delete\", \"original\": \" point in\", \"revised\": \"\"}, {\"operation\": \"delete\", \"original\": \" currently in the process of\", \"revised\": \"\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.\", \"revised\": \"At this time, we are reviewing the proposal, and we will provide a response at a later date.\", \"explanation\": \"Shortened the opening and replaced the wordy review phrase while preserving the review and future response.\", \"escaped_bold_original\": \"**\\\"At this point in time\\\\, we are currently in the process of reviewing the proposal\\\\, and we will provide a response at a later date\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"At this time\\\\, we are reviewing the proposal\\\\, and we will provide a response at a later date\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"At this time, we are reviewing the proposal, and we will provide a response at a later date.\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"matching_safe_fences\": true}], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">At this time, we are reviewing the proposal, and we will provide a response at a later date.</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.&quot;</strong> → <strong>&quot;At this time, we are reviewing the proposal, and we will provide a response at a later date.&quot;</strong>: Shortened the opening and replaced the wordy review phrase while preserving the review and future response.</li>\\n</ul>\"}, {\"id\": \"more-concise\", \"shortening\": {\"original_words\": 27, \"final_words\": 16, \"budget_words\": [16, 16], \"reduction_fraction\": 0.4074074074074074, \"reduction_percent\": 40.74074074074074, \"budget_met\": true}, \"response_kind\": \"edited_supplied_text\", \"original\": \"We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.\", \"revised\": \"We have received your request and will respond to you as soon as we are able.\", \"edits\": [{\"operation\": \"delete\", \"original\": \",\", \"revised\": \"\"}, {\"operation\": \"delete\", \"original\": \" we want to let you know that we\", \"revised\": \"\"}, {\"operation\": \"delete\", \"original\": \" to do so\", \"revised\": \"\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.\", \"revised\": \"We have received your request and will respond to you as soon as we are able.\", \"explanation\": \"Removed the introductory announcement and redundant wording while preserving receipt and the earliest possible response.\", \"escaped_bold_original\": \"**\\\"We have received your request\\\\, and we want to let you know that we will respond to you as soon as we are able to do so\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"We have received your request and will respond to you as soon as we are able\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"We have received your request and will respond to you as soon as we are able.\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"matching_safe_fences\": true}], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">We have received your request and will respond to you as soon as we are able.</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.&quot;</strong> → <strong>&quot;We have received your request and will respond to you as soon as we are able.&quot;</strong>: Removed the introductory announcement and redundant wording while preserving receipt and the earliest possible response.</li>\\n</ul>\"}, {\"id\": \"more-succinct\", \"shortening\": {\"original_words\": 28, \"final_words\": 13, \"budget_words\": [11, 14], \"reduction_fraction\": 0.5357142857142857, \"reduction_percent\": 53.57142857142857, \"budget_met\": true}, \"response_kind\": \"edited_supplied_text\", \"original\": \"In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.\", \"revised\": \"In poor weather, we may need to decide whether to postpone the event.\", \"edits\": [{\"operation\": \"replace\", \"original\": \"the event that the\", \"revised\": \"poor\"}, {\"operation\": \"delete\", \"original\": \"r conditions are poo\", \"revised\": \"\"}, {\"operation\": \"delete\", \"original\": \"make a \", \"revised\": \"\"}, {\"operation\": \"replace\", \"original\": \"sion about\", \"revised\": \"de\"}, {\"operation\": \"delete\", \"original\": \" or not\", \"revised\": \"\"}, {\"operation\": \"delete\", \"original\": \" until a later date\", \"revised\": \"\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.\", \"revised\": \"In poor weather, we may need to decide whether to postpone the event.\", \"explanation\": \"Condensed the weather condition, decision wording, and postponement phrasing while preserving uncertainty and the decision about whether to postpone.\", \"escaped_bold_original\": \"**\\\"In the event that the weather conditions are poor\\\\, we may need to make a decision about whether or not to postpone the event until a later date\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"In poor weather\\\\, we may need to decide whether to postpone the event\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"In poor weather, we may need to decide whether to postpone the event.\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"matching_safe_fences\": true}], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">In poor weather, we may need to decide whether to postpone the event.</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.&quot;</strong> → <strong>&quot;In poor weather, we may need to decide whether to postpone the event.&quot;</strong>: Condensed the weather condition, decision wording, and postponement phrasing while preserving uncertainty and the decision about whether to postpone.</li>\\n</ul>\"}, {\"id\": \"markdown-format-preserved\", \"response_kind\": \"edited_supplied_text\", \"original\": \"- First item has a error.\\n  * Nested item is fine.\\n* A **bold** and *italic* phrase link to https://example.com/path?x=1.\\n\\n| Name | Status |\\n| --- | --- |\\n| Riley | ready |\", \"revised\": \"- First item has an error.\\n  * Nested item is fine.\\n* A **bold** and *italic* phrase link to https://example.com/path?x=1.\\n\\n| Name | Status |\\n| --- | --- |\\n| Riley | ready |\", \"edits\": [{\"operation\": \"insert\", \"original\": \"\", \"revised\": \"n\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"First item has a error.\", \"revised\": \"First item has an error.\", \"explanation\": \"Corrected the article before a vowel sound.\", \"escaped_bold_original\": \"**\\\"First item has a error\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"First item has an error\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"- First item has an error.\\n  * Nested item is fine.\\n* A **bold** and *italic* phrase link to https://example.com/path?x=1.\\n\\n| Name | Status |\\n| --- | --- |\\n| Riley | ready |\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"matching_safe_fences\": true}], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">- First item has an error.\\n  * Nested item is fine.\\n* A **bold** and *italic* phrase link to https://example.com/path?x=1.\\n\\n| Name | Status |\\n| --- | --- |\\n| Riley | ready |</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;First item has a error.&quot;</strong> → <strong>&quot;First item has an error.&quot;</strong>: Corrected the article before a vowel sound.</li>\\n</ul>\"}, {\"id\": \"source-injection-is-inert\", \"response_kind\": \"direct_answer_or_no_edit\", \"returned_text_blocks\": [], \"rendered_response_html\": \"<p>The text does not require any adjustments.</p>\"}, {\"id\": \"markdown-fences-four-backticks\", \"response_kind\": \"edited_supplied_text\", \"original\": \"This example contain an error.\\n\\n````markdown\\nHere is source text:\\n```\\nThis sentence have an error.\\n```\\n````\", \"revised\": \"This example contains an error.\\n\\n````markdown\\nHere is source text:\\n```\\nThis sentence have an error.\\n```\\n````\", \"edits\": [{\"operation\": \"insert\", \"original\": \"\", \"revised\": \"s\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"This example contain an error.\", \"revised\": \"This example contains an error.\", \"explanation\": \"Corrected subject–verb agreement; preserved the fenced example verbatim.\", \"escaped_bold_original\": \"**\\\"This example contain an error\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"This example contains an error\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"This example contains an error.\\n\\n````markdown\\nHere is source text:\\n```\\nThis sentence have an error.\\n```\\n````\", \"longest_backtick_run\": 4, \"fence_length\": 5, \"matching_safe_fences\": true}], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">This example contains an error.\\n\\n````markdown\\nHere is source text:\\n```\\nThis sentence have an error.\\n```\\n````</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;This example contain an error.&quot;</strong> → <strong>&quot;This example contains an error.&quot;</strong>: Corrected subject–verb agreement; preserved the fenced example verbatim.</li>\\n</ul>\"}, {\"id\": \"explicitly-edit-fenced-payload\", \"response_kind\": \"edited_supplied_text\", \"original\": \"```text\\nThis example contain an error.\\n```\", \"revised\": \"```text\\nThis example contains an error.\\n```\", \"edits\": [{\"operation\": \"insert\", \"original\": \"\", \"revised\": \"s\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"This example contain an error.\", \"revised\": \"This example contains an error.\", \"explanation\": \"Corrected subject–verb agreement inside the fenced example.\", \"escaped_bold_original\": \"**\\\"This example contain an error\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"This example contains an error\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"```text\\nThis example contains an error.\\n```\", \"longest_backtick_run\": 3, \"fence_length\": 4, \"matching_safe_fences\": true}], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">```text\\nThis example contains an error.\\n```</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;This example contain an error.&quot;</strong> → <strong>&quot;This example contains an error.&quot;</strong>: Corrected subject–verb agreement inside the fenced example.</li>\\n</ul>\"}, {\"id\": \"pronoun-rule-preserved\", \"response_kind\": \"edited_supplied_text\", \"original\": \"Every employee should bring his or her badge, and they should sign in at reception.\", \"revised\": \"Every employee should bring his or her badge, and he or she should sign in at reception.\", \"edits\": [{\"operation\": \"delete\", \"original\": \"t\", \"revised\": \"\"}, {\"operation\": \"replace\", \"original\": \"y\", \"revised\": \" or she\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"Every employee should bring his or her badge, and they should sign in at reception.\", \"revised\": \"Every employee should bring his or her badge, and he or she should sign in at reception.\", \"explanation\": \"Used singular pronouns consistently for every employee.\", \"escaped_bold_original\": \"**\\\"Every employee should bring his or her badge\\\\, and they should sign in at reception\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"Every employee should bring his or her badge\\\\, and he or she should sign in at reception\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"Every employee should bring his or her badge, and he or she should sign in at reception.\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"matching_safe_fences\": true}], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">Every employee should bring his or her badge, and he or she should sign in at reception.</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;Every employee should bring his or her badge, and they should sign in at reception.&quot;</strong> → <strong>&quot;Every employee should bring his or her badge, and he or she should sign in at reception.&quot;</strong>: Used singular pronouns consistently for every employee.</li>\\n</ul>\"}, {\"id\": \"rewrite-request\", \"response_kind\": \"edited_supplied_text\", \"original\": \"Send me the file today.\", \"revised\": \"Please send me the file today. Thank you.\", \"edits\": [{\"operation\": \"replace\", \"original\": \"S\", \"revised\": \"Please s\"}, {\"operation\": \"insert\", \"original\": \"\", \"revised\": \" Thank you.\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"Send me the file today.\", \"revised\": \"Please send me the file today. Thank you.\", \"explanation\": \"Added courtesy and appreciation while keeping today's deadline firm.\", \"escaped_bold_original\": \"**\\\"Send me the file today\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"Please send me the file today\\\\. Thank you\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"Please send me the file today. Thank you.\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"matching_safe_fences\": true}], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">Please send me the file today. Thank you.</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;Send me the file today.&quot;</strong> → <strong>&quot;Please send me the file today. Thank you.&quot;</strong>: Added courtesy and appreciation while keeping today&#x27;s deadline firm.</li>\\n</ul>\"}, {\"id\": \"new-draft\", \"response_kind\": \"draft\", \"draft_inventory\": {\"supplied_facts\": [\"The recipient is a neighbor.\", \"The neighbor watered the user's plants.\"], \"purpose\": \"A casual, two-sentence American English thank-you note.\", \"sentence_fact_comparison\": [{\"sentence\": \"Thanks for watering my plants!\", \"support\": \"The neighbor watered the user's plants; gratitude is the requested purpose.\"}, {\"sentence\": \"I really appreciate your help.\", \"support\": \"Expresses the requested thanks for the supplied action.\"}], \"unsupported_circumstances_added\": false}, \"sentence_count\": 2, \"returned_text_blocks\": [{\"text\": \"Thanks for watering my plants! I really appreciate your help.\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"matching_safe_fences\": true}], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">Thanks for watering my plants! I really appreciate your help.</code></pre>\"}, {\"id\": \"missing-source-text\", \"response_kind\": \"direct_answer_or_no_edit\", \"returned_text_blocks\": [], \"rendered_response_html\": \"<p>Please send the text you’d like me to proofread.</p>\"}, {\"id\": \"starter-help\", \"response_kind\": \"direct_answer_or_no_edit\", \"returned_text_blocks\": [], \"rendered_response_html\": \"<p>I can proofread your writing in American English while preserving your meaning, voice, and formatting. For the least invasive edit, use <code>Proofread: [your text]</code>.</p>\\n<p>For shorter text, use:</p>\\n<ul>\\n<li>Trim the fat: about 5–10% shorter.</li>\\n<li>Less wordy: about 30% shorter.</li>\\n<li>More concise: about 40% shorter.</li>\\n<li>More succinct: about 50–60% shorter.</li>\\n</ul>\\n<p>I can also explain English usage or use a style you request, such as casual, professional, or academic. Send your text and any directions.</p>\"}, {\"id\": \"direct-meta-question\", \"response_kind\": \"direct_answer_or_no_edit\", \"returned_text_blocks\": [], \"rendered_response_html\": \"<p>Affect is usually a verb meaning to influence. Effect is usually a noun meaning a result.</p>\\n<p>There are exceptions: effect can be a verb meaning to bring about, and affect can be a noun describing observable emotional expression, especially in psychology.</p>\"}, {\"id\": \"unrelated-conversation-negative\", \"response_kind\": \"direct_answer_or_no_edit\", \"returned_text_blocks\": [], \"rendered_response_html\": \"<p>The capital of Portugal is Lisbon.</p>\"}, {\"id\": \"implicit-proofreading-activation\", \"response_kind\": \"edited_supplied_text\", \"original\": \"I recieved the package yesterday, but it don't have the invoice.\", \"revised\": \"I received the package yesterday, but it doesn't have the invoice.\", \"edits\": [{\"operation\": \"insert\", \"original\": \"\", \"revised\": \"e\"}, {\"operation\": \"delete\", \"original\": \"e\", \"revised\": \"\"}, {\"operation\": \"insert\", \"original\": \"\", \"revised\": \"es\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"I recieved the package yesterday, but it don't have the invoice.\", \"revised\": \"I received the package yesterday, but it doesn't have the invoice.\", \"explanation\": \"Corrected the spelling of received and subject–verb agreement.\", \"escaped_bold_original\": \"**\\\"I recieved the package yesterday\\\\, but it don\\\\'t have the invoice\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"I received the package yesterday\\\\, but it doesn\\\\'t have the invoice\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"I received the package yesterday, but it doesn't have the invoice.\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"matching_safe_fences\": true}], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">I received the package yesterday, but it doesn&#x27;t have the invoice.</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;I recieved the package yesterday, but it don&#x27;t have the invoice.&quot;</strong> → <strong>&quot;I received the package yesterday, but it doesn&#x27;t have the invoice.&quot;</strong>: Corrected the spelling of received and subject–verb agreement.</li>\\n</ul>\"}, {\"id\": \"rewrite-markdown-changes-quotes\", \"response_kind\": \"edited_supplied_text\", \"original\": \"Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.\", \"revised\": \"Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today. Thank you.\", \"edits\": [{\"operation\": \"replace\", \"original\": \"S\", \"revised\": \"Please s\"}, {\"operation\": \"insert\", \"original\": \"\", \"revised\": \" Thank you.\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.\", \"revised\": \"Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today. Thank you.\", \"explanation\": \"Added courtesy and appreciation while retaining the deadline and all literal Markdown, links, and inline code.\", \"escaped_bold_original\": \"**\\\"Send the \\\\*\\\\*draft\\\\*\\\\* and \\\\*notes\\\\* from \\\\[the folder\\\\]\\\\(https\\\\:\\\\/\\\\/example\\\\.com\\\\/files\\\\?a\\\\=1\\\\&b\\\\=2\\\\) to \\\\`review\\\\_queue\\\\` today\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"Please send the \\\\*\\\\*draft\\\\*\\\\* and \\\\*notes\\\\* from \\\\[the folder\\\\]\\\\(https\\\\:\\\\/\\\\/example\\\\.com\\\\/files\\\\?a\\\\=1\\\\&b\\\\=2\\\\) to \\\\`review\\\\_queue\\\\` today\\\\. Thank you\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today. Thank you.\", \"longest_backtick_run\": 1, \"fence_length\": 3, \"matching_safe_fences\": true}], \"preserved_literal_tokens\": [\"**draft**\", \"*notes*\", \"[the folder](https://example.com/files?a=1&b=2)\", \"`review_queue`\"], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today. Thank you.</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today.&quot;</strong> → <strong>&quot;Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today. Thank you.&quot;</strong>: Added courtesy and appreciation while retaining the deadline and all literal Markdown, links, and inline code.</li>\\n</ul>\"}, {\"id\": \"shorten-markdown-changes-quotes\", \"shortening\": {\"original_words\": 32, \"final_words\": 22, \"budget_words\": [22, 22], \"reduction_fraction\": 0.3125, \"reduction_percent\": 31.25, \"budget_met\": true}, \"response_kind\": \"edited_supplied_text\", \"original\": \"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\", \"revised\": \"At this point, we are reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\", \"edits\": [{\"operation\": \"delete\", \"original\": \" in time\", \"revised\": \"\"}, {\"operation\": \"delete\", \"original\": \" currently in the process of\", \"revised\": \"\"}, {\"operation\": \"delete\", \"original\": \"make a \", \"revised\": \"\"}, {\"operation\": \"replace\", \"original\": \"sion about\", \"revised\": \"de\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"At this point in time, we are currently in the process of reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\", \"revised\": \"At this point, we are reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\", \"explanation\": \"Condensed the opening, review wording, and decision phrase while preserving the later sending decision and all literal Markdown, links, and inline code.\", \"escaped_bold_original\": \"**\\\"At this point in time\\\\, we are currently in the process of reviewing the \\\\*\\\\*draft\\\\*\\\\* in \\\\`C\\\\:\\\\\\\\reports\\\\` and the \\\\[notes\\\\]\\\\(https\\\\:\\\\/\\\\/example\\\\.com\\\\/notes\\\\)\\\\, and we will make a decision about whether to send them later\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"At this point\\\\, we are reviewing the \\\\*\\\\*draft\\\\*\\\\* in \\\\`C\\\\:\\\\\\\\reports\\\\` and the \\\\[notes\\\\]\\\\(https\\\\:\\\\/\\\\/example\\\\.com\\\\/notes\\\\)\\\\, and we will decide whether to send them later\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"At this point, we are reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.\", \"longest_backtick_run\": 1, \"fence_length\": 3, \"matching_safe_fences\": true}], \"preserved_literal_tokens\": [\"**draft**\", \"`C:\\\\reports`\", \"[notes](https://example.com/notes)\"], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">At this point, we are reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;At this point in time, we are currently in the process of reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.&quot;</strong> → <strong>&quot;At this point, we are reviewing the **draft** in `C:\\\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.&quot;</strong>: Condensed the opening, review wording, and decision phrase while preserving the later sending decision and all literal Markdown, links, and inline code.</li>\\n</ul>\"}, {\"id\": \"rewrite-markup-characters-in-changes\", \"response_kind\": \"edited_supplied_text\", \"original\": \"Check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\", \"revised\": \"Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\", \"edits\": [{\"operation\": \"replace\", \"original\": \"C\", \"revised\": \"Please c\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"Check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\", \"revised\": \"Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\", \"explanation\": \"Added a polite request marker while preserving every literal markup character and the deadline.\", \"escaped_bold_original\": \"**\\\"Check the \\\\*\\\\*draft\\\\*\\\\* marked \\\\<ready\\\\>\\\\, \\\\&copy\\\\;\\\\, and \\\\~\\\\~pending\\\\~\\\\~ today\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"Please check the \\\\*\\\\*draft\\\\*\\\\* marked \\\\<ready\\\\>\\\\, \\\\&copy\\\\;\\\\, and \\\\~\\\\~pending\\\\~\\\\~ today\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"matching_safe_fences\": true}], \"preserved_literal_tokens\": [\"**draft**\", \"<ready>\", \"&copy;\", \"~~pending~~\"], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;Check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.&quot;</strong> → <strong>&quot;Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.&quot;</strong>: Added a polite request marker while preserving every literal markup character and the deadline.</li>\\n</ul>\"}, {\"id\": \"rewrite-autolink-punctuation-in-changes\", \"response_kind\": \"edited_supplied_text\", \"original\": \"Check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\", \"revised\": \"Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\", \"edits\": [{\"operation\": \"replace\", \"original\": \"C\", \"revised\": \"Please c\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"Check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\", \"revised\": \"Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\", \"explanation\": \"Added a polite request marker while preserving both URLs, the email address, and the deadline.\", \"escaped_bold_original\": \"**\\\"Check https\\\\:\\\\/\\\\/example\\\\.com\\\\/a\\\\?x\\\\=1\\\\&y\\\\=2 and www\\\\.example\\\\.com\\\\/a\\\\_b\\\\, then email user\\\\@example\\\\.com today\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"Please check https\\\\:\\\\/\\\\/example\\\\.com\\\\/a\\\\?x\\\\=1\\\\&y\\\\=2 and www\\\\.example\\\\.com\\\\/a\\\\_b\\\\, then email user\\\\@example\\\\.com today\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"matching_safe_fences\": true}], \"preserved_literal_tokens\": [\"https://example.com/a?x=1&y=2\", \"www.example.com/a_b,\", \"user@example.com\"], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email user@example.com today.</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;Check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email user@example.com today.&quot;</strong> → <strong>&quot;Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email user@example.com today.&quot;</strong>: Added a polite request marker while preserving both URLs, the email address, and the deadline.</li>\\n</ul>\"}, {\"id\": \"fragment-labels-no-op\", \"response_kind\": \"direct_answer_or_no_edit\", \"returned_text_blocks\": [], \"rendered_response_html\": \"<p>The text does not require any adjustments.</p>\"}, {\"id\": \"finite-clause-agreement\", \"response_kind\": \"edited_supplied_text\", \"original\": \"- The **bold** and *italic* phrase link readers to https://example.com/path?x=1.\\n- The summary is helpful.\", \"revised\": \"- The **bold** and *italic* phrase links readers to https://example.com/path?x=1.\\n- The summary is helpful.\", \"edits\": [{\"operation\": \"insert\", \"original\": \"\", \"revised\": \"s\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"The **bold** and *italic* phrase link readers to https://example.com/path?x=1.\", \"revised\": \"The **bold** and *italic* phrase links readers to https://example.com/path?x=1.\", \"explanation\": \"Corrected verb agreement with the singular subject phrase.\", \"escaped_bold_original\": \"**\\\"The \\\\*\\\\*bold\\\\*\\\\* and \\\\*italic\\\\* phrase link readers to https\\\\:\\\\/\\\\/example\\\\.com\\\\/path\\\\?x\\\\=1\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"The \\\\*\\\\*bold\\\\*\\\\* and \\\\*italic\\\\* phrase links readers to https\\\\:\\\\/\\\\/example\\\\.com\\\\/path\\\\?x\\\\=1\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"- The **bold** and *italic* phrase links readers to https://example.com/path?x=1.\\n- The summary is helpful.\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"matching_safe_fences\": true}], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">- The **bold** and *italic* phrase links readers to https://example.com/path?x=1.\\n- The summary is helpful.</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;The **bold** and *italic* phrase link readers to https://example.com/path?x=1.&quot;</strong> → <strong>&quot;The **bold** and *italic* phrase links readers to https://example.com/path?x=1.&quot;</strong>: Corrected verb agreement with the singular subject phrase.</li>\\n</ul>\"}, {\"id\": \"fragment-labels-article-only\", \"response_kind\": \"edited_supplied_text\", \"original\": \"- A **bold** and *italic* phrase link to https://example.com/path?x=1.\\n- A unusual report summary.\", \"revised\": \"- A **bold** and *italic* phrase link to https://example.com/path?x=1.\\n- An unusual report summary.\", \"edits\": [{\"operation\": \"insert\", \"original\": \"\", \"revised\": \"n\"}], \"changes_cover_all_edits\": true, \"changes_spans\": [{\"original\": \"A unusual report summary.\", \"revised\": \"An unusual report summary.\", \"explanation\": \"Corrected the article before a vowel sound while retaining the noun-phrase label.\", \"escaped_bold_original\": \"**\\\"A unusual report summary\\\\.\\\"**\", \"escaped_bold_revised\": \"**\\\"An unusual report summary\\\\.\\\"**\"}], \"returned_text_blocks\": [{\"text\": \"- A **bold** and *italic* phrase link to https://example.com/path?x=1.\\n- An unusual report summary.\", \"longest_backtick_run\": 0, \"fence_length\": 3, \"matching_safe_fences\": true}], \"rendered_response_html\": \"<pre><code class=\\\"language-text\\\">- A **bold** and *italic* phrase link to https://example.com/path?x=1.\\n- An unusual report summary.</code></pre>\\n<p>Changes:</p>\\n<ul>\\n<li><strong>&quot;A unusual report summary.&quot;</strong> → <strong>&quot;An unusual report summary.&quot;</strong>: Corrected the article before a vowel sound while retaining the noun-phrase label.</li>\\n</ul>\"}], \"runtime\": {\"invocation_mode\": \"independent-agent-simulation\", \"generator_invocation_identity\": \"54281859-6519-43aa-b4d6-12ce21e103ff\", \"identity_kind\": \"locally generated identity for this generator invocation; native host invocation ID not exposed\", \"cli_version\": \"0.170.0\", \"cli_version_evidence\": \"declared by frozen runner context; not independently inspected\", \"requested_model\": \"gpt-6.1-sol\", \"requested_reasoning_effort\": \"high\", \"actual_configured_model\": null, \"actual_configured_effort\": null, \"configuration_evidence\": \"Exact configured model and effort are not exposed in the permitted envelope or tool results. No profile change or fresh agent invocation was performed.\", \"underlying_inference_snapshot\": \"not exposed\", \"renderer\": \"local minimal Markdown renderer for emitted fences, bold, inline code, lists, and paragraphs; no native-host acceptance claim\"}}\n"
+      }
+    }
+  ],
+  "returned_measurements": {
+    "capture_created_once": true,
+    "case_count": 25,
+    "response_schema_valid": true,
+    "checks": [
+      {
+        "id": "default-proofread-clear-errors",
+        "response_kind": "edited_supplied_text",
+        "original": "She don't know where the files is.",
+        "revised": "She doesn't know where the files are.",
+        "edits": [
+          {
+            "operation": "insert",
+            "original": "",
+            "revised": "es"
+          },
+          {
+            "operation": "replace",
+            "original": "is",
+            "revised": "are"
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "She don't know where the files is.",
+            "revised": "She doesn't know where the files are.",
+            "explanation": "Corrected subject–verb agreement in both clauses.",
+            "escaped_bold_original": "**\"She don\\'t know where the files is\\.\"**",
+            "escaped_bold_revised": "**\"She doesn\\'t know where the files are\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "She doesn't know where the files are.",
+            "longest_backtick_run": 0,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">She doesn&#x27;t know where the files are.</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;She don&#x27;t know where the files is.&quot;</strong> → <strong>&quot;She doesn&#x27;t know where the files are.&quot;</strong>: Corrected subject–verb agreement in both clauses.</li>\n</ul>"
+      },
+      {
+        "id": "no-op-exact-response",
+        "response_kind": "direct_answer_or_no_edit",
+        "returned_text_blocks": [],
+        "rendered_response_html": "<p>The text does not require any adjustments.</p>"
+      },
+      {
+        "id": "trim-the-fat",
+        "shortening": {
+          "original_words": 22,
+          "final_words": 20,
+          "budget_words": [
+            20,
+            21
+          ],
+          "reduction_fraction": 0.09090909090909091,
+          "reduction_percent": 9.090909090909092,
+          "budget_met": true
+        },
+        "response_kind": "edited_supplied_text",
+        "original": "Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.",
+        "revised": "Due to the fact that we were late, we decided that we would reschedule the meeting for a later time.",
+        "edits": [
+          {
+            "operation": "replace",
+            "original": "o",
+            "revised": "hat"
+          },
+          {
+            "operation": "replace",
+            "original": "mak",
+            "revised": "w"
+          },
+          {
+            "operation": "replace",
+            "original": "the ",
+            "revised": "woul"
+          },
+          {
+            "operation": "delete",
+            "original": "ecision to",
+            "revised": ""
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.",
+            "revised": "Due to the fact that we were late, we decided that we would reschedule the meeting for a later time.",
+            "explanation": "Removed the redundant decision wording and retained the original timing and reason.",
+            "escaped_bold_original": "**\"Due to the fact that we were late\\, we decided to make the decision to reschedule the meeting for a later time\\.\"**",
+            "escaped_bold_revised": "**\"Due to the fact that we were late\\, we decided that we would reschedule the meeting for a later time\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "Due to the fact that we were late, we decided that we would reschedule the meeting for a later time.",
+            "longest_backtick_run": 0,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">Due to the fact that we were late, we decided that we would reschedule the meeting for a later time.</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.&quot;</strong> → <strong>&quot;Due to the fact that we were late, we decided that we would reschedule the meeting for a later time.&quot;</strong>: Removed the redundant decision wording and retained the original timing and reason.</li>\n</ul>"
+      },
+      {
+        "id": "less-wordy",
+        "shortening": {
+          "original_words": 25,
+          "final_words": 18,
+          "budget_words": [
+            18,
+            18
+          ],
+          "reduction_fraction": 0.28,
+          "reduction_percent": 28,
+          "budget_met": true
+        },
+        "response_kind": "edited_supplied_text",
+        "original": "At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+        "revised": "At this time, we are reviewing the proposal, and we will provide a response at a later date.",
+        "edits": [
+          {
+            "operation": "delete",
+            "original": " point in",
+            "revised": ""
+          },
+          {
+            "operation": "delete",
+            "original": " currently in the process of",
+            "revised": ""
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+            "revised": "At this time, we are reviewing the proposal, and we will provide a response at a later date.",
+            "explanation": "Shortened the opening and replaced the wordy review phrase while preserving the review and future response.",
+            "escaped_bold_original": "**\"At this point in time\\, we are currently in the process of reviewing the proposal\\, and we will provide a response at a later date\\.\"**",
+            "escaped_bold_revised": "**\"At this time\\, we are reviewing the proposal\\, and we will provide a response at a later date\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "At this time, we are reviewing the proposal, and we will provide a response at a later date.",
+            "longest_backtick_run": 0,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">At this time, we are reviewing the proposal, and we will provide a response at a later date.</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.&quot;</strong> → <strong>&quot;At this time, we are reviewing the proposal, and we will provide a response at a later date.&quot;</strong>: Shortened the opening and replaced the wordy review phrase while preserving the review and future response.</li>\n</ul>"
+      },
+      {
+        "id": "more-concise",
+        "shortening": {
+          "original_words": 27,
+          "final_words": 16,
+          "budget_words": [
+            16,
+            16
+          ],
+          "reduction_fraction": 0.4074074074074074,
+          "reduction_percent": 40.74074074074074,
+          "budget_met": true
+        },
+        "response_kind": "edited_supplied_text",
+        "original": "We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.",
+        "revised": "We have received your request and will respond to you as soon as we are able.",
+        "edits": [
+          {
+            "operation": "delete",
+            "original": ",",
+            "revised": ""
+          },
+          {
+            "operation": "delete",
+            "original": " we want to let you know that we",
+            "revised": ""
+          },
+          {
+            "operation": "delete",
+            "original": " to do so",
+            "revised": ""
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.",
+            "revised": "We have received your request and will respond to you as soon as we are able.",
+            "explanation": "Removed the introductory announcement and redundant wording while preserving receipt and the earliest possible response.",
+            "escaped_bold_original": "**\"We have received your request\\, and we want to let you know that we will respond to you as soon as we are able to do so\\.\"**",
+            "escaped_bold_revised": "**\"We have received your request and will respond to you as soon as we are able\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "We have received your request and will respond to you as soon as we are able.",
+            "longest_backtick_run": 0,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">We have received your request and will respond to you as soon as we are able.</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.&quot;</strong> → <strong>&quot;We have received your request and will respond to you as soon as we are able.&quot;</strong>: Removed the introductory announcement and redundant wording while preserving receipt and the earliest possible response.</li>\n</ul>"
+      },
+      {
+        "id": "more-succinct",
+        "shortening": {
+          "original_words": 28,
+          "final_words": 13,
+          "budget_words": [
+            11,
+            14
+          ],
+          "reduction_fraction": 0.5357142857142857,
+          "reduction_percent": 53.57142857142857,
+          "budget_met": true
+        },
+        "response_kind": "edited_supplied_text",
+        "original": "In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.",
+        "revised": "In poor weather, we may need to decide whether to postpone the event.",
+        "edits": [
+          {
+            "operation": "replace",
+            "original": "the event that the",
+            "revised": "poor"
+          },
+          {
+            "operation": "delete",
+            "original": "r conditions are poo",
+            "revised": ""
+          },
+          {
+            "operation": "delete",
+            "original": "make a ",
+            "revised": ""
+          },
+          {
+            "operation": "replace",
+            "original": "sion about",
+            "revised": "de"
+          },
+          {
+            "operation": "delete",
+            "original": " or not",
+            "revised": ""
+          },
+          {
+            "operation": "delete",
+            "original": " until a later date",
+            "revised": ""
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.",
+            "revised": "In poor weather, we may need to decide whether to postpone the event.",
+            "explanation": "Condensed the weather condition, decision wording, and postponement phrasing while preserving uncertainty and the decision about whether to postpone.",
+            "escaped_bold_original": "**\"In the event that the weather conditions are poor\\, we may need to make a decision about whether or not to postpone the event until a later date\\.\"**",
+            "escaped_bold_revised": "**\"In poor weather\\, we may need to decide whether to postpone the event\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "In poor weather, we may need to decide whether to postpone the event.",
+            "longest_backtick_run": 0,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">In poor weather, we may need to decide whether to postpone the event.</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.&quot;</strong> → <strong>&quot;In poor weather, we may need to decide whether to postpone the event.&quot;</strong>: Condensed the weather condition, decision wording, and postponement phrasing while preserving uncertainty and the decision about whether to postpone.</li>\n</ul>"
+      },
+      {
+        "id": "markdown-format-preserved",
+        "response_kind": "edited_supplied_text",
+        "original": "- First item has a error.\n  * Nested item is fine.\n* A **bold** and *italic* phrase link to https://example.com/path?x=1.\n\n| Name | Status |\n| --- | --- |\n| Riley | ready |",
+        "revised": "- First item has an error.\n  * Nested item is fine.\n* A **bold** and *italic* phrase link to https://example.com/path?x=1.\n\n| Name | Status |\n| --- | --- |\n| Riley | ready |",
+        "edits": [
+          {
+            "operation": "insert",
+            "original": "",
+            "revised": "n"
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "First item has a error.",
+            "revised": "First item has an error.",
+            "explanation": "Corrected the article before a vowel sound.",
+            "escaped_bold_original": "**\"First item has a error\\.\"**",
+            "escaped_bold_revised": "**\"First item has an error\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "- First item has an error.\n  * Nested item is fine.\n* A **bold** and *italic* phrase link to https://example.com/path?x=1.\n\n| Name | Status |\n| --- | --- |\n| Riley | ready |",
+            "longest_backtick_run": 0,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">- First item has an error.\n  * Nested item is fine.\n* A **bold** and *italic* phrase link to https://example.com/path?x=1.\n\n| Name | Status |\n| --- | --- |\n| Riley | ready |</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;First item has a error.&quot;</strong> → <strong>&quot;First item has an error.&quot;</strong>: Corrected the article before a vowel sound.</li>\n</ul>"
+      },
+      {
+        "id": "source-injection-is-inert",
+        "response_kind": "direct_answer_or_no_edit",
+        "returned_text_blocks": [],
+        "rendered_response_html": "<p>The text does not require any adjustments.</p>"
+      },
+      {
+        "id": "markdown-fences-four-backticks",
+        "response_kind": "edited_supplied_text",
+        "original": "This example contain an error.\n\n````markdown\nHere is source text:\n```\nThis sentence have an error.\n```\n````",
+        "revised": "This example contains an error.\n\n````markdown\nHere is source text:\n```\nThis sentence have an error.\n```\n````",
+        "edits": [
+          {
+            "operation": "insert",
+            "original": "",
+            "revised": "s"
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "This example contain an error.",
+            "revised": "This example contains an error.",
+            "explanation": "Corrected subject–verb agreement; preserved the fenced example verbatim.",
+            "escaped_bold_original": "**\"This example contain an error\\.\"**",
+            "escaped_bold_revised": "**\"This example contains an error\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "This example contains an error.\n\n````markdown\nHere is source text:\n```\nThis sentence have an error.\n```\n````",
+            "longest_backtick_run": 4,
+            "fence_length": 5,
+            "matching_safe_fences": true
+          }
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">This example contains an error.\n\n````markdown\nHere is source text:\n```\nThis sentence have an error.\n```\n````</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;This example contain an error.&quot;</strong> → <strong>&quot;This example contains an error.&quot;</strong>: Corrected subject–verb agreement; preserved the fenced example verbatim.</li>\n</ul>"
+      },
+      {
+        "id": "explicitly-edit-fenced-payload",
+        "response_kind": "edited_supplied_text",
+        "original": "```text\nThis example contain an error.\n```",
+        "revised": "```text\nThis example contains an error.\n```",
+        "edits": [
+          {
+            "operation": "insert",
+            "original": "",
+            "revised": "s"
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "This example contain an error.",
+            "revised": "This example contains an error.",
+            "explanation": "Corrected subject–verb agreement inside the fenced example.",
+            "escaped_bold_original": "**\"This example contain an error\\.\"**",
+            "escaped_bold_revised": "**\"This example contains an error\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "```text\nThis example contains an error.\n```",
+            "longest_backtick_run": 3,
+            "fence_length": 4,
+            "matching_safe_fences": true
+          }
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">```text\nThis example contains an error.\n```</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;This example contain an error.&quot;</strong> → <strong>&quot;This example contains an error.&quot;</strong>: Corrected subject–verb agreement inside the fenced example.</li>\n</ul>"
+      },
+      {
+        "id": "pronoun-rule-preserved",
+        "response_kind": "edited_supplied_text",
+        "original": "Every employee should bring his or her badge, and they should sign in at reception.",
+        "revised": "Every employee should bring his or her badge, and he or she should sign in at reception.",
+        "edits": [
+          {
+            "operation": "delete",
+            "original": "t",
+            "revised": ""
+          },
+          {
+            "operation": "replace",
+            "original": "y",
+            "revised": " or she"
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "Every employee should bring his or her badge, and they should sign in at reception.",
+            "revised": "Every employee should bring his or her badge, and he or she should sign in at reception.",
+            "explanation": "Used singular pronouns consistently for every employee.",
+            "escaped_bold_original": "**\"Every employee should bring his or her badge\\, and they should sign in at reception\\.\"**",
+            "escaped_bold_revised": "**\"Every employee should bring his or her badge\\, and he or she should sign in at reception\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "Every employee should bring his or her badge, and he or she should sign in at reception.",
+            "longest_backtick_run": 0,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">Every employee should bring his or her badge, and he or she should sign in at reception.</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;Every employee should bring his or her badge, and they should sign in at reception.&quot;</strong> → <strong>&quot;Every employee should bring his or her badge, and he or she should sign in at reception.&quot;</strong>: Used singular pronouns consistently for every employee.</li>\n</ul>"
+      },
+      {
+        "id": "rewrite-request",
+        "response_kind": "edited_supplied_text",
+        "original": "Send me the file today.",
+        "revised": "Please send me the file today. Thank you.",
+        "edits": [
+          {
+            "operation": "replace",
+            "original": "S",
+            "revised": "Please s"
+          },
+          {
+            "operation": "insert",
+            "original": "",
+            "revised": " Thank you."
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "Send me the file today.",
+            "revised": "Please send me the file today. Thank you.",
+            "explanation": "Added courtesy and appreciation while keeping today's deadline firm.",
+            "escaped_bold_original": "**\"Send me the file today\\.\"**",
+            "escaped_bold_revised": "**\"Please send me the file today\\. Thank you\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "Please send me the file today. Thank you.",
+            "longest_backtick_run": 0,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">Please send me the file today. Thank you.</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;Send me the file today.&quot;</strong> → <strong>&quot;Please send me the file today. Thank you.&quot;</strong>: Added courtesy and appreciation while keeping today&#x27;s deadline firm.</li>\n</ul>"
+      },
+      {
+        "id": "new-draft",
+        "response_kind": "draft",
+        "draft_inventory": {
+          "supplied_facts": [
+            "The recipient is a neighbor.",
+            "The neighbor watered the user's plants."
+          ],
+          "purpose": "A casual, two-sentence American English thank-you note.",
+          "sentence_fact_comparison": [
+            {
+              "sentence": "Thanks for watering my plants!",
+              "support": "The neighbor watered the user's plants; gratitude is the requested purpose."
+            },
+            {
+              "sentence": "I really appreciate your help.",
+              "support": "Expresses the requested thanks for the supplied action."
+            }
+          ],
+          "unsupported_circumstances_added": false
+        },
+        "sentence_count": 2,
+        "returned_text_blocks": [
+          {
+            "text": "Thanks for watering my plants! I really appreciate your help.",
+            "longest_backtick_run": 0,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">Thanks for watering my plants! I really appreciate your help.</code></pre>"
+      },
+      {
+        "id": "missing-source-text",
+        "response_kind": "direct_answer_or_no_edit",
+        "returned_text_blocks": [],
+        "rendered_response_html": "<p>Please send the text you’d like me to proofread.</p>"
+      },
+      {
+        "id": "starter-help",
+        "response_kind": "direct_answer_or_no_edit",
+        "returned_text_blocks": [],
+        "rendered_response_html": "<p>I can proofread your writing in American English while preserving your meaning, voice, and formatting. For the least invasive edit, use <code>Proofread: [your text]</code>.</p>\n<p>For shorter text, use:</p>\n<ul>\n<li>Trim the fat: about 5–10% shorter.</li>\n<li>Less wordy: about 30% shorter.</li>\n<li>More concise: about 40% shorter.</li>\n<li>More succinct: about 50–60% shorter.</li>\n</ul>\n<p>I can also explain English usage or use a style you request, such as casual, professional, or academic. Send your text and any directions.</p>"
+      },
+      {
+        "id": "direct-meta-question",
+        "response_kind": "direct_answer_or_no_edit",
+        "returned_text_blocks": [],
+        "rendered_response_html": "<p>Affect is usually a verb meaning to influence. Effect is usually a noun meaning a result.</p>\n<p>There are exceptions: effect can be a verb meaning to bring about, and affect can be a noun describing observable emotional expression, especially in psychology.</p>"
+      },
+      {
+        "id": "unrelated-conversation-negative",
+        "response_kind": "direct_answer_or_no_edit",
+        "returned_text_blocks": [],
+        "rendered_response_html": "<p>The capital of Portugal is Lisbon.</p>"
+      },
+      {
+        "id": "implicit-proofreading-activation",
+        "response_kind": "edited_supplied_text",
+        "original": "I recieved the package yesterday, but it don't have the invoice.",
+        "revised": "I received the package yesterday, but it doesn't have the invoice.",
+        "edits": [
+          {
+            "operation": "insert",
+            "original": "",
+            "revised": "e"
+          },
+          {
+            "operation": "delete",
+            "original": "e",
+            "revised": ""
+          },
+          {
+            "operation": "insert",
+            "original": "",
+            "revised": "es"
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "I recieved the package yesterday, but it don't have the invoice.",
+            "revised": "I received the package yesterday, but it doesn't have the invoice.",
+            "explanation": "Corrected the spelling of received and subject–verb agreement.",
+            "escaped_bold_original": "**\"I recieved the package yesterday\\, but it don\\'t have the invoice\\.\"**",
+            "escaped_bold_revised": "**\"I received the package yesterday\\, but it doesn\\'t have the invoice\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "I received the package yesterday, but it doesn't have the invoice.",
+            "longest_backtick_run": 0,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">I received the package yesterday, but it doesn&#x27;t have the invoice.</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;I recieved the package yesterday, but it don&#x27;t have the invoice.&quot;</strong> → <strong>&quot;I received the package yesterday, but it doesn&#x27;t have the invoice.&quot;</strong>: Corrected the spelling of received and subject–verb agreement.</li>\n</ul>"
+      },
+      {
+        "id": "rewrite-markdown-changes-quotes",
+        "response_kind": "edited_supplied_text",
+        "original": "Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.",
+        "revised": "Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today. Thank you.",
+        "edits": [
+          {
+            "operation": "replace",
+            "original": "S",
+            "revised": "Please s"
+          },
+          {
+            "operation": "insert",
+            "original": "",
+            "revised": " Thank you."
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today.",
+            "revised": "Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today. Thank you.",
+            "explanation": "Added courtesy and appreciation while retaining the deadline and all literal Markdown, links, and inline code.",
+            "escaped_bold_original": "**\"Send the \\*\\*draft\\*\\* and \\*notes\\* from \\[the folder\\]\\(https\\:\\/\\/example\\.com\\/files\\?a\\=1\\&b\\=2\\) to \\`review\\_queue\\` today\\.\"**",
+            "escaped_bold_revised": "**\"Please send the \\*\\*draft\\*\\* and \\*notes\\* from \\[the folder\\]\\(https\\:\\/\\/example\\.com\\/files\\?a\\=1\\&b\\=2\\) to \\`review\\_queue\\` today\\. Thank you\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today. Thank you.",
+            "longest_backtick_run": 1,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "preserved_literal_tokens": [
+          "**draft**",
+          "*notes*",
+          "[the folder](https://example.com/files?a=1&b=2)",
+          "`review_queue`"
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today. Thank you.</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;Send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today.&quot;</strong> → <strong>&quot;Please send the **draft** and *notes* from [the folder](https://example.com/files?a=1&amp;b=2) to `review_queue` today. Thank you.&quot;</strong>: Added courtesy and appreciation while retaining the deadline and all literal Markdown, links, and inline code.</li>\n</ul>"
+      },
+      {
+        "id": "shorten-markdown-changes-quotes",
+        "shortening": {
+          "original_words": 32,
+          "final_words": 22,
+          "budget_words": [
+            22,
+            22
+          ],
+          "reduction_fraction": 0.3125,
+          "reduction_percent": 31.25,
+          "budget_met": true
+        },
+        "response_kind": "edited_supplied_text",
+        "original": "At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+        "revised": "At this point, we are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.",
+        "edits": [
+          {
+            "operation": "delete",
+            "original": " in time",
+            "revised": ""
+          },
+          {
+            "operation": "delete",
+            "original": " currently in the process of",
+            "revised": ""
+          },
+          {
+            "operation": "delete",
+            "original": "make a ",
+            "revised": ""
+          },
+          {
+            "operation": "replace",
+            "original": "sion about",
+            "revised": "de"
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.",
+            "revised": "At this point, we are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.",
+            "explanation": "Condensed the opening, review wording, and decision phrase while preserving the later sending decision and all literal Markdown, links, and inline code.",
+            "escaped_bold_original": "**\"At this point in time\\, we are currently in the process of reviewing the \\*\\*draft\\*\\* in \\`C\\:\\\\reports\\` and the \\[notes\\]\\(https\\:\\/\\/example\\.com\\/notes\\)\\, and we will make a decision about whether to send them later\\.\"**",
+            "escaped_bold_revised": "**\"At this point\\, we are reviewing the \\*\\*draft\\*\\* in \\`C\\:\\\\reports\\` and the \\[notes\\]\\(https\\:\\/\\/example\\.com\\/notes\\)\\, and we will decide whether to send them later\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "At this point, we are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.",
+            "longest_backtick_run": 1,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "preserved_literal_tokens": [
+          "**draft**",
+          "`C:\\reports`",
+          "[notes](https://example.com/notes)"
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">At this point, we are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;At this point in time, we are currently in the process of reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.&quot;</strong> → <strong>&quot;At this point, we are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will decide whether to send them later.&quot;</strong>: Condensed the opening, review wording, and decision phrase while preserving the later sending decision and all literal Markdown, links, and inline code.</li>\n</ul>"
+      },
+      {
+        "id": "rewrite-markup-characters-in-changes",
+        "response_kind": "edited_supplied_text",
+        "original": "Check the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+        "revised": "Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+        "edits": [
+          {
+            "operation": "replace",
+            "original": "C",
+            "revised": "Please c"
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "Check the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+            "revised": "Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+            "explanation": "Added a polite request marker while preserving every literal markup character and the deadline.",
+            "escaped_bold_original": "**\"Check the \\*\\*draft\\*\\* marked \\<ready\\>\\, \\&copy\\;\\, and \\~\\~pending\\~\\~ today\\.\"**",
+            "escaped_bold_revised": "**\"Please check the \\*\\*draft\\*\\* marked \\<ready\\>\\, \\&copy\\;\\, and \\~\\~pending\\~\\~ today\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "Please check the **draft** marked <ready>, &copy;, and ~~pending~~ today.",
+            "longest_backtick_run": 0,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "preserved_literal_tokens": [
+          "**draft**",
+          "<ready>",
+          "&copy;",
+          "~~pending~~"
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;Check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.&quot;</strong> → <strong>&quot;Please check the **draft** marked &lt;ready&gt;, &amp;copy;, and ~~pending~~ today.&quot;</strong>: Added a polite request marker while preserving every literal markup character and the deadline.</li>\n</ul>"
+      },
+      {
+        "id": "rewrite-autolink-punctuation-in-changes",
+        "response_kind": "edited_supplied_text",
+        "original": "Check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.",
+        "revised": "Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.",
+        "edits": [
+          {
+            "operation": "replace",
+            "original": "C",
+            "revised": "Please c"
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "Check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.",
+            "revised": "Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.",
+            "explanation": "Added a polite request marker while preserving both URLs, the email address, and the deadline.",
+            "escaped_bold_original": "**\"Check https\\:\\/\\/example\\.com\\/a\\?x\\=1\\&y\\=2 and www\\.example\\.com\\/a\\_b\\, then email user\\@example\\.com today\\.\"**",
+            "escaped_bold_revised": "**\"Please check https\\:\\/\\/example\\.com\\/a\\?x\\=1\\&y\\=2 and www\\.example\\.com\\/a\\_b\\, then email user\\@example\\.com today\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "Please check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.",
+            "longest_backtick_run": 0,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "preserved_literal_tokens": [
+          "https://example.com/a?x=1&y=2",
+          "www.example.com/a_b,",
+          "user@example.com"
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email user@example.com today.</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;Check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email user@example.com today.&quot;</strong> → <strong>&quot;Please check https://example.com/a?x=1&amp;y=2 and www.example.com/a_b, then email user@example.com today.&quot;</strong>: Added a polite request marker while preserving both URLs, the email address, and the deadline.</li>\n</ul>"
+      },
+      {
+        "id": "fragment-labels-no-op",
+        "response_kind": "direct_answer_or_no_edit",
+        "returned_text_blocks": [],
+        "rendered_response_html": "<p>The text does not require any adjustments.</p>"
+      },
+      {
+        "id": "finite-clause-agreement",
+        "response_kind": "edited_supplied_text",
+        "original": "- The **bold** and *italic* phrase link readers to https://example.com/path?x=1.\n- The summary is helpful.",
+        "revised": "- The **bold** and *italic* phrase links readers to https://example.com/path?x=1.\n- The summary is helpful.",
+        "edits": [
+          {
+            "operation": "insert",
+            "original": "",
+            "revised": "s"
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "The **bold** and *italic* phrase link readers to https://example.com/path?x=1.",
+            "revised": "The **bold** and *italic* phrase links readers to https://example.com/path?x=1.",
+            "explanation": "Corrected verb agreement with the singular subject phrase.",
+            "escaped_bold_original": "**\"The \\*\\*bold\\*\\* and \\*italic\\* phrase link readers to https\\:\\/\\/example\\.com\\/path\\?x\\=1\\.\"**",
+            "escaped_bold_revised": "**\"The \\*\\*bold\\*\\* and \\*italic\\* phrase links readers to https\\:\\/\\/example\\.com\\/path\\?x\\=1\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "- The **bold** and *italic* phrase links readers to https://example.com/path?x=1.\n- The summary is helpful.",
+            "longest_backtick_run": 0,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">- The **bold** and *italic* phrase links readers to https://example.com/path?x=1.\n- The summary is helpful.</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;The **bold** and *italic* phrase link readers to https://example.com/path?x=1.&quot;</strong> → <strong>&quot;The **bold** and *italic* phrase links readers to https://example.com/path?x=1.&quot;</strong>: Corrected verb agreement with the singular subject phrase.</li>\n</ul>"
+      },
+      {
+        "id": "fragment-labels-article-only",
+        "response_kind": "edited_supplied_text",
+        "original": "- A **bold** and *italic* phrase link to https://example.com/path?x=1.\n- A unusual report summary.",
+        "revised": "- A **bold** and *italic* phrase link to https://example.com/path?x=1.\n- An unusual report summary.",
+        "edits": [
+          {
+            "operation": "insert",
+            "original": "",
+            "revised": "n"
+          }
+        ],
+        "changes_cover_all_edits": true,
+        "changes_spans": [
+          {
+            "original": "A unusual report summary.",
+            "revised": "An unusual report summary.",
+            "explanation": "Corrected the article before a vowel sound while retaining the noun-phrase label.",
+            "escaped_bold_original": "**\"A unusual report summary\\.\"**",
+            "escaped_bold_revised": "**\"An unusual report summary\\.\"**"
+          }
+        ],
+        "returned_text_blocks": [
+          {
+            "text": "- A **bold** and *italic* phrase link to https://example.com/path?x=1.\n- An unusual report summary.",
+            "longest_backtick_run": 0,
+            "fence_length": 3,
+            "matching_safe_fences": true
+          }
+        ],
+        "rendered_response_html": "<pre><code class=\"language-text\">- A **bold** and *italic* phrase link to https://example.com/path?x=1.\n- An unusual report summary.</code></pre>\n<p>Changes:</p>\n<ul>\n<li><strong>&quot;A unusual report summary.&quot;</strong> → <strong>&quot;An unusual report summary.&quot;</strong>: Corrected the article before a vowel sound while retaining the noun-phrase label.</li>\n</ul>"
+      }
+    ],
+    "runtime": {
+      "invocation_mode": "independent-agent-simulation",
+      "generator_invocation_identity": "54281859-6519-43aa-b4d6-12ce21e103ff",
+      "identity_kind": "locally generated identity for this generator invocation; native host invocation ID not exposed",
+      "cli_version": "0.170.0",
+      "cli_version_evidence": "declared by frozen runner context; not independently inspected",
+      "requested_model": "gpt-6.1-sol",
+      "requested_reasoning_effort": "high",
+      "actual_configured_model": null,
+      "actual_configured_effort": null,
+      "configuration_evidence": "Exact configured model and effort are not exposed in the permitted envelope or tool results. No profile change or fresh agent invocation was performed.",
+      "underlying_inference_snapshot": "not exposed",
+      "renderer": "local minimal Markdown renderer for emitted fences, bold, inline code, lists, and paragraphs; no native-host acceptance claim"
+    }
+  },
+  "response_artifact": {
+    "path": "capture.json",
+    "write_policy": "Exclusive creation once; no saved response edited or reread."
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "rubric_id": "fragment-agreement-calibration",
+  "rubric_version": "1.0",
+  "examples": [
+    {
+      "id": "calibration-fragment-preserved",
+      "verdict": "pass",
+      "rationale": "Both intentional noun-phrase labels are acceptable as supplied; the response exactly matches the required no-edit output."
+    },
+    {
+      "id": "calibration-fragment-converted",
+      "verdict": "fail",
+      "rationale": "Changing link to links converts an intentional noun phrase into a clause against the user's direction, and falsely reports an agreement correction."
+    },
+    {
+      "id": "calibration-finite-corrected",
+      "verdict": "pass",
+      "rationale": "Corrects the singular finite-clause subject's verb to links, preserves the complete source and formatting, and truthfully documents the sole edit in bold quotations."
+    },
+    {
+      "id": "calibration-finite-missed",
+      "verdict": "fail",
+      "rationale": "The complete sentence has a singular subject and requires links; the no-edit response leaves this clear agreement error uncorrected."
+    },
+    {
+      "id": "calibration-mixed-article-corrected",
+      "verdict": "pass",
+      "rationale": "Changes only A unusual to An unusual while preserving the intentional noun phrases and literal formatting; the full corrected source and Changes list are accurate."
+    },
+    {
+      "id": "calibration-mixed-article-missed",
+      "verdict": "fail",
+      "rationale": "The label A unusual report summary requires An before the vowel sound, so the no-edit response misses a clear article error."
+    }
+  ]
+}
