@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "kind": "controller-direct-helper-interface-check",
+  "outcome": "passed",
+  "model_calls": 0,
+  "helper_sha256": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51",
+  "runner_sha256": "2f0a7e893b7e8b17d64c46dde764359bdc83d2d62393706f70f88850af9a5441",
+  "interface": "Frozen Python -I -B <shipped-helper> --input <inert JSON data file>; executed through active PreToolUse hook, no inline helper loading.",
+  "observations": [
+    {
+      "label": "literal-count",
+      "outcome": "passed",
+      "input": {
+        "path": "tests/trials/resource-execution-v4-direct-helper-literal-count-input-2026-11-25.json",
+        "sha256": "85fd7abe0389f781244817d49ec8493ae99a9c51bbeb6d85daf507582082bdc2"
+      },
+      "stdout": {
+        "path": "tests/trials/resource-execution-v4-direct-helper-literal-count-stdout-2026-11-25.json",
+        "sha256": "ceccca9102decc20d1a390bbd5b0a44bd6a4ce362b945650b8585534150bed95"
+      },
+      "stderr": {
+        "path": "tests/trials/resource-execution-v4-direct-helper-literal-count-stderr-2026-11-25.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    {
+      "label": "draft-presentation",
+      "outcome": "passed",
+      "input": {
+        "path": "tests/trials/resource-execution-v4-direct-helper-draft-presentation-input-2026-11-25.json",
+        "sha256": "8b06ccf8434c5385f955c05f4e735809a2b62e6a683db207368919c247183242"
+      },
+      "stdout": {
+        "path": "tests/trials/resource-execution-v4-direct-helper-draft-presentation-stdout-2026-11-25.json",
+        "sha256": "0a4605139400a750df6ec8f24990c578532c752dd33139b5d8095e6709779baf"
+      },
+      "stderr": {
+        "path": "tests/trials/resource-execution-v4-direct-helper-draft-presentation-stderr-2026-11-25.txt",
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  ],
+  "scope": "Separate controller/no-model allowed-interface check; not generator execution evidence, a semantic trial, or native host acceptance. Actual successful direct tool invocations returned exit0. No hook bypass, global settings or runtime source edits."
+}

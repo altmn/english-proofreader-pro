@@ -1,0 +1,108 @@
+{
+  "schema_version": 1,
+  "kind": "executed-capture-panel",
+  "captures": [
+    {
+      "run_id": "01a2146d-0e3d-7c13-bd2a-4ad9751ba4c9",
+      "original_plan_path": "/Users/routerhealthchecker/.codex/audit-runs/resource-execution-v4-20261125-etzv_ecy/controller/run-1/plan.json",
+      "plan": {
+        "path": "tests/trials/resource-execution-v4-cli-plan-1-2026-11-25.json",
+        "sha256": "4288894a8ab104dde5d440d2ab7bab30d172c87940ddd76849a9972c5165d5e0"
+      },
+      "events": {
+        "path": "tests/trials/resource-execution-v4-cli-events-1-2026-11-25.jsonl.gz",
+        "sha256": "cff611ecdc40e6cce73689f95fdb89f3160756beb991271239f1ef9c05ec5c30"
+      },
+      "accepted": {
+        "path": "tests/trials/resource-execution-v4-cli-raw-1-2026-11-25.json",
+        "sha256": "e3df6bbae52132e854fb88ad55e144248b3696b41e20d7616f110e6371a0dad2"
+      },
+      "receipt": {
+        "path": "tests/trials/resource-execution-v4-cli-protocol-1-2026-11-25.json",
+        "sha256": "d135b8bc877d4ea9291ed97950ac02b328000c07cee79f6e368bc1b07f18afc2"
+      },
+      "records": [
+        {
+          "path": "tests/trials/resource-execution-v4-core-sol-1-2026-11-25.json",
+          "sha256": "8b2f93266dc3f1e1e05c7bdd3fb04f7a8b4cf8cc16afdd1520b1f34d1d5f8ef4"
+        },
+        {
+          "path": "tests/trials/resource-execution-v4-markdown-sol-1-2026-11-25.json",
+          "sha256": "a9f3cbdf2a546c6193f71632f9e4e4e02b7907ec6c16873a70e565d1b7af9bd9"
+        },
+        {
+          "path": "tests/trials/resource-execution-v4-fragments-sol-1-2026-11-25.json",
+          "sha256": "95feb62286477fb77015e67ea4bacf2b91f63e29fe429cb2b55aa47835745b86"
+        }
+      ]
+    },
+    {
+      "run_id": "01a2146d-0e3f-77c3-9cd2-1cce431a2018",
+      "original_plan_path": "/Users/routerhealthchecker/.codex/audit-runs/resource-execution-v4-20261125-etzv_ecy/controller/run-2/plan.json",
+      "plan": {
+        "path": "tests/trials/resource-execution-v4-cli-plan-2-2026-11-25.json",
+        "sha256": "9e36d14cb2ee226692b1a670475475aec742ca3def2926134c0fee9b78e1ba1c"
+      },
+      "events": {
+        "path": "tests/trials/resource-execution-v4-cli-events-2-2026-11-25.jsonl.gz",
+        "sha256": "e87027705bb90ecb02e294b6748c315278c6f05298d20a52a61a271ba9d8ae0e"
+      },
+      "accepted": {
+        "path": "tests/trials/resource-execution-v4-cli-raw-2-2026-11-25.json",
+        "sha256": "7b1a27f537dd7524d9793614106ffcfd3175c75f3450e89ff99065f326ec11bf"
+      },
+      "receipt": {
+        "path": "tests/trials/resource-execution-v4-cli-protocol-2-2026-11-25.json",
+        "sha256": "b12fbb8d915410eb126658e1fb92608f0a701a9c9e6157aac3d8e2125fa6788f"
+      },
+      "records": [
+        {
+          "path": "tests/trials/resource-execution-v4-core-sol-2-2026-11-25.json",
+          "sha256": "15ee665400bebd9cb9948255b9707603bdc86a39194844a73e72e60d211a5d3f"
+        },
+        {
+          "path": "tests/trials/resource-execution-v4-markdown-sol-2-2026-11-25.json",
+          "sha256": "44f9c1a0e61ccca3f0bfe243ce80be47f561884bab7320b32cf891443ba6ff16"
+        },
+        {
+          "path": "tests/trials/resource-execution-v4-fragments-sol-2-2026-11-25.json",
+          "sha256": "b7ca0eca2fe298684b0855a8d502fcacab6374e77ed4ffea014e2dacc468f7c8"
+        }
+      ]
+    },
+    {
+      "run_id": "01a2146d-0e3e-7900-a6ec-c57445dbf698",
+      "original_plan_path": "/Users/routerhealthchecker/.codex/audit-runs/resource-execution-v4-20261125-etzv_ecy/controller/run-3/plan.json",
+      "plan": {
+        "path": "tests/trials/resource-execution-v4-cli-plan-3-2026-11-25.json",
+        "sha256": "b9f0044ee5aae68d8d3119d44099a853930275ac2eed768b9d23744db3be09be"
+      },
+      "events": {
+        "path": "tests/trials/resource-execution-v4-cli-events-3-2026-11-25.jsonl.gz",
+        "sha256": "eaf2417e4e027114a186f369cec9a81487d1d93083b35edf1a9ba6c90e9e8d9a"
+      },
+      "accepted": {
+        "path": "tests/trials/resource-execution-v4-cli-raw-3-2026-11-25.json",
+        "sha256": "7b5ff0968709f2a29d19311fc0f0372267aaf3a4edbe41ea107fc2ee2392ba92"
+      },
+      "receipt": {
+        "path": "tests/trials/resource-execution-v4-cli-protocol-3-2026-11-25.json",
+        "sha256": "e7e3c5caa3d0862e3879f54d7b1b02534cf85656faa821d6834e8ad2105aa492"
+      },
+      "records": [
+        {
+          "path": "tests/trials/resource-execution-v4-core-sol-3-2026-11-25.json",
+          "sha256": "13d59bf217bcdd65d2d1b64216cf9f8cddb046f6cd83e9a084a67928c572e497"
+        },
+        {
+          "path": "tests/trials/resource-execution-v4-markdown-sol-3-2026-11-25.json",
+          "sha256": "37702ac421cc4469a75cb350382319158f6232946887da2b9924b945dcad0091"
+        },
+        {
+          "path": "tests/trials/resource-execution-v4-fragments-sol-3-2026-11-25.json",
+          "sha256": "02f4ef66fffb37d7b6ce5ed5bda48350849b9481b5e4386288f8594fc1fdc2bd"
+        }
+      ]
+    }
+  ]
+}

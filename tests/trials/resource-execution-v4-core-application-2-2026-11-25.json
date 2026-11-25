@@ -1,0 +1,263 @@
+{
+  "kind": "independent-judgment-application",
+  "date": "2026-11-25",
+  "review_path": "tests/trials/resource-execution-v4-core-judgments-2-2026-11-25.json",
+  "review_sha256": "424b0467732ffd466a843c25bf32d6264c2429bf50322505963959cff1fc7b7d",
+  "records": [
+    {
+      "path": "tests/trials/resource-execution-v4-core-sol-2-2026-11-25.json",
+      "before_sha256": "e8c539c9a4d6229f32021326ca7b004aa24e3c48143f3b17ea8a21ea8e77b321",
+      "after_sha256": "15ee665400bebd9cb9948255b9707603bdc86a39194844a73e72e60d211a5d3f",
+      "assertions": 83
+    }
+  ],
+  "scope": "Only assertion status/note and aggregate changed. Exact accepted responses, expected values, metadata and source bindings preserved.",
+  "independent_measurement_verification": [
+    {
+      "case_id": "trim-the-fat",
+      "request": {
+        "text": "Due to the fact that we were late, we decided to make the decision to reschedule the meeting for a later time.",
+        "candidate": "Due to the fact that we were late, we made the decision to reschedule the meeting for a later time.",
+        "level": "trim_the_fat"
+      },
+      "request_sha256": "493b0788dfb6502431c0790b53edf1087909bcbad9654aae97e528c79b92f249",
+      "result": {
+        "budget": {
+          "kind": "range",
+          "max_words": 21,
+          "min_words": 20
+        },
+        "candidate_metrics": {
+          "code_points": 99,
+          "fence_length": 3,
+          "letters": 78,
+          "literal_occurrences": null,
+          "longest_backtick_run": 0,
+          "words": 20
+        },
+        "candidate_sha256": "b3e9fb4514f690fb8a501a2124d7dad77a3a6805a509ebc51bede9d2c02cad07",
+        "comparison": {
+          "candidate_words": 20,
+          "meaning_verified": false,
+          "reduction": 0.09090909090909091,
+          "reduction_fraction": {
+            "denominator": 22,
+            "numerator": 2
+          },
+          "source_words": 22,
+          "within_budget": true
+        },
+        "conventions": {
+          "budgets": "Words remaining; nearest integer with halves upward",
+          "characters": "Unicode code points, including whitespace; no normalization",
+          "input_sha256": "UTF-8 JSON with sorted keys, no whitespace, and unescaped Unicode",
+          "letters": "Unicode str.isalpha(); combining marks are not letters",
+          "occurrences": "Case-sensitive literal matches; nonoverlapping by default",
+          "overlapping": false,
+          "reduction": "(source_words-candidate_words)/source_words; null at zero source words",
+          "text_sha256": "Exact UTF-8 string bytes; no normalization",
+          "words": "Whitespace-separated units; omit whole backtick/tilde fence lines with optional info text, tokens made only of `*_~#>+-, and numeric list-marker tokens such as 1. or 1)."
+        },
+        "input_sha256": "51305e5a64b49bfbadd63b4d6247e076dc223f717051d5619e5d828f2f08da95",
+        "metrics": {
+          "code_points": 110,
+          "fence_length": 3,
+          "letters": 87,
+          "literal_occurrences": null,
+          "longest_backtick_run": 0,
+          "words": 22
+        },
+        "request_bytes_sha256": "493b0788dfb6502431c0790b53edf1087909bcbad9654aae97e528c79b92f249",
+        "schema_version": 1,
+        "status": "ok",
+        "text_sha256": "1875088ed4328e4235484eea4c4c70ff20626c487e5ed88e45437fa9bbf34b00"
+      },
+      "result_sha256": "075165d218acaaa9511cb0e603ee80629f9e775e8468eb90b54160ef1332a844"
+    },
+    {
+      "case_id": "less-wordy",
+      "request": {
+        "text": "At this point in time, we are currently in the process of reviewing the proposal, and we will provide a response at a later date.",
+        "candidate": "We are reviewing the proposal at this time, and we will provide a response at a later date.",
+        "level": "less_wordy"
+      },
+      "request_sha256": "c41fc6dac9d7d2073c6dfae80ff8c34837b39abcfc1a79f53f6a509319702c1e",
+      "result": {
+        "budget": {
+          "kind": "point",
+          "max_words": 18,
+          "min_words": 18
+        },
+        "candidate_metrics": {
+          "code_points": 91,
+          "fence_length": 3,
+          "letters": 72,
+          "literal_occurrences": null,
+          "longest_backtick_run": 0,
+          "words": 18
+        },
+        "candidate_sha256": "840463a6553aba2f271b222ea1ec3585343d0cc066fb8466e45640e3ad293e71",
+        "comparison": {
+          "candidate_words": 18,
+          "meaning_verified": false,
+          "reduction": 0.28,
+          "reduction_fraction": {
+            "denominator": 25,
+            "numerator": 7
+          },
+          "source_words": 25,
+          "within_budget": true
+        },
+        "conventions": {
+          "budgets": "Words remaining; nearest integer with halves upward",
+          "characters": "Unicode code points, including whitespace; no normalization",
+          "input_sha256": "UTF-8 JSON with sorted keys, no whitespace, and unescaped Unicode",
+          "letters": "Unicode str.isalpha(); combining marks are not letters",
+          "occurrences": "Case-sensitive literal matches; nonoverlapping by default",
+          "overlapping": false,
+          "reduction": "(source_words-candidate_words)/source_words; null at zero source words",
+          "text_sha256": "Exact UTF-8 string bytes; no normalization",
+          "words": "Whitespace-separated units; omit whole backtick/tilde fence lines with optional info text, tokens made only of `*_~#>+-, and numeric list-marker tokens such as 1. or 1)."
+        },
+        "input_sha256": "3cce4d3c210e6897674f874d0c6411c2f39c3ddef762630a50609199bb3dc528",
+        "metrics": {
+          "code_points": 129,
+          "fence_length": 3,
+          "letters": 102,
+          "literal_occurrences": null,
+          "longest_backtick_run": 0,
+          "words": 25
+        },
+        "request_bytes_sha256": "c41fc6dac9d7d2073c6dfae80ff8c34837b39abcfc1a79f53f6a509319702c1e",
+        "schema_version": 1,
+        "status": "ok",
+        "text_sha256": "608820cadb10138a05500b1af8c5cfc1062e6255ae6a6f938625f6d9a4076714"
+      },
+      "result_sha256": "fd1437c6eedc4f07a2f04c6b6bb5928cc53635922e442906ca24b062d3d7447a"
+    },
+    {
+      "case_id": "more-concise",
+      "request": {
+        "text": "We have received your request, and we want to let you know that we will respond to you as soon as we are able to do so.",
+        "candidate": "We have received your request and will respond to you as soon as we are able.",
+        "level": "more_concise"
+      },
+      "request_sha256": "68d6b46bd061bca21be080edd2e0a3b459f12ddf50a0abe5ce9c15461fe43db8",
+      "result": {
+        "budget": {
+          "kind": "point",
+          "max_words": 16,
+          "min_words": 16
+        },
+        "candidate_metrics": {
+          "code_points": 77,
+          "fence_length": 3,
+          "letters": 61,
+          "literal_occurrences": null,
+          "longest_backtick_run": 0,
+          "words": 16
+        },
+        "candidate_sha256": "f4f48178425dbbfba832c313d211c197855e96dc7948911b929b9f51e4645d85",
+        "comparison": {
+          "candidate_words": 16,
+          "meaning_verified": false,
+          "reduction": 0.4074074074074074,
+          "reduction_fraction": {
+            "denominator": 27,
+            "numerator": 11
+          },
+          "source_words": 27,
+          "within_budget": true
+        },
+        "conventions": {
+          "budgets": "Words remaining; nearest integer with halves upward",
+          "characters": "Unicode code points, including whitespace; no normalization",
+          "input_sha256": "UTF-8 JSON with sorted keys, no whitespace, and unescaped Unicode",
+          "letters": "Unicode str.isalpha(); combining marks are not letters",
+          "occurrences": "Case-sensitive literal matches; nonoverlapping by default",
+          "overlapping": false,
+          "reduction": "(source_words-candidate_words)/source_words; null at zero source words",
+          "text_sha256": "Exact UTF-8 string bytes; no normalization",
+          "words": "Whitespace-separated units; omit whole backtick/tilde fence lines with optional info text, tokens made only of `*_~#>+-, and numeric list-marker tokens such as 1. or 1)."
+        },
+        "input_sha256": "3ad867ed1b5d579916cda855c2bff7c6c927c2ae78ab89bb6f47498d9f6ef63c",
+        "metrics": {
+          "code_points": 119,
+          "fence_length": 3,
+          "letters": 91,
+          "literal_occurrences": null,
+          "longest_backtick_run": 0,
+          "words": 27
+        },
+        "request_bytes_sha256": "68d6b46bd061bca21be080edd2e0a3b459f12ddf50a0abe5ce9c15461fe43db8",
+        "schema_version": 1,
+        "status": "ok",
+        "text_sha256": "533e923ecb2eacda15942010660cd20e52d69b4219b10c9bc5d0b631c04b9777"
+      },
+      "result_sha256": "997ec5264197fce6aa670aee832962a76547654a1644aa94dad4264a45761208"
+    },
+    {
+      "case_id": "more-succinct",
+      "request": {
+        "text": "In the event that the weather conditions are poor, we may need to make a decision about whether or not to postpone the event until a later date.",
+        "candidate": "Poor weather may mean we need to decide whether to postpone the event.",
+        "level": "more_succinct"
+      },
+      "request_sha256": "5d47d62981c98a5393ad58f24da8608e1123bbd2d7b50e67304a8ece978c5093",
+      "result": {
+        "budget": {
+          "kind": "range",
+          "max_words": 14,
+          "min_words": 11
+        },
+        "candidate_metrics": {
+          "code_points": 70,
+          "fence_length": 3,
+          "letters": 57,
+          "literal_occurrences": null,
+          "longest_backtick_run": 0,
+          "words": 13
+        },
+        "candidate_sha256": "69d96a7da3f4de053ec90605acf857138f0a0e77af3a855721db5d83b64a2a96",
+        "comparison": {
+          "candidate_words": 13,
+          "meaning_verified": false,
+          "reduction": 0.5357142857142857,
+          "reduction_fraction": {
+            "denominator": 28,
+            "numerator": 15
+          },
+          "source_words": 28,
+          "within_budget": true
+        },
+        "conventions": {
+          "budgets": "Words remaining; nearest integer with halves upward",
+          "characters": "Unicode code points, including whitespace; no normalization",
+          "input_sha256": "UTF-8 JSON with sorted keys, no whitespace, and unescaped Unicode",
+          "letters": "Unicode str.isalpha(); combining marks are not letters",
+          "occurrences": "Case-sensitive literal matches; nonoverlapping by default",
+          "overlapping": false,
+          "reduction": "(source_words-candidate_words)/source_words; null at zero source words",
+          "text_sha256": "Exact UTF-8 string bytes; no normalization",
+          "words": "Whitespace-separated units; omit whole backtick/tilde fence lines with optional info text, tokens made only of `*_~#>+-, and numeric list-marker tokens such as 1. or 1)."
+        },
+        "input_sha256": "45a7733e23ec69b0bb70cb32106a0580f1311ecc9768a88088261bec5a764bf4",
+        "metrics": {
+          "code_points": 144,
+          "fence_length": 3,
+          "letters": 115,
+          "literal_occurrences": null,
+          "longest_backtick_run": 0,
+          "words": 28
+        },
+        "request_bytes_sha256": "5d47d62981c98a5393ad58f24da8608e1123bbd2d7b50e67304a8ece978c5093",
+        "schema_version": 1,
+        "status": "ok",
+        "text_sha256": "88d165ea860c83f0c64c474a50eb93f0b77d72793db6e24533cc3b60f60a5858"
+      },
+      "result_sha256": "ef646fb698cb9be05205f630f987f085aee37671705607aeb327b726cef81d0d"
+    }
+  ],
+  "measurement_command": "python3 -I -B skills/proofreader-pro/scripts/text_metrics.py --input <inert request JSON>",
+  "helper_sha256": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51"
+}
