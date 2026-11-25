@@ -1,0 +1,81 @@
+{
+  "kind": "simulation-protocol-review",
+  "reviewer": "Parent evaluation agent, confirmed independently by core reviewer",
+  "captures": [
+    {
+      "capture": 1,
+      "events_file": "tests/trials/count-routing-cli-events-1-2026-11-25.jsonl.gz",
+      "events_sha256": "a5aed751a052b7ae439b4c2b173ae9fed21e37066421a466c71143dc171f7f24",
+      "completed_command_count": 7,
+      "command_items": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_5",
+        "item_6",
+        "item_7",
+        "item_9"
+      ],
+      "source_budget_execution": "observed",
+      "final_word_and_backtick_execution": "observed",
+      "scope": "Independent review of complete CLI event log; no claim about hidden inference internals.",
+      "finding": "Final text-count, fence, and response checks appear in executed local Python commands; their semantic completeness is separately reviewed."
+    },
+    {
+      "capture": 2,
+      "events_file": "tests/trials/count-routing-cli-events-2-2026-11-25.jsonl.gz",
+      "events_sha256": "482d9b986104ea4756a95b1ef89cd4cdfe550dc090b04bacc36f98c9e7b04aa5",
+      "completed_command_count": 7,
+      "command_items": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_5",
+        "item_6",
+        "item_8",
+        "item_9"
+      ],
+      "source_budget_execution": "observed",
+      "final_word_and_backtick_execution": "observed",
+      "scope": "Independent review of complete CLI event log; no claim about hidden inference internals.",
+      "finding": "Final text-count, fence, and response checks appear in executed local Python commands; their semantic completeness is separately reviewed.",
+      "retained_generator_reported_orchestration_errors": [
+        {
+          "stage": "First generation-check orchestration attempt",
+          "error": "SyntaxError: Invalid or unexpected token",
+          "python_executed": false,
+          "responses_saved": false,
+          "cause": "A JavaScript template literal contained literal backticks; corrected orchestration quoting without reading or executing source."
+        },
+        {
+          "stage": "First render-check orchestration attempt",
+          "error": "ReferenceError: btoa is not defined",
+          "python_executed": false,
+          "responses_saved": false
+        }
+      ],
+      "orchestration_error_evidence_limit": "Retained self-report in generator trace. Captured CLI events have no corresponding failed command/error event, so this is not independent attestation of the errors."
+    },
+    {
+      "capture": 3,
+      "events_file": "tests/trials/count-routing-cli-events-3-2026-11-25.jsonl.gz",
+      "events_sha256": "1408675d36d7abd1d0e0360a0eac8d1a8958e26e4ffeac7cb6b123ed3655f418",
+      "completed_command_count": 4,
+      "command_items": [
+        "item_1",
+        "item_2",
+        "item_3",
+        "item_4"
+      ],
+      "source_budget_execution": "observed",
+      "final_word_and_backtick_execution": "not_evidenced",
+      "scope": "Independent review of complete CLI event log; no claim about hidden inference internals.",
+      "finding": "After source-budget execution and a second prompt extraction, the log shows agent messages and a file_change adding capture/trace/HTML. Later JavaScript code and returned_measurements in trace have no corresponding executed tool event; they are retained generator-authored claims."
+    }
+  ],
+  "outcome": "failed",
+  "failed_gate": "Capture3 has no observed execution backing final word/backtick measurements despite instructions requiring actual tool results.",
+  "scored_output_assertions": "Separate manual record assertions may pass on actual output properties; these do not convert generator-authored snippets into executed checks.",
+  "remediation": "Retain all three attempts; do not rerun silently or describe the whole generation protocol as passed. Native acceptance remains separate and pending.",
+  "command_error_scope": "No captured completed shell command has a nonzero exit code. This does not establish an error-free workflow; generator trace2 reports pre-execution orchestration errors."
+}

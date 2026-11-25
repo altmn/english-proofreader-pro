@@ -2,7 +2,27 @@
 
 This file records notable changes to the repository's distributable package. An `Unreleased` entry is repository history, not evidence that a package has been publicly published.
 
-## Unreleased
+## [1.0.9] - 2026-11-25
+
+### Added
+
+- Measure exact text counts and shortening budgets with the bundled offline Python helper when the host can execute it. Preserve literal copyable blocks and full bold Changes quotations.
+- Verify saved CLI results against actual source and final measurement commands, with independently reviewed regression and Markdown-rendering evidence.
+
+### Fixed
+
+- Keep the ZIP and local installation consistent by building both from the same validated runtime snapshot.
+- Distinguish intentional fragments from agreement errors in regression cases, and document disabling, removal and reinstallation.
+
+### Known limitations
+
+- Chat/Instant still fails the counting fallback and full output/Changes contract. Native shortening verification and complete native copy/source-isolation acceptance remain open. Work-mode smoke checks and passing CLI evaluations do not clear those gaps. See [known issues](KNOWN_ISSUES.md).
+
+## Earlier unreleased preparation
+
+- Add a bundled offline Python helper for exact text measurements, shortening budgets, safe literal blocks, and escaped Changes quotations. Bind helper bytes in new evaluation snapshots and records. Accept CLI captures only after independently collected source/final execution results pass the protected controller and portable CI gate; preserve prior protocol failures. Fix empty and trailing-newline block round trips. Private candidate updates and Safari observations remain separate from behavioral acceptance.
+
+- Build ZIP and local staging from one validated immutable runtime snapshot, and compare payload bytes before promotion. Add regressions for source edits during preparation and corrupted prepared outputs. Add explicit fragment/finite-clause fixtures with reviewer calibration, document host-managed removal, and tighten the counting-execution and shortening-budget acceptance gates. Advertise standalone counting in skill discovery. Retain authorized private Safari candidate tests, including unresolved counting-evidence and shortening failures; native acceptance has not passed.
 
 - Require programmatic counts and candid limitations when counting tools are unavailable; strengthen isolation of source URLs and tool/app commands. Forbid adding recipients or circumstances to meet a word budget, following a recorded simulation failure. Prefer plain-text code blocks with copy and soft-wrap controls where the host supports them. Replace "prose" with "text" in current instructions and listing metadata. Recommend the latest ChatGPT Instant model at its normal setting without claiming package-level model control.
 
@@ -19,4 +39,4 @@ This file records notable changes to the repository's distributable package. An 
 - Prepare the repository for open-source contributions with community guidance, issue and pull-request templates, and maintainer/security reporting instructions.
 - Add deterministic tests and release validation/build tooling; package metadata and release guidance are maintained through pull requests.
 
-No public releases have been recorded here yet. Add a dated, versioned entry only when a release is actually published, summarizing its user-visible changes. The package version is maintained in `plugin.json`.
+The package version is maintained in `plugin.json`. A prepared changelog entry is not proof of publication; verify the matching GitHub release and its attached archive.

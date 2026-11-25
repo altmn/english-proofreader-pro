@@ -3,6 +3,10 @@
 
 This tool checks evaluation provenance and record structure. It does not grade
 model responses or certify that a human's semantic verdict is correct.
+
+Snapshot schema 2 embeds the allowlisted text resource as UTF-8 data; record
+schema 3 includes its path/hash map in source_binding. Snapshot schema 1 and
+record schemas 1/2 remain historical formats and cannot accept current resources.
 """
 from __future__ import annotations
 
@@ -10,16 +14,19 @@ import argparse
 import hashlib
 import json
 import re
+import stat
 import sys
 from datetime import date, datetime, timezone
 from pathlib import Path
 from typing import Any
 
 ROOT = Path(__file__).resolve().parent.parent
-SCHEMA_VERSION = 1
-RECORD_SCHEMA_VERSION = 2
+SCHEMA_VERSION = 2
+RECORD_SCHEMA_VERSION = 3
 SNAPSHOT_SUFFIX = "-snapshot.json"
 VERDICTS = {"pass", "fail", "not_run"}
+RESOURCE_PATHS = ("skills/proofreader-pro/scripts/text_metrics.py",)
+MAX_RESOURCE_BYTES = 1024 * 1024
 
 
 class EvaluationError(Exception):
@@ -161,6 +168,81 @@ def read_current_sources() -> tuple[str, str, dict[str, Any]]:
     return skill, manifest_text, manifest
 
 
+def read_current_resources() -> list[dict[str, Any]]:
+    """Read only the explicit text-resource allowlist; never import or execute it."""
+    resources = []
+    for relative in RESOURCE_PATHS:
+        path = ROOT.resolve()
+        for part in Path(relative).parts:
+            path = path / part
+            if path.is_symlink():
+                raise EvaluationError(f"current resource must not use symbolic links: {relative}")
+        try:
+            if not stat.S_ISREG(path.stat().st_mode):
+                raise EvaluationError(f"current resource must be a regular file: {relative}")
+            with path.open("rb") as stream:
+                data = stream.read(MAX_RESOURCE_BYTES + 1)
+        except OSError as exc:
+            raise EvaluationError(f"cannot read current resource {relative}: {exc}") from exc
+        if len(data) > MAX_RESOURCE_BYTES:
+            raise EvaluationError(f"current resource exceeds the UTF-8 byte limit: {relative}")
+        try:
+            text = data.decode("utf-8")
+        except UnicodeError as exc:
+            raise EvaluationError(f"current resource is not UTF-8: {relative}") from exc
+        if not text.strip():
+            raise EvaluationError(f"current resource is empty: {relative}")
+        resources.append({"path": relative, "text": text, "sha256": sha256_bytes(data),
+                          "utf8_byte_count": len(data)})
+    return resources
+
+
+def snapshot_resources(snapshot: dict[str, Any]) -> dict[str, str] | None:
+    """Verify embedded resource bytes without consulting their old filesystem."""
+    if snapshot["schema_version"] == 1:
+        if "resources" in snapshot:
+            raise EvaluationError("legacy snapshots cannot carry resource bindings")
+        return None
+    resources = snapshot.get("resources")
+    if not isinstance(resources, list) or len(resources) != len(RESOURCE_PATHS):
+        raise EvaluationError("resource-aware snapshots require the complete resource allowlist")
+    indexed: dict[str, str] = {}
+    for resource in resources:
+        if (not isinstance(resource, dict)
+                or set(resource) != {"path", "text", "sha256", "utf8_byte_count"}
+                or not isinstance(resource["path"], str)
+                or resource["path"] not in RESOURCE_PATHS
+                or resource["path"] in indexed):
+            raise EvaluationError("snapshot resource path is unlisted or duplicated")
+        text = resource["text"]
+        if not isinstance(text, str) or not text.strip():
+            raise EvaluationError("snapshot resource text is missing or empty")
+        try:
+            data = text.encode("utf-8")
+        except UnicodeError as exc:
+            raise EvaluationError("snapshot resource text is not UTF-8") from exc
+        if (len(data) > MAX_RESOURCE_BYTES or type(resource["utf8_byte_count"]) is not int
+                or resource["utf8_byte_count"] != len(data)):
+            raise EvaluationError("snapshot resource UTF-8 byte count is invalid")
+        if resource["sha256"] != sha256_bytes(data):
+            raise EvaluationError("snapshot resource text/hash mismatch")
+        indexed[resource["path"]] = resource["sha256"]
+    if set(indexed) != set(RESOURCE_PATHS):
+        raise EvaluationError("snapshot resource allowlist is incomplete")
+    return indexed
+
+
+def source_binding(snapshot: dict[str, Any]) -> dict[str, Any]:
+    binding = {"skill_sha256": snapshot["skill"]["sha256"],
+               "manifest_version": snapshot["manifest"]["version"],
+               "manifest_sha256": snapshot["manifest"]["sha256"],
+               "runner_context_sha256": snapshot["runner_context"]["sha256"]}
+    resources = snapshot_resources(snapshot)
+    if resources is not None:
+        binding["resources"] = resources
+    return binding
+
+
 def create_snapshot(args: argparse.Namespace) -> Path:
     trial_dir = ROOT / "tests/trials"
     trial_dir.mkdir(parents=True, exist_ok=True)
@@ -169,6 +251,7 @@ def create_snapshot(args: argparse.Namespace) -> Path:
     output = trial_dir / f"{args.id}{SNAPSHOT_SUFFIX}"
 
     skill, manifest_text, manifest = read_current_sources()
+    resources = read_current_resources()
     runner_context = read_text(Path(args.runner_context), "runner context")
     fixture_source = getattr(args, "fixtures", "tests/cases.json")
     fixture_bytes = read_bytes(fixture_source_path(fixture_source), "evaluation fixtures")
@@ -192,6 +275,7 @@ def create_snapshot(args: argparse.Namespace) -> Path:
         "skill": {"path": "skills/proofreader-pro/SKILL.md", "text": skill, "sha256": sha256(skill), "unicode_character_count": len(skill)},
         "manifest": {"path": "plugin.json", "text": manifest_text, "version": manifest["version"], "sha256": sha256(manifest_text)},
         "runner_context": {"text": runner_context, "sha256": sha256(runner_context)},
+        "resources": resources,
         "cases": saved_cases,
     }
     write_json_exclusive(output, snapshot, "snapshot")
@@ -200,8 +284,11 @@ def create_snapshot(args: argparse.Namespace) -> Path:
 
 
 def validate_snapshot(snapshot: dict[str, Any]) -> dict[str, dict[str, Any]]:
-    if snapshot.get("schema_version") != SCHEMA_VERSION or snapshot.get("kind") != "evaluation-snapshot":
+    if (type(snapshot.get("schema_version")) is not int
+            or snapshot["schema_version"] not in (1, SCHEMA_VERSION)
+            or snapshot.get("kind") != "evaluation-snapshot"):
         raise EvaluationError("unsupported snapshot schema or kind")
+    snapshot_resources(snapshot)
     fixture_path = fixture_source_path(snapshot.get("fixture_source"))
     skill = snapshot.get("skill")
     manifest = snapshot.get("manifest")
@@ -217,6 +304,8 @@ def validate_snapshot(snapshot: dict[str, Any]) -> dict[str, dict[str, Any]]:
     if not isinstance(snapshot.get("fixture_sha256"), str) or not re.fullmatch(r"[0-9a-f]{64}", snapshot["fixture_sha256"]):
         raise EvaluationError("snapshot fixture SHA-256 is missing or malformed")
     if "fixture_text" not in snapshot:
+        if snapshot["schema_version"] == SCHEMA_VERSION:
+            raise EvaluationError("resource-aware snapshots must preserve fixture_text")
         # A pre-projection schema-1 snapshot can be verified only against the
         # exact current fixture bytes. It cannot prove its own historical cases.
         fixture_bytes = read_bytes(fixture_path, "current evaluation fixtures")
@@ -255,6 +344,8 @@ def create_record(args: argparse.Namespace) -> Path:
         raise EvaluationError(f"invalid snapshot path: {exc}") from exc
     snapshot = load_json(snapshot_path, "snapshot")
     snapshot_cases = validate_snapshot(snapshot)
+    if snapshot["schema_version"] != SCHEMA_VERSION:
+        raise EvaluationError("new records require a resource-aware snapshot")
     response_bundle = load_json(Path(args.responses), "response bundle")
     responses = unique_ids(response_bundle.get("responses"), "response")
     missing = sorted(snapshot_cases.keys() - responses.keys())
@@ -296,12 +387,7 @@ def create_record(args: argparse.Namespace) -> Path:
             "response_sha256": sha256(response),
             "assertions": assertions,
         })
-    binding = {
-        "skill_sha256": snapshot["skill"]["sha256"],
-        "manifest_version": snapshot["manifest"]["version"],
-        "manifest_sha256": snapshot["manifest"]["sha256"],
-        "runner_context_sha256": snapshot["runner_context"]["sha256"],
-    }
+    binding = source_binding(snapshot)
     record = {
         "schema_version": RECORD_SCHEMA_VERSION,
         "kind": "evaluation-record",
@@ -371,7 +457,9 @@ def validate_record(record_path: Path) -> str:
     required = {"schema_version", "kind", "snapshot_file", "snapshot_sha256", "source_binding", "metadata", "host_evidence", "cases", "aggregate"}
     if set(record) != required:
         raise EvaluationError(f"record fields must be exactly: {', '.join(sorted(required))}")
-    if record.get("schema_version") not in (1, RECORD_SCHEMA_VERSION) or record.get("kind") != "evaluation-record":
+    if (type(record.get("schema_version")) is not int
+            or record["schema_version"] not in (1, 2, RECORD_SCHEMA_VERSION)
+            or record.get("kind") != "evaluation-record"):
         raise EvaluationError("unsupported evaluation record schema or kind")
     if not isinstance(record["snapshot_file"], str) or not record["snapshot_file"]:
         raise EvaluationError("snapshot_file must be a path string")
@@ -395,13 +483,11 @@ def validate_record(record_path: Path) -> str:
         raise EvaluationError("record snapshot SHA-256 mismatch")
     snapshot = load_json(snapshot_path, "bound snapshot")
     snapshot_cases = validate_snapshot(snapshot)
+    expected_snapshot_version = SCHEMA_VERSION if record["schema_version"] == RECORD_SCHEMA_VERSION else 1
+    if snapshot["schema_version"] != expected_snapshot_version:
+        raise EvaluationError("record/snapshot schema versions have incompatible resource bindings")
     binding = record.get("source_binding")
-    expected_binding = {
-        "skill_sha256": snapshot["skill"]["sha256"],
-        "manifest_version": snapshot["manifest"]["version"],
-        "manifest_sha256": snapshot["manifest"]["sha256"],
-        "runner_context_sha256": snapshot["runner_context"]["sha256"],
-    }
+    expected_binding = source_binding(snapshot)
     if binding != expected_binding:
         raise EvaluationError("record source binding does not match its snapshot")
     metadata = record.get("metadata")
@@ -409,7 +495,7 @@ def validate_record(record_path: Path) -> str:
     if not isinstance(host_evidence, dict) or set(host_evidence) != {"install_method", "build_sha256"}:
         raise EvaluationError("host_evidence must contain install_method and build_sha256 fields")
     validate_metadata(metadata, host_evidence["install_method"], host_evidence["build_sha256"], snapshot,
-                      require_profile=record["schema_version"] == RECORD_SCHEMA_VERSION)
+                      require_profile=record["schema_version"] >= 2)
     record_cases = unique_ids(record.get("cases"), "record case")
     missing = sorted(snapshot_cases.keys() - record_cases.keys())
     extra = sorted(record_cases.keys() - snapshot_cases.keys())
@@ -459,8 +545,17 @@ def validate_record(record_path: Path) -> str:
         current_fixture_hash = None
     except OSError as exc:
         raise EvaluationError(f"cannot read current evaluation fixtures: {exc}") from exc
+    try:
+        current_resources = {resource["path"]: resource["sha256"] for resource in read_current_resources()}
+    except EvaluationError:
+        # Embedded historical resources remain verifiable after removal or an
+        # unusable local replacement, but can never satisfy --require-current.
+        current_resources = None
     current = (
-        snapshot["skill"]["sha256"] == sha256(current_skill)
+        record["schema_version"] == RECORD_SCHEMA_VERSION
+        and snapshot_resources(snapshot) == current_resources
+        and current_resources is not None
+        and snapshot["skill"]["sha256"] == sha256(current_skill)
         and snapshot["manifest"]["sha256"] == sha256(current_manifest_text)
         and snapshot["manifest"]["version"] == current_manifest["version"]
         and snapshot["fixture_sha256"] == current_fixture_hash
@@ -471,7 +566,7 @@ def validate_record(record_path: Path) -> str:
 def check_requirements(record: dict[str, Any], binding: str, *, require_current: bool = False,
                        require_complete: bool = False, require_pass: bool = False) -> None:
     if require_current and binding != "current":
-        raise EvaluationError("record is bound to historical skill, manifest, or fixture inputs")
+        raise EvaluationError("record is bound to historical skill, manifest, resource, or fixture inputs")
     if require_complete and any(
         assertion["status"] == "not_run"
         for case in record["cases"]
@@ -505,8 +600,8 @@ def validate_suite(record_paths: list[Path], *, model: str, reasoning_effort: st
     for record_path in record_paths:
         binding = validate_record(record_path)
         record = load_json(record_path, "evaluation record")
-        if record["schema_version"] != RECORD_SCHEMA_VERSION:
-            raise EvaluationError("suite requires schema-2 records; legacy evidence cannot establish a new run")
+        if record["schema_version"] not in (2, RECORD_SCHEMA_VERSION):
+            raise EvaluationError("suite requires schema-2 records or newer; legacy evidence cannot establish a new run")
         check_requirements(record, binding, require_current=require_current,
                            require_complete=require_complete, require_pass=require_pass)
         snapshot = load_json(ROOT / record["snapshot_file"], "bound snapshot")

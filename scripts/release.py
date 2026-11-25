@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import json
 import os
 import re
@@ -11,7 +12,9 @@ import shutil
 import sys
 import tempfile
 import zipfile
+from collections.abc import Mapping
 from pathlib import Path, PurePosixPath
+from types import MappingProxyType
 from typing import Any
 from urllib.parse import urlsplit
 
@@ -21,7 +24,8 @@ PLUGIN_NAME = "english-proofreader-pro"
 SKILL_NAME = "proofreader-pro"
 EXPECTED_SKILL = f"skills/{SKILL_NAME}/SKILL.md"
 EXPECTED_AGENT = f"skills/{SKILL_NAME}/agents/openai.yaml"
-EXPECTED_SKILL_FILES = (EXPECTED_SKILL, EXPECTED_AGENT)
+EXPECTED_COUNTER = f"skills/{SKILL_NAME}/scripts/text_metrics.py"
+EXPECTED_SKILL_FILES = (EXPECTED_SKILL, EXPECTED_AGENT, EXPECTED_COUNTER)
 # Only preflight may recognize the previous generated layout for replacement.
 # These files are never included in new archives or staging trees.
 RETIRED_SKILL_FILES = (
@@ -31,7 +35,9 @@ RETIRED_SKILL_FILES = (
     "skills/english-proofreader-pro/agents/openai.yaml",
 )
 EXPECTED_ICON = "assets/icon.webp"
+RUNTIME_FILES = ("LICENSE", "PRIVACY.md", EXPECTED_ICON, "plugin.json", *EXPECTED_SKILL_FILES)
 MAX_SKILL_BYTES = 1024 * 1024
+MAX_RESOURCE_BYTES = 1024 * 1024
 MAX_METADATA_URL_CHARS = 2048
 MAX_INTERFACE_URL_CHARS = 1024
 SEMVER = re.compile(r"^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$")
@@ -55,9 +61,15 @@ def fail(message: str) -> None:
     raise ReleaseError(message)
 
 
-def read_text(path: Path, label: str) -> str:
+def read_runtime_bytes(path: Path, snapshot: Mapping[str, bytes] | None = None) -> bytes:
+    if snapshot is None:
+        return path.read_bytes()
+    return snapshot[path.relative_to(ROOT).as_posix()]
+
+
+def read_text(path: Path, label: str, snapshot: Mapping[str, bytes] | None = None) -> str:
     try:
-        return path.read_text(encoding="utf-8")
+        return read_runtime_bytes(path, snapshot).decode("utf-8")
     except (OSError, UnicodeError) as exc:
         fail(f"cannot read {label} as UTF-8: {exc}")
 
@@ -233,7 +245,7 @@ def parse_webp_dimensions(data: bytes) -> tuple[int, int] | None:
     return dimensions
 
 
-def validate_manifest() -> dict[str, Any]:
+def validate_manifest(snapshot: Mapping[str, bytes] | None = None) -> dict[str, Any]:
     manifest_path = require_regular_file("plugin.json")
     def unique_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
         result: dict[str, Any] = {}
@@ -243,7 +255,7 @@ def validate_manifest() -> dict[str, Any]:
             result[key] = value
         return result
     try:
-        manifest = json.loads(read_text(manifest_path, "plugin.json"), object_pairs_hook=unique_object)
+        manifest = json.loads(read_text(manifest_path, "plugin.json", snapshot), object_pairs_hook=unique_object)
     except json.JSONDecodeError as exc:
         fail(f"plugin.json is not valid JSON: {exc}")
     except ValueError as exc:
@@ -352,19 +364,19 @@ def validate_manifest() -> dict[str, Any]:
         if len(set(countries)) != len(countries):
             fail("plugin.json publication.countries must not contain duplicate country codes")
     icon_path = require_regular_file(EXPECTED_ICON)
-    dimensions = parse_webp_dimensions(icon_path.read_bytes())
+    dimensions = parse_webp_dimensions(read_runtime_bytes(icon_path, snapshot))
     if dimensions != (1024, 1024):
         fail(f"{EXPECTED_ICON} must be a structurally valid 1024x1024 WebP (detected {dimensions})")
 
-    manifest_text = read_text(manifest_path, "plugin.json")
+    manifest_text = read_text(manifest_path, "plugin.json", snapshot)
     check_placeholders(manifest_text, "plugin.json")
     return manifest
 
 
-def validate_skill() -> list[Path]:
+def validate_skill(snapshot: Mapping[str, bytes] | None = None) -> list[Path]:
     skill_path = require_regular_file(EXPECTED_SKILL)
     try:
-        skill_bytes = skill_path.read_bytes()
+        skill_bytes = read_runtime_bytes(skill_path, snapshot)
         text = skill_bytes.decode("utf-8")
     except (OSError, UnicodeError) as exc:
         fail(f"cannot read {EXPECTED_SKILL} as UTF-8: {exc}")
@@ -393,7 +405,7 @@ def validate_skill() -> list[Path]:
     if len(fields["name"]) > 64 or len(fields["description"]) > 1024:
         fail(f"{EXPECTED_SKILL} frontmatter name/description exceeds supported metadata limits")
     agent_path = require_regular_file(EXPECTED_AGENT)
-    agent_text = read_text(agent_path, EXPECTED_AGENT)
+    agent_text = read_text(agent_path, EXPECTED_AGENT, snapshot)
     validate_yaml_characters(agent_text, EXPECTED_AGENT)
     agent_lines = agent_text.splitlines()
     if len(agent_lines) < 2 or agent_lines[0] != "interface:":
@@ -409,6 +421,18 @@ def validate_skill() -> list[Path]:
     if re.search(r"(?:^|\s)(?:\.\./|/|[A-Za-z]:\\)", text):
         fail(f"{EXPECTED_SKILL} contains a potentially unsafe absolute or parent-relative path")
 
+    counter_path = require_regular_file(EXPECTED_COUNTER)
+    counter_bytes = read_runtime_bytes(counter_path, snapshot)
+    if len(counter_bytes) > MAX_RESOURCE_BYTES:
+        fail(f"{EXPECTED_COUNTER} must be at most {MAX_RESOURCE_BYTES} UTF-8 bytes")
+    counter_text = read_text(counter_path, EXPECTED_COUNTER, snapshot)
+    if not counter_text.strip():
+        fail(f"{EXPECTED_COUNTER} must contain a non-empty Python resource")
+    try:
+        ast.parse(counter_text, filename=EXPECTED_COUNTER)
+    except (SyntaxError, ValueError) as exc:
+        fail(f"{EXPECTED_COUNTER} must contain valid Python source: {exc}")
+
     skills_root = ROOT / "skills"
     if skills_root.is_symlink() or not skills_root.is_dir():
         fail("skills must be a regular directory")
@@ -423,7 +447,7 @@ def validate_skill() -> list[Path]:
                 continue
             if relative not in allowed_files:
                 fail(f"unexpected skill package file is not in the release allowlist: {relative}")
-            content = read_text(path, relative)
+            content = read_text(path, relative, snapshot)
             check_placeholders(content, relative)
             files.append(path)
     expected_paths = [require_regular_file(relative) for relative in EXPECTED_SKILL_FILES]
@@ -433,24 +457,32 @@ def validate_skill() -> list[Path]:
     return expected_paths
 
 
-def validate() -> list[Path]:
-    validate_manifest()
-    skill_files = validate_skill()
-    package = [require_regular_file("plugin.json"), *skill_files,
-               require_regular_file(EXPECTED_ICON), require_regular_file("LICENSE"),
-               require_regular_file("PRIVACY.md")]
+def validate(snapshot: Mapping[str, bytes] | None = None) -> list[Path]:
+    validate_manifest(snapshot)
+    validate_skill(snapshot)
+    package = [require_regular_file(relative) for relative in RUNTIME_FILES]
     # All packaged material is text except the explicitly checked icon.
     for path in package:
         if path.suffix.lower() not in {".webp"}:
             relative = path.relative_to(ROOT).as_posix()
-            text = read_text(path, relative)
+            text = read_text(path, relative, snapshot)
             check_placeholders(text, relative)
     return sorted(set(package), key=lambda p: p.relative_to(ROOT).as_posix())
 
 
+def _snapshot_runtime() -> Mapping[str, bytes]:
+    """Capture once; later validation and both outputs consume immutable bytes."""
+    captured = {
+        relative: require_regular_file(relative).read_bytes()
+        for relative in sorted(RUNTIME_FILES)
+    }
+    return MappingProxyType(captured)
+
+
 def build() -> Path:
-    files = validate()
-    manifest = validate_manifest()
+    snapshot = _snapshot_runtime()
+    files = validate(snapshot)
+    manifest = validate_manifest(snapshot)
     output = Path("dist") / f"{PLUGIN_NAME}-{manifest['version']}.zip"
     output_path = ROOT / output
     if output_path.parent.is_symlink() or (output_path.parent.exists() and not output_path.parent.is_dir()):
@@ -468,10 +500,10 @@ def build() -> Path:
     try:
         stage_temp = Path(tempfile.mkdtemp(prefix=".local-plugin.", suffix=".tmp", dir=output_path.parent))
         backup = Path(tempfile.mkdtemp(prefix=".release-backup.", dir=output_path.parent))
-        _write_archive(zip_temp, files)
-        _verify_archive(zip_temp, files)
-        _populate_stage(stage_temp, files, manifest)
-        _verify_stage(stage_temp, files)
+        _write_archive(zip_temp, snapshot)
+        _verify_archive(zip_temp, snapshot)
+        _populate_stage(stage_temp, snapshot, manifest)
+        _verify_stage(stage_temp, snapshot, manifest)
         old_stage = ROOT / "dist" / "local-plugin"
         backed_stage = backup / "local-plugin"
         stage_backed_up = stage_promoted = False
@@ -551,11 +583,7 @@ def _preflight_stage(stage_root: Path, files: list[Path]) -> None:
                 fail(f"staging output contains a non-regular entry: dist/local-plugin/{relative}")
 
 
-def _populate_stage(stage_root: Path, files: list[Path], manifest: dict[str, Any]) -> None:
-    """Populate a fresh staging tree; callers publish it only after verification."""
-    compatibility_path = ".codex-plugin/plugin.json"
-    stage_root.mkdir(parents=True, exist_ok=True)
-
+def _legacy_manifest_bytes(manifest: dict[str, Any]) -> bytes:
     # The compatibility manifest mirrors the canonical root identity and
     # translates the portable OpenAI extension to the legacy overlay shape.
     openai_extension = manifest["extensions"]["com.openai"]
@@ -576,25 +604,24 @@ def _populate_stage(stage_root: Path, files: list[Path], manifest: dict[str, Any
         if key in manifest:
             legacy_manifest[key] = manifest[key]
 
-    for source in files:
-        relative = source.relative_to(ROOT)
+    return (json.dumps(legacy_manifest, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
+
+
+def _populate_stage(stage_root: Path, snapshot: Mapping[str, bytes], manifest: dict[str, Any]) -> None:
+    """Populate a fresh staging tree from the validated snapshot only."""
+    stage_root.mkdir(parents=True, exist_ok=True)
+    payloads = {**snapshot, ".codex-plugin/plugin.json": _legacy_manifest_bytes(manifest)}
+    for name, payload in payloads.items():
+        relative = PurePosixPath(name)
         destination = stage_root / relative
         destination.parent.mkdir(parents=True, exist_ok=True)
         if destination.is_symlink() or (destination.exists() and not destination.is_file()):
             fail(f"staging target is not a regular file: dist/local-plugin/{relative.as_posix()}")
-        shutil.copyfile(source, destination)
-
-    compatibility_manifest = stage_root / compatibility_path
-    compatibility_manifest.parent.mkdir(parents=True, exist_ok=True)
-    if compatibility_manifest.is_symlink() or (compatibility_manifest.exists() and not compatibility_manifest.is_file()):
-        fail("staging target is not a regular file: dist/local-plugin/.codex-plugin/plugin.json")
-    compatibility_manifest.write_text(
-        json.dumps(legacy_manifest, ensure_ascii=False, indent=2) + "\n",
-        encoding="utf-8",
-    )
+        destination.write_bytes(payload)
 
 
-def _verify_stage(stage_root: Path, files: list[Path]) -> None:
+def _verify_stage(stage_root: Path, snapshot: Mapping[str, bytes], manifest: dict[str, Any]) -> None:
+    files = [ROOT / name for name in snapshot]
     expected_files, expected_dirs = _stage_paths(stage_root, files)
     actual_files: set[str] = set()
     for path in stage_root.rglob("*"):
@@ -603,33 +630,40 @@ def _verify_stage(stage_root: Path, files: list[Path]) -> None:
             fail(f"prepared staging output contains a symlink: {relative}")
         if path.is_file():
             actual_files.add(relative)
+            expected = snapshot.get(relative)
+            if relative == ".codex-plugin/plugin.json":
+                expected = _legacy_manifest_bytes(manifest)
+            if expected is None or path.read_bytes() != expected:
+                fail(f"prepared staging output differs from the validated snapshot: {relative}")
         elif path.is_dir() and relative not in expected_dirs:
             fail(f"prepared staging output contains an unexpected directory: {relative}")
     if actual_files != expected_files:
         fail("prepared staging output differs from the release allowlist")
 
 
-def _write_archive(output_path: Path, files: list[Path]) -> None:
+def _write_archive(output_path: Path, snapshot: Mapping[str, bytes]) -> None:
     with zipfile.ZipFile(output_path, "w", compression=zipfile.ZIP_DEFLATED, compresslevel=9) as archive:
-        for path in files:
-            name = path.relative_to(ROOT).as_posix()
+        for name, payload in snapshot.items():
             info = zipfile.ZipInfo(name, date_time=(1980, 1, 1, 0, 0, 0))
             info.compress_type = zipfile.ZIP_DEFLATED
             info.create_system = 3
             info.external_attr = (0o100644 & 0xFFFF) << 16
-            archive.writestr(info, path.read_bytes(), compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
+            archive.writestr(info, payload, compress_type=zipfile.ZIP_DEFLATED, compresslevel=9)
 
 
-def _verify_archive(archive_path: Path, files: list[Path]) -> None:
+def _verify_archive(archive_path: Path, snapshot: Mapping[str, bytes]) -> None:
     try:
         with zipfile.ZipFile(archive_path) as archive:
             bad_member = archive.testzip()
             if bad_member is not None:
                 fail(f"built ZIP failed CRC validation at {bad_member}")
             actual = archive.namelist()
-            expected = [path.relative_to(ROOT).as_posix() for path in files]
+            expected = list(snapshot)
             if actual != expected:
                 fail("built ZIP contents differ from the release allowlist")
+            for name, payload in snapshot.items():
+                if archive.read(name) != payload:
+                    fail(f"built ZIP payload differs from the validated snapshot: {name}")
     except (OSError, zipfile.BadZipFile) as exc:
         fail(f"built ZIP could not be verified: {exc}")
 

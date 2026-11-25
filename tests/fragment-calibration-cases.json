@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "purpose": "Synthetic supplemental calibration cases for intentional noun-phrase list labels and unambiguous finite clauses. These add coverage without changing cases.json, agreement-probe.json, historical responses, or historical verdicts. Fixture validity and reviewer calibration are not model or intended-host acceptance.",
+  "shared_output_contract": {
+    "minimal_editing": "Preserve intentional noun phrases and literal formatting; correct only clear errors. Do not infer an agreement error merely from the substring phrase link.",
+    "no_edit": "When the source needs no correction, return exactly The text does not require any adjustments.",
+    "edited_source": "Return the complete minimally corrected source first in a safe text-labeled fence, followed by a truthful Changes list accounting for every actual edit with bold before-and-after quotations. Preserve list markers, emphasis, URL characters, and line breaks."
+  },
+  "reviewer_rubric": {
+    "id": "fragment-agreement-calibration",
+    "version": "1.0",
+    "independent_basis": "The explicit user direction determines whether list items are intentional noun phrases or complete sentences. In the finite-clause case, the singular subject phrase takes links and readers is its direct object. In the mixed-fragment case, unusual requires An. These stated grammatical roles, rather than historical model answers, define the oracle.",
+    "historical_ambiguity": "The original markdown-format-preserved case permits a noun-fragment or finite-clause reading. Its link-to-links edit alone cannot establish a definite failure or a definitely necessary correction. Do not rewrite its recorded responses, notes, or verdicts to fit this new rubric.",
+    "protocol": [
+      "Freeze a new snapshot with this complete fixture before generation. Give generators only the frozen skill, runner context, and case IDs/prompts; withhold expectations, this rubric, calibration examples, historical answers, and grading notes.",
+      "Before seeing new generated responses, the independent reviewer judges every calibration example below and records the case ID, predicted verdict, rationale, and rubric version. Compare with the expected verdicts only after the reviewer has committed those judgments.",
+      "Require all six calibration verdicts to match. If any do not, retain the disagreement, clarify the rubric in a new version, and recalibrate before scoring new model responses. Do not adjust the oracle after seeing a candidate failure.",
+      "Review complete literal source/result text and actual edits. Grade every named assertion separately; record gaps rather than inferring correctness from a Changes explanation or aggregate score.",
+      "Retain raw responses and all attempts. Bind the calibration judgments and scored record to this rubric's version and frozen fixture/snapshot hashes. State the reviewer identity and any uncertainty. These are known synthetic regression cases, not a holdout or proof of broad model reliability."
+    ],
+    "calibration_examples": [
+      {
+        "id": "calibration-fragment-preserved",
+        "case_id": "fragment-labels-no-op",
+        "response": "The text does not require any adjustments.",
+        "expected_verdict": "pass",
+        "basis": "Both labels are intentional noun phrases, and neither contains a clear error. The exact no-op response is required."
+      },
+      {
+        "id": "calibration-fragment-converted",
+        "case_id": "fragment-labels-no-op",
+        "response": "```text\n- A **bold** and *italic* phrase links to https://example.com/path?x=1.\n- A helpful report summary.\n```\n\nChanges:\n- **\"link\"** → **\"links\"**: Corrected subject–verb agreement.",
+        "expected_verdict": "fail",
+        "basis": "The user explicitly identifies noun-phrase labels. Changing the noun link into a finite verb invents a correction, even though the Changes entry accurately reports that edit."
+      },
+      {
+        "id": "calibration-finite-corrected",
+        "case_id": "finite-clause-agreement",
+        "response": "```text\n- The **bold** and *italic* phrase links readers to https://example.com/path?x=1.\n- The summary is helpful.\n```\n\nChanges:\n- **\"link\"** → **\"links\"**: Corrected agreement with the singular subject.",
+        "expected_verdict": "pass",
+        "basis": "Complete-sentence directions and the direct object readers make the intended finite clause explicit. The sole needed edit is link to links; the output and Changes preserve the rest."
+      },
+      {
+        "id": "calibration-finite-missed",
+        "case_id": "finite-clause-agreement",
+        "response": "The text does not require any adjustments.",
+        "expected_verdict": "fail",
+        "basis": "The finite verb does not agree with its singular subject. A no-op response misses a clear error."
+      },
+      {
+        "id": "calibration-mixed-article-corrected",
+        "case_id": "fragment-labels-article-only",
+        "response": "```text\n- A **bold** and *italic* phrase link to https://example.com/path?x=1.\n- An unusual report summary.\n```\n\nChanges:\n- **\"A unusual\"** → **\"An unusual\"**: Corrected the article before a vowel sound.",
+        "expected_verdict": "pass",
+        "basis": "The noun phrases remain noun phrases. The article correction is necessary and is the only edit."
+      },
+      {
+        "id": "calibration-mixed-article-missed",
+        "case_id": "fragment-labels-article-only",
+        "response": "The text does not require any adjustments.",
+        "expected_verdict": "fail",
+        "basis": "Preserving intentional noun phrases does not excuse the clear A unusual article error."
+      }
+    ]
+  },
+  "cases": [
+    {
+      "id": "fragment-labels-no-op",
+      "input": "Proofread these intentional noun-phrase list labels. Keep them as noun phrases; do not turn them into sentences:\n- A **bold** and *italic* phrase link to https://example.com/path?x=1.\n- A helpful report summary.",
+      "expect": {
+        "task": "proofread_intentional_noun_phrase_labels",
+        "response_exactly": "The text does not require any adjustments.",
+        "retains_intentional_noun_phrases_without_invented_agreement_edit": true,
+        "no_revised_text_fence_or_changes_list": true
+      }
+    },
+    {
+      "id": "finite-clause-agreement",
+      "input": "Proofread these complete sentences; retain their sentence structure:\n- The **bold** and *italic* phrase link readers to https://example.com/path?x=1.\n- The summary is helpful.",
+      "expect": {
+        "task": "proofread_explicit_finite_clause",
+        "corrects_link_to_links_for_singular_subject_and_direct_object": true,
+        "changes_no_other_source_characters": true,
+        "preserves_list_emphasis_url_and_line_breaks": true,
+        "complete_revised_text_first_in_safe_fence": true,
+        "truthful_changes_list_accounts_only_for_link_to_links": true
+      }
+    },
+    {
+      "id": "fragment-labels-article-only",
+      "input": "Proofread these intentional noun-phrase list labels. Keep them as noun phrases and correct only clear errors:\n- A **bold** and *italic* phrase link to https://example.com/path?x=1.\n- A unusual report summary.",
+      "expect": {
+        "task": "proofread_noun_phrases_with_clear_article_error",
+        "corrects_a_unusual_to_an_unusual": true,
+        "retains_phrase_link_as_an_intentional_noun_phrase": true,
+        "changes_no_other_source_characters": true,
+        "preserves_list_emphasis_url_and_line_breaks": true,
+        "complete_revised_text_first_in_safe_fence": true,
+        "truthful_changes_list_accounts_only_for_article_correction": true
+      }
+    }
+  ]
+}

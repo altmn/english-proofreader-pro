@@ -1,0 +1,347 @@
+{
+  "kind": "simulation-semantic-and-integrity-checks",
+  "applications": [
+    {
+      "record": "tests/trials/count-routing-core-sol-1-2026-11-25.json",
+      "pre_grade_sha256": "a37270afdcbf9a8b0c81f09b352bfabec406e6ee52fc43dd6d49b7ad6d9eb0f3",
+      "graded_sha256": "9bb3a32309c4ec29b4111a5be1374c9e9127e3d8914a9f2b36e8642092fe9ba9",
+      "judgments_file": "tests/trials/count-routing-core-judgments-2026-11-25.json",
+      "judgments_sha256": "12f542b5b86dea800a334cf57ea95d175873ad8deb2a4467c1580c6fc49b3abb",
+      "aggregate": "pass",
+      "assertions": 83,
+      "passed": 83,
+      "failed": 0,
+      "not_run": 0
+    },
+    {
+      "record": "tests/trials/count-routing-core-sol-2-2026-11-25.json",
+      "pre_grade_sha256": "4563e61325eb5ded8c06cb606e3dbcf39914bbcd2d299e8f83b403acd57bd454",
+      "graded_sha256": "d760b06d60dad7ff6585efaac1e98e08f67cd5f9986bb8afc3d3c6eee6926ad7",
+      "judgments_file": "tests/trials/count-routing-core-judgments-2026-11-25.json",
+      "judgments_sha256": "12f542b5b86dea800a334cf57ea95d175873ad8deb2a4467c1580c6fc49b3abb",
+      "aggregate": "pass",
+      "assertions": 83,
+      "passed": 83,
+      "failed": 0,
+      "not_run": 0
+    },
+    {
+      "record": "tests/trials/count-routing-core-sol-3-2026-11-25.json",
+      "pre_grade_sha256": "a34eaa217948396cb5392baf9326f06f94e9d87d8cfd6f99df2ebdb45e98dcba",
+      "graded_sha256": "04842f91d0907bbe30245db6af812524752db8e3b018e1d1757cbe6205a12aa0",
+      "judgments_file": "tests/trials/count-routing-core-judgments-2026-11-25.json",
+      "judgments_sha256": "12f542b5b86dea800a334cf57ea95d175873ad8deb2a4467c1580c6fc49b3abb",
+      "aggregate": "pass",
+      "assertions": 83,
+      "passed": 83,
+      "failed": 0,
+      "not_run": 0
+    },
+    {
+      "record": "tests/trials/count-routing-markdown-sol-1-2026-11-25.json",
+      "pre_grade_sha256": "364ec48d1453abdb16fe0040d1b97757805f0f4c24cc5fa32f9c1219e6e825c8",
+      "graded_sha256": "15634b6bf0d26836ff6f84303e979b418560346ab6ae7ac99765b71927c9447a",
+      "judgments_file": "tests/trials/count-routing-markdown-fragments-judgments-2026-11-25.json",
+      "judgments_sha256": "234337dae74d687d0e3e4e99886541f7fde7d01a54e2c8ba5dfe61e2391af8c2",
+      "aggregate": "pass",
+      "assertions": 37,
+      "passed": 37,
+      "failed": 0,
+      "not_run": 0
+    },
+    {
+      "record": "tests/trials/count-routing-fragments-sol-1-2026-11-25.json",
+      "pre_grade_sha256": "ecdb9f17e7222cbecd3988030142c071f462b8f91609dc5f7d82343c1447816e",
+      "graded_sha256": "66ad17be1da1ce3184fe6ae3c0829828d132f85fad86f7e751aab692be5964de",
+      "judgments_file": "tests/trials/count-routing-markdown-fragments-judgments-2026-11-25.json",
+      "judgments_sha256": "234337dae74d687d0e3e4e99886541f7fde7d01a54e2c8ba5dfe61e2391af8c2",
+      "aggregate": "pass",
+      "assertions": 17,
+      "passed": 17,
+      "failed": 0,
+      "not_run": 0
+    },
+    {
+      "record": "tests/trials/count-routing-markdown-sol-2-2026-11-25.json",
+      "pre_grade_sha256": "e443adf7db4a4d369a1ce74df7893f5a756d73fa74a87f7f98c2a0677e89e284",
+      "graded_sha256": "4d9204378dcce2cd62b5b61f414acacea01a225c8d0298f93d634bb515eb0d0a",
+      "judgments_file": "tests/trials/count-routing-markdown-fragments-judgments-2026-11-25.json",
+      "judgments_sha256": "234337dae74d687d0e3e4e99886541f7fde7d01a54e2c8ba5dfe61e2391af8c2",
+      "aggregate": "pass",
+      "assertions": 37,
+      "passed": 37,
+      "failed": 0,
+      "not_run": 0
+    },
+    {
+      "record": "tests/trials/count-routing-fragments-sol-2-2026-11-25.json",
+      "pre_grade_sha256": "6ec67ae8ddfb4c9e347d83bca632e9f8e3ea3e04d2e6e79f8857e2589274038d",
+      "graded_sha256": "f14c776fc1dd1676baf967920d3a8f69340d0cd5507bb8ae6adfbeca8aa07820",
+      "judgments_file": "tests/trials/count-routing-markdown-fragments-judgments-2026-11-25.json",
+      "judgments_sha256": "234337dae74d687d0e3e4e99886541f7fde7d01a54e2c8ba5dfe61e2391af8c2",
+      "aggregate": "pass",
+      "assertions": 17,
+      "passed": 17,
+      "failed": 0,
+      "not_run": 0
+    },
+    {
+      "record": "tests/trials/count-routing-markdown-sol-3-2026-11-25.json",
+      "pre_grade_sha256": "8d4b7f2301bebcbdbe414afe243b1b20dbaf647b561e2e6a1fc74799a02e93a9",
+      "graded_sha256": "87c10b86008f57529e9acad7b3d2be3d7d40e56a2e220349ccbb5621ee15c465",
+      "judgments_file": "tests/trials/count-routing-markdown-fragments-judgments-2026-11-25.json",
+      "judgments_sha256": "234337dae74d687d0e3e4e99886541f7fde7d01a54e2c8ba5dfe61e2391af8c2",
+      "aggregate": "pass",
+      "assertions": 37,
+      "passed": 37,
+      "failed": 0,
+      "not_run": 0
+    },
+    {
+      "record": "tests/trials/count-routing-fragments-sol-3-2026-11-25.json",
+      "pre_grade_sha256": "4a856519159535947a7f49445948ba167834801131256ebc558d657a6f2f8a49",
+      "graded_sha256": "5bb550a682b786805b5918a209622c406994965eb0b9ffcee3479ba71b3ddb28",
+      "judgments_file": "tests/trials/count-routing-markdown-fragments-judgments-2026-11-25.json",
+      "judgments_sha256": "234337dae74d687d0e3e4e99886541f7fde7d01a54e2c8ba5dfe61e2391af8c2",
+      "aggregate": "pass",
+      "assertions": 17,
+      "passed": 17,
+      "failed": 0,
+      "not_run": 0
+    }
+  ],
+  "checks": [
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-I",
+        "-B",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/scripts/evaluate.py",
+        "validate",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-core-sol-1-2026-11-25.json",
+        "--require-current",
+        "--require-complete",
+        "--require-pass"
+      ],
+      "exit_code": 0,
+      "stdout": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-I",
+        "-B",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/scripts/evaluate.py",
+        "validate",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-core-sol-2-2026-11-25.json",
+        "--require-current",
+        "--require-complete",
+        "--require-pass"
+      ],
+      "exit_code": 0,
+      "stdout": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-I",
+        "-B",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/scripts/evaluate.py",
+        "validate",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-core-sol-3-2026-11-25.json",
+        "--require-current",
+        "--require-complete",
+        "--require-pass"
+      ],
+      "exit_code": 0,
+      "stdout": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-I",
+        "-B",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/scripts/evaluate.py",
+        "validate",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-markdown-sol-1-2026-11-25.json",
+        "--require-current",
+        "--require-complete",
+        "--require-pass"
+      ],
+      "exit_code": 0,
+      "stdout": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-I",
+        "-B",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/scripts/evaluate.py",
+        "validate",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-fragments-sol-1-2026-11-25.json",
+        "--require-current",
+        "--require-complete",
+        "--require-pass"
+      ],
+      "exit_code": 0,
+      "stdout": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-I",
+        "-B",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/scripts/evaluate.py",
+        "validate",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-markdown-sol-2-2026-11-25.json",
+        "--require-current",
+        "--require-complete",
+        "--require-pass"
+      ],
+      "exit_code": 0,
+      "stdout": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-I",
+        "-B",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/scripts/evaluate.py",
+        "validate",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-fragments-sol-2-2026-11-25.json",
+        "--require-current",
+        "--require-complete",
+        "--require-pass"
+      ],
+      "exit_code": 0,
+      "stdout": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-I",
+        "-B",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/scripts/evaluate.py",
+        "validate",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-markdown-sol-3-2026-11-25.json",
+        "--require-current",
+        "--require-complete",
+        "--require-pass"
+      ],
+      "exit_code": 0,
+      "stdout": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-I",
+        "-B",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/scripts/evaluate.py",
+        "validate",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-fragments-sol-3-2026-11-25.json",
+        "--require-current",
+        "--require-complete",
+        "--require-pass"
+      ],
+      "exit_code": 0,
+      "stdout": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-I",
+        "-B",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/scripts/evaluate.py",
+        "validate-suite",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-core-sol-1-2026-11-25.json",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-core-sol-2-2026-11-25.json",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-core-sol-3-2026-11-25.json",
+        "--fixtures",
+        "tests/cases.json",
+        "--model",
+        "gpt-6.1-sol",
+        "--reasoning-effort",
+        "high",
+        "--invocation-mode",
+        "independent-agent-simulation",
+        "--min-runs",
+        "3",
+        "--require-current",
+        "--require-complete",
+        "--require-pass"
+      ],
+      "exit_code": 0,
+      "stdout": "valid evaluation suite: 3 distinct recorded runs for gpt-6.1-sol/high/independent-agent-simulation; execution provenance and semantic verdicts remain reviewer claims\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-I",
+        "-B",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/scripts/evaluate.py",
+        "validate-suite",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-markdown-sol-1-2026-11-25.json",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-markdown-sol-2-2026-11-25.json",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-markdown-sol-3-2026-11-25.json",
+        "--fixtures",
+        "tests/changes-markdown-cases.json",
+        "--model",
+        "gpt-6.1-sol",
+        "--reasoning-effort",
+        "high",
+        "--invocation-mode",
+        "independent-agent-simulation",
+        "--min-runs",
+        "3",
+        "--require-current",
+        "--require-complete",
+        "--require-pass"
+      ],
+      "exit_code": 0,
+      "stdout": "valid evaluation suite: 3 distinct recorded runs for gpt-6.1-sol/high/independent-agent-simulation; execution provenance and semantic verdicts remain reviewer claims\n",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "/opt/homebrew/opt/python@3.15/bin/python3.15",
+        "-I",
+        "-B",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/scripts/evaluate.py",
+        "validate-suite",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-fragments-sol-1-2026-11-25.json",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-fragments-sol-2-2026-11-25.json",
+        "/Users/routerhealthchecker/Dropbox/SoftwareDevelopment/AI-Plugins/open-ai/english-proofreader-pro/tests/trials/count-routing-fragments-sol-3-2026-11-25.json",
+        "--fixtures",
+        "tests/fragment-calibration-cases.json",
+        "--model",
+        "gpt-6.1-sol",
+        "--reasoning-effort",
+        "high",
+        "--invocation-mode",
+        "independent-agent-simulation",
+        "--min-runs",
+        "3",
+        "--require-current",
+        "--require-complete",
+        "--require-pass"
+      ],
+      "exit_code": 0,
+      "stdout": "valid evaluation suite: 3 distinct recorded runs for gpt-6.1-sol/high/independent-agent-simulation; execution provenance and semantic verdicts remain reviewer claims\n",
+      "stderr": ""
+    }
+  ],
+  "current_skill_sha256": "f89c24e42f7c54ed74aa8761c7894a39843fbe1bc61d74e36f5427dfe34aea8a",
+  "generation_protocol_outcome": "failed",
+  "generation_protocol_reason": "Capture3 final-word/backtick tool execution not evidenced; generated returned_measurements are not execution proof.",
+  "native_acceptance": "not_established_by_simulations"
+}

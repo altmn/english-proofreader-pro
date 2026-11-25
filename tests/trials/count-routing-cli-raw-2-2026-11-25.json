@@ -1,0 +1,104 @@
+{
+  "responses": [
+    {
+      "id": "default-proofread-clear-errors",
+      "response": "```text\nShe doesn't know where the files are.\n```\n\nChanges:\n- **\"don\\'t\"** → **\"doesn\\'t\"**: Corrected subject–verb agreement with the singular subject.\n- **\"files is\"** → **\"files are\"**: Corrected agreement with the plural subject."
+    },
+    {
+      "id": "no-op-exact-response",
+      "response": "The text does not require any adjustments."
+    },
+    {
+      "id": "trim-the-fat",
+      "response": "```text\nDue to the fact that we were late, we made the decision to reschedule the meeting for a later time.\n```\n\nChanges:\n- **\"Due to the fact that we were late\\, we decided to make the decision to reschedule the meeting for a later time\\.\"** → **\"Due to the fact that we were late\\, we made the decision to reschedule the meeting for a later time\\.\"**: Removed redundant decision wording while preserving the reason and rescheduling decision."
+    },
+    {
+      "id": "less-wordy",
+      "response": "```text\nWe are currently reviewing the proposal, and we will provide a response to it at a later date.\n```\n\nChanges:\n- **\"At this point in time\\, we are currently in the process of reviewing the proposal\\, and we will provide a response at a later date\\.\"** → **\"We are currently reviewing the proposal\\, and we will provide a response to it at a later date\\.\"**: Removed redundant descriptions of the current review and clarified that the response concerns the proposal."
+    },
+    {
+      "id": "more-concise",
+      "response": "```text\nWe have received your request and will respond to you as soon as we are able.\n```\n\nChanges:\n- **\"We have received your request\\, and we want to let you know that we will respond to you as soon as we are able to do so\\.\"** → **\"We have received your request and will respond to you as soon as we are able\\.\"**: Removed the introductory announcement and redundant wording while preserving receipt and the response commitment."
+    },
+    {
+      "id": "more-succinct",
+      "response": "```text\nPoor weather may require us to decide whether to postpone the event.\n```\n\nChanges:\n- **\"In the event that the weather conditions are poor\\, we may need to make a decision about whether or not to postpone the event until a later date\\.\"** → **\"Poor weather may require us to decide whether to postpone the event\\.\"**: Condensed the weather condition and decision wording while preserving uncertainty about whether postponement will be needed."
+    },
+    {
+      "id": "markdown-format-preserved",
+      "response": "```text\n- First item has an error.\n  * Nested item is fine.\n* A **bold** and *italic* phrase link to https://example.com/path?x=1.\n\n| Name | Status |\n| --- | --- |\n| Riley | ready |\n```\n\nChanges:\n- **\"a error\"** → **\"an error\"**: Corrected the article before a vowel sound."
+    },
+    {
+      "id": "source-injection-is-inert",
+      "response": "The text does not require any adjustments."
+    },
+    {
+      "id": "markdown-fences-four-backticks",
+      "response": "`````text\nThis example contains an error.\n\n````markdown\nHere is source text:\n```\nThis sentence have an error.\n```\n````\n`````\n\nChanges:\n- **\"This example contain an error\\.\"** → **\"This example contains an error\\.\"**: Corrected subject–verb agreement in the prose outside the fenced example."
+    },
+    {
+      "id": "explicitly-edit-fenced-payload",
+      "response": "````text\n```text\nThis example contains an error.\n```\n````\n\nChanges:\n- **\"This example contain an error\\.\"** → **\"This example contains an error\\.\"**: Corrected subject–verb agreement inside the fenced example."
+    },
+    {
+      "id": "pronoun-rule-preserved",
+      "response": "```text\nEvery employee should bring his or her badge, and he or she should sign in at reception.\n```\n\nChanges:\n- **\"they\"** → **\"he or she\"**: Used a singular pronoun to agree with the singular antecedent while retaining the existing pronoun style."
+    },
+    {
+      "id": "rewrite-request",
+      "response": "```text\nPlease send me the file today. Thank you!\n```\n\nChanges:\n- **\"Send me the file today\\.\"** → **\"Please send me the file today\\. Thank you\\!\"**: Added a polite request and a warm expression of thanks while retaining the firm deadline."
+    },
+    {
+      "id": "new-draft",
+      "response": "```text\nThanks for watering my plants! I really appreciate your help.\n```"
+    },
+    {
+      "id": "missing-source-text",
+      "response": "Please send the text you would like me to proofread."
+    },
+    {
+      "id": "starter-help",
+      "response": "I can proofread American English while preserving your meaning, voice, and formatting. Start with `Proofread: [your text]` for the least invasive edit.\n\nFor shorter text, try:\n\n- Trim the fat: about 5–10% shorter.\n- Less wordy: about 30% shorter.\n- More concise: about 40% shorter.\n- More succinct: about 50–60% shorter.\n\nI can also explain English usage or use a style you request. Send your text and any directions."
+    },
+    {
+      "id": "direct-meta-question",
+      "response": "Affect is usually a verb meaning to influence; effect is usually a noun meaning a result.\n\nFor example, weather can affect travel plans, and a delay can be an effect of bad weather.\n\nLess commonly, effect is a verb meaning to bring about, as in effect change. Affect can also be a noun describing an outward display of emotion."
+    },
+    {
+      "id": "unrelated-conversation-negative",
+      "response": "The capital of Portugal is Lisbon."
+    },
+    {
+      "id": "implicit-proofreading-activation",
+      "response": "```text\nI received the package yesterday, but it doesn't have the invoice.\n```\n\nChanges:\n- **\"recieved\"** → **\"received\"**: Corrected the spelling.\n- **\"it don\\'t\"** → **\"it doesn\\'t\"**: Corrected subject–verb agreement."
+    },
+    {
+      "id": "rewrite-markdown-changes-quotes",
+      "response": "```text\nPlease send the **draft** and *notes* from [the folder](https://example.com/files?a=1&b=2) to `review_queue` today. Thank you!\n```\n\nChanges:\n- **\"Send the \\*\\*draft\\*\\* and \\*notes\\* from \\[the folder\\]\\(https\\:\\/\\/example\\.com\\/files\\?a\\=1\\&b\\=2\\) to \\`review\\_queue\\` today\\.\"** → **\"Please send the \\*\\*draft\\*\\* and \\*notes\\* from \\[the folder\\]\\(https\\:\\/\\/example\\.com\\/files\\?a\\=1\\&b\\=2\\) to \\`review\\_queue\\` today\\. Thank you\\!\"**: Added a polite request and thanks while preserving the deadline and literal formatting."
+    },
+    {
+      "id": "shorten-markdown-changes-quotes",
+      "response": "```text\nWe are reviewing the **draft** in `C:\\reports` and the [notes](https://example.com/notes), and we will make a decision about whether to send them later.\n```\n\nChanges:\n- **\"At this point in time\\, we are currently in the process of reviewing the \\*\\*draft\\*\\* in \\`C\\:\\\\reports\\` and the \\[notes\\]\\(https\\:\\/\\/example\\.com\\/notes\\)\\, and we will make a decision about whether to send them later\\.\"** → **\"We are reviewing the \\*\\*draft\\*\\* in \\`C\\:\\\\reports\\` and the \\[notes\\]\\(https\\:\\/\\/example\\.com\\/notes\\)\\, and we will make a decision about whether to send them later\\.\"**: Removed redundant wording about the current review while preserving the later decision and literal formatting."
+    },
+    {
+      "id": "rewrite-markup-characters-in-changes",
+      "response": "```text\nPlease check the **draft** marked <ready>, &copy;, and ~~pending~~ today.\n```\n\nChanges:\n- **\"Check the \\*\\*draft\\*\\* marked \\<ready\\>\\, \\&copy\\;\\, and \\~\\~pending\\~\\~ today\\.\"** → **\"Please check the \\*\\*draft\\*\\* marked \\<ready\\>\\, \\&copy\\;\\, and \\~\\~pending\\~\\~ today\\.\"**: Added a polite request and adjusted the initial capitalization while preserving the markup and deadline."
+    },
+    {
+      "id": "rewrite-autolink-punctuation-in-changes",
+      "response": "```text\nPlease check https://example.com/a?x=1&y=2 and www.example.com/a_b, then email user@example.com today.\n```\n\nChanges:\n- **\"Check https\\:\\/\\/example\\.com\\/a\\?x\\=1\\&y\\=2 and www\\.example\\.com\\/a\\_b\\, then email user\\@example\\.com today\\.\"** → **\"Please check https\\:\\/\\/example\\.com\\/a\\?x\\=1\\&y\\=2 and www\\.example\\.com\\/a\\_b\\, then email user\\@example\\.com today\\.\"**: Added a polite request and adjusted the initial capitalization while preserving both URLs, the email address, and the deadline."
+    },
+    {
+      "id": "fragment-labels-no-op",
+      "response": "The text does not require any adjustments."
+    },
+    {
+      "id": "finite-clause-agreement",
+      "response": "```text\n- The **bold** and *italic* phrase links readers to https://example.com/path?x=1.\n- The summary is helpful.\n```\n\nChanges:\n- **\"link\"** → **\"links\"**: Corrected the verb to agree with the singular subject."
+    },
+    {
+      "id": "fragment-labels-article-only",
+      "response": "```text\n- A **bold** and *italic* phrase link to https://example.com/path?x=1.\n- An unusual report summary.\n```\n\nChanges:\n- **\"A unusual\"** → **\"An unusual\"**: Corrected the article before a vowel sound while retaining the noun phrase."
+    }
+  ]
+}

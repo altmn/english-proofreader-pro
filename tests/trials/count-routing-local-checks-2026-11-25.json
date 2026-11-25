@@ -1,0 +1,327 @@
+{
+  "kind": "local-package-and-evidence-integrity-checks",
+  "date": "2026-11-25",
+  "skill_sha256": "f89c24e42f7c54ed74aa8761c7894a39843fbe1bc61d74e36f5427dfe34aea8a",
+  "canonical_manifest_sha256": "9cac9f516add3eea3d30f1a13e646aec481c03a19e92024353ced1174699c36b",
+  "repository_archive_sha256": "71f9cfe35011294fdcce49f617ef42742658fc0ef369f3cac61a07bbff5fd506",
+  "unit_tests": {
+    "passed": 82,
+    "skipped": 0,
+    "output_file": "tests/trials/count-routing-local-test-output-2026-11-25.txt.gz",
+    "output_sha256": "f9ac5d945a6c10e9ae2ccae7b500b5f61e5521d762d41a33fc5c9078b9967de6"
+  },
+  "all_evaluation_records": {
+    "count": 55,
+    "complete_and_integrity_valid": true,
+    "records": [
+      {
+        "path": "tests/trials/audit-fixes-core-sol-1-2026-11-25.json",
+        "sha256": "8d9ff69fd31d227e4b9889fe14b78abe1c6744ee1c0af1947edc76fd9f290d1b",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/audit-fixes-core-sol-2-2026-11-25.json",
+        "sha256": "301c2bf2bdbdc5dfd2e5768015b6d16e4e5ddd8e4c4fa01c279e2517ba362dea",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/audit-fixes-core-sol-3-2026-11-25.json",
+        "sha256": "015b58dfe06a136e74a2587fe4d5cf07afb94e90a386003a149c527babd1efee",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/audit-fixes-fragments-sol-1-2026-11-25.json",
+        "sha256": "2d5a0554707ef679e690bd07716835f32bfe723ebae5757c46b79490e242d6b1",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/audit-fixes-fragments-sol-2-2026-11-25.json",
+        "sha256": "b4c160af4c203da817f63972bfd563393e4611aa561d5a81dd0213613a4be4d4",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/audit-fixes-fragments-sol-3-2026-11-25.json",
+        "sha256": "aeb8e8358b70098f046958bfc9a3d6483650ef47e66458f5ec4a2d2f4f8bba2b",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/audit-fixes-markdown-sol-1-2026-11-25.json",
+        "sha256": "ee9b60e07b452f53210d140d4b862be75a0804b758e54cc11e4c9812800cfa43",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/audit-fixes-markdown-sol-2-2026-11-25.json",
+        "sha256": "483a2295aa597889951c28231832546ebc12fc1492242edfa1fb4e810da917f3",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/audit-fixes-markdown-sol-3-2026-11-25.json",
+        "sha256": "347d45f453ccbfd91ec11cc0d0c93167a3ef6533a36277519f89261f77b63793",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-baseline-sol-2026-10-12.json",
+        "sha256": "c96cfa20f41242a273354dc2396f2da8e89ffb6305826ef72a1c52b17a04272c",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-final-luna-1-2026-10-12.json",
+        "sha256": "b4583ed7d80a233b262c0c0e5ff4080a764556a9ea138b2b4310ad9cdfa8940f",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: fail; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-final-luna-2-2026-10-12.json",
+        "sha256": "5dde931bf5a7f73a55cdd388c660696ddbb7b5388286abf45126e4f71f6cbf4c",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: fail; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-final-luna-3-2026-10-12.json",
+        "sha256": "924bdba0b916da44ee4fc758d383f7e1bb0c359e16c73c74184feada41ac79f5",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: fail; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-final-sol-1-2026-10-12.json",
+        "sha256": "ab089a56e39886063a9dd894b761be4d28af942eb464a7562ccbc41fb8b290b5",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-final-sol-2-2026-10-12.json",
+        "sha256": "24b00ad7784b96cc4c02dca2ebd2671b447b890c1fd9618ac4f401e81299d330",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-final-sol-3-2026-10-12.json",
+        "sha256": "f6bd7c2367883827c2be77296bf8517350993c916bbc6646f76edaecf7571c8a",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-first-luna-1-2026-10-12.json",
+        "sha256": "dd7f468b3f38248e68a2cd6feafd50be2e6faa8ea37ee55e334be7a6345edcbf",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: fail; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-first-luna-2-2026-10-12.json",
+        "sha256": "1e30db18aaadeffbeb7635d56a65277d575bfe7a698f18d41a236a9ff60e4590",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: fail; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-first-luna-3-2026-10-12.json",
+        "sha256": "e0d2acbf613c8fc88a1dae47c3fd1d6aee5cd08ba9959b0cecaa64b6a4f67c2f",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: fail; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-first-sol-1-2026-10-12.json",
+        "sha256": "476cba77dac0dafbd04a51f410237388c2675511faf0cacdda38e1a7abcd0d04",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-first-sol-2-2026-10-12.json",
+        "sha256": "299cc1982ed027e062c929aa8c13dd69acf25eb20c8f96d04d3dd20ad0216d30",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-first-sol-3-2026-10-12.json",
+        "sha256": "85ec78b67a654169a1bf2500201aa8c3cb18916d9b19df957b4047569b38f2d7",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-max-luna-2-2026-10-12.json",
+        "sha256": "5f7fa185f7c2b71ad6d3612f721ecf87c9a6b73d8941d47dcb909480ccbc55bc",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-max-luna-2026-10-12.json",
+        "sha256": "61834fcb8db37ef8d9b713b0fe0f61bf3b912a8149576b5aa644d6ff62f2c8d2",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: fail; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/behavior-max-luna-3-2026-10-12.json",
+        "sha256": "0a8fd11aa3515974116a14daa915b279bbf949ea7f4c3af3f96ba007a07943bb",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/count-routing-core-sol-1-2026-11-25.json",
+        "sha256": "9bb3a32309c4ec29b4111a5be1374c9e9127e3d8914a9f2b36e8642092fe9ba9",
+        "result": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/count-routing-core-sol-2-2026-11-25.json",
+        "sha256": "d760b06d60dad7ff6585efaac1e98e08f67cd5f9986bb8afc3d3c6eee6926ad7",
+        "result": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/count-routing-core-sol-3-2026-11-25.json",
+        "sha256": "04842f91d0907bbe30245db6af812524752db8e3b018e1d1757cbe6205a12aa0",
+        "result": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/count-routing-fragments-sol-1-2026-11-25.json",
+        "sha256": "66ad17be1da1ce3184fe6ae3c0829828d132f85fad86f7e751aab692be5964de",
+        "result": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/count-routing-fragments-sol-2-2026-11-25.json",
+        "sha256": "f14c776fc1dd1676baf967920d3a8f69340d0cd5507bb8ae6adfbeca8aa07820",
+        "result": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/count-routing-fragments-sol-3-2026-11-25.json",
+        "sha256": "5bb550a682b786805b5918a209622c406994965eb0b9ffcee3479ba71b3ddb28",
+        "result": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/count-routing-markdown-sol-1-2026-11-25.json",
+        "sha256": "15634b6bf0d26836ff6f84303e979b418560346ab6ae7ac99765b71927c9447a",
+        "result": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/count-routing-markdown-sol-2-2026-11-25.json",
+        "sha256": "4d9204378dcce2cd62b5b61f414acacea01a225c8d0298f93d634bb515eb0d0a",
+        "result": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/count-routing-markdown-sol-3-2026-11-25.json",
+        "sha256": "87c10b86008f57529e9acad7b3d2be3d7d40e56a2e220349ccbb5621ee15c465",
+        "result": "valid evaluation record (current source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/engineering-fixes-2026-10-12-run-1.json",
+        "sha256": "c0a8ede85b3e3546eaaa3cc0b3a6078f0fe34a569f2507fe0f8b52db677b2d7d",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: fail; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/engineering-fixes-2026-10-12-run-2.json",
+        "sha256": "16480529a63897c10d70acb794255fcde748d30aeb796758ddf1bb8ed6f7af41",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: fail; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/engineering-fixes-2026-10-12-run-3.json",
+        "sha256": "4b3f9a146acc1f29123ab0c96dc3acd377af15bdcf0c10c79ac8e33bfb38c8fe",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: fail; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/host-behavior-core-sol-1-2026-11-16.json",
+        "sha256": "33f9b914fb631c2040a7321ca5b52bdba87b112cbeb553ab48944c1c6ea6a9ec",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/host-behavior-core-sol-2-2026-11-16.json",
+        "sha256": "24a462efdb4c7c78f3eb4d8265c5dfa27a9e376396bf790572197353082e6104",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: fail; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/host-behavior-core-sol-3-2026-11-16.json",
+        "sha256": "7910e9090c087e5b167ae642335d58c664535eef2ec8ce9372a71d2910497e42",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/host-behavior-markdown-sol-1-2026-11-16.json",
+        "sha256": "1be024e1d8febed2ef5e5915e6d6183845223ac0d8a50b78c0c6f44344b0dedc",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/host-behavior-markdown-sol-2-2026-11-16.json",
+        "sha256": "22071f36b0a828bbc116a67b43b30a176c44469e06b159c6c83157480afeb74c",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/host-behavior-markdown-sol-3-2026-11-16.json",
+        "sha256": "52742cb9561ff0a53c9ee6b9f39d56bd1b1bb948947b4b076fdad6c9d502e094",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/host-facts-core-sol-1-2026-11-16.json",
+        "sha256": "e8956670d7fd5dec8b0cc4a6eec71a0c5e956dbc0f9c9a00fe95432610a597d4",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/host-facts-core-sol-2-2026-11-16.json",
+        "sha256": "6bbf4f41eaa0bfa25b389e3824f3cb98345575e4937a27b57b400fcdd6cfe97c",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/host-facts-core-sol-3-2026-11-16.json",
+        "sha256": "f3582897a386b6746096440ab209730ed590128a3ea080102e0158eb42991862",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/host-facts-markdown-sol-1-2026-11-16.json",
+        "sha256": "9cea95fe094a7e34c47e8e9da239f2b58818a41d53c254f498d58efc01a59192",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/host-facts-markdown-sol-2-2026-11-16.json",
+        "sha256": "85bb5024ee0623c11f9335908831ae90a89a947c558ff334e8800c8f854a6eb7",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/host-facts-markdown-sol-3-2026-11-16.json",
+        "sha256": "703d712ab1df7f3d15fd9440ea03fc9ec4ec3d6735a6af36b3dc5d455bd5f92e",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/review-fixes-sol-1-2026-11-16.json",
+        "sha256": "b7a5e9e68868dcbeb142cc068bc51be47d66a44bfbb5fe34857235bb35718ebc",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/review-fixes-sol-2-2026-11-16.json",
+        "sha256": "5d7e68ccff68241fd56b6ddd3cd0557756123755e4fe0d66bc3aae0129233605",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/review-fixes-sol-3-2026-11-16.json",
+        "sha256": "eb1156b999ec37a9896695f970baa5e184e02acafaabee965d34ac541f9bd1ba",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/review-markdown-sol-1-2026-11-16.json",
+        "sha256": "8eed2c22d488930f72613d1e07664ae3933deb262edef97a54cb1f4497180caa",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/review-markdown-sol-2-2026-11-16.json",
+        "sha256": "f4d95ea22da198d324eb60f9177c6831c87374dd36f1f331dcb34efe2efa8cf7",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      },
+      {
+        "path": "tests/trials/review-markdown-sol-3-2026-11-16.json",
+        "sha256": "0f790cf3a52e1d350440b6385d3df5034d21b22626b65f226bab8c6fd6729593",
+        "result": "valid evaluation record (historical source binding); assertion aggregate: pass; semantic verdicts are manual"
+      }
+    ]
+  },
+  "current_visible_output_suites": [
+    {
+      "suite": "core",
+      "result": "valid evaluation suite: 3 distinct recorded runs for gpt-6.1-sol/high/independent-agent-simulation; execution provenance and semantic verdicts remain reviewer claims"
+    },
+    {
+      "suite": "markdown",
+      "result": "valid evaluation suite: 3 distinct recorded runs for gpt-6.1-sol/high/independent-agent-simulation; execution provenance and semantic verdicts remain reviewer claims"
+    },
+    {
+      "suite": "fragments",
+      "result": "valid evaluation suite: 3 distinct recorded runs for gpt-6.1-sol/high/independent-agent-simulation; execution provenance and semantic verdicts remain reviewer claims"
+    }
+  ],
+  "package_checks": [
+    "release validation passed",
+    "six-file archive CRC and exact source/staging bytes passed",
+    "generated local compatibility manifest equals canonical generator output",
+    "repeat build byte-identical",
+    "git diff --check passed"
+  ],
+  "generation_protocol": {
+    "outcome": "failed",
+    "review_file": "tests/trials/count-routing-cli-protocol-review-2026-11-25.json",
+    "review_sha256": "afc9d62b7ebf6f0132ac44e8dacc61c740a638d5ca01cb71cea0e85626499e99",
+    "limit": "These local/semantic/integrity passes do not certify actual final-count execution; capture3 lacks evidence."
+  },
+  "native_acceptance": {
+    "outcome": "not_accepted",
+    "observations_file": "tests/trials/audit-fixes-safari-candidates-2026-11-25.json",
+    "observations_sha256": "ef25c68fb1060ceca9b122b3ff0dea2875822edbe049a25a6f385d1478704a00",
+    "limit": "Private Safari candidates did not pass. No pass is transferred from repository manifest1.0.1 to private1.0.4."
+  }
+}

@@ -13,6 +13,22 @@
     ],
     ".gstack/pregate.json": [
       "tests/test_repository.py"
+    ],
+    ".github/workflows/ci.yml": [
+      "tests/test_workflow_evidence.py"
+    ],
+    "tests/README.md": [
+      "tests/test_repository.py",
+      "tests/test_workflow_evidence.py"
+    ],
+    "tests/audit-fixes-runner.txt": [
+      "tests/test_workflow_evidence.py"
+    ],
+    "tests/verified-execution-runner.txt": [
+      "tests/test_workflow_evidence.py"
+    ],
+    "tests/host-acceptance-runner.txt": [
+      "tests/test_repository.py"
     ]
   },
   "allowlist": [

@@ -47,15 +47,20 @@ jobs:
       - name: Check historical behavioral-record integrity
         # Keep prior profiles and failures; they do not accept revised inputs.
         run: |
-          for record in tests/trials/behavior-final-{luna,sol}-{1,2,3}-2026-10-12.json tests/trials/behavior-max-luna-2026-10-12.json tests/trials/behavior-max-luna-{2,3}-2026-10-12.json tests/trials/review-{fixes,markdown}-sol-{1,2,3}-2026-11-16.json tests/trials/host-behavior-{core,markdown}-sol-{1,2,3}-2026-11-16.json; do
+          for record in tests/trials/behavior-final-{luna,sol}-{1,2,3}-2026-10-12.json tests/trials/behavior-max-luna-2026-10-12.json tests/trials/behavior-max-luna-{2,3}-2026-10-12.json tests/trials/review-{fixes,markdown}-sol-{1,2,3}-2026-11-16.json tests/trials/host-behavior-{core,markdown}-sol-{1,2,3}-2026-11-16.json tests/trials/host-facts-{core,markdown}-sol-{1,2,3}-2026-11-16.json tests/trials/audit-fixes-{core,markdown,fragments}-sol-{1,2,3}-2026-11-25.json tests/trials/count-routing-{core,markdown,fragments}-sol-{1,2,3}-2026-11-25.json; do
             python scripts/evaluate.py validate "$record" --require-complete
           done
 
       - name: Require current simulation profile and distinct run evidence
         # Profile/duplicate checks do not attest independent execution or host UI.
+        # Actual source/final execution is required by the additional gate below.
         run: |
-          python scripts/evaluate.py validate-suite tests/trials/host-facts-core-sol-{1,2,3}-2026-11-16.json --fixtures tests/cases.json --model gpt-6.1-sol --reasoning-effort high --invocation-mode independent-agent-simulation --min-runs 3 --require-current --require-complete --require-pass
-          python scripts/evaluate.py validate-suite tests/trials/host-facts-markdown-sol-{1,2,3}-2026-11-16.json --fixtures tests/changes-markdown-cases.json --model gpt-6.1-sol --reasoning-effort high --invocation-mode independent-agent-simulation --min-runs 3 --require-current --require-complete --require-pass
+          python scripts/evaluate.py validate-suite tests/trials/resource-execution-v4-core-sol-{1,2,3}-2026-11-25.json --fixtures tests/cases.json --model gpt-6.1-sol --reasoning-effort high --invocation-mode independent-agent-simulation --min-runs 3 --require-current --require-complete --require-pass
+          python scripts/evaluate.py validate-suite tests/trials/resource-execution-v4-markdown-sol-{1,2,3}-2026-11-25.json --fixtures tests/changes-markdown-cases.json --model gpt-6.1-sol --reasoning-effort high --invocation-mode independent-agent-simulation --min-runs 3 --require-current --require-complete --require-pass
+          python scripts/evaluate.py validate-suite tests/trials/resource-execution-v4-fragments-sol-{1,2,3}-2026-11-25.json --fixtures tests/fragment-calibration-cases.json --model gpt-6.1-sol --reasoning-effort high --invocation-mode independent-agent-simulation --min-runs 3 --require-current --require-complete --require-pass
+
+      - name: Require executed source and final measurements
+        run: python scripts/check_capture_evidence.py tests/trials/resource-execution-v4-panel-2026-11-25.json
 
       - name: Install asset verification decoder
         run: |

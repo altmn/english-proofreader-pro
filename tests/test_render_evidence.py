@@ -49,23 +49,38 @@ class RenderedText(HTMLParser):
 
 class RenderEvidenceTests(unittest.TestCase):
     def test_gfm_evidence_matches_bound_responses_and_literal_bold_quotations(self) -> None:
-        for proof_name, record_prefix in (
-            ("review-markdown-render-2026-11-16.json", "review-markdown-sol"),
-            ("host-behavior-markdown-render-2026-11-16.json", "host-behavior-markdown-sol"),
-            ("host-facts-markdown-render-2026-11-16.json", "host-facts-markdown-sol"),
+        for proof_name, record_prefix, capture_date in (
+            ("review-markdown-render-2026-11-16.json", "review-markdown-sol", "2026-11-16"),
+            ("host-behavior-markdown-render-2026-11-16.json", "host-behavior-markdown-sol", "2026-11-16"),
+            ("host-facts-markdown-render-2026-11-16.json", "host-facts-markdown-sol", "2026-11-16"),
+            ("audit-fixes-markdown-render-2026-11-25.json", "audit-fixes-markdown-sol", "2026-11-25"),
+            ("count-routing-markdown-render-2026-11-25.json", "count-routing-markdown-sol", "2026-11-25"),
         ):
             with self.subTest(proof=proof_name):
-                self.check_render_evidence(proof_name, record_prefix)
+                self.check_render_evidence(proof_name, record_prefix, capture_date)
 
-    def check_render_evidence(self, proof_name: str, record_prefix: str) -> None:
+    def test_resource_v3_accepted_run_render_evidence(self) -> None:
+        self.check_render_evidence(
+            "resource-execution-v3-markdown-render-2026-11-25.json",
+            "resource-execution-v3-markdown-sol", "2026-11-25", numbers=(2, 3),
+        )
+
+    def test_resource_v4_accepted_run_render_evidence(self) -> None:
+        self.check_render_evidence(
+            "resource-execution-v4-markdown-render-2026-11-25.json",
+            "resource-execution-v4-markdown-sol", "2026-11-25",
+        )
+
+    def check_render_evidence(self, proof_name: str, record_prefix: str, capture_date: str,
+                              *, numbers: tuple[int, ...] = (1, 2, 3)) -> None:
         proof = evaluate.load_json(ROOT / "tests/trials" / proof_name, "render evidence")
         self.assertEqual(proof["kind"], "markdown-render-verification")
         seen: set[tuple[str, str]] = set()
         expected: set[tuple[str, str]] = set()
         records = {}
         snapshots = {}
-        for number in (1, 2, 3):
-            relative = f"tests/trials/{record_prefix}-{number}-2026-11-16.json"
+        for number in numbers:
+            relative = f"tests/trials/{record_prefix}-{number}-{capture_date}.json"
             evaluate.validate_record(ROOT / relative)
             records[relative] = evaluate.load_json(ROOT / relative, "bound record")
             snapshots[relative] = evaluate.load_json(ROOT / records[relative]["snapshot_file"], "bound snapshot")

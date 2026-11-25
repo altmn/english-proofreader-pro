@@ -13,7 +13,7 @@ Only a maintainer should publish a release. A checked-in version or locally buil
    python3 scripts/release.py build
    ```
 
-3. Inspect the generated `dist/english-proofreader-pro-<version>.zip`: verify it contains exactly the six runtime files, opens successfully, and excludes development materials and private data. Calculate and record the SHA-256 with `shasum -a 256 dist/english-proofreader-pro-<version>.zip` on macOS or `sha256sum dist/english-proofreader-pro-<version>.zip` on Linux.
+3. Build from a stable source tree: the builder validates one captured runtime byte snapshot and compares both outputs with it, but its sequential capture is not an atomic Git revision. Inspect the generated `dist/english-proofreader-pro-<version>.zip`: verify it contains exactly the seven runtime files, including the counting helper, matches the reviewed source, opens successfully, and excludes development materials and private data. Calculate and record the SHA-256 with `shasum -a 256 dist/english-proofreader-pro-<version>.zip` on macOS or `sha256sum dist/english-proofreader-pro-<version>.zip` on Linux.
 4. Review the release notes, package contents, privacy notice, and source-bound synthetic behavior/host records using the [evaluation procedure](../tests/README.md). For a skill change, refresh three complete independent simulation runs with exact input hashes and per-assertion verdicts. Require all assertions to pass for the profile being accepted; a passing stronger-model run does not clear a failing Luna profile. Run intended-host acceptance against the exact built ZIP and record the real host version, model/effort, installation method, invocation mode, and archive checksum; historical observations are not acceptance for a new skill. Tests are not a guarantee of consistent model behavior in every host.
 5. Confirm CI's `dwebp` asset-decode check passed. For local asset verification, install libwebp's decoder through your system package manager and run `dwebp assets/icon.webp -o /tmp/english-proofreader-pro-icon.png`; the archive builder itself remains standard-library-only.
 6. Confirm successful CodeQL analyses for both Python and GitHub Actions on the exact reviewed commit, then review the alerts. Resolve high/critical security alerts and error-level alerts, or record the maintainer's reasoned disposition before releasing. Confirm GitHub's immutable-release setting is enabled and the `Release tag integrity` ruleset protects `refs/tags/v*` against updates and deletion with no bypass actors. These settings live on GitHub, not in the archive.
@@ -35,7 +35,7 @@ Only a maintainer should publish a release. A checked-in version or locally buil
 6. If submitting the ZIP to a separate plugin directory, use that platform's current process. GitHub source publication and plugin-directory submission are distinct; publishing one does not automatically publish the other, and submission is not approval or listing.
 7. If a release needs correction, use a new version/tag and update `CHANGELOG.md` and release metadata through a new pull request against the default branch. Do not weaken the ruleset, reuse a tag, edit `master` directly, or backfill an unverified release history.
 
-There is no pre-existing public release history recorded in this repository's changelog.
+The changelog records prepared package changes. Confirm the matching published GitHub release and its verified assets before claiming that a version is available.
 
 ## References
 

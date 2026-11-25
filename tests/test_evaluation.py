@@ -23,6 +23,10 @@ class EvaluationTests(unittest.TestCase):
         (self.root / "tests/trials").mkdir(parents=True)
         (self.root / "plugin.json").write_text('{"version":"1.2.3"}\n', encoding="utf-8")
         (self.root / "skills/proofreader-pro/SKILL.md").write_text("Synthetic skill v1\n", encoding="utf-8")
+        self.resource_path = self.root / evaluate.RESOURCE_PATHS[0]
+        self.resource_path.parent.mkdir(parents=True)
+        self.resource_bytes = b"raise RuntimeError('the evaluator must not execute resource code')\n"
+        self.resource_path.write_bytes(self.resource_bytes)
         fixture = {
             "schema_version": 1,
             "cases": [
@@ -79,6 +83,22 @@ class EvaluationTests(unittest.TestCase):
 
     def _save_record(self, record: dict) -> None:
         self.record_path.write_text(json.dumps(record, indent=2), encoding="utf-8")
+
+    def _legacy_record(self, record: dict, version: int = 1) -> dict:
+        source = Path(record["snapshot_file"])
+        if not source.is_absolute():
+            source = self.root / source
+        snapshot = json.loads(source.read_text(encoding="utf-8"))
+        snapshot["schema_version"] = 1
+        snapshot.pop("resources", None)
+        suffix = record["metadata"].get("run_id", "unprofiled")
+        legacy = self.root / f"tests/trials/legacy-{version}-{suffix}-snapshot.json"
+        legacy.write_text(json.dumps(snapshot), encoding="utf-8")
+        record["schema_version"] = version
+        record["snapshot_file"] = str(legacy.relative_to(self.root))
+        record["snapshot_sha256"] = evaluate.sha256_bytes(legacy.read_bytes())
+        record["source_binding"].pop("resources", None)
+        return record
 
     def _competing_creates(self, target: Path, calls: list) -> list:
         barrier = threading.Barrier(2)
@@ -186,24 +206,24 @@ class EvaluationTests(unittest.TestCase):
                 evaluate.create_record(args)
         self._record()
         record = self._load_record()
-        self.assertEqual(record["schema_version"], 2)
+        self.assertEqual(record["schema_version"], evaluate.RECORD_SCHEMA_VERSION)
         for field in ("reasoning_effort", "run_id"):
             record["metadata"].pop(field)
         self._save_record(record)
         with self.assertRaisesRegex(evaluate.EvaluationError, "reasoning_effort"):
             evaluate.validate_record(self.record_path)
-        record["schema_version"] = 1
+        record = self._legacy_record(record)
         self._save_record(record)
-        self.assertEqual(evaluate.validate_record(self.record_path), "current")
+        self.assertEqual(evaluate.validate_record(self.record_path), "historical")
         with self.assertRaisesRegex(evaluate.EvaluationError, "schema-2 records"):
             self._validate_suite([self.record_path], min_runs=1, require_complete=False, require_pass=False)
 
     def test_suite_rejects_legacy_records_even_with_structured_profile_fields(self) -> None:
         paths = self._suite_records()
         record = json.loads(paths[1].read_text(encoding="utf-8"))
-        record["schema_version"] = 1
+        record = self._legacy_record(record)
         paths[1].write_text(json.dumps(record), encoding="utf-8")
-        self.assertEqual(evaluate.validate_record(paths[1]), "current")
+        self.assertEqual(evaluate.validate_record(paths[1]), "historical")
         with self.assertRaisesRegex(evaluate.EvaluationError, "schema-2 records"):
             self._validate_suite(paths)
 
@@ -431,6 +451,8 @@ class EvaluationTests(unittest.TestCase):
         self._record()
         snapshot = self._snapshot()
         self.assertEqual(evaluate.validate_snapshot(snapshot), {case["id"]: case for case in snapshot["cases"]})
+        snapshot["schema_version"] = 1
+        snapshot.pop("resources")
         del snapshot["fixture_text"]
         self.assertEqual(evaluate.validate_snapshot(snapshot), {case["id"]: case for case in snapshot["cases"]})
 
@@ -439,6 +461,8 @@ class EvaluationTests(unittest.TestCase):
         (self.root / "tests/cases.json").write_text('{"schema_version":1,"cases":[]}', encoding="utf-8")
         self.assertEqual(evaluate.validate_record(self.record_path), "historical")
         snapshot = self._snapshot()
+        snapshot["schema_version"] = 1
+        snapshot.pop("resources")
         snapshot.pop("fixture_text", None)
         with self.assertRaisesRegex(evaluate.EvaluationError, "no embedded fixture text"):
             evaluate.validate_snapshot(snapshot)
@@ -565,6 +589,165 @@ class EvaluationTests(unittest.TestCase):
         self._record()
         (self.root / "skills/proofreader-pro/SKILL.md").write_text("Synthetic skill v2\n", encoding="utf-8")
         self.assertEqual(evaluate.validate_record(self.record_path), "historical")
+
+    def test_resource_bytes_are_embedded_and_bound_without_executing_them(self) -> None:
+        self._record()
+        snapshot, record = self._snapshot(), self._load_record()
+        self.assertEqual(snapshot["schema_version"], 2)
+        self.assertEqual(record["schema_version"], 3)
+        expected = {"path": evaluate.RESOURCE_PATHS[0], "text": self.resource_bytes.decode("utf-8"),
+                    "sha256": evaluate.sha256_bytes(self.resource_bytes), "utf8_byte_count": len(self.resource_bytes)}
+        self.assertEqual(snapshot["resources"], [expected])
+        self.assertEqual(record["source_binding"]["resources"], {expected["path"]: expected["sha256"]})
+        # The synthetic helper raises immediately if executed. Validation treats
+        # its bytes only as data and still succeeds.
+        self.assertEqual(evaluate.validate_record(self.record_path), "current")
+
+    def test_changed_or_missing_resource_is_historical_without_losing_saved_bytes(self) -> None:
+        self._record()
+        original_record = self.record_path.read_bytes()
+        original_snapshot = self.snapshot_path.read_bytes()
+        self.resource_path.write_text("A changed resource.\n", encoding="utf-8")
+        self.assertEqual(evaluate.validate_record(self.record_path), "historical")
+        with self.assertRaisesRegex(evaluate.EvaluationError, "resource"):
+            evaluate.check_requirements(self._load_record(), "historical", require_current=True)
+        self.resource_path.unlink()
+        self.assertEqual(evaluate.validate_record(self.record_path), "historical")
+        evaluate.validate_snapshot(self._snapshot())
+        self.assertEqual(self.snapshot_path.read_bytes(), original_snapshot)
+        self.assertEqual(self.record_path.read_bytes(), original_record)
+        self.resource_path.write_bytes(self.resource_bytes)
+        self.assertEqual(evaluate.validate_record(self.record_path), "current")
+
+    def test_new_snapshots_require_present_regular_nonempty_bounded_utf8_resource(self) -> None:
+        cases = [(None, "cannot read current resource"), (b" \n", "empty"), (b"\xff", "not UTF-8"),
+                 (b"x" * (evaluate.MAX_RESOURCE_BYTES + 1), "byte limit"), ("directory", "regular file")]
+        for index, (data, message) in enumerate(cases):
+            with self.subTest(case=message):
+                self.resource_path.unlink()
+                if data == "directory":
+                    self.resource_path.mkdir()
+                elif data is not None:
+                    self.resource_path.write_bytes(data)
+                try:
+                    with self.assertRaisesRegex(evaluate.EvaluationError, message):
+                        evaluate.create_snapshot(argparse.Namespace(id=f"missing-resource-{index}", runner_context=str(self.context_path)))
+                    self.assertFalse((self.root / f"tests/trials/missing-resource-{index}-snapshot.json").exists())
+                finally:
+                    if self.resource_path.is_dir():
+                        self.resource_path.rmdir()
+                    elif self.resource_path.exists():
+                        self.resource_path.unlink()
+                    self.resource_path.write_bytes(self.resource_bytes)
+
+    def test_resource_file_and_ancestor_symlinks_are_not_followed(self) -> None:
+        self._record()
+        outside = self.root / "unlisted-resource.py"
+        outside.write_bytes(self.resource_bytes)
+        self.resource_path.unlink()
+        self.resource_path.symlink_to(outside)
+        with self.assertRaisesRegex(evaluate.EvaluationError, "symbolic links"):
+            evaluate.read_current_resources()
+        self.assertEqual(evaluate.validate_record(self.record_path), "historical")
+        self.resource_path.unlink()
+        self.resource_path.write_bytes(self.resource_bytes)
+        original_dir = self.resource_path.parent
+        held = self.root / "held-scripts"
+        original_dir.rename(held)
+        original_dir.symlink_to(held, target_is_directory=True)
+        try:
+            with self.assertRaisesRegex(evaluate.EvaluationError, "symbolic links"):
+                evaluate.read_current_resources()
+            self.assertEqual(evaluate.validate_record(self.record_path), "historical")
+        finally:
+            original_dir.unlink()
+            held.rename(original_dir)
+        self.assertEqual(outside.read_bytes(), self.resource_bytes)
+
+    def test_embedded_resource_hash_count_and_paths_cannot_be_falsified(self) -> None:
+        original = self._snapshot()
+        changes = [
+            (lambda resource: resource.update(text=resource["text"] + "changed"), "byte count"),
+            (lambda resource: resource.update(sha256="0" * 64), "text/hash"),
+            (lambda resource: resource.update(utf8_byte_count=True), "byte count"),
+            (lambda resource: resource.update(path="../outside.py"), "unlisted"),
+            (lambda resource: resource.update(path="/outside.py"), "unlisted"),
+            (lambda resource: resource.update(path="skills/other.py"), "unlisted"),
+        ]
+        for mutate, reason in changes:
+            snapshot = json.loads(json.dumps(original))
+            mutate(snapshot["resources"][0])
+            with self.subTest(reason=reason), self.assertRaisesRegex(evaluate.EvaluationError, reason):
+                evaluate.validate_snapshot(snapshot)
+        for resources in ([], original["resources"] * 2):
+            snapshot = json.loads(json.dumps(original))
+            snapshot["resources"] = resources
+            with self.assertRaisesRegex(evaluate.EvaluationError, "complete resource allowlist"):
+                evaluate.validate_snapshot(snapshot)
+
+    def test_record_resource_binding_must_match_embedded_snapshot(self) -> None:
+        self._record()
+        record = self._load_record()
+        record["source_binding"]["resources"][evaluate.RESOURCE_PATHS[0]] = "0" * 64
+        self._save_record(record)
+        with self.assertRaisesRegex(evaluate.EvaluationError, "source binding"):
+            evaluate.validate_record(self.record_path)
+
+    def test_resource_crlf_and_unicode_bytes_have_exact_identity(self) -> None:
+        data = "# café\r\nraise RuntimeError('data only')\r\n".encode("utf-8")
+        self.resource_path.write_bytes(data)
+        snapshot_path = evaluate.create_snapshot(argparse.Namespace(id="resource-crlf", runner_context=str(self.context_path)))
+        snapshot = json.loads(snapshot_path.read_bytes())
+        self.assertEqual(snapshot["resources"][0]["text"].encode("utf-8"), data)
+        self.assertEqual(snapshot["resources"][0]["sha256"], evaluate.sha256_bytes(data))
+        self.assertEqual(snapshot["resources"][0]["utf8_byte_count"], len(data))
+
+    def test_legacy_schema_two_remains_valid_but_cannot_accept_resources(self) -> None:
+        self._record()
+        record = self._legacy_record(self._load_record(), version=2)
+        self._save_record(record)
+        self.assertEqual(evaluate.validate_record(self.record_path), "historical")
+        record["metadata"].pop("run_id")
+        self._save_record(record)
+        with self.assertRaisesRegex(evaluate.EvaluationError, "run_id"):
+            evaluate.validate_record(self.record_path)
+        snapshot = self._snapshot()
+        snapshot["schema_version"] = 1
+        with self.assertRaisesRegex(evaluate.EvaluationError, "legacy snapshots"):
+            evaluate.validate_snapshot(snapshot)
+
+    def test_legacy_schema_two_suites_remain_historically_verifiable(self) -> None:
+        paths = self._suite_records()
+        for path in paths:
+            record = self._legacy_record(json.loads(path.read_text(encoding="utf-8")), version=2)
+            path.write_text(json.dumps(record), encoding="utf-8")
+        self.assertEqual(self._validate_suite(paths, require_current=False), 3)
+        with self.assertRaisesRegex(evaluate.EvaluationError, "historical"):
+            self._validate_suite(paths)
+
+    def test_resource_aware_schema_cannot_be_downgraded_or_omit_source_content(self) -> None:
+        snapshot = self._snapshot()
+        for field in ("resources", "fixture_text"):
+            changed = dict(snapshot)
+            changed.pop(field)
+            with self.subTest(field=field), self.assertRaisesRegex(evaluate.EvaluationError, "resource-aware"):
+                evaluate.validate_snapshot(changed)
+        self._record()
+        record = self._load_record()
+        record["schema_version"] = 2
+        self._save_record(record)
+        with self.assertRaisesRegex(evaluate.EvaluationError, "incompatible resource bindings"):
+            evaluate.validate_record(self.record_path)
+
+    def test_new_records_cannot_be_created_from_an_unbound_legacy_snapshot(self) -> None:
+        snapshot = self._snapshot()
+        snapshot["schema_version"] = 1
+        snapshot.pop("resources")
+        self.snapshot_path.write_text(json.dumps(snapshot), encoding="utf-8")
+        self._responses()
+        with self.assertRaisesRegex(evaluate.EvaluationError, "new records require a resource-aware snapshot"):
+            evaluate.create_record(self._record_args())
+        self.assertFalse(self.record_path.exists())
 
     def test_intended_host_and_grader_metadata_are_required(self) -> None:
         self._responses()

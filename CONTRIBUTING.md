@@ -20,7 +20,7 @@ python3 scripts/release.py validate
 python3 scripts/release.py build
 ```
 
-The tests check deterministic local behavior, validation, and packaging; they do not guarantee language-model behavior in every host or prompt. The build produces a ZIP containing the six runtime files and stages a local development copy under `dist/local-plugin/`. Review the archive contents before distributing it.
+The tests check deterministic local behavior, validation, and packaging; they do not guarantee language-model behavior in every host or prompt. The build produces a ZIP containing seven allowlisted runtime files, including the offline counting helper, and stages a local development copy under `dist/local-plugin/`. Review the archive contents before distributing it. Keep the helper's inputs inert, its dependencies in the standard library, and its measurements separate from model-authored claims of execution.
 
 ## Pull requests
 
