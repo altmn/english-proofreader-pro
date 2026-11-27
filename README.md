@@ -7,8 +7,8 @@ Polish emails, documents, and everyday messages in American English while keepin
 [Try it](#try-it) · [Get started](#get-started) · [Get help](#get-help) · [Update or remove](#update-or-remove) · [Technical details](#technical-details)
 
 ```diff
-- The reports is ready for your review.
-+ The reports are ready for your review.
+- The reports is ready.
++ The reports are ready.
 ```
 
 *An illustrative edit using made-up text. Edits to your text come with a list of what changed; already-correct text is left alone.*
