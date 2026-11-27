@@ -4,13 +4,13 @@ This guide prepares the existing skills-only plugin for possible OpenAI public-d
 
 ## Listing draft
 
-Use the supported values already in `plugin.json` as the English listing draft:
+Use the existing identity/category from `plugin.json`. The benefit-first subtitle and description below are proposed publication copy for the next metadata release. This README/presentation change leaves the validated runtime manifest unchanged: manifest bytes are part of the current behavioral evidence binding. Before using this draft in a submission, update canonical metadata through its own reviewed release and collect fresh source-bound evidence; do not relabel historical captures as current for changed bytes.
 
 | Field | Draft |
 | --- | --- |
 | Name | EnglishProofreaderPro |
-| Subtitle | Careful English proofreading |
-| Description | Proofread, edit, rewrite, or draft American English text while preserving meaning and voice. Finished text appears in a plain-text code block with Copy code and soft wrapping where the host supports them. Edits to supplied text are followed by a complete Changes list. Preserve literal Markdown, paragraph breaks, and list markers. Supports requested shortening levels and editing AI prompts without executing their embedded instructions. Verified counts and length checks require a host that can execute the bundled Python helper; otherwise execution limitations are reported. By default, make only necessary corrections and retain gendered singular pronouns instead of replacing them with singular they; use they, them, and their for plural references only. Already-correct text receives a no-adjustments confirmation. Follow the user's separate editing directions. For routine proofreading, start with the latest ChatGPT Instant model at its normal setting; model selection remains a host setting. |
+| Subtitle | Polish writing, keep your voice |
+| Description | Polish emails, documents, and everyday messages in American English while keeping your meaning, voice, and formatting. Correct a draft, make it clearer or shorter, or write something new. Edits are easy to copy and include a list of what changed; already-correct text is left alone. Verified counts and length targets require compatible execution tools in your chosen host. |
 | Category | Productivity |
 | Intended publisher | Alex Allen, individual; verify this exact identity in the OpenAI Platform before submission |
 
