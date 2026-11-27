@@ -63,6 +63,8 @@ proposal. We expected it yesterday and need it before tomorrow's meeting.
 
 </details>
 
+<a id="build-and-install"></a>
+
 ## Get started
 
 Ask an AI assistant to help with setup, or follow the [installation guide](docs/getting-started.md) yourself. No terminal knowledge is needed to ask for help.
@@ -111,6 +113,8 @@ and use a short made-up example to check the result.
 
 [Get support](SUPPORT.md) or [report a problem](https://github.com/altmn/english-proofreader-pro/issues/new/choose) with a small synthetic example. Keep private writing out of public reports. Report vulnerabilities through the [security policy](SECURITY.md).
 
+<a id="disable-or-remove"></a>
+
 ## Update or remove
 
 **Ask the AI tool where you use the skill:**
@@ -154,10 +158,16 @@ The plugin contains editing instructions and an offline Python counting helper. 
 | Inspect checks and their limits | [Testing](tests/README.md) · [Results](tests/RESULTS.md) · [Known issues](KNOWN_ISSUES.md) |
 | Understand data handling | [Privacy](PRIVACY.md) · [Terms](TERMS.md) |
 
+<a id="contribute-and-get-help"></a>
+
 ## Contribute
 
 Improvements to documentation, synthetic examples, packaging, and tests are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md); changes use feature branches and pull requests against `master`.
 
+<a id="openai-directory-publication"></a>
+
 Maintainers can find [release instructions](docs/releasing.md), [directory submission preparation](docs/chatgpt-submission.md), [open-source readiness](docs/open-source-readiness.md), and the [presentation guide](docs/presentation.md). OpenAI submission, review, and directory publication remain separate steps.
+
+<a id="license-and-author"></a>
 
 Maintained by [Alex Allen (@altmn)](https://github.com/altmn). [MIT license](LICENSE) · [Notices](NOTICE.md) · [Code of conduct](CODE_OF_CONDUCT.md). This independent project is not an official OpenAI product.
