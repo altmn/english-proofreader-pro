@@ -4,17 +4,11 @@
 
 Polish an email, a document, or an everyday message in American English while preserving your voice. Refine a draft or write something from scratch.
 
-```diff
-  I'm looking for a
-- long term solution,
-+ long-term solution,
-  not another workaround.
-  I'd rather delay the launch
-  than ship something we'll need
-  to replace in a month.
-```
+**Before:** The terms are acceptable, however we still need the lender's approval.
 
-*Illustrative edit: one punctuation fix. The writer's phrasing, emphasis, and tone stay intact.*
+**After:** The terms are acceptable; however, we still need the lender's approval.
+
+*Two punctuation fixes. Wording unchanged.*
 
 [Try it](#try-it) · [Get started](#get-started) · [Get help](#get-help) · [Update or remove](#update-disable-or-remove) · [Technical details](#technical-details)
 
