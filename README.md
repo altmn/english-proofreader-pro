@@ -2,11 +2,11 @@
 
 # English Proofreader Pro
 
-Polish an email, a document, or an everyday message in American English while preserving your voice. Refine a draft or write something from scratch.
+Refine a draft or write something from scratch in American English.
 
 ```diff
-- A software issue at a single company can put on hold all US real estate market on hold.
-+ A software issue at a single company can put the entire U.S. real estate market on hold.
+- A software issue at a single company put on hold all US real estate market.
++ A software issue at a single company put the entire U.S. real estate market on hold.
 ```
 
 [Try it](#try-it) · [Get started](#get-started) · [Get help](#get-help) · [Update or remove](#update-disable-or-remove) · [Technical details](#technical-details)
