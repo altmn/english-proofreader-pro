@@ -5,11 +5,13 @@
 Polish an email, a document, or an everyday message in American English while preserving your voice. Refine a draft or write something from scratch.
 
 ```diff
-- I'm looking for a long term solution,
-+ I'm looking for a long-term solution,
-  not another workaround. I'd rather
-  delay the launch than ship something
-  we'll need to replace in a month.
+  I'm looking for a
+- long term solution,
++ long-term solution,
+  not another workaround.
+  I'd rather delay the launch
+  than ship something we'll need
+  to replace in a month.
 ```
 
 *Illustrative edit: one punctuation fix. The writer's phrasing, emphasis, and tone stay intact.*
