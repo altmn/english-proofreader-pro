@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "kind": "metadata-only-release",
+  "version": "1.0.11",
+  "baseline_version": "1.0.9",
+  "baseline_commit": "c72c25c90e39cacb51e282e77f3891dc48bd632f",
+  "baseline_snapshot": {
+    "path": "tests/trials/resource-execution-v4-cli-core-2026-11-25-snapshot.json",
+    "sha256": "12da6c0659c1ec817ffed1a9ca2e08e637de4979d941469af799e5719e88ac4b"
+  },
+  "baseline_panel": {
+    "path": "tests/trials/resource-execution-v4-panel-2026-11-25.json",
+    "sha256": "272223cac6abc2b9b0e82739bda44b4d00adf47c6cfd82a2298414f9762f18b6"
+  },
+  "baseline_runtime_sha256": {
+    "LICENSE": "8fab3ea5b69feb68dab60d2ebc8e6ec55523b562180f2ce5ad032040e558e9f4",
+    "PRIVACY.md": "c9f3b0abcef11c62b964b54c09b0d635aac3bc3f08bf768aa26648063bf78bda",
+    "assets/icon.webp": "1f679ce2a85371f79da2e28a952ea1c22eff987fe050bce709da0c270a9708b4",
+    "plugin.json": "672419e08661ea920568613a7607c13ae658b5f5a936638c3bd0c8110dbf9369",
+    "skills/proofreader-pro/SKILL.md": "47ecee80432daf25759bb894664f944cecef1cabd2cbc3cb9573795e3653ede6",
+    "skills/proofreader-pro/agents/openai.yaml": "85d8aa78ae3f55b6df193b3f61274f82aac68853199b8bec2bf5dd54d489b134",
+    "skills/proofreader-pro/scripts/text_metrics.py": "c1b3808071c63501268eb6f7dd5a1d130e44642d6c0bf3a7f0d44808267a9d51"
+  },
+  "baseline_archive_sha256": "2d4c2accbe42dcf27dda066690a48df629e6a3519c1f664c5f3a775d0e55b6b1",
+  "baseline_release_url": "https://github.com/altmn/english-proofreader-pro/releases/tag/v1.0.9"
+}
