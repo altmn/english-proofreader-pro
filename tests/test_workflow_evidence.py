@@ -1,4 +1,4 @@
-"""Check the release workflow's evidence references without a model or shell."""
+"""Check release evidence references and metadata-only gates without a model."""
 
 from __future__ import annotations
 
@@ -8,6 +8,8 @@ import re
 import shlex
 import unittest
 from pathlib import Path
+
+from scripts import check_metadata_release
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -31,10 +33,35 @@ class WorkflowEvidenceTests(unittest.TestCase):
         workflow = (ROOT / ".github/workflows/ci.yml").read_text(encoding="utf-8")
         documentation = (ROOT / "tests/README.md").read_text(encoding="utf-8")
         commands = re.findall(r"^\s*python scripts/evaluate\.py validate-suite (.+)$", workflow, re.MULTILINE)
+        metadata_receipts = re.findall(r"python scripts/check_metadata_release\.py (\S+)", workflow)
+        workflow_panels = re.findall(r"python scripts/check_capture_evidence\.py (\S+)", workflow)
+        documented_panels = re.findall(r"python3 scripts/check_capture_evidence\.py (\S+)", documentation)
+        if metadata_receipts:
+            self.assertEqual(len(metadata_receipts), 1, "CI must select one reviewed metadata-only receipt")
+            self.assertFalse(commands, "metadata-only CI must not label historical records current")
+            self.assertFalse(workflow_panels, "the metadata-only gate owns strict baseline panel validation")
+            self.assertEqual(re.findall(r"python3 scripts/check_metadata_release\.py (\S+)", documentation),
+                             metadata_receipts)
+            receipt_path = (ROOT / metadata_receipts[0]).resolve()
+            self.assertTrue(receipt_path.is_relative_to(ROOT))
+            receipt = json.loads(receipt_path.read_bytes())
+            manifest = json.loads((ROOT / "plugin.json").read_bytes())
+            self.assertEqual(receipt["version"], manifest["version"])
+            self.assertEqual(documented_panels, [receipt["baseline_panel"]["path"]])
+            self.assertIn("captures are historical for " + receipt["version"], documentation)
+            self.assertIn("no new model runs or native acceptance", documentation)
+            # Exercise the real gate, including all three strict profile suites
+            # and the execution panel against the isolated exact baseline.
+            result = check_metadata_release.check_release(ROOT, receipt)
+            self.assertEqual(result["outcome"], "passed")
+            self.assertEqual(result["version"], manifest["version"])
+            self.assertEqual(result["baseline_version"], receipt["baseline_version"])
+            return
         self.assertTrue(commands, "release CI must declare its current regression suites")
         fixtures = set()
         for command in commands:
             arguments = shlex.split(command)
+            self.assertTrue({"--require-current", "--require-complete", "--require-pass"} <= set(arguments))
             first_option = next(index for index, value in enumerate(arguments) if value.startswith("--"))
             records = [path for token in arguments[:first_option] for path in expand_record_paths(token)]
             self.assertGreaterEqual(len(records), 3)
@@ -47,8 +74,6 @@ class WorkflowEvidenceTests(unittest.TestCase):
                     self.assertTrue(path.is_file(), f"missing workflow evidence: {relative}")
         self.assertEqual(fixtures, {"tests/cases.json", "tests/changes-markdown-cases.json",
                                     "tests/fragment-calibration-cases.json"})
-        workflow_panels = re.findall(r"python scripts/check_capture_evidence\.py (\S+)", workflow)
-        documented_panels = re.findall(r"python3 scripts/check_capture_evidence\.py (\S+)", documentation)
         self.assertEqual(len(workflow_panels), 1)
         self.assertEqual(documented_panels, workflow_panels)
         self.assertTrue((ROOT / workflow_panels[0]).is_file())

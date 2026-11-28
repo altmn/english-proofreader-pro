@@ -2,6 +2,19 @@
 
 This file records notable changes to the repository's distributable package. An `Unreleased` entry is repository history, not evidence that a package has been publicly published.
 
+## [1.0.10] - 2026-11-27
+
+### Documentation
+
+- Present the skill with a short introduction and proofreading example, followed by concise usage, installation, troubleshooting, and maintenance prompts.
+- Clarify skill selection in ChatGPT and Codex, and distinguish Claude web from Claude Code setup.
+- Preserve existing section links and improve mobile readability.
+
+### Package
+
+- Update the version and release notes. The skill instructions, counting helper, UI metadata, icon, and notices are byte-for-byte unchanged from 1.0.9.
+- Retain 1.0.9 behavioral evidence as historical evidence; this documentation release does not establish new model or native-host acceptance. Existing limitations remain unchanged.
+
 ## [1.0.9] - 2026-11-25
 
 ### Added
