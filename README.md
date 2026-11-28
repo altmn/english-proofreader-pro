@@ -5,9 +5,14 @@
 Polish an email, a document, or an everyday message in American English while preserving your voice. Refine a draft or write something from scratch.
 
 ```diff
-- Home sales is on hold.
-+ Home sales are on hold.
+- I'm looking for a long term solution,
++ I'm looking for a long-term solution,
+  not another workaround. I'd rather
+  delay the launch than ship something
+  we'll need to replace in a month.
 ```
+
+*Illustrative edit: one punctuation fix. The writer's phrasing, emphasis, and tone stay intact.*
 
 [Try it](#try-it) · [Get started](#get-started) · [Get help](#get-help) · [Update or remove](#update-disable-or-remove) · [Technical details](#technical-details)
 
