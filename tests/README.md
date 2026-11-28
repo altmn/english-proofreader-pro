@@ -58,15 +58,15 @@ Regression acceptance requires three current, independently reviewed runs for th
 
 The original `cases.json` and Luna `evaluation-runner.txt` remain unchanged. Earlier collaboration runners and `tool-enabled-runner.txt` remain evidence of their own protocols; the resource-assisted execution protocol is `verified-execution-runner.txt`. Give generators frozen skill/resource inputs, raw prompts/context, and mechanical execution requirements, while withholding semantic rubrics, calibration examples, old answers, and grading notes. Reviewers receive expectations after generation. Batched CLI captures are not installed-host conversations. Keep every attempt and exclusion; a saved trace or code example is not proof that its code ran.
 
-## Documentation-only 1.0.10 release
+## Documentation-only 1.0.11 release
 
-Version 1.0.10 changes only the manifest version and publication release notes in the installable package. The README and setup guidance have changed; the six other runtime files are byte-identical to the verified published 1.0.9 ZIP. The reviewed [metadata-only receipt](metadata-release-1.0.10.json) pins that archive checksum, runtime inventory, and retained snapshot/panel references.
+Version 1.0.11 changes only the manifest version and publication release notes in the installable package. The README and setup guidance have changed; the six other runtime files are byte-identical to the verified published 1.0.9 ZIP. The reviewed [metadata-only receipt](metadata-release-1.0.11.json) pins that archive checksum, runtime inventory, and retained snapshot/panel references.
 
 ```sh
-python3 scripts/check_metadata_release.py tests/metadata-release-1.0.10.json
+python3 scripts/check_metadata_release.py tests/metadata-release-1.0.11.json
 ```
 
-This separate gate rejects any other manifest configuration or runtime change. It runs the existing strict profile, distinct-run, and execution validators in a temporary copy using the exact frozen 1.0.9 manifest and unchanged current skill/helper/fixtures. It never rewrites retained records or the candidate manifest. The original `--require-current` semantics remain strict: these captures are historical for 1.0.10. This is a metadata-only equivalence check, with no new model runs or native acceptance. Existing known host failures remain open. A future behavior release requires fresh evidence and an updated CI gate; this receipt accepts only version 1.0.10.
+This separate gate rejects any other manifest configuration or runtime change. It runs the existing strict profile, distinct-run, and execution validators in a temporary copy using the exact frozen 1.0.9 manifest and unchanged current skill/helper/fixtures. It never rewrites retained records or the candidate manifest. The original `--require-current` semantics remain strict: these captures are historical for 1.0.11. This is a metadata-only equivalence check, with no new model runs or native acceptance. Existing known host failures remain open. A future behavior release requires fresh evidence and an updated CI gate; this receipt accepts only version 1.0.11.
 
 ## CLI execution acceptance
 
