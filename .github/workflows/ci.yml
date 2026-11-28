@@ -51,12 +51,12 @@ jobs:
             python scripts/evaluate.py validate "$record" --require-complete
           done
 
-      - name: Verify unchanged behavior for the metadata-only 1.0.10 release
+      - name: Verify unchanged behavior for the metadata-only 1.0.11 release
         # The reviewed receipt permits only version/release_notes changes.
         # Existing strict suites and execution checks run with their exact frozen
-        # baseline manifest in isolation; old captures stay historical for 1.0.10.
+        # baseline manifest in isolation; old captures stay historical for 1.0.11.
         # A future behavior release must switch to fresh current evidence.
-        run: python scripts/check_metadata_release.py tests/metadata-release-1.0.10.json
+        run: python scripts/check_metadata_release.py tests/metadata-release-1.0.11.json
 
       - name: Install asset verification decoder
         run: |

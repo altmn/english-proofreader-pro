@@ -2,6 +2,13 @@
 
 This file records notable changes to the repository's distributable package. An `Unreleased` entry is repository history, not evidence that a package has been publicly published.
 
+## [1.0.11] - 2026-11-27
+
+### Documentation
+
+- Publish the current README and documented release and existing-installation update workflow.
+- Update version and publication notes only; retain the 1.0.9 behavioral baseline without claiming fresh native acceptance.
+
 ## [1.0.10] - 2026-11-27
 
 ### Documentation
