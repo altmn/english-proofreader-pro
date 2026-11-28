@@ -2,149 +2,189 @@
 
 # English Proofreader Pro
 
-Polish emails, documents, and everyday messages in American English while keeping your voice. Correct a draft, make it shorter, or write something new.
-
-[Try it](#try-it) · [Get started](#get-started) · [Get help](#get-help) · [Update or remove](#update-or-remove) · [Technical details](#technical-details)
+Polish an email, a document, or an everyday message in American English while preserving your voice. Refine a draft or write something from scratch.
 
 ```diff
-- The reports is ready.
-+ The reports are ready.
+- A software issue at a single company can put on hold all US real estate market on hold.
++ A software issue at a single company can put the entire U.S. real estate market on hold.
 ```
 
-*An illustrative edit using made-up text. Edits to your text come with a list of what changed; already-correct text is left alone.*
+[Try it](#try-it) · [Get started](#get-started) · [Get help](#get-help) · [Update or remove](#update-disable-or-remove) · [Technical details](#technical-details)
+
+---
 
 ## Try it
 
-Once installed, select the skill for **each message** you want it to handle, including follow-up edits.
+### Invoke in each prompt 
+Once installed, select the skill at the beginning of **each message** you want it to handle, including follow-up edits.
 
+### How to invoke
+Choose the matching menu entry rather than just typing its name. If it does not appear, start with [setup help](#get-started).
 | Where you are writing | How to select it |
 | --- | --- |
 | ChatGPT in your browser, or the **ChatGPT tab** in the desktop app | Type `@` and choose the available **EnglishProofreaderPro** plugin or **ProofreaderPro** skill entry. |
 | The **Codex tab**, Codex app, or Codex CLI | Include `$proofreader-pro`, or choose **ProofreaderPro** in the skill picker (`/skills` in the CLI). |
 
-Choose the matching menu entry rather than just typing its name. If it does not appear, start with [setup help](#get-started). The new picker labels still need installed-host verification; see [where it works](#where-it-works).
+### Proofreading prompt examples
 
-**In ChatGPT:** select the entry through `@`, then paste:
+**In ChatGPT web or desktop app:** select the entry through `@`, type `Proofread:`, then paste the text to proofread. For example:
 
 ```text
-Proofread this email in American English. Keep my tone and formatting,
-make only necessary corrections, and show what changed.
+@EnglishProofreaderPro Proofread:
 
-Text:
 Hi Morgan,
 
-The reports is ready for your review. Please let me know if you have any
-questions before Friday.
+The paperwork has been signed with no issues. 
+Scans are uploaded to the portal. 
+Documents have been shipped for a delivery tomorrow.
 
-Thanks,
-Alex
+Please let me know if there are any questions 
+before noon tomorrow, as I'm taking the afternoon off.
+
+Thank you and have a great day,
+Jennifer
 ```
 
-**In Codex:** use `$proofreader-pro` followed by the same request.
+**In Codex:** use `$proofreader-pro` to envoke the skill in the beginning of the prompt, type `Proofread:`, then paste the text to proofread. For example:
+
+```text
+$proofreader-pro Proofread:
+
+Hi Morgan,
+
+The paperwork has been signed with no issues. 
+Scans are uploaded to the portal. 
+Documents have been shipped for a delivery tomorrow.
+
+Please let me know if there are any questions 
+before noon tomorrow, as I'm taking the afternoon off.
+
+Thank you and have a great day,
+Jennifer
+```
+
 
 <details>
-<summary>More prompts: shorten a message or write a new draft</summary>
+<summary>More prompt examples</summary>
 
-Select the skill again for each request. In Codex, add `$proofreader-pro` at the beginning.
-
+An example of a ChatGPT prompt to make the message sound official:
 ```text
-Make this message shorter and easier to read while keeping the meaning
-and a friendly tone.
+@EnglishProofreaderPro 
 
-Text:
-I am writing to let you know that we have now finished reviewing the
-proposal, and we would like to arrange a time to discuss the next steps.
+Make this message sound more official while keeping the meaning and a friendly tone:
+
+I'm writing to let you know that we have now finished reviewing 
+your proposal, and we would like to set up a time 
+for an online call to discuss the next steps.
 ```
 
+An example of a Codex prompt to write an email to a colleague from scratch:
 ```text
-Write a friendly, concise email asking a colleague for an update on a
-proposal. We expected it yesterday and need it before tomorrow's meeting.
-```
+$proofreader-pro 
 
+Write a friendly, concise email asking my colleague Mary for an update on a proposal 
+I had sent her two weeks ago. We expected it yesterday and need it before tomorrow's meeting.
+```
 </details>
+
+---
 
 <a id="build-and-install"></a>
 
 ## Get started
 
-Ask an AI assistant to help with setup, or follow the [installation guide](docs/getting-started.md) yourself. No terminal knowledge is needed to ask for help.
+Ask your AI assistant to help with setup, or follow the [installation guide](docs/getting-started.md) yourself. No terminal knowledge is needed to ask for help.
 
-**Ask ChatGPT to guide you — paste into a chat at [chatgpt.com](https://chatgpt.com/):**
+**Paste into a chat in ChatGPT or Claude:**
 
+ChatGPT:
 ```text
-I want to use English Proofreader Pro:
-https://github.com/altmn/english-proofreader-pro
-
-I'm using ChatGPT in my browser and would like setup help without a
-terminal. Read the project's current instructions and OpenAI's guidance.
-Help me check which supported installation route my account offers, then
-guide me one step at a time. If I need the desktop app or an administrator,
-explain the next step. Finish by helping me select it and try a short email.
+Guide me on how to install the English Proofreader Pro skill in my ChatGPT web account: https://github.com/altmn/english-proofreader-pro
 ```
 
-**Ask a coding agent to set it up — paste into Codex or another agent with local tools:**
-
+Claude:
 ```text
-Help me install English Proofreader Pro for this AI tool:
-https://github.com/altmn/english-proofreader-pro
-
-Read its current installation instructions, check what is already installed,
-and use the supported route for this tool. Ask which installation scope I
-want if needed. Preserve existing personal changes, verify the skill appears
-in a fresh session, and give me a short first-use example.
+Guide me on how to install the English Proofreader Pro skill in my Claude web account: https://github.com/altmn/english-proofreader-pro
 ```
 
-**Current availability:** this project is open source and has a [published plugin ZIP and checksum](https://github.com/altmn/english-proofreader-pro/releases/latest), but does not claim an approved OpenAI directory listing. A browser chat can guide setup; it cannot create an unavailable import option. Use a route your account offers, or the documented [local Codex route](docs/getting-started.md#install-in-codex-from-source). See the [manual steps](docs/getting-started.md) for package choices.
+**Ask your coding agent to set it up on your machine:**
+
+Codex:
+```text
+Install the English Proofreader Pro skill for Codex globally: https://github.com/altmn/english-proofreader-pro
+```
+
+Claude:
+```text
+Install the English Proofreader Pro skill for Claude globally: https://github.com/altmn/english-proofreader-pro
+```
+
+
+**Current availability** 
+
+This project is open source and has a [published plugin ZIP and checksum](https://github.com/altmn/english-proofreader-pro/releases/latest). It is not yet an approved OpenAI or Anthropic directory listing. 
+
+A browser chat can guide setup; it cannot create an unavailable import option. Use a route your account offers, or the documented [local Codex route](docs/getting-started.md#install-in-codex-from-source). See the [manual steps](docs/getting-started.md) for package choices.
+
+---
 
 ## Get help
 
-If the skill is missing, check installation and the picker first. If a follow-up is handled unexpectedly, select the skill again for that message. For other problems, ask your assistant:
+If the skill is missing, check installation and the picker first. If a follow-up request is handled unexpectedly, select the skill again for that message. For other problems, ask your AI assistant.
 
+An example of a troubleshooting prompt (replace `[...]` with your information):
 ```text
-Help me troubleshoot English Proofreader Pro:
-https://github.com/altmn/english-proofreader-pro
+Help me troubleshoot English Proofreader Pro (https://github.com/altmn/english-proofreader-pro).
 
-I'm using [ChatGPT web / the ChatGPT tab in the desktop app / Codex].
+I'm using [ChatGPT web/ChatGPT tab in the desktop app/Codex, or similar Claude options]. 
 I expected [result], but got [actual result or short error].
-Help me check installation, selection for this message, and whether the task
-works in my environment. Ask only for the details needed for the next step,
-and use a short made-up example to check the result.
+Investigate the issue.
 ```
 
-[Get support](SUPPORT.md) or [report a problem](https://github.com/altmn/english-proofreader-pro/issues/new/choose) with a small synthetic example. Keep private writing out of public reports. Report vulnerabilities through the [security policy](SECURITY.md).
+### Nothing helps or found a bug
+[Get support](SUPPORT.md) or [report a problem](https://github.com/altmn/english-proofreader-pro/issues/new/choose) with a small synthetic example. Remember to keep private writing and information out of public reports. Report vulnerabilities through the [security policy](SECURITY.md).
+
+---
 
 <a id="disable-or-remove"></a>
 
-## Update or remove
+## Update, disable, or remove
 
-**Ask the AI tool where you use the skill:**
+What to update, disable, or remove the skill? Just ask your AI tool.
 
+To update:
 ```text
-Help me check whether English Proofreader Pro is up to date:
-https://github.com/altmn/english-proofreader-pro
-
-I use it in [ChatGPT web / ChatGPT desktop / Codex]. Help me find the installed
-version, compare it with the latest published release, and follow the update
-process for that installation. Preserve personal changes and help me select
-the skill and try a short example afterward.
+Update English Proofreader Pro: https://github.com/altmn/english-proofreader-pro 
 ```
 
+To disable:
 ```text
-Help me temporarily disable or uninstall English Proofreader Pro from
-[the AI tool where I use it]. Identify my installation method, follow the
-project's removal instructions, keep my writing and unrelated settings,
-and help me confirm the result in a new chat or session.
+Temporarily disable English Proofreader Pro: https://github.com/altmn/english-proofreader-pro.
 ```
 
-Prefer direct steps? See [updating, disabling, and uninstalling](docs/getting-started.md#update-disable-or-remove).
+To uninstall:
+```text
+Uninstall English Proofreader Pro: https://github.com/altmn/english-proofreader-pro.
+```
+
+### Prefer direct steps?
+
+See [updating, disabling, and uninstalling](docs/getting-started.md#update-disable-or-remove).
+
+---
 
 ## Where it works
 
-- **ChatGPT:** use a supported plugin installation available to your account. Select through `@` in the browser or ChatGPT tab; public directory approval is not claimed. Current picker labels and exact-release behavior still need intended-host acceptance.
-- **Codex:** the source checkout provides a local development marketplace. Select through `$proofreader-pro` or the skill picker; installation and selection are separate steps.
-- **Counts and shortening targets:** verified counts and length budgets need a host that can execute the bundled counting tool. Without a successful measurement, the skill reports that limitation. Ordinary proofreading should not be mistaken for a verified count.
+- **ChatGPT/Claude:** use a supported plugin installation available to your account. Select through `@` in the browser or ChatGPT tab.
+- **Codex/Claude Code:** the source checkout provides a local development marketplace. Select through `$proofreader-pro` or the skill picker.
 
-For routine proofreading, start with the latest Instant model available in ChatGPT at its normal setting. See [host compatibility](docs/host-compatibility.md) for model choice, counting requirements, and verification limits. [Test results](tests/RESULTS.md) and [known issues](KNOWN_ISSUES.md) retain observed failures and pending acceptance; source-bound simulations do not establish universal host behavior.
+### What model to choose
+
+For routine proofreading, start with the latest Instant model available in ChatGPT/Claude at its normal setting. 
+
+See [host compatibility](docs/host-compatibility.md), [test results](tests/RESULTS.md), and [known issues](KNOWN_ISSUES.md) for more.
+
+---
 
 ## Technical details
 
@@ -160,14 +200,20 @@ The plugin contains editing instructions and an offline Python counting helper. 
 
 <a id="contribute-and-get-help"></a>
 
+---
+
 ## Contribute
 
 Improvements to documentation, synthetic examples, packaging, and tests are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md); changes use feature branches and pull requests against `master`.
 
 <a id="openai-directory-publication"></a>
 
-Maintainers can find [release instructions](docs/releasing.md), [directory submission preparation](docs/chatgpt-submission.md), [open-source readiness](docs/open-source-readiness.md), and the [presentation guide](docs/presentation.md). OpenAI submission, review, and directory publication remain separate steps.
+Maintainers can find [release instructions](docs/releasing.md), [directory submission preparation](docs/chatgpt-submission.md), [open-source readiness](docs/open-source-readiness.md), and the [presentation guide](docs/presentation.md).
 
 <a id="license-and-author"></a>
 
-Maintained by [Alex Allen (@altmn)](https://github.com/altmn). [MIT license](LICENSE) · [Notices](NOTICE.md) · [Code of conduct](CODE_OF_CONDUCT.md). This independent project is not an official OpenAI product.
+Maintained by [Alex Allen (@altmn)](https://github.com/altmn).
+
+This is an independent project. It is not endorced by OpenAI, Anthropic, or any other AI company.
+
+[MIT license](LICENSE) · [Notices](NOTICE.md) · [Code of conduct](CODE_OF_CONDUCT.md). 
