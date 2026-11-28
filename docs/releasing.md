@@ -2,6 +2,8 @@
 
 Only a maintainer should publish a release. A checked-in version or locally built ZIP is not evidence that a public release or plugin submission has occurred.
 
+For a request to "get to production", follow the standing authorization in [project instructions](../AGENTS.md#getting-to-production): publish a new versioned release, including for documentation-only changes, and update and verify existing installed copies without another confirmation. The checks below still apply. A source-only edit or local build does not by itself request production.
+
 ## Prepare the release pull request
 
 1. In the feature pull request that proposes a release, update `plugin.json`'s version and release notes, and add the proposed version's entry to `CHANGELOG.md`. Make these changes before merging to `master`; do not make a release-preparation commit directly on `master` after the merge.
