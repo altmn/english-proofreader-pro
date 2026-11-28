@@ -4,11 +4,10 @@
 
 Polish an email, a document, or an everyday message in American English while preserving your voice. Refine a draft or write something from scratch.
 
-**Before:** The terms are acceptable, however we still need the lender's approval.
-
-**After:** The terms are acceptable; however, we still need the lender's approval.
-
-*Two punctuation fixes. Wording unchanged.*
+```diff
+- A software issue at a single company can put on hold all US real estate market on hold.
++ A software issue at a single company can put the entire U.S. real estate market on hold.
+```
 
 [Try it](#try-it) · [Get started](#get-started) · [Get help](#get-help) · [Update or remove](#update-disable-or-remove) · [Technical details](#technical-details)
 
